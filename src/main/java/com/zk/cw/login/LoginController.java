@@ -1,8 +1,8 @@
 package com.zk.cw.login;
 
-import hirondelle.movies.main.MainWindow;
+import com.zk.cw.main.MainWindow;
 import java.util.logging.Logger;
-import hirondelle.movies.util.Util;
+import com.zk.cw.util.Util;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 public final class LoginController implements ActionListener {
 
   /**   Listen for button clicks on the {@link LoginView} screen - {@link #LOGIN} or {@link #CANCEL}.  */
-  @Override public void actionPerformed(ActionEvent aEvent) {
+  public void actionPerformed(ActionEvent aEvent) {
     String command = aEvent.getActionCommand();
     if ( LOGIN.equals(command) ) {
       validateUserCredentials();

@@ -1,14 +1,14 @@
 package com.zk.cw.main;
 
-import hirondelle.movies.LaunchApplication;
-import hirondelle.movies.about.AboutAction;
-import hirondelle.movies.edit.MovieActionAdd;
-import hirondelle.movies.edit.MovieActionChange;
-import hirondelle.movies.edit.MovieActionDelete;
-import hirondelle.movies.edit.MovieTableModel;
-import hirondelle.movies.exit.ExitAction;
-import hirondelle.movies.util.Util;
-import hirondelle.movies.util.ui.UiUtil;
+import com.zk.cw.LaunchApplication;
+import com.zk.cw.about.AboutAction;
+import com.zk.cw.edit.MovieActionAdd;
+import com.zk.cw.edit.MovieActionChange;
+import com.zk.cw.edit.MovieActionDelete;
+import com.zk.cw.edit.MovieTableModel;
+import com.zk.cw.exit.ExitAction;
+import com.zk.cw.util.Util;
+import com.zk.cw.util.ui.UiUtil;
 
 import java.awt.Color;
 import java.awt.Dimension;

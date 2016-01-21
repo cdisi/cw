@@ -1,7 +1,7 @@
 package com.zk.cw.exception;
 
-import hirondelle.movies.util.Util;
-import hirondelle.movies.util.ui.UiUtil;
+import com.zk.cw.util.Util;
+import com.zk.cw.util.ui.UiUtil;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -25,10 +25,10 @@ public final class ExceptionHandler implements Thread.UncaughtExceptionHandler {
   Custom handler for uncaught exceptions.
   
   <P>Displays a simple model dialog to the user, showing that an error has
-   occured. The text of the error includes {@link Throwable#toString()}. 
+   occured. The text of thse error includes {@link Throwable#toString()}. 
    The stack trace is logged at a SEVERE level.
  */
-  @Override  public void uncaughtException(Thread aThread, Throwable aThrowable) {
+  public void uncaughtException(Thread aThread, Throwable aThrowable) {
     fLogger.severe(getStackTrace(aThrowable));
     JOptionPane.showMessageDialog(
       UiUtil.getActiveFrame(), "Error: " + aThrowable.toString(), 

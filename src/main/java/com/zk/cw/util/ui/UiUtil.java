@@ -1,7 +1,7 @@
 package com.zk.cw.util.ui;
 
-import hirondelle.movies.LaunchApplication;
-import hirondelle.movies.util.Args;
+import com.zk.cw.LaunchApplication;
+import com.zk.cw.util.Args;
 import java.util.*;
 import java.net.URL;
 import javax.swing.*;

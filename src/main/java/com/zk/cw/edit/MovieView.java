@@ -1,10 +1,10 @@
 package com.zk.cw.edit;
 
-import hirondelle.movies.util.ui.OnClose;
-import hirondelle.movies.util.Edit;
-import hirondelle.movies.util.Util;
-import hirondelle.movies.util.ui.UiUtil;
-import hirondelle.movies.util.ui.StandardDialog;
+import com.zk.cw.util.ui.OnClose;
+import com.zk.cw.util.Edit;
+import com.zk.cw.util.Util;
+import com.zk.cw.util.ui.UiUtil;
+import com.zk.cw.util.ui.StandardDialog;
 
 import java.util.logging.Logger;
 import java.util.*;

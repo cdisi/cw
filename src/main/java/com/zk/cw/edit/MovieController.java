@@ -1,9 +1,9 @@
 package com.zk.cw.edit;
 
-import hirondelle.movies.exception.InvalidInputException;
-import hirondelle.movies.main.MainWindow;
-import hirondelle.movies.util.Edit;
-import hirondelle.movies.util.Util;
+import com.zk.cw.exception.InvalidInputException;
+import com.zk.cw.main.MainWindow;
+import com.zk.cw.util.Edit;
+import com.zk.cw.util.Util;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

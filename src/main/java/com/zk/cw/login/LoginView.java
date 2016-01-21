@@ -1,9 +1,9 @@
 package com.zk.cw.login;
 
-import hirondelle.movies.util.ui.OnClose;
-import hirondelle.movies.util.ui.StandardDialog;
+import com.zk.cw.util.ui.OnClose;
+import com.zk.cw.util.ui.StandardDialog;
 import java.util.*;
-import hirondelle.movies.util.ui.UiUtil;
+import com.zk.cw.util.ui.UiUtil;
 import javax.swing.*;
 
 /**

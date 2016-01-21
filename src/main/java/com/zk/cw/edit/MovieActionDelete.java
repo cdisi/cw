@@ -1,7 +1,7 @@
 package com.zk.cw.edit;
 
-import hirondelle.movies.main.MainWindow;
-import hirondelle.movies.util.Util;
+import com.zk.cw.main.MainWindow;
+import com.zk.cw.util.Util;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.logging.Logger;

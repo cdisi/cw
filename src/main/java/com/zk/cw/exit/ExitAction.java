@@ -1,7 +1,7 @@
 package com.zk.cw.exit;
 
-import hirondelle.movies.edit.MovieDAO;
-import hirondelle.movies.util.Util;
+import com.zk.cw.edit.MovieDAO;
+import com.zk.cw.util.Util;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;

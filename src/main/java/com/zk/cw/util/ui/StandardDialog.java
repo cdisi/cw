@@ -117,7 +117,7 @@ public final class StandardDialog {
     JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     inputMap.put(escapeKey, CANCEL_ACTION_KEY);
     AbstractAction cancelAction = new AbstractAction() {
-      @Override public void actionPerformed(ActionEvent e) {
+      public void actionPerformed(ActionEvent e) {
         if (OnClose.DO_NOTHING == aOnClose) {
           // do nothing
         }
