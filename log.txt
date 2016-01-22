@@ -1,28 +1,26 @@
-Oca 21, 2016 3:47:56 PM com.zk.cw.LaunchApplication main
+Oca 22, 2016 9:20:35 AM com.zk.cw.LaunchApplication main
 CONFIG: Launching application...
-Oca 21, 2016 3:47:56 PM com.zk.cw.LaunchApplication main
+Oca 22, 2016 9:20:35 AM com.zk.cw.LaunchApplication main
 CONFIG: Operating System : Windows 8.1 6.3
-Oca 21, 2016 3:47:56 PM com.zk.cw.LaunchApplication main
+Oca 22, 2016 9:20:35 AM com.zk.cw.LaunchApplication main
 CONFIG: Java Version: 1.8.0_66
-Oca 21, 2016 3:47:56 PM com.zk.cw.LaunchApplication main
+Oca 22, 2016 9:20:35 AM com.zk.cw.LaunchApplication main
 CONFIG: Java Home: C:\Program Files\Java\jdk1.8.0_66\jre
-Oca 21, 2016 3:47:56 PM com.zk.cw.LaunchApplication useCustomExceptionHandler
+Oca 22, 2016 9:20:35 AM com.zk.cw.LaunchApplication useCustomExceptionHandler
 CONFIG: Setting up custom exception handler.
-Oca 21, 2016 3:47:57 PM com.zk.cw.LaunchApplication main
+Oca 22, 2016 9:20:35 AM com.zk.cw.LaunchApplication main
 CONFIG: Showing user login screen.
-Oca 21, 2016 3:47:57 PM com.zk.cw.LaunchApplication userLogin
+Oca 22, 2016 9:20:35 AM com.zk.cw.LaunchApplication userLogin
 CONFIG: Showing the login screen.
-Oca 21, 2016 3:47:58 PM com.zk.cw.login.LoginController showMainWindow
+Oca 22, 2016 9:20:39 AM com.zk.cw.login.LoginController showMainWindow
 CONFIG: Showing the main window.
-Oca 21, 2016 3:47:58 PM com.zk.cw.main.MainWindow buildAndShow
-FINE: Building GUI for user : sdf
-Oca 21, 2016 3:47:58 PM com.zk.cw.edit.MovieDAO readInMovieFileUponStartup
-FINE: Reading movies from :movie_list_for_sdf.txt
-Oca 21, 2016 3:47:58 PM com.zk.cw.edit.MovieDAO readInMovieFileUponStartup
+Oca 22, 2016 9:20:39 AM com.zk.cw.main.MainWindow buildAndShow
+FINE: Building GUI for user : dd
+Oca 22, 2016 9:20:39 AM com.zk.cw.edit.MovieDAO readInMovieFileUponStartup
+FINE: Reading movies from :movie_list_for_dd.txt
+Oca 22, 2016 9:20:39 AM com.zk.cw.edit.MovieDAO readInMovieFileUponStartup
 SEVERE: Unable to access the movies file.
-Oca 21, 2016 3:47:58 PM com.zk.cw.edit.MovieDAO <clinit>
+Oca 22, 2016 9:20:39 AM com.zk.cw.edit.MovieDAO <clinit>
 CONFIG: Number of movies read in from file: 0
-Oca 21, 2016 3:47:58 PM com.zk.cw.LaunchApplication main
+Oca 22, 2016 9:20:39 AM com.zk.cw.LaunchApplication main
 CONFIG: Launch thread now ending.
-Oca 21, 2016 3:48:05 PM com.zk.cw.main.MainWindow$SortMovieTable mouseClicked
-CONFIG: Sorting the table.

@@ -198,7 +198,6 @@ public final class MainWindow {
     fMovieTable.getColumnModel().getColumn(1).setPreferredWidth(20);
     fMovieTable.getColumnModel().getColumn(2).setPreferredWidth(20);
     fMovieTable.getColumnModel().getColumn(3).setPreferredWidth(200);
-    
     /* 
      Interesting: even though these methods are one-liners, it's 
      still useful to create them, since, from the point of view of the caller, 
