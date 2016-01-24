@@ -15,6 +15,18 @@ import com.zk.cw.util.Util;
   <P>Like most model objects, <b>this class would greatly benefit from a JUnit test class, 
   to test its data validation and sorting.</b>*/
 public final class Uretici implements Comparable<Uretici>{
+<<<<<<< HEAD
+=======
+  // PRIVATE
+  private String id;
+  private final String ad;
+  private final String baslik;
+  private final String logoUrl;
+  private final String durum;
+  private static final BigDecimal TEN = new BigDecimal("10.0");
+  private static final int EQUAL = 0;
+  private static final int DESCENDING = -1;
+>>>>>>> origin/master
 
   /**   Constructor taking regular Java objects natural to the domain.
    
@@ -28,6 +40,7 @@ public final class Uretici implements Comparable<Uretici>{
    @param aComment optional, any comment on the movie
   */
   Uretici(
+<<<<<<< HEAD
     String aId, String aTitle, Date aDateViewed, BigDecimal aRating, String aComment
   ) throws InvalidInputException {
     fId = aId;
@@ -35,42 +48,39 @@ public final class Uretici implements Comparable<Uretici>{
     fDateViewed = aDateViewed;
     fRating = aRating;
     fComment = aComment;
+=======
+    String id, String ad, String baslik, String logoUrl, String durum
+  ) throws InvalidInputException {
+    this.id = id;
+    this.ad = ad;
+    this.baslik = baslik;
+    this.logoUrl = logoUrl;
+    this.durum = durum;
+>>>>>>> origin/master
     validateState();
   }
   
-  /**   Constructor which takes all parameters as <em>text</em>.
-   
-   <P>Raw user input is usually in the form of <em>text</em>.
-   This constructor <em>first</em> parses such text into the required 'base objects' - 
-   {@link Date}, {@link BigDecimal} and so on. If those parse operations <em>fail</em>, 
-   then the user is shown an error message. If N such errors are present in user input, 
-   then  N <em>separate</em> message will be presented for each failure, one by one.
-   
-   <P>If all such parse operations <em>succeed</em>, then the "regular" constructor 
-   {@link #Movie(String, String, Date, BigDecimal, String)}
-   will then be called. It's important to note that this call to the second constructor 
-   can in turn result in <em>another</em> error message being shown to the 
-   user (just one this time).  */
-  Uretici(
-    String aId, String aTitle, String aDateViewed, String aRating, String aComment
-  ) throws InvalidInputException {
-      this(
-        aId, aTitle, Util.parseDate(aDateViewed, "Date Viewed"), 
-        Util.parseBigDecimal(aRating, "Rating"), aComment
-      );
+  String idAl(){ 
+	  return id; 
   }
   
-  String getId(){ return fId; }
+  void idVer(String aId){
+	  this.id = id; 
+  }
   
-  /**   This set method is rather artificial. It results from the toy persistence layer. 
-   It's dissatisfying to add this method since the class would otherwise be immutable,
-   and immutability is a highly desirable characteristic.  */
-  void setId(String aId){  fId = aId; }
-  
-  String getTitle(){ return fTitle; }
-  Date getDateViewed(){ return fDateViewed; }
-  BigDecimal getRating(){ return fRating; }
-  String getComment(){ return fComment; }
+  String adAl(){
+	  return this.ad; 
+  }
+  String baslikAl(){
+	  return this.baslik; 
+  }
+  String logoUrlAl(){
+	  return this.logoUrl; 
+  }
+  String durumAl(){
+	  return this.durum; 
+  }
+
   
   @Override public boolean equals(Object aThat){
     if ( this == aThat ) return true;
