@@ -5,6 +5,7 @@ import com.zk.cw.main.MainWindow;
 import com.zk.cw.util.Util;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -13,6 +14,11 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -21,6 +27,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Properties;
 import java.util.Scanner;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -42,6 +49,23 @@ import java.util.regex.Pattern;
   back to the disk, for use during the next launch of the application.
  */
 public final class UreticiDAO {
+	
+	private File configFile = new File("resources/config.properties");
+	private static Properties configProps;
+    private static Connection conn = null;
+    private static Statement stmt = null;
+    private static final Map<String, Uretici> fTable = new LinkedHashMap<>();
+    private static int fNextId = 0;
+    private static final String MOVIES_FILE_NAME = "movie_list_for_";
+    private static final String DELIMITER = "|";
+    private static final String NULL = "NULL";
+    private static final Logger fLogger = Util.getLogger(UreticiDAO.class);
+    private final static Charset ENCODING = StandardCharsets.UTF_8;
+    
+    static {
+      bul();
+      fLogger.config("Number of movies read in from file: " + fTable.size());
+    }    
 
   /**
     Save all data to a text file. Must be called explicitly when the
@@ -80,44 +104,42 @@ public final class UreticiDAO {
     fTable.remove(aMovieId);
   }
 
-  // PRIVATE 
-  private static final Map<String, Uretici> fTable = new LinkedHashMap<>();
-  private static int fNextId = 0;
-  private static final String MOVIES_FILE_NAME = "movie_list_for_";
-  private static final String DELIMITER = "|";
-  private static final String NULL = "NULL";
-  private static final Logger fLogger = Util.getLogger(UreticiDAO.class);
-  private final static Charset ENCODING = StandardCharsets.UTF_8;
-  
-  static {
-    readInMovieFileUponStartup();
-    fLogger.config("Number of movies read in from file: " + fTable.size());
-  }
-
-  private static void readInMovieFileUponStartup() {
-    Path moviesPath = Paths.get(getMovieFileName());
-    fLogger.fine("Reading movies from :" + moviesPath);
-    String line = "";
-    try (Scanner scanner = new Scanner(moviesPath, ENCODING.name())){
-      while (scanner.hasNextLine()) {
-        line = scanner.nextLine();
-        if (Util.textHasContent(line)) {
-          parseLine(line);
-        }
-      }
-    }
-    catch (FileNotFoundException ex) {
-      fLogger.config("Movies file not present. Will be created when the app closes.");
-    }
-    catch (InvalidInputException ex) {
-      fLogger.severe("Movies file: date-viewed field not in expected format: " + line);
-    }
-    catch (NoSuchElementException ex) {
-      fLogger.severe("Movies file: Not in expected format: " + line);
-    }
-    catch(IOException ex){
-      fLogger.severe("Unable to access the movies file.");
-    }
+  private static void bul() {
+	  try{
+	      Class.forName(configProps.getProperty("JDBC_DRIVER"));
+	      conn = DriverManager.getConnection(configProps.getProperty("DB_URL"), configProps.getProperty("DB_USER"), configProps.getProperty("DB_PASS"));
+	      stmt = conn.createStatement();
+	      String sql= "SELECT * FROM uretici";
+	      ResultSet rs = stmt.executeQuery(sql);	      
+	      while(rs.next()){
+	    	 String id = rs.getString("id");
+	    	 String ad = rs.getString("ad");
+	    	 String baslik = rs.getString("baslik");
+	    	 String logoUrl = rs.getString("logoUrl");
+		     String durum = rs.getString("durum");
+		     Uretici uretici = new Uretici(id, ad, baslik, logoUrl, durum);
+		     fTable.put(uretici.idAl(), uretici);
+	      }
+	      rs.close();
+	      stmt.close();
+	      conn.close();
+	   }catch(SQLException se){
+	      se.printStackTrace();
+	   }catch(Exception e){
+	      e.printStackTrace();
+	   }finally{
+	      try{
+	         if(stmt!=null)
+	            stmt.close();
+	      }catch(SQLException se2){
+	      }
+	      try{
+	         if(conn!=null)
+	            conn.close();
+	      }catch(SQLException se){
+	         se.printStackTrace();
+	      }
+	   }
   }
 
   private static void parseLine(String aLine) throws InvalidInputException {
