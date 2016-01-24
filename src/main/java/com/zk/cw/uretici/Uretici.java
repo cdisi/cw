@@ -15,26 +15,26 @@ import com.zk.cw.util.Util;
   <P>Like most model objects, <b>this class would greatly benefit from a JUnit test class, 
   to test its data validation and sorting.</b>*/
 public final class Uretici implements Comparable<Uretici>{
-  // PRIVATE
-  private String id;
-  private final String ad;
-  private final String baslik;
-  private final String logo;
-  private final Date olusturulmaZamani;
-  private final String durum;
-  private static final BigDecimal TEN = new BigDecimal("10.0");
-  private static final int EQUAL = 0;
-  private static final int DESCENDING = -1;
 
+  /**   Constructor taking regular Java objects natural to the domain.
+   
+   <P>When the user has entered text, this constructor is called indirectly, through 
+   {@link #Movie(String, String, String, String, String)}.
+   
+   @param aId optional, the database identifier for the movie. This item is optional since, 
+   for 'add' operations,  it has yet to be assigned by the database.
+   @param aTitle has content, name of the movie   @param aDateViewed optional, date the movie was screened by the user
+   @param aRating optional, in range 0.0 to 10.0
+   @param aComment optional, any comment on the movie
+  */
   Uretici(
-    String id, String ad, String baslik, String logo, Date olusturulmaZamani, String durum
+    String aId, String aTitle, Date aDateViewed, BigDecimal aRating, String aComment
   ) throws InvalidInputException {
-    this.id = id;
-    this.ad = ad;
-    this.baslik = baslik;
-    this.logo = logo;
-    this.olusturulmaZamani = olusturulmaZamani;
-    this.durum = durum;
+    fId = aId;
+    fTitle = aTitle;
+    fDateViewed = aDateViewed;
+    fRating = aRating;
+    fComment = aComment;
     validateState();
   }
   
@@ -184,6 +184,17 @@ public final class Uretici implements Comparable<Uretici>{
       return EQUAL;
     };
   };
+  
+  // PRIVATE
+  private String id;
+  private final String ad;
+  private final String baslik;
+  private final String logo;
+  private final Date olusturulmaZamani;
+  private final String durum;
+  private static final BigDecimal TEN = new BigDecimal("10.0");
+  private static final int EQUAL = 0;
+  private static final int DESCENDING = -1;
   
   private void validateState() throws InvalidInputException {
     InvalidInputException ex = new InvalidInputException();
