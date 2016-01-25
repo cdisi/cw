@@ -3,7 +3,7 @@ Edit movies. An edit is an 'add', 'change', or 'delete'.
 
 <P>The flow is as follows:
 <PRE>{@link hirondelle.movies.main.MainWindow}
-  -> {@link hirondelle.movies.edit.MovieActionAdd} (simple Swing Action) - similar for Change
+  -> {@link UreticiActionAra.movies.edit.MovieActionAdd} (simple Swing Action) - similar for Change
     -> {@link hirondelle.movies.edit.MovieView} (dialog)
       -> {@link hirondelle.movies.edit.MovieController}
         -> {@link Uretici.movies.edit.Movie} (model) 
