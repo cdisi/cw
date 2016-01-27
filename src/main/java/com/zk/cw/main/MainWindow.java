@@ -5,7 +5,7 @@ import com.zk.cw.about.AboutAction;
 import com.zk.cw.edit.MovieActionAdd;
 import com.zk.cw.edit.MovieActionChange;
 import com.zk.cw.edit.MovieActionDelete;
-import com.zk.cw.edit.MovieTableModel;
+import com.zk.cw.uretici.*;
 import com.zk.cw.exit.ExitAction;
 import com.zk.cw.uretici.UreticiActionAra;
 import com.zk.cw.util.Util;
@@ -17,6 +17,8 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.Locale;
 import java.util.logging.Logger;
 
@@ -30,6 +32,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 /** Main window for the application.
  
@@ -85,8 +92,8 @@ public final class MainWindow {
   /** Empty constructor prevents the caller from creating an object. */
   private MainWindow() {  }
   
-  private MovieTableModel fMovieTableModel;
-  private JTable fMovieTable;
+  private UreticiTableModel ureticiTableModel;
+  private JTable ureticiTable;
   private Action fChangeMovieAction;
   private Action fDeleteMovieAction;
   private String fUserName;
@@ -98,9 +105,10 @@ public final class MainWindow {
       LaunchApplication.APP_NAME + 
       " - " + fUserName.toUpperCase(Locale.ENGLISH)
     ); 
+    ureticiBul();
     
-    fMovieTableModel = new MovieTableModel();
-    fMovieTable = new JTable(fMovieTableModel);
+    ureticiTableModel = new UreticiTableModel();
+    ureticiTable = new JTable(ureticiTableModel);
     
     buildActionsAndMenu(frame);
     buildContent(frame);
@@ -110,6 +118,26 @@ public final class MainWindow {
     addApplicationIcon(frame);
     UiUtil.centerAndShow(frame);
   }
+  
+  private void ureticiBul(){
+		Document doc;
+		try {
+
+			doc = Jsoup.connect("http://www.gsmarena.com/makers.php3").get();
+
+			Elements links = doc.select("a[href*=phones]");
+			for (Element link : links) {
+
+				// get the value from href attribute
+				System.out.println("\nlink : " + link.attr("href"));
+				System.out.println("text : " + link.text());
+
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
   /** Sort the table.  Listens for clicks on the JTableHeader. */
   private final class SortMovieTable extends MouseAdapter {

@@ -22,7 +22,7 @@ public final class UreticiActionAra extends AbstractAction  {
   
   @Override public void actionPerformed(ActionEvent aActionEvent) {
     fLogger.config("Adding a new movie.");
-    MovieView view = new MovieView(fFrame);
+    UreticiView view = new UreticiView(fFrame);
   }
   
   // PRIVATE
