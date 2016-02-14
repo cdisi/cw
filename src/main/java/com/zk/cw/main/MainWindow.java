@@ -122,16 +122,12 @@ public final class MainWindow {
   private void ureticiBul(){
 		Document doc;
 		try {
-
 			doc = Jsoup.connect("http://www.gsmarena.com/makers.php3").get();
-
 			Elements links = doc.select("a[href*=phones]");
 			for (Element link : links) {
-
 				// get the value from href attribute
 				System.out.println("\nlink : " + link.attr("href"));
 				System.out.println("text : " + link.text());
-
 			}
 
 		} catch (IOException e) {

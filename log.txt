@@ -1,22 +1,22 @@
-Oca 27, 2016 11:17:18 PM com.zk.cw.LaunchApplication main
+Şub 13, 2016 4:10:57 PM com.zk.cw.LaunchApplication main
 CONFIG: Launching application...
-Oca 27, 2016 11:17:18 PM com.zk.cw.LaunchApplication main
+Şub 13, 2016 4:10:57 PM com.zk.cw.LaunchApplication main
 CONFIG: Operating System : Windows 8.1 6.3
-Oca 27, 2016 11:17:18 PM com.zk.cw.LaunchApplication main
+Şub 13, 2016 4:10:57 PM com.zk.cw.LaunchApplication main
 CONFIG: Java Version: 1.8.0_45
-Oca 27, 2016 11:17:18 PM com.zk.cw.LaunchApplication main
+Şub 13, 2016 4:10:57 PM com.zk.cw.LaunchApplication main
 CONFIG: Java Home: C:\Program Files\Java\jdk1.8.0_45\jre
-Oca 27, 2016 11:17:18 PM com.zk.cw.LaunchApplication useCustomExceptionHandler
+Şub 13, 2016 4:10:57 PM com.zk.cw.LaunchApplication useCustomExceptionHandler
 CONFIG: Setting up custom exception handler.
-Oca 27, 2016 11:17:18 PM com.zk.cw.LaunchApplication main
+Şub 13, 2016 4:10:57 PM com.zk.cw.LaunchApplication main
 CONFIG: Showing user login screen.
-Oca 27, 2016 11:17:18 PM com.zk.cw.LaunchApplication userLogin
+Şub 13, 2016 4:10:57 PM com.zk.cw.LaunchApplication userLogin
 CONFIG: Showing the login screen.
-Oca 27, 2016 11:17:20 PM com.zk.cw.login.LoginController showMainWindow
+Şub 13, 2016 4:10:59 PM com.zk.cw.login.LoginController showMainWindow
 CONFIG: Showing the main window.
-Oca 27, 2016 11:17:20 PM com.zk.cw.main.MainWindow buildAndShow
-FINE: Building GUI for user : ff
-Oca 27, 2016 11:17:21 PM com.zk.cw.exception.ExceptionHandler uncaughtException
+Şub 13, 2016 4:10:59 PM com.zk.cw.main.MainWindow buildAndShow
+FINE: Building GUI for user : afadf
+Şub 13, 2016 4:11:00 PM com.zk.cw.exception.ExceptionHandler uncaughtException
 SEVERE: java.lang.Error: Unresolved compilation problems: 
 	fMovies cannot be resolved to a variable
 	fMovies cannot be resolved to a variable
@@ -43,27 +43,18 @@ SEVERE: java.lang.Error: Unresolved compilation problems:
 	at javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2346)
 	at javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402)
 	at javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259)
-	at javax.swing.AbstractButton.doClick(AbstractButton.java:376)
-	at javax.swing.plaf.basic.BasicRootPaneUI$Actions.actionPerformed(BasicRootPaneUI.java:208)
-	at javax.swing.SwingUtilities.notifyAction(SwingUtilities.java:1663)
-	at javax.swing.JComponent.processKeyBinding(JComponent.java:2882)
-	at javax.swing.KeyboardManager.fireBinding(KeyboardManager.java:307)
-	at javax.swing.KeyboardManager.fireKeyboardAction(KeyboardManager.java:250)
-	at javax.swing.JComponent.processKeyBindingsForAllComponents(JComponent.java:2974)
-	at javax.swing.JComponent.processKeyBindings(JComponent.java:2966)
-	at javax.swing.JComponent.processKeyEvent(JComponent.java:2845)
-	at java.awt.Component.processEvent(Component.java:6302)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:252)
+	at java.awt.Component.processMouseEvent(Component.java:6525)
+	at javax.swing.JComponent.processMouseEvent(JComponent.java:3324)
+	at java.awt.Component.processEvent(Component.java:6290)
 	at java.awt.Container.processEvent(Container.java:2234)
 	at java.awt.Component.dispatchEventImpl(Component.java:4881)
 	at java.awt.Container.dispatchEventImpl(Container.java:2292)
 	at java.awt.Component.dispatchEvent(Component.java:4703)
-	at java.awt.KeyboardFocusManager.redispatchEvent(KeyboardFocusManager.java:1954)
-	at java.awt.DefaultKeyboardFocusManager.dispatchKeyEvent(DefaultKeyboardFocusManager.java:806)
-	at java.awt.DefaultKeyboardFocusManager.preDispatchKeyEvent(DefaultKeyboardFocusManager.java:1074)
-	at java.awt.DefaultKeyboardFocusManager.typeAheadAssertions(DefaultKeyboardFocusManager.java:945)
-	at java.awt.DefaultKeyboardFocusManager.dispatchEvent(DefaultKeyboardFocusManager.java:771)
-	at java.awt.Component.dispatchEventImpl(Component.java:4752)
-	at java.awt.Container.dispatchEventImpl(Container.java:2292)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4898)
+	at java.awt.LightweightDispatcher.processMouseEvent(Container.java:4533)
+	at java.awt.LightweightDispatcher.dispatchEvent(Container.java:4462)
+	at java.awt.Container.dispatchEventImpl(Container.java:2278)
 	at java.awt.Window.dispatchEventImpl(Window.java:2750)
 	at java.awt.Component.dispatchEvent(Component.java:4703)
 	at java.awt.EventQueue.dispatchEventImpl(EventQueue.java:758)
@@ -97,5 +88,5 @@ SEVERE: java.lang.Error: Unresolved compilation problems:
 	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:93)
 	at java.awt.EventDispatchThread.run(EventDispatchThread.java:82)
 
-Oca 27, 2016 11:17:21 PM com.zk.cw.LaunchApplication main
+Şub 13, 2016 4:11:00 PM com.zk.cw.LaunchApplication main
 CONFIG: Launch thread now ending.
