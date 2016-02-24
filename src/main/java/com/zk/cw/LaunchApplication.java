@@ -15,43 +15,8 @@ import java.util.logging.SimpleFormatter;
 import javax.swing.UIManager;
 import javax.swing.plaf.FontUIResource;
 
-/** <b>Launch the application.</b>
- 
- <P> Perform any needed one-time startup operations.
-  Ask the user for their login credentials, and then display the main window.
-*/
 public final class LaunchApplication {
 
-  /**   Run the application.
-   
-   <P>Performs the following :
-   <ul>
-    <li>configure JDK logging : log at <tt>FINEST</tt> level to a file named <tt>log.txt</tt> in the application's home 
-    directory. Overwrite the log file each time the application is launched. (Many apps would prefer to make the log level 
-    sensitive to an environment property, or a user preference.)
-    <li>configure a custom {@link ExceptionHandler} for uncaught exceptions
-    <li>use the native look and feel, natural to the runtime operating system    <li>sets the font for the application (12-point Verdana)
-    <li>show the login screen (no real authentication is actually performed)
-   </ul>
-   
-   <P>Some apps might also do these tasks upon startup :
-   <ul>
-    <li>display a temporary 'splash' screen
-    <li>confirm a database connection
-   </ul>
-   
-   <P>The Swing tutorial recommends the following style for application launch :
-   <PRE> 
-javax.swing.SwingUtilities.invokeLater(new Runnable() {
-  public void run() {
-    createAndShowGUI();
-  }
-});
-  </PRE>
-   However, that style is not used here, since it doesn't seem necessary. During launch, 
-   no GUI has yet been realized, so it seems practically impossible for a thread to interact 
-   with it. 
-  */
   public static void main(String... aArgs){  
     configureJDKLogging();
     

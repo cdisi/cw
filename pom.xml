@@ -32,6 +32,7 @@
 					<source>1.8</source>
 					<target>1.8</target>
 					<encoding>UTF-8</encoding>
+					<failOnError>false</failOnError>
 				</configuration>
 				<executions>
 					<execution>
@@ -78,6 +79,11 @@
   		<artifactId>jsoup</artifactId>
   		<version>1.8.3</version>
 	</dependency>
+	<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.6</version>
+	</dependency>	
   </dependencies>
   
 </project>

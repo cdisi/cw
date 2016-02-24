@@ -1,40 +1,32 @@
-Şub 13, 2016 4:10:57 PM com.zk.cw.LaunchApplication main
+Şub 21, 2016 4:49:38 PM com.zk.cw.LaunchApplication main
 CONFIG: Launching application...
-Şub 13, 2016 4:10:57 PM com.zk.cw.LaunchApplication main
+Şub 21, 2016 4:49:38 PM com.zk.cw.LaunchApplication main
 CONFIG: Operating System : Windows 8.1 6.3
-Şub 13, 2016 4:10:57 PM com.zk.cw.LaunchApplication main
+Şub 21, 2016 4:49:38 PM com.zk.cw.LaunchApplication main
 CONFIG: Java Version: 1.8.0_45
-Şub 13, 2016 4:10:57 PM com.zk.cw.LaunchApplication main
+Şub 21, 2016 4:49:38 PM com.zk.cw.LaunchApplication main
 CONFIG: Java Home: C:\Program Files\Java\jdk1.8.0_45\jre
-Şub 13, 2016 4:10:57 PM com.zk.cw.LaunchApplication useCustomExceptionHandler
+Şub 21, 2016 4:49:38 PM com.zk.cw.LaunchApplication useCustomExceptionHandler
 CONFIG: Setting up custom exception handler.
-Şub 13, 2016 4:10:57 PM com.zk.cw.LaunchApplication main
+Şub 21, 2016 4:49:39 PM com.zk.cw.LaunchApplication main
 CONFIG: Showing user login screen.
-Şub 13, 2016 4:10:57 PM com.zk.cw.LaunchApplication userLogin
+Şub 21, 2016 4:49:39 PM com.zk.cw.LaunchApplication userLogin
 CONFIG: Showing the login screen.
-Şub 13, 2016 4:10:59 PM com.zk.cw.login.LoginController showMainWindow
+Şub 21, 2016 4:49:40 PM com.zk.cw.login.LoginController showMainWindow
 CONFIG: Showing the main window.
-Şub 13, 2016 4:10:59 PM com.zk.cw.main.MainWindow buildAndShow
-FINE: Building GUI for user : afadf
-Şub 13, 2016 4:11:00 PM com.zk.cw.exception.ExceptionHandler uncaughtException
+Şub 21, 2016 4:49:40 PM com.zk.cw.main.MainWindow buildAndShow
+FINE: Building GUI for user : sdf
+Şub 21, 2016 4:49:43 PM com.zk.cw.uretici.UreticiDAO <clinit>
+CONFIG: Number of movies read in from file: 0
+Şub 21, 2016 4:49:43 PM com.zk.cw.exception.ExceptionHandler uncaughtException
 SEVERE: java.lang.Error: Unresolved compilation problems: 
-	fMovies cannot be resolved to a variable
-	fMovies cannot be resolved to a variable
-	fMovies cannot be resolved
-	The method getId() is undefined for the type Uretici
-	fMovies cannot be resolved
-	fMovies cannot be resolved to a variable
-	fMovies cannot be resolved to a variable
-	fMovies cannot be resolved to a variable
-	fMovies cannot be resolved
-	fMovies cannot be resolved
-	The method getTitle() is undefined for the type Uretici
-	The method getDateViewed() is undefined for the type Uretici
-	The method getRating() is undefined for the type Uretici
-	The method getComment() is undefined for the type Uretici
+	fMovieTable cannot be resolved to a variable
+	fMovieTableModel cannot be resolved to a variable
+	fMovieTable cannot be resolved to a variable
+	fMovieTableModel cannot be resolved to a variable
 
-	at com.zk.cw.uretici.UreticiTableModel.<init>(UreticiTableModel.java:22)
-	at com.zk.cw.main.MainWindow.buildGui(MainWindow.java:112)
+	at com.zk.cw.main.MainWindow.buildActionsAndMenu(MainWindow.java:190)
+	at com.zk.cw.main.MainWindow.buildGui(MainWindow.java:115)
 	at com.zk.cw.main.MainWindow.buildAndShow(MainWindow.java:71)
 	at com.zk.cw.login.LoginController.showMainWindow(LoginController.java:93)
 	at com.zk.cw.login.LoginController.validateUserCredentials(LoginController.java:56)
@@ -88,5 +80,5 @@ SEVERE: java.lang.Error: Unresolved compilation problems:
 	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:93)
 	at java.awt.EventDispatchThread.run(EventDispatchThread.java:82)
 
-Şub 13, 2016 4:11:00 PM com.zk.cw.LaunchApplication main
+Şub 21, 2016 4:49:43 PM com.zk.cw.LaunchApplication main
 CONFIG: Launch thread now ending.

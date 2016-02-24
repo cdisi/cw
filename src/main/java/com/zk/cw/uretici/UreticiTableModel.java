@@ -15,11 +15,15 @@ import javax.swing.table.AbstractTableModel;
   superclass, but are useful in the context of this application. 
  */
 public final class UreticiTableModel extends AbstractTableModel {
-  
+  // PRIVATE //
+  private UreticiDAO fDAO;
+  private List<Uretici> fUretici;
+  private int fNumClicks = 0;  
+	
   /** Constructor. */
   public UreticiTableModel(){
     fDAO = new UreticiDAO();
-    fMovies = fDAO.list();
+    fUretici = fDAO.list();
   }
 
   /** 
@@ -124,8 +128,5 @@ public final class UreticiTableModel extends AbstractTableModel {
     return result;
   }
   
-  // PRIVATE //
-  private UreticiDAO fDAO;
-  private List<Uretici> fUretici;
-  private int fNumClicks = 0;
+
 }

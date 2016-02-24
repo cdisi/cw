@@ -6,8 +6,10 @@ import com.zk.cw.util.Util;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -50,8 +52,6 @@ import java.util.regex.Pattern;
  */
 public final class UreticiDAO {
 	
-	private File configFile = new File("resources/config.properties");
-	private static Properties configProps;
     private static Connection conn = null;
     private static Statement stmt = null;
     private static final Map<String, Uretici> fTable = new LinkedHashMap<>();
@@ -63,7 +63,7 @@ public final class UreticiDAO {
     private final static Charset ENCODING = StandardCharsets.UTF_8;
     
     static {
-      bul();
+    	bul();
       fLogger.config("Number of movies read in from file: " + fTable.size());
     }    
 
@@ -105,9 +105,17 @@ public final class UreticiDAO {
   }
 
   private static void bul() {
+	  Properties configProps = new Properties();
+	  InputStream input = null;
 	  try{
-	      Class.forName(configProps.getProperty("JDBC_DRIVER"));
+		  input = new FileInputStream("resources/config.properties");
+
+		  // load a properties file
+		  configProps.load(input);
+		  System.out.println(configProps.getProperty("JDBC_DRIVER"));
+		  Class.forName("com.mysql.jdbc.Driver");
 	      conn = DriverManager.getConnection(configProps.getProperty("DB_URL"), configProps.getProperty("DB_USER"), configProps.getProperty("DB_PASS"));
+	      //conn = DriverManager.getConnection("jdbc:mysql://cepworld.com/beta?useUnicode=true&characterEncoding=UTF-8","zihni", "nl2brr");
 	      stmt = conn.createStatement();
 	      String sql= "SELECT * FROM uretici";
 	      ResultSet rs = stmt.executeQuery(sql);	      
@@ -115,9 +123,11 @@ public final class UreticiDAO {
 	    	 String id = rs.getString("id");
 	    	 String ad = rs.getString("ad");
 	    	 String baslik = rs.getString("baslik");
-	    	 String logoUrl = rs.getString("logoUrl");
+	    	 String url = rs.getString("url");
+	    	 String logoUrl = rs.getString("logo_url");
 		     String durum = rs.getString("durum");
-		     Uretici uretici = new Uretici(id, ad, baslik, logoUrl, durum);
+		     String gsmArenaUrl = rs.getString("gsm_arena_url");
+		     Uretici uretici = new Uretici(id, ad, baslik, url, logoUrl, durum, gsmArenaUrl);
 		     fTable.put(uretici.idAl(), uretici);
 	      }
 	      rs.close();
