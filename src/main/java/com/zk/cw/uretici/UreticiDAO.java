@@ -18,6 +18,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -152,7 +153,7 @@ public final class UreticiDAO {
 	   }
   }
   
-  private static boolean bul(String ad) {
+  public static boolean bul(String ad) {
 	  Properties configProps = new Properties();
 	  InputStream input = null;
 	  boolean donus =false;
@@ -192,25 +193,18 @@ public final class UreticiDAO {
 	  return donus;
   }
   
-  private static void ekle(Uretici uretici) {
+  public static void ekle(String ad) {
 	  Properties configProps = new Properties();
 	  InputStream input = null;
-	  boolean donus =false;
 	  try{
 		  input = new FileInputStream("resources/config.properties");
 		  configProps.load(input);
-		  System.out.println(configProps.getProperty("JDBC_DRIVER"));
 		  Class.forName("com.mysql.jdbc.Driver");
 	      conn = DriverManager.getConnection(configProps.getProperty("DB_URL"), configProps.getProperty("DB_USER"), configProps.getProperty("DB_PASS"));
 	      //conn = DriverManager.getConnection("jdbc:mysql://cepworld.com/beta?useUnicode=true&characterEncoding=UTF-8","zihni", "nl2brr");
-	      stmt = conn.createStatement();
-	      String sql= "SELECT * FROM uretici WHERE ad ='"+ad+"'";
-	      ResultSet rs = stmt.executeQuery(sql);	      
-	      while(rs.next()){
-	    	  donus= true;
-	      }
-	      rs.close();
-	      stmt.close();
+	      PreparedStatement pstmt = conn.prepareStatement("INSERT INTO uretici (ad) VALUES (?)", PreparedStatement.RETURN_GENERATED_KEYS);
+	      pstmt.setString(1, ad);
+	      pstmt.executeUpdate();
 	      conn.close();
 	   }catch(SQLException se){
 	      se.printStackTrace();
@@ -229,7 +223,6 @@ public final class UreticiDAO {
 	         se.printStackTrace();
 	      }
 	   }
-	  return donus;
   }  
   
 

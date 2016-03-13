@@ -44,7 +44,21 @@ import org.jsoup.select.Elements;
  
  <P>Some applications would add a confirmation dialog when the user exits.*/
 public final class MainWindow {
+  // PRIVATE 
   
+  /** The single instance of this class. */
+  private static MainWindow INSTANCE = new MainWindow();
+  
+  /** Empty constructor prevents the caller from creating an object. */
+  private MainWindow() {  }
+  
+  private UreticiTableModel ureticiTableModel;
+  private UreticiDAO ureticiDao = new UreticiDAO();
+  private JTable ureticiTable;
+  private Action fChangeMovieAction;
+  private Action fDeleteMovieAction;
+  private String fUserName;
+  private static final Logger fLogger = Util.getLogger(MainWindow.class); 
   /** 
    Return an instance of this class.
    
@@ -84,20 +98,7 @@ public final class MainWindow {
     return fUserName;
   }
   
-  // PRIVATE 
-  
-  /** The single instance of this class. */
-  private static MainWindow INSTANCE = new MainWindow();
-  
-  /** Empty constructor prevents the caller from creating an object. */
-  private MainWindow() {  }
-  
-  private UreticiTableModel ureticiTableModel;
-  private JTable ureticiTable;
-  private Action fChangeMovieAction;
-  private Action fDeleteMovieAction;
-  private String fUserName;
-  private static final Logger fLogger = Util.getLogger(MainWindow.class);
+
   
   /** Build the user interface. */
   private void buildGui(){
@@ -128,6 +129,10 @@ public final class MainWindow {
 				// get the value from href attribute
 				System.out.println("\nlink : " + link.attr("href"));
 				System.out.println("text : " + link.text());
+				if(!UreticiDAO.bul(link.text())){
+					System.out.println("yok");
+					UreticiDAO.ekle(link.text());
+				}
 			}
 
 		} catch (IOException e) {
