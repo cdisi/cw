@@ -33,20 +33,20 @@ public final class UreticiTableModel extends AbstractTableModel {
    a listener on the DAO.
   */ 
   public void refreshView() {
-    fMovies = fDAO.list();
+	fUretici = fDAO.list();
     //one might want to preserve the sort order here
     fireTableDataChanged();
   }
   
   /** Returned the selected movie's id. */
   public String getId(int aRow){
-    Uretici movie = fMovies.get(aRow);
+    Uretici movie = fUretici.get(aRow);
     return movie.getId(); 
   }
   
   /** Return the selected {@link Uretici}. */
   public Uretici getMovie(int aRow){
-    return fMovies.get(aRow);
+    return fUretici.get(aRow);
   }
   
   /** 
@@ -60,7 +60,7 @@ public final class UreticiTableModel extends AbstractTableModel {
     fNumClicks++;
     if( aIdx == 1 ) {
       //natural sorting of the Movie class
-      Collections.sort(fMovies);
+      Collections.sort(fUretici);
     }
     else {
       Comparator<Uretici> comparator = null;
@@ -73,10 +73,10 @@ public final class UreticiTableModel extends AbstractTableModel {
       else if ( aIdx == 3 ){
         comparator = Uretici.COMMENT_SORT;
       }
-      Collections.sort(fMovies, comparator);
+      Collections.sort(fUretici, comparator);
     }
     if( (fNumClicks % 2) == 0){
-      Collections.reverse(fMovies);
+      Collections.reverse(fUretici);
     }
     fireTableDataChanged();
   }
@@ -88,13 +88,13 @@ public final class UreticiTableModel extends AbstractTableModel {
   
   /** Return the number of rows in the table. */
   @Override public int getRowCount() {
-    return fMovies.size();
+    return fUretici.size();
   }
   
   /** Return the <tt>Object</tt> in a specific table cell. */
   @Override public Object getValueAt(int aRow, int aCol) {
     Object result = null;
-    Uretici movie = fMovies.get(aRow);
+    Uretici movie = fUretici.get(aRow);
     if(aCol == 0) {
       result = movie.getTitle();
     }

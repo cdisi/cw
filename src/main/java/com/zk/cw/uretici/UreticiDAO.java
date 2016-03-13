@@ -151,6 +151,87 @@ public final class UreticiDAO {
 	      }
 	   }
   }
+  
+  private static boolean bul(String ad) {
+	  Properties configProps = new Properties();
+	  InputStream input = null;
+	  boolean donus =false;
+	  try{
+		  input = new FileInputStream("resources/config.properties");
+		  configProps.load(input);
+		  System.out.println(configProps.getProperty("JDBC_DRIVER"));
+		  Class.forName("com.mysql.jdbc.Driver");
+	      conn = DriverManager.getConnection(configProps.getProperty("DB_URL"), configProps.getProperty("DB_USER"), configProps.getProperty("DB_PASS"));
+	      //conn = DriverManager.getConnection("jdbc:mysql://cepworld.com/beta?useUnicode=true&characterEncoding=UTF-8","zihni", "nl2brr");
+	      stmt = conn.createStatement();
+	      String sql= "SELECT * FROM uretici WHERE ad ='"+ad+"'";
+	      ResultSet rs = stmt.executeQuery(sql);	      
+	      while(rs.next()){
+	    	  donus= true;
+	      }
+	      rs.close();
+	      stmt.close();
+	      conn.close();
+	   }catch(SQLException se){
+	      se.printStackTrace();
+	   }catch(Exception e){
+	      e.printStackTrace();
+	   }finally{
+	      try{
+	         if(stmt!=null)
+	            stmt.close();
+	      }catch(SQLException se2){
+	      }
+	      try{
+	         if(conn!=null)
+	            conn.close();
+	      }catch(SQLException se){
+	         se.printStackTrace();
+	      }
+	   }
+	  return donus;
+  }
+  
+  private static void ekle(Uretici uretici) {
+	  Properties configProps = new Properties();
+	  InputStream input = null;
+	  boolean donus =false;
+	  try{
+		  input = new FileInputStream("resources/config.properties");
+		  configProps.load(input);
+		  System.out.println(configProps.getProperty("JDBC_DRIVER"));
+		  Class.forName("com.mysql.jdbc.Driver");
+	      conn = DriverManager.getConnection(configProps.getProperty("DB_URL"), configProps.getProperty("DB_USER"), configProps.getProperty("DB_PASS"));
+	      //conn = DriverManager.getConnection("jdbc:mysql://cepworld.com/beta?useUnicode=true&characterEncoding=UTF-8","zihni", "nl2brr");
+	      stmt = conn.createStatement();
+	      String sql= "SELECT * FROM uretici WHERE ad ='"+ad+"'";
+	      ResultSet rs = stmt.executeQuery(sql);	      
+	      while(rs.next()){
+	    	  donus= true;
+	      }
+	      rs.close();
+	      stmt.close();
+	      conn.close();
+	   }catch(SQLException se){
+	      se.printStackTrace();
+	   }catch(Exception e){
+	      e.printStackTrace();
+	   }finally{
+	      try{
+	         if(stmt!=null)
+	            stmt.close();
+	      }catch(SQLException se2){
+	      }
+	      try{
+	         if(conn!=null)
+	            conn.close();
+	      }catch(SQLException se){
+	         se.printStackTrace();
+	      }
+	   }
+	  return donus;
+  }  
+  
 
   private static void parseLine(String aLine) throws InvalidInputException {
     Scanner scanner = new Scanner(aLine);

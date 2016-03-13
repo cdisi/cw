@@ -183,12 +183,6 @@ public final class MainWindow {
     Action araUreticiAction = new UreticiActionAra(aFrame);
     fileMenu.add(new JMenuItem(araUreticiAction));
     
-    Action addMovieAction = new MovieActionAdd(aFrame);
-    fileMenu.add(new JMenuItem(addMovieAction));
-    fChangeMovieAction = new MovieActionChange(aFrame, fMovieTable, fMovieTableModel);
-    fileMenu.add(new JMenuItem(fChangeMovieAction));
-    fDeleteMovieAction = new MovieActionDelete(fMovieTable, fMovieTableModel);
-    fileMenu.add(new JMenuItem(fDeleteMovieAction));
     
     Action exitAction = new ExitAction();
     fileMenu.add(new JMenuItem(exitAction));
@@ -220,13 +214,13 @@ public final class MainWindow {
 
   /** Build the main content of the frame. */
   private void buildContent(JFrame aFrame) {
-    fMovieTable.setBackground(Color.LIGHT_GRAY);
+    ureticiTable.setBackground(Color.LIGHT_GRAY);
     
     //relative column widths
-    fMovieTable.getColumnModel().getColumn(0).setPreferredWidth(100);
-    fMovieTable.getColumnModel().getColumn(1).setPreferredWidth(20);
-    fMovieTable.getColumnModel().getColumn(2).setPreferredWidth(20);
-    fMovieTable.getColumnModel().getColumn(3).setPreferredWidth(200);
+    ureticiTable.getColumnModel().getColumn(0).setPreferredWidth(100);
+    ureticiTable.getColumnModel().getColumn(1).setPreferredWidth(20);
+    ureticiTable.getColumnModel().getColumn(2).setPreferredWidth(20);
+    ureticiTable.getColumnModel().getColumn(3).setPreferredWidth(200);
     /* 
      Interesting: even though these methods are one-liners, it's 
      still useful to create them, since, from the point of view of the caller, 
@@ -237,22 +231,22 @@ public final class MainWindow {
     doubleClickShowsEditDialog();
     rowSelectionEnablesActions();
     
-    JScrollPane panel = new JScrollPane(fMovieTable);
+    JScrollPane panel = new JScrollPane(ureticiTable);
     aFrame.getContentPane().add(panel);  
   }
 
   private void clickOnHeaderSortsTable() {
     //generic sorting, not performed here: 
     //fMovieTable.setAutoCreateRowSorter(true); 
-    fMovieTable.getTableHeader().addMouseListener(new SortMovieTable());
+	  ureticiTable.getTableHeader().addMouseListener(new SortMovieTable());
   }
   
   private void doubleClickShowsEditDialog() {
-    fMovieTable.addMouseListener( new LaunchEditMovieDialog() );
+	  ureticiTable.addMouseListener( new LaunchEditMovieDialog() );
   }
 
   private void rowSelectionEnablesActions() {
-    fMovieTable.getSelectionModel().addListSelectionListener(new EnableEditActions());
+	  ureticiTable.getSelectionModel().addListSelectionListener(new EnableEditActions());
   }
 }
       
