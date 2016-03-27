@@ -10,7 +10,6 @@ public final class Uretici implements Comparable<Uretici>{
   // PRIVATE
   private String id;
   private final String ad;
-  private final String baslik;
   private final String url;
   private final String logoUrl;
   private final String durum;
@@ -20,11 +19,10 @@ public final class Uretici implements Comparable<Uretici>{
 
   
   Uretici(
-    String id, String ad, String baslik,String url, String logoUrl, String durum, String gsmArenaUrl
+    String id, String ad, String url, String logoUrl, String durum, String gsmArenaUrl
   ) throws InvalidInputException {
     this.id = id;
     this.ad = ad;
-    this.baslik = baslik;
     this.url=url;
     this.logoUrl = logoUrl;
     this.durum = durum;
