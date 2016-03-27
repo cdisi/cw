@@ -37,6 +37,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import com.zk.cw.uretici.*;
 
 /** Main window for the application.
  
@@ -127,10 +128,10 @@ public final class MainWindow {
 			Elements links = doc.select("a[href*=phones]");
 			for (Element link : links) {
 				// get the value from href attribute
+				Uretici uretici = new Uretici();
 				System.out.println("\nlink : " + link.attr("href"));
 				System.out.println("text : " + link.text());
 				if(!UreticiDAO.bul(link.text())){
-					System.out.println("yok");
 					UreticiDAO.ekle(link.text());
 				}
 			}
