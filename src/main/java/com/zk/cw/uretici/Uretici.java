@@ -41,9 +41,7 @@ public final class Uretici implements Comparable<Uretici>{
   String adAl(){
 	  return this.ad; 
   }
-  String baslikAl(){
-	  return this.baslik; 
-  }
+
   String urlAl(){
 	  return this.url;
   }
