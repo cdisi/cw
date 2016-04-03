@@ -128,6 +128,9 @@ public final class MainWindow {
 			Elements links = doc.select("a[href*=phones]");
 			for (Element link : links) {
 				// get the value from href attribute
+				String id = null;
+				String ad = link.text();
+				String gsmArenaUrl = link.attr("href");
 				Uretici uretici = new Uretici();
 				System.out.println("\nlink : " + link.attr("href"));
 				System.out.println("text : " + link.text());
