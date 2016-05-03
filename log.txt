@@ -1,20 +1,22 @@
-Mar 13, 2016 10:48:33 PM com.zk.cw.LaunchApplication main
+May 03, 2016 6:51:58 PM com.zk.cw.LaunchApplication main
 CONFIG: Launching application...
-Mar 13, 2016 10:48:33 PM com.zk.cw.LaunchApplication main
+May 03, 2016 6:51:58 PM com.zk.cw.LaunchApplication main
 CONFIG: Operating System : Windows 8.1 6.3
-Mar 13, 2016 10:48:33 PM com.zk.cw.LaunchApplication main
-CONFIG: Java Version: 1.8.0_45
-Mar 13, 2016 10:48:33 PM com.zk.cw.LaunchApplication main
-CONFIG: Java Home: C:\Program Files\Java\jdk1.8.0_45\jre
-Mar 13, 2016 10:48:33 PM com.zk.cw.LaunchApplication useCustomExceptionHandler
+May 03, 2016 6:51:58 PM com.zk.cw.LaunchApplication main
+CONFIG: Java Version: 1.8.0_66
+May 03, 2016 6:51:58 PM com.zk.cw.LaunchApplication main
+CONFIG: Java Home: C:\Program Files\Java\jdk1.8.0_66\jre
+May 03, 2016 6:51:58 PM com.zk.cw.LaunchApplication useCustomExceptionHandler
 CONFIG: Setting up custom exception handler.
-Mar 13, 2016 10:48:34 PM com.zk.cw.LaunchApplication main
+May 03, 2016 6:51:58 PM com.zk.cw.LaunchApplication main
 CONFIG: Showing user login screen.
-Mar 13, 2016 10:48:34 PM com.zk.cw.LaunchApplication userLogin
+May 03, 2016 6:51:58 PM com.zk.cw.LaunchApplication userLogin
 CONFIG: Showing the login screen.
-Mar 13, 2016 10:48:35 PM com.zk.cw.login.LoginController showMainWindow
+May 03, 2016 6:52:00 PM com.zk.cw.login.LoginController showMainWindow
 CONFIG: Showing the main window.
-Mar 13, 2016 10:48:37 PM com.zk.cw.uretici.UreticiDAO <clinit>
+May 03, 2016 6:52:00 PM com.zk.cw.uretici.UreticiDAO <clinit>
 CONFIG: Number of movies read in from file: 0
-Mar 13, 2016 10:48:37 PM com.zk.cw.main.MainWindow buildAndShow
-FINE: Building GUI for user : df
+May 03, 2016 6:52:00 PM com.zk.cw.main.MainWindow buildAndShow
+FINE: Building GUI for user : ddd
+May 03, 2016 6:52:01 PM com.zk.cw.LaunchApplication main
+CONFIG: Launch thread now ending.

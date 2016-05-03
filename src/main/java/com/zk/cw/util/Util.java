@@ -10,12 +10,12 @@ import java.text.SimpleDateFormat;
 import java.text.DateFormat;
 import java.text.ParseException;
 
-/**
- Static convenience methods for common tasks, which eliminate code duplication.
-*/
 public final class Util {
 
-   /**
+   public static booelan resimKopyala(String url){
+	   
+   }
+	/**
     Return <tt>true</tt> only if <tt>aText</tt> is not null,
     and is not empty after trimming. (Trimming removes both
     leading/trailing whitespace and ASCII control characters.)

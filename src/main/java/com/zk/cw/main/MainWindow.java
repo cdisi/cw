@@ -126,11 +126,15 @@ public final class MainWindow {
 			doc = Jsoup.connect("http://www.gsmarena.com/makers.php3").get();
 			Elements links = doc.select("a[href*=phones]");
 			for (Element link : links) {
-				// get the value from href attribute
 				System.out.println("\nlink : " + link.attr("href"));
 				System.out.println("text : " + link.text());
+				Elements imgElm = link.select("img");
+				System.out.println(imgElm.attr("src"));
+				String ad = link.text().trim();
+				String gsmArenaUrl = link.attr("href").trim();
+				Uretici uretici = new Uretici(null,ad,0,gsmArenaUrl);
+
 				if(!UreticiDAO.bul(link.text())){
-					System.out.println("yok");
 					UreticiDAO.ekle(link.text());
 				}
 			}

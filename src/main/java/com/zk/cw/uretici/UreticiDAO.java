@@ -35,22 +35,6 @@ import java.util.Scanner;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
-/**
- Data Access Object (DAO) for {@link Uretici} objects.
- 
-  <P> Implements persistence for movie information. This class uses a simple text file called
-  <tt>movie_list_for_&lt;<em>user name</em>&gt;.txt</tt>, stored locally, in the application's
-  home directory.
-  Each logged in user gets their own list. Each logged in user can see their own list, 
-  but they cannot see anyone else's list.
-  
-  <P>The format of the file is specific to this application. The file should not be edited 
-  directly by an end user, in case the format is violated.
-   
-  <P>Upon startup, all records in the data-store are read into memory. Edits are performed initially
-  only in memory. When the application shuts down, then the updated data store is written
-  back to the disk, for use during the next launch of the application.
- */
 public final class UreticiDAO {
 	
     private static Connection conn = null;
@@ -110,7 +94,6 @@ public final class UreticiDAO {
 	  InputStream input = null;
 	  try{
 		  input = new FileInputStream("resources/config.properties");
-
 		  // load a properties file
 		  configProps.load(input);
 		  System.out.println(configProps.getProperty("JDBC_DRIVER"));
@@ -163,7 +146,6 @@ public final class UreticiDAO {
 		  System.out.println(configProps.getProperty("JDBC_DRIVER"));
 		  Class.forName("com.mysql.jdbc.Driver");
 	      conn = DriverManager.getConnection(configProps.getProperty("DB_URL"), configProps.getProperty("DB_USER"), configProps.getProperty("DB_PASS"));
-	      //conn = DriverManager.getConnection("jdbc:mysql://cepworld.com/beta?useUnicode=true&characterEncoding=UTF-8","zihni", "nl2brr");
 	      stmt = conn.createStatement();
 	      String sql= "SELECT * FROM uretici WHERE ad ='"+ad+"'";
 	      ResultSet rs = stmt.executeQuery(sql);	      
@@ -201,7 +183,6 @@ public final class UreticiDAO {
 		  configProps.load(input);
 		  Class.forName("com.mysql.jdbc.Driver");
 	      conn = DriverManager.getConnection(configProps.getProperty("DB_URL"), configProps.getProperty("DB_USER"), configProps.getProperty("DB_PASS"));
-	      //conn = DriverManager.getConnection("jdbc:mysql://cepworld.com/beta?useUnicode=true&characterEncoding=UTF-8","zihni", "nl2brr");
 	      PreparedStatement pstmt = conn.prepareStatement("INSERT INTO uretici (ad) VALUES (?)", PreparedStatement.RETURN_GENERATED_KEYS);
 	      pstmt.setString(1, ad);
 	      pstmt.executeUpdate();
