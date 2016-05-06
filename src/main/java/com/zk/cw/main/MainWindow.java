@@ -133,7 +133,6 @@ public final class MainWindow {
 				String ad = link.text().trim();
 				String gsmArenaUrl = link.attr("href").trim();
 				Uretici uretici = new Uretici(null,ad,0,gsmArenaUrl);
-
 				if(!UreticiDAO.bul(link.text())){
 					UreticiDAO.ekle(link.text());
 				}

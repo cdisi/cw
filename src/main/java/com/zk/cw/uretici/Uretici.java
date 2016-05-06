@@ -10,9 +10,8 @@ public final class Uretici{
   private final String durum;
   private final String gsmArenaUrl;
   
-  Uretici(
-    String id, String ad, String logoUrl, String durum, String gsmArenaUrl
-  ) throws InvalidInputException {
+ 
+  Uretici(String id, String ad, String url, String logoUrl, String durum, String gsmArenaUrl) throws InvalidInputException {
     this.id = id;
     this.ad = ad;
     this.logoUrl = logoUrl;
@@ -23,15 +22,13 @@ public final class Uretici{
   String idAl(){ 
 	  return id; 
   }
-  
   void idVer(String id){
 	  this.id = id; 
   }
-  
   String adAl(){
 	  return this.ad; 
   }
-  
+
   String logoUrlAl(){
 	  return this.logoUrl; 
   }

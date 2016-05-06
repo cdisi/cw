@@ -9,12 +9,36 @@ import com.zk.cw.exception.InvalidInputException;
 import java.text.SimpleDateFormat;
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public final class Util {
+	   public static void downloadImage(String sourceUrl, String targetDirectory, String fileName)
+	            throws MalformedURLException, IOException, FileNotFoundException
+	    {
+	        URL imageUrl = new URL(sourceUrl);
+	        try (InputStream imageReader = new BufferedInputStream(
+	                imageUrl.openStream());
+	                OutputStream imageWriter = new BufferedOutputStream(
+	                        new FileOutputStream(targetDirectory + File.separator
+	                                + fileName));)
+	        {
+	            int readByte;
 
-   public static booelan resimKopyala(String url){
-	   
-   }
+	            while ((readByte = imageReader.read()) != -1)
+	            {
+	                imageWriter.write(readByte);
+	            }
+	        }
+	    }
 	/**
     Return <tt>true</tt> only if <tt>aText</tt> is not null,
     and is not empty after trimming. (Trimming removes both
