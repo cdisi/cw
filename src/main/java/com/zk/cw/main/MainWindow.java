@@ -5,6 +5,7 @@ import com.zk.cw.about.AboutAction;
 import com.zk.cw.edit.MovieActionAdd;
 import com.zk.cw.edit.MovieActionChange;
 import com.zk.cw.edit.MovieActionDelete;
+import com.zk.cw.exception.InvalidInputException;
 import com.zk.cw.uretici.*;
 import com.zk.cw.exit.ExitAction;
 import com.zk.cw.uretici.UreticiActionAra;
@@ -120,25 +121,27 @@ public final class MainWindow {
     UiUtil.centerAndShow(frame);
   }
   
-  private void ureticiBul(){
+  private void ureticiBul() {
 		Document doc;
 		try {
 			doc = Jsoup.connect("http://www.gsmarena.com/makers.php3").get();
 			Elements links = doc.select("a[href*=phones]");
 			for (Element link : links) {
-				System.out.println("\nlink : " + link.attr("href"));
+				System.out.println("link : " + link.attr("href"));
 				System.out.println("text : " + link.text());
 				Elements imgElm = link.select("img");
 				System.out.println(imgElm.attr("src"));
 				String ad = link.text().trim();
 				String gsmArenaUrl = link.attr("href").trim();
-				Uretici uretici = new Uretici(null,ad,0,gsmArenaUrl);
-				if(!UreticiDAO.bul(link.text())){
-					UreticiDAO.ekle(link.text());
+				Uretici uretici = new Uretici(null,ad,null,0,gsmArenaUrl);
+				if(!UreticiDAO.bul(uretici)){
+					UreticiDAO.ekle(uretici);
 				}
 			}
 
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InvalidInputException e) {
 			e.printStackTrace();
 		}
 	}

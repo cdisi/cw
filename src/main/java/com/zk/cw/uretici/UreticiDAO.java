@@ -35,6 +35,8 @@ import java.util.Scanner;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
+import org.ietf.jgss.GSSManager;
+
 public final class UreticiDAO {
 	
     private static Connection conn = null;
@@ -136,10 +138,10 @@ public final class UreticiDAO {
 	   }
   }
   
-  public static boolean bul(String ad) {
+  public static boolean bul(Uretici uretici) {
 	  Properties configProps = new Properties();
 	  InputStream input = null;
-	  boolean donus =false;
+	  boolean donus = false;
 	  try{
 		  input = new FileInputStream("resources/config.properties");
 		  configProps.load(input);
@@ -147,7 +149,7 @@ public final class UreticiDAO {
 		  Class.forName("com.mysql.jdbc.Driver");
 	      conn = DriverManager.getConnection(configProps.getProperty("DB_URL"), configProps.getProperty("DB_USER"), configProps.getProperty("DB_PASS"));
 	      stmt = conn.createStatement();
-	      String sql= "SELECT * FROM uretici WHERE ad ='"+ad+"'";
+	      String sql= "SELECT * FROM uretici WHERE ad ='"+ uretici.adAl()+"'";
 	      ResultSet rs = stmt.executeQuery(sql);	      
 	      while(rs.next()){
 	    	  donus= true;
@@ -175,7 +177,7 @@ public final class UreticiDAO {
 	  return donus;
   }
   
-  public static void ekle(String ad) {
+  public static void ekle(Uretici uretici) {
 	  Properties configProps = new Properties();
 	  InputStream input = null;
 	  try{
@@ -183,8 +185,11 @@ public final class UreticiDAO {
 		  configProps.load(input);
 		  Class.forName("com.mysql.jdbc.Driver");
 	      conn = DriverManager.getConnection(configProps.getProperty("DB_URL"), configProps.getProperty("DB_USER"), configProps.getProperty("DB_PASS"));
-	      PreparedStatement pstmt = conn.prepareStatement("INSERT INTO uretici (ad) VALUES (?)", PreparedStatement.RETURN_GENERATED_KEYS);
-	      pstmt.setString(1, ad);
+	      PreparedStatement pstmt = conn.prepareStatement("INSERT INTO uretici (ad, logoUrl, gsmArenaUrl, Aktif) VALUES (?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
+	      pstmt.setString(1, uretici.adAl());
+	      pstmt.setString(2, uretici.logoUrlAl());
+	      pstmt.setString(3,uretici.gsmArenaUrlAl());
+	      pstmt.setInt(4,uretici.aktifAl());
 	      pstmt.executeUpdate();
 	      conn.close();
 	   }catch(SQLException se){
