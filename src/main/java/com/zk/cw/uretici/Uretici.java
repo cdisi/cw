@@ -3,10 +3,9 @@ package com.zk.cw.uretici;
 import com.zk.cw.exception.InvalidInputException;
 
 public final class Uretici{
-	  // PRIVATE
 	  private String id;
 	  private final String ad;
-	  private final String logoUrl;
+	  private String logoUrl;
 	  private final int aktif;
 	  private final String gsmArenaUrl;
 	  
@@ -30,11 +29,14 @@ public final class Uretici{
 	  String logoUrlAl(){
 		  return this.logoUrl; 
 	  }
+	  public void logoUrlVer(String logoUrl){
+		  this.logoUrl=logoUrl ; 
+	  }
 	  int aktifAl(){
 		  return this.aktif; 
 	  }
 	  String gsmArenaUrlAl(){
 		  return this.gsmArenaUrl;
 	  }
-  
+	  
 }

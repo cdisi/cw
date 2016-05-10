@@ -20,6 +20,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Locale;
 import java.util.logging.Logger;
 
@@ -122,29 +123,32 @@ public final class MainWindow {
   }
   
   private void ureticiBul() {
-		Document doc;
-		try {
-			doc = Jsoup.connect("http://www.gsmarena.com/makers.php3").get();
-			Elements links = doc.select("a[href*=phones]");
-			for (Element link : links) {
-				System.out.println("link : " + link.attr("href"));
-				System.out.println("text : " + link.text());
-				Elements imgElm = link.select("img");
-				System.out.println(imgElm.attr("src"));
-				String ad = link.text().trim();
-				String gsmArenaUrl = link.attr("href").trim();
-				Uretici uretici = new Uretici(null,ad,null,0,gsmArenaUrl);
-				if(!UreticiDAO.bul(uretici)){
-					UreticiDAO.ekle(uretici);
-				}
+	Document doc;
+	try {
+		doc = Jsoup.connect("http://www.gsmarena.com/makers.php3").get();
+		Elements links = doc.select("a[href*=phones]");
+		for (Element link : links) {
+			System.out.println("link : " + link.attr("href"));
+			System.out.println("text : " + link.text());
+			Elements imgElm = link.select("img");
+			System.out.println(imgElm.attr("src"));
+			String ad = link.text().trim();
+			String logoUrl = null;
+			String gsmArenaUrl = link.attr("href").trim();
+			Uretici uretici = new Uretici(null,ad,null,0,gsmArenaUrl);
+			String dosyaAdi =  ad.replaceAll("[^\\w.-]", "_");
+			if(!UreticiDAO.bul(uretici)){
+				Util.downloadImage(imgElm.attr("src"),"resources/logo",(ad+".gif").replaceAll("[^\\w.-]", "_"););
+				uretici.logoUrlVer("/img/logo/"+ad+".gif");
+				UreticiDAO.ekle(uretici);
 			}
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (InvalidInputException e) {
-			e.printStackTrace();
 		}
+	} catch (IOException e) {
+		e.printStackTrace();
+	} catch (InvalidInputException e) {
+		e.printStackTrace();
 	}
+  }
 
   /** Sort the table.  Listens for clicks on the JTableHeader. */
   private final class SortMovieTable extends MouseAdapter {

@@ -20,6 +20,7 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+
 public final class Util {
 	   public static void downloadImage(String sourceUrl, String targetDirectory, String fileName)
 	            throws MalformedURLException, IOException, FileNotFoundException
@@ -39,6 +40,17 @@ public final class Util {
 	            }
 	        }
 	    }
+	   
+	   public static String getExtension(File f) {
+		    String ext = null;
+		    String s = f.getName();
+		    int i = s.lastIndexOf('.');
+
+		    if (i > 0 &&  i < s.length() - 1) {
+		        ext = s.substring(i+1).toLowerCase();
+		    }
+		    return ext;
+		}	   
 	/**
     Return <tt>true</tt> only if <tt>aText</tt> is not null,
     and is not empty after trimming. (Trimming removes both

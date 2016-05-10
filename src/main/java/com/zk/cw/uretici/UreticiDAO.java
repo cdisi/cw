@@ -108,12 +108,10 @@ public final class UreticiDAO {
 	      while(rs.next()){
 	    	 String id = rs.getString("id");
 	    	 String ad = rs.getString("ad");
-	    	 String baslik = rs.getString("baslik");
-	    	 String url = rs.getString("url");
 	    	 String logoUrl = rs.getString("logo_url");
-		     String durum = rs.getString("durum");
+		     int aktif = rs.getInt("aktif");
 		     String gsmArenaUrl = rs.getString("gsm_arena_url");
-		     Uretici uretici = new Uretici(id, ad, baslik, url, logoUrl, durum, gsmArenaUrl);
+		     Uretici uretici = new Uretici(id, ad, logoUrl, aktif, gsmArenaUrl);
 		     fTable.put(uretici.idAl(), uretici);
 	      }
 	      rs.close();
@@ -145,14 +143,13 @@ public final class UreticiDAO {
 	  try{
 		  input = new FileInputStream("resources/config.properties");
 		  configProps.load(input);
-		  System.out.println(configProps.getProperty("JDBC_DRIVER"));
 		  Class.forName("com.mysql.jdbc.Driver");
 	      conn = DriverManager.getConnection(configProps.getProperty("DB_URL"), configProps.getProperty("DB_USER"), configProps.getProperty("DB_PASS"));
 	      stmt = conn.createStatement();
-	      String sql= "SELECT * FROM uretici WHERE ad ='"+ uretici.adAl()+"'";
+	      String sql= "SELECT * FROM uretici WHERE ad ='"+ uretici.adAl() +"'";
 	      ResultSet rs = stmt.executeQuery(sql);	      
 	      while(rs.next()){
-	    	  donus= true;
+	    	  donus = true;
 	      }
 	      rs.close();
 	      stmt.close();
@@ -174,23 +171,22 @@ public final class UreticiDAO {
 	         se.printStackTrace();
 	      }
 	   }
-	  return donus;
+	   return donus;
   }
   
   public static void ekle(Uretici uretici) {
 	  Properties configProps = new Properties();
-	  InputStream input = null;
-	  
+	  InputStream input = null;	  
 	  try{
 		  input = new FileInputStream("resources/config.properties");
 		  configProps.load(input);
 		  Class.forName("com.mysql.jdbc.Driver");
 	      conn = DriverManager.getConnection(configProps.getProperty("DB_URL"), configProps.getProperty("DB_USER"), configProps.getProperty("DB_PASS"));
-	      PreparedStatement pstmt = conn.prepareStatement("INSERT INTO uretici (ad, logoUrl, gsmArenaUrl, Aktif) VALUES (?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
+	      PreparedStatement pstmt = conn.prepareStatement("INSERT INTO uretici (ad, logo_url, gsm_arena_url, aktif) VALUES (?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
 	      pstmt.setString(1, uretici.adAl());
 	      pstmt.setString(2, uretici.logoUrlAl());
-	      pstmt.setString(3,uretici.gsmArenaUrlAl());
-	      pstmt.setInt(4,uretici.aktifAl());
+	      pstmt.setString(3, uretici.gsmArenaUrlAl());
+	      pstmt.setInt(4, uretici.aktifAl());
 	      pstmt.executeUpdate();
 	      conn.close();
 	   }catch(SQLException se){
@@ -210,8 +206,7 @@ public final class UreticiDAO {
 	         se.printStackTrace();
 	      }
 	   }
-  }  
-  
+  }    
 
   private static void parseLine(String aLine) throws InvalidInputException {
     Scanner scanner = new Scanner(aLine);
