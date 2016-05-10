@@ -180,6 +180,7 @@ public final class UreticiDAO {
   public static void ekle(Uretici uretici) {
 	  Properties configProps = new Properties();
 	  InputStream input = null;
+	  
 	  try{
 		  input = new FileInputStream("resources/config.properties");
 		  configProps.load(input);
