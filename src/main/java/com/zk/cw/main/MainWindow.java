@@ -35,6 +35,7 @@ import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.apache.commons.io.FilenameUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -134,12 +135,12 @@ public final class MainWindow {
 			System.out.println(imgElm.attr("src"));
 			String ad = link.text().trim();
 			String logoUrl = null;
-			String gsmArenaUrl = link.attr("href").trim();
+			String gsmArenaUrl = "http://www.gsmarena.com/"+ link.attr("href").trim();
 			Uretici uretici = new Uretici(null,ad,null,0,gsmArenaUrl);
-			String dosyaAdi =  ad.replaceAll("[^\\w.-]", "_");
+			String dosya =  (ad.replaceAll("[^\\w.-]", "_") + "." + (FilenameUtils.getExtension(imgElm.attr("src")))).toLowerCase();
 			if(!UreticiDAO.bul(uretici)){
-				Util.downloadImage(imgElm.attr("src"),"resources/logo",(ad+".gif").replaceAll("[^\\w.-]", "_"););
-				uretici.logoUrlVer("/img/logo/"+ad+".gif");
+				Util.downloadImage(imgElm.attr("src"), "resources/logo", dosya);
+				uretici.logoUrlVer("/img/logo/"+dosya);
 				UreticiDAO.ekle(uretici);
 			}
 		}
