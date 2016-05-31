@@ -1,28 +1,43 @@
-May 11, 2016 2:03:41 PM com.zk.cw.LaunchApplication main
+May 31, 2016 4:10:01 PM com.zk.cw.LaunchApplication main
 CONFIG: Launching application...
-May 11, 2016 2:03:41 PM com.zk.cw.LaunchApplication main
+May 31, 2016 4:10:01 PM com.zk.cw.LaunchApplication main
 CONFIG: Operating System : Windows 8.1 6.3
-May 11, 2016 2:03:41 PM com.zk.cw.LaunchApplication main
+May 31, 2016 4:10:01 PM com.zk.cw.LaunchApplication main
 CONFIG: Java Version: 1.8.0_66
-May 11, 2016 2:03:41 PM com.zk.cw.LaunchApplication main
+May 31, 2016 4:10:01 PM com.zk.cw.LaunchApplication main
 CONFIG: Java Home: C:\Program Files\Java\jdk1.8.0_66\jre
-May 11, 2016 2:03:41 PM com.zk.cw.LaunchApplication useCustomExceptionHandler
+May 31, 2016 4:10:01 PM com.zk.cw.LaunchApplication useCustomExceptionHandler
 CONFIG: Setting up custom exception handler.
-May 11, 2016 2:03:41 PM com.zk.cw.LaunchApplication main
+May 31, 2016 4:10:01 PM com.zk.cw.LaunchApplication main
 CONFIG: Showing user login screen.
-May 11, 2016 2:03:41 PM com.zk.cw.LaunchApplication userLogin
+May 31, 2016 4:10:01 PM com.zk.cw.LaunchApplication userLogin
 CONFIG: Showing the login screen.
-May 11, 2016 2:03:43 PM com.zk.cw.login.LoginController showMainWindow
+May 31, 2016 4:10:02 PM com.zk.cw.login.LoginController showMainWindow
 CONFIG: Showing the main window.
-May 11, 2016 2:03:43 PM com.zk.cw.uretici.UreticiDAO <clinit>
-CONFIG: Number of movies read in from file: 0
-May 11, 2016 2:03:43 PM com.zk.cw.main.MainWindow buildAndShow
-FINE: Building GUI for user : fff
-May 11, 2016 2:03:52 PM com.zk.cw.exception.ExceptionHandler uncaughtException
-SEVERE: java.lang.Error: Unresolved compilation problem: 
-	The method sort(List<T>) in the type Collections is not applicable for the arguments (List<Uretici>)
+May 31, 2016 4:10:03 PM com.zk.cw.uretici.UreticiDAO <clinit>
+CONFIG: Number of movies read in from file: 104
+May 31, 2016 4:10:03 PM com.zk.cw.main.MainWindow buildAndShow
+FINE: Building GUI for user : dd
+May 31, 2016 4:10:03 PM com.zk.cw.exception.ExceptionHandler uncaughtException
+SEVERE: java.lang.Error: Unresolved compilation problems: 
+	fDateViewed cannot be resolved or is not a field
+	fDateViewed cannot be resolved or is not a field
+	fTitle cannot be resolved or is not a field
+	fTitle cannot be resolved or is not a field
+	fRating cannot be resolved or is not a field
+	fRating cannot be resolved or is not a field
+	fComment cannot be resolved or is not a field
+	fComment cannot be resolved or is not a field
 
-	at com.zk.cw.uretici.UreticiDAO.list(UreticiDAO.java:85)
+	at com.zk.cw.uretici.Uretici.compareTo(Uretici.java:82)
+	at com.zk.cw.uretici.Uretici.compareTo(Uretici.java:1)
+	at java.util.ComparableTimSort.countRunAndMakeAscending(ComparableTimSort.java:320)
+	at java.util.ComparableTimSort.sort(ComparableTimSort.java:202)
+	at java.util.Arrays.sort(Arrays.java:1312)
+	at java.util.Arrays.sort(Arrays.java:1506)
+	at java.util.ArrayList.sort(ArrayList.java:1454)
+	at java.util.Collections.sort(Collections.java:141)
+	at com.zk.cw.uretici.UreticiDAO.list(UreticiDAO.java:86)
 	at com.zk.cw.uretici.UreticiTableModel.<init>(UreticiTableModel.java:26)
 	at com.zk.cw.main.MainWindow.buildGui(MainWindow.java:116)
 	at com.zk.cw.main.MainWindow.buildAndShow(MainWindow.java:88)
@@ -78,5 +93,5 @@ SEVERE: java.lang.Error: Unresolved compilation problem:
 	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:93)
 	at java.awt.EventDispatchThread.run(EventDispatchThread.java:82)
 
-May 11, 2016 2:03:52 PM com.zk.cw.LaunchApplication main
+May 31, 2016 4:10:03 PM com.zk.cw.LaunchApplication main
 CONFIG: Launch thread now ending.

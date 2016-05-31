@@ -34,18 +34,17 @@ public final class UreticiTableModel extends AbstractTableModel {
   */ 
   public void refreshView() {
 	fUretici = fDAO.list();
-    //one might want to preserve the sort order here
     fireTableDataChanged();
   }
   
   /** Returned the selected movie's id. */
   public String getId(int aRow){
-    Uretici movie = fUretici.get(aRow);
-    return movie.getId(); 
+    Uretici uretici = fUretici.get(aRow);
+    return uretici.idAl(); 
   }
   
   /** Return the selected {@link Uretici}. */
-  public Uretici getMovie(int aRow){
+  public Uretici getUretici(int aRow){
     return fUretici.get(aRow);
   }
   
@@ -94,18 +93,18 @@ public final class UreticiTableModel extends AbstractTableModel {
   /** Return the <tt>Object</tt> in a specific table cell. */
   @Override public Object getValueAt(int aRow, int aCol) {
     Object result = null;
-    Uretici movie = fUretici.get(aRow);
+    Uretici uretici = fUretici.get(aRow);
     if(aCol == 0) {
-      result = movie.getTitle();
+      result = uretici.idAl();
     }
     else if(aCol == 1) {
-      result = Util.format(movie.getDateViewed());
+      result = uretici.adAl();
     }
     else if(aCol == 2) {
-      result = movie.getRating();
+      result = uretici.logoUrlAl();
     }
     else if(aCol == 3) {
-      result = movie.getComment();
+      result = uretici.aktifAl();
     }
     return result;
   }
@@ -114,16 +113,16 @@ public final class UreticiTableModel extends AbstractTableModel {
   @Override public String getColumnName(int aIdx){
     String result = "";
     if( aIdx == 0) {
-      result = "Adı";
+      result = "ID";
     }
     else if( aIdx == 1) {
-      result = "Viewed";
+      result = "Ad";
     }
     else if( aIdx == 2) {
-      result = "Rating";
+      result = "logo";
     }
     else if( aIdx == 3) {
-      result =  "Comment";
+      result =  "Aktif";
     }
     return result;
   }

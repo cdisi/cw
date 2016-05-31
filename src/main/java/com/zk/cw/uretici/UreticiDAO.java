@@ -50,7 +50,7 @@ public final class UreticiDAO {
     private final static Charset ENCODING = StandardCharsets.UTF_8;
     
     static {
-    	bul();
+      bul();
       fLogger.config("Number of movies read in from file: " + fTable.size());
     }    
 
@@ -82,6 +82,7 @@ public final class UreticiDAO {
    */
   List<Uretici> list() {
     List<Uretici> result = new ArrayList<>(fTable.values());
+    System.out.println("sonuç"+result);
     Collections.sort(result);
     return result;
   }
