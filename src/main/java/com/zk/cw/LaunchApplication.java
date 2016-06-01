@@ -39,13 +39,13 @@ public final class LaunchApplication {
   Defines the name of the app.
   Could be used in an About box, trouble ticket emails, and so on.
   */
-  public static final String APP_NAME = "My Movies";
+  public static final String APP_NAME = "CW";
   
   /** 
    The version of this application (an arbitrary string). 
    Here, the version string simply matches the version of the JDK. 
   */
-  public static final String APP_VERSION = "1.7.0";
+  public static final String APP_VERSION = "1.0.0";
   
   // PRIVATE 
  
