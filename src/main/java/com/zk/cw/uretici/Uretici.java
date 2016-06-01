@@ -6,15 +6,15 @@ import com.zk.cw.edit.Movie;
 import com.zk.cw.exception.InvalidInputException;
 
 public final class Uretici implements Comparable<Uretici>{
-	  private String id;
+	  private Integer id;
 	  private final String ad;
 	  private String logoUrl;
-	  private final int aktif;
+	  private Integer aktif;
 	  private final String gsmArenaUrl;
 	  private static final int EQUAL = 0;
 	  private static final int DESCENDING = -1;	  
 	  
-	  public Uretici(String id, String ad, String logoUrl, int aktif, String gsmArenaUrl) throws InvalidInputException {
+	  public Uretici(Integer id, String ad, String logoUrl, int aktif, String gsmArenaUrl) throws InvalidInputException {
 	    this.id = id;
 	    this.ad = ad;
 	    this.logoUrl = logoUrl;
@@ -22,10 +22,10 @@ public final class Uretici implements Comparable<Uretici>{
 	    this.gsmArenaUrl=gsmArenaUrl;
 	  }
 	  
-	  String idAl(){ 
+	  Integer idAl(){ 
 		  return id; 
 	  }
-	  void idVer(String id){
+	  void idVer(Integer id){
 		  this.id = id; 
 	  }
 	  String adAl(){
@@ -79,83 +79,20 @@ public final class Uretici implements Comparable<Uretici>{
 	@Override public int compareTo(Uretici aThat) {
 		    if ( this == aThat ) return EQUAL;
 		   
-		    int comparison = DESCENDING*comparePossiblyNull(this.fDateViewed, aThat.fDateViewed);
+		    int comparison = this.id.compareTo(aThat.id);
 		    if ( comparison != EQUAL ) return comparison;
 		    
-		    comparison = this.fTitle.compareTo(aThat.fTitle);
+		    comparison = this.ad.compareTo(aThat.ad);
 		    if ( comparison != EQUAL ) return comparison;
 		    
-		    comparison = comparePossiblyNull(this.fRating, aThat.fRating);
+		    comparison = this.logoUrl.compareTo(aThat.ad);
 		    if ( comparison != EQUAL ) return comparison;
 		   
-		    comparison = comparePossiblyNull(this.fComment, aThat.fComment);
+		    comparison = this.aktif.compareTo(aThat.aktif);
 		    if ( comparison != EQUAL ) return comparison;
 		    
 		    return EQUAL;
 		  }
-		  
-		  /** Sort by Title. */
-		  public static Comparator<Movie> TITLE_SORT = new Comparator<Movie>(){
-		    @Override public int compare(Movie aThis, Movie aThat) {
-		      if ( aThis == aThat ) return EQUAL;
-
-		      int comparison = aThis.fTitle.compareTo(aThat.fTitle);
-		      if ( comparison != EQUAL ) return comparison;
-		      
-		      comparison = DESCENDING*comparePossiblyNull(aThis.fDateViewed, aThat.fDateViewed);
-		      if ( comparison != EQUAL ) return comparison;
-		      
-		      comparison = comparePossiblyNull(aThis.fRating, aThat.fRating);
-		      if ( comparison != EQUAL ) return comparison;
-		     
-		      comparison = comparePossiblyNull(aThis.fComment, aThat.fComment);
-		      if ( comparison != EQUAL ) return comparison;
-		      
-		      return EQUAL;
-		    };
-		  };
-		  
-		  /** Sort by Rating (descending), then Date Viewed (descending). */
-		  public static Comparator<Movie> RATING_SORT = new Comparator<Movie>(){
-		    @Override public int compare(Movie aThis, Movie aThat) {
-		      if ( aThis == aThat ) return EQUAL;
-
-		      int comparison = DESCENDING*comparePossiblyNull(aThis.fRating, aThat.fRating);
-		      if ( comparison != EQUAL ) return comparison;
-
-		      comparison = DESCENDING*comparePossiblyNull(aThis.fDateViewed, aThat.fDateViewed);
-		      if ( comparison != EQUAL ) return comparison;
-		      
-		      comparison = aThis.fTitle.compareTo(aThat.fTitle);
-		      if ( comparison != EQUAL ) return comparison;
-		      
-		      comparison = comparePossiblyNull(aThis.fComment, aThat.fComment);
-		      if ( comparison != EQUAL ) return comparison;
-		      
-		      return EQUAL;
-		    };
-		  };
-		  
-		  /** Sort by Comment. */
-		  public static Comparator<Movie> COMMENT_SORT = new Comparator<Movie>(){
-		    @Override public int compare(Movie aThis, Movie aThat) {
-		      if ( aThis == aThat ) return EQUAL;
-
-		      int comparison = comparePossiblyNull(aThis.fComment, aThat.fComment);
-		      if ( comparison != EQUAL ) return comparison;
-		      
-		      comparison = aThis.fTitle.compareTo(aThat.fTitle);
-		      if ( comparison != EQUAL ) return comparison;
-		      
-		      comparison = comparePossiblyNull(aThis.fRating, aThat.fRating);
-		      if ( comparison != EQUAL ) return comparison;
-
-		      comparison = DESCENDING*comparePossiblyNull(aThis.fDateViewed, aThat.fDateViewed);
-		      if ( comparison != EQUAL ) return comparison;
-		      
-		      return EQUAL;
-		    };
-		  };
 		  
 		  private boolean areEqual(Object aThis, Object aThat){
 			    return aThis == null ? aThat == null : aThis.equals(aThat);

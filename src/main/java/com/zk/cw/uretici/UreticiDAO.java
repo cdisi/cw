@@ -41,7 +41,7 @@ public final class UreticiDAO {
 	
     private static Connection conn = null;
     private static Statement stmt = null;
-    private static final Map<String, Uretici> fTable = new LinkedHashMap<>();
+    private static final Map<Integer, Uretici> fTable = new LinkedHashMap<>();
     private static int fNextId = 0;
     private static final String MOVIES_FILE_NAME = "movie_list_for_";
     private static final String DELIMITER = "|";
@@ -107,7 +107,7 @@ public final class UreticiDAO {
 	      String sql= "SELECT * FROM uretici";
 	      ResultSet rs = stmt.executeQuery(sql);	      
 	      while(rs.next()){
-	    	 String id = rs.getString("id");
+	    	 Integer id = rs.getInt("id");
 	    	 String ad = rs.getString("ad");
 	    	 String logoUrl = rs.getString("logo_url");
 		     int aktif = rs.getInt("aktif");
