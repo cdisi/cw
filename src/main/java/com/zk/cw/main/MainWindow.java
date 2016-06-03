@@ -8,7 +8,7 @@ import com.zk.cw.edit.MovieActionDelete;
 import com.zk.cw.exception.InvalidInputException;
 import com.zk.cw.uretici.*;
 import com.zk.cw.exit.ExitAction;
-import com.zk.cw.uretici.UreticiActionAra;
+import com.zk.cw.uretici.CihazAraAction;
 import com.zk.cw.util.Util;
 import com.zk.cw.util.ui.UiUtil;
 
@@ -196,8 +196,8 @@ public final class MainWindow {
     JMenu fileMenu = new JMenu("File");
     fileMenu.setMnemonic('F'); 
     
-    Action araUreticiAction = new UreticiActionAra(aFrame);
-    fileMenu.add(new JMenuItem(araUreticiAction));
+    Action cihazAraAction = new CihazAraAction(aFrame);
+    fileMenu.add(new JMenuItem(cihazAraAction));
     
     
     Action exitAction = new ExitAction();

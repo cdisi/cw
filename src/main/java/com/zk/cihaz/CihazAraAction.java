@@ -1,4 +1,4 @@
-package com.zk.cw.uretici;
+package com.zk.cihaz;
 
 import com.zk.cw.util.Util;
 
@@ -10,22 +10,23 @@ import javax.swing.AbstractAction;
 import javax.swing.JFrame;
 
 /** Show dialog for adding a new {@link Movie}. */
-public final class UreticiActionAra extends AbstractAction  {
+public final class CihazAraAction extends AbstractAction  {
   
   /** Constructor. */
-  public UreticiActionAra(JFrame aFrame){
-    super("Ara...", null );
-    putValue(SHORT_DESCRIPTION, "Üretici ara"); 
+  public CihazAraAction(JFrame aFrame){
+    super("Cihaz ara...", null );
+    putValue(SHORT_DESCRIPTION, "Cihaz ara"); 
     putValue(MNEMONIC_KEY, new Integer(KeyEvent.VK_A) );
     fFrame = aFrame;
   }
   
   @Override public void actionPerformed(ActionEvent aActionEvent) {
     fLogger.config("Adding a new movie.");
-    UreticiView view = new UreticiView(fFrame);
+    //UreticiView view = new UreticiView(fFrame);
   }
   
   // PRIVATE
   private JFrame fFrame;
-  private static final Logger fLogger = Util.getLogger(UreticiActionAra.class);
+  private static final Logger fLogger = Util.getLogger(CihazAraAction.class);
+  
 }
