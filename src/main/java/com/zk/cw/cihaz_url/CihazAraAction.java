@@ -1,4 +1,4 @@
-package com.zk.cw.cihaz;
+package com.zk.cw.cihaz_url;
 
 import com.zk.cw.uretici.Uretici;
 import com.zk.cw.uretici.UreticiDAO;
@@ -40,11 +40,13 @@ public final class CihazAraAction extends AbstractAction  {
 					  .userAgent("Mozilla")
 					  .cookie("auth", "token")
 					  .timeout(3000)
-					  .post();;
+					  .post();
 			//System.out.println(doc.html());
 			Elements elms = doc.select("div.makers > ul > li > a");
+			CihazURLDAO dao = new CihazURLDAO();
 			for (Element elm : elms) {
-				System.out.println("link : " + elm.text());
+				System.out.println("link : " + elm.attr("href"));
+				System.out.println("text : " + elm.text());
 			}
 		  } catch (IOException e) {
 			e.printStackTrace();

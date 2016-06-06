@@ -1,4 +1,4 @@
-package com.zk.cw.cihaz;
+package com.zk.cw.cihaz_url;
 
 import com.zk.cw.exception.InvalidInputException;
 import com.zk.cw.main.MainWindow;
