@@ -1,4 +1,4 @@
-package com.zk.cihaz;
+package com.zk.cw.cihaz;
 
 import com.zk.cw.exception.InvalidInputException;
 import com.zk.cw.main.MainWindow;
@@ -68,4 +68,5 @@ final class CihazAraController implements ActionListener {
       "Movie cannot be saved", JOptionPane.ERROR_MESSAGE
     );
   }
+  
 }

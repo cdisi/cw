@@ -6,14 +6,6 @@ import java.util.List;
 import com.zk.cw.util.Util;
 import javax.swing.table.AbstractTableModel;
 
-/** 
-  Table model used by {@link javax.swing.JTable}, explicitly for {@link Uretici} objects.  
- 
-  <P>When a database operation occurs, the view is refreshed by calling 
-  {@link #refreshView()}.
-  <P>Note this class includes some methods which are unrelated to the needs of the 
-  superclass, but are useful in the context of this application. 
- */
 public final class UreticiTableModel extends AbstractTableModel {
   // PRIVATE //
   private UreticiDAO fDAO;
@@ -26,12 +18,6 @@ public final class UreticiTableModel extends AbstractTableModel {
     fUretici = fDAO.list();
   }
 
-  /** 
-   Explicitly refresh the view.
-  
-   <P>This style seems to be cleaner and simpler than implementing 
-   a listener on the DAO.
-  */ 
   public void refreshView() {
 	fUretici = fDAO.list();
     fireTableDataChanged();
@@ -48,13 +34,6 @@ public final class UreticiTableModel extends AbstractTableModel {
     return fUretici.get(aRow);
   }
   
-  /** 
-   Sort the movies.
-   
-   When called repeatedly, this method will toggle the sort between 
-   ascending and descending.
-   @param aIdx index of the column by which to sort.  
-  */
   public void sortByColumn(int aIdx){
     fNumClicks++;
     if( aIdx == 1 ) {

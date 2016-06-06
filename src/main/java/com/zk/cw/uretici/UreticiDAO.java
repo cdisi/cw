@@ -54,43 +54,76 @@ public final class UreticiDAO {
       fLogger.config("Number of movies read in from file: " + fTable.size());
     }    
 
-  /**
-    Save all data to a text file. Must be called explicitly when the
-    app shuts down, in order to save all edits.
-  */
   public void shutdown() {
     fLogger.fine("Saving all movie records to file.");
     String fileContents = buildFileContents();
     writeStringToFile(fileContents);
   }
 
-  /** Add a new {@link Uretici}. */
   void add(Uretici aMovie) {
     String id = nextId();
     aMovie.setId(id.toString());
     fTable.put(id, aMovie);
   }
 
-  /** Change an existing {@link Uretici}. */
   void change(Uretici aMovie) {
     fTable.put(aMovie.getId(), aMovie);
   }
 
-  /**
-   * List all {@link Uretici}s. Order is the natural order of the {@link Uretici} class
-   * (descending date, then title).
-   */
-  List<Uretici> list() {
+  public List<Uretici> list() {
     List<Uretici> result = new ArrayList<>(fTable.values());
-    System.out.println("sonuç"+result);
     Collections.sort(result);
     return result;
   }
 
-  /** Delete an existing {@link Uretici}, given the movie id. */
   void delete(String aMovieId) {
     fTable.remove(aMovieId);
   }
+  
+  public static ArrayList<Uretici> bul(int ureticiId) {
+	  Properties configProps = new Properties();
+	  InputStream input = null;
+	  ArrayList<Uretici> sonuc = null;
+	  try{
+		  input = new FileInputStream("resources/config.properties");
+		  configProps.load(input);
+		  Class.forName("com.mysql.jdbc.Driver");
+	      conn = DriverManager.getConnection(configProps.getProperty("DB_URL"), configProps.getProperty("DB_USER"), configProps.getProperty("DB_PASS"));
+	      stmt = conn.createStatement();
+	      String sql= "SELECT * FROM uretici WHERE id="+ureticiId;
+	      ResultSet rs = stmt.executeQuery(sql);	      
+	      while(rs.next()){
+	    	 Integer id = rs.getInt("id");
+	    	 String ad = rs.getString("ad");
+	    	 String logoUrl = rs.getString("logo_url");
+		     int aktif = rs.getInt("aktif");
+		     String gsmArenaUrl = rs.getString("gsm_arena_url");
+		     Uretici uretici = new Uretici(id, ad, logoUrl, gsmArenaUrl, aktif);
+		     sonuc = new ArrayList<Uretici>();
+		     sonuc.add(uretici);
+	      }
+	      rs.close();
+	      stmt.close();
+	      conn.close();
+	   }catch(SQLException se){
+	      se.printStackTrace();
+	   }catch(Exception e){
+	      e.printStackTrace();
+	   }finally{
+	      try{
+	         if(stmt!=null)
+	            stmt.close();
+	      }catch(SQLException se2){
+	      }
+	      try{
+	         if(conn!=null)
+	            conn.close();
+	      }catch(SQLException se){
+	         se.printStackTrace();
+	      }
+	   }
+	  return sonuc;
+  }  
 
   private static void bul() {
 	  Properties configProps = new Properties();
@@ -99,7 +132,7 @@ public final class UreticiDAO {
 		  input = new FileInputStream("resources/config.properties");
 		  // load a properties file
 		  configProps.load(input);
-		  System.out.println(configProps.getProperty("JDBC_DRIVER"));
+		  //System.out.println(configProps.getProperty("JDBC_DRIVER"));
 		  Class.forName("com.mysql.jdbc.Driver");
 	      conn = DriverManager.getConnection(configProps.getProperty("DB_URL"), configProps.getProperty("DB_USER"), configProps.getProperty("DB_PASS"));
 	      //conn = DriverManager.getConnection("jdbc:mysql://cepworld.com/beta?useUnicode=true&characterEncoding=UTF-8","zihni", "nl2brr");
@@ -112,7 +145,7 @@ public final class UreticiDAO {
 	    	 String logoUrl = rs.getString("logo_url");
 		     int aktif = rs.getInt("aktif");
 		     String gsmArenaUrl = rs.getString("gsm_arena_url");
-		     Uretici uretici = new Uretici(id, ad, logoUrl, aktif, gsmArenaUrl);
+		     Uretici uretici = new Uretici(id, ad, logoUrl, gsmArenaUrl, aktif);
 		     fTable.put(uretici.idAl(), uretici);
 	      }
 	      rs.close();
@@ -209,23 +242,6 @@ public final class UreticiDAO {
 	   }
   }    
 
-  private static void parseLine(String aLine) throws InvalidInputException {
-    Scanner scanner = new Scanner(aLine);
-    // note how the quoting is needed here, since '|' is a special character in
-    // regular expressions :
-    scanner.useDelimiter(Pattern.quote(DELIMITER));
-    scanner.useLocale(Locale.US);
-    if (scanner.hasNext()) {
-      String title = scanner.next();
-      Date viewed = Util.parseDate(maybeNull(scanner.next()), "Date Viewed");
-      BigDecimal rating = Util.parseBigDecimal(maybeNull(scanner.next()), "Rating");
-      String comment = maybeNull(scanner.next());
-      Uretici movie = new Uretici(nextId().toString(), title, viewed, rating, comment);
-      fTable.put(movie.getId(), movie);
-    }
-    scanner.close();
-  }
-
   private static String nextId() {
     ++fNextId;
     return String.valueOf(fNextId);
@@ -249,7 +265,6 @@ public final class UreticiDAO {
     return MOVIES_FILE_NAME + MainWindow.getInstance().getUserName().toLowerCase(Locale.ENGLISH) + ".txt";
   }
 
-  /** Create a string, holding all movie records. */
   private String buildFileContents() {
     String NEW_LINE = System.getProperty("line.separator");
     StringBuilder result = new StringBuilder();
@@ -262,7 +277,6 @@ public final class UreticiDAO {
     return result.toString();
   }
 
-  /** Write string containing all movie records to a file - overwrite the whole file. */
   private void writeStringToFile(String aFileContents) {
     Path moviesPath = Paths.get(getMovieFileName());
     fLogger.fine("Writing movies to: " + moviesPath);

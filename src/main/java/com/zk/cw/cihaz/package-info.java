@@ -5,4 +5,4 @@
  * @author pc
  *
  */
-package com.zk.cihaz;
+package com.zk.cw.cihaz;

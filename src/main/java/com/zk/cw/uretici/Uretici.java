@@ -9,12 +9,12 @@ public final class Uretici implements Comparable<Uretici>{
 	  private Integer id;
 	  private final String ad;
 	  private String logoUrl;
-	  private Integer aktif;
 	  private final String gsmArenaUrl;
+	  private Integer aktif;
 	  private static final int EQUAL = 0;
 	  private static final int DESCENDING = -1;	  
 	  
-	  public Uretici(Integer id, String ad, String logoUrl, int aktif, String gsmArenaUrl) throws InvalidInputException {
+	  public Uretici(Integer id, String ad, String logoUrl, String gsmArenaUrl,int aktif) throws InvalidInputException {
 	    this.id = id;
 	    this.ad = ad;
 	    this.logoUrl = logoUrl;
@@ -22,25 +22,25 @@ public final class Uretici implements Comparable<Uretici>{
 	    this.gsmArenaUrl=gsmArenaUrl;
 	  }
 	  
-	  Integer idAl(){ 
+	  public Integer idAl(){ 
 		  return id; 
 	  }
 	  void idVer(Integer id){
 		  this.id = id; 
 	  }
-	  String adAl(){
+	  public String adAl(){
 		  return this.ad; 
 	  }	
-	  String logoUrlAl(){
+	  public String logoUrlAl(){
 		  return this.logoUrl; 
 	  }
 	  public void logoUrlVer(String logoUrl){
 		  this.logoUrl=logoUrl ; 
 	  }
-	  int aktifAl(){
+	  public int aktifAl(){
 		  return this.aktif; 
 	  }
-	  String gsmArenaUrlAl(){
+	  public String gsmArenaUrlAl(){
 		  return this.gsmArenaUrl;
 	  }
 	  
@@ -68,7 +68,7 @@ public final class Uretici implements Comparable<Uretici>{
 	 @Override public String toString(){
 		    return 
 		      "Uretici  Id:" + this.id + " Ad:" + this.ad + " Logo url:" + this.logoUrl + 
-		      " Aktif:" + this.aktif
+		      "GSM Arena URL:"+this.gsmArenaUrl+" Aktif:" + this.aktif
 		    ; 
 	 }
 		  

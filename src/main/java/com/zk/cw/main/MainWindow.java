@@ -8,7 +8,7 @@ import com.zk.cw.edit.MovieActionDelete;
 import com.zk.cw.exception.InvalidInputException;
 import com.zk.cw.uretici.*;
 import com.zk.cw.exit.ExitAction;
-import com.zk.cw.uretici.CihazAraAction;
+import com.zk.cw.cihaz.CihazAraAction;
 import com.zk.cw.util.Util;
 import com.zk.cw.util.ui.UiUtil;
 
@@ -41,11 +41,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-/** Main window for the application.
- 
- <P>A menu bar, and a sortable table containing the user's list of movies.
- 
- <P>Some applications would add a confirmation dialog when the user exits.*/
 public final class MainWindow {
   // PRIVATE 
   
@@ -62,15 +57,7 @@ public final class MainWindow {
   private Action fDeleteMovieAction;
   private String fUserName;
   private static final Logger fLogger = Util.getLogger(MainWindow.class); 
-  /** 
-   Return an instance of this class.
-   
-   <P>This class is made a singleton, since there is only one main window.
-   Any caller can refresh the main window using
-   <PRE>MainWindow.getInstance().refreshView();</PRE>
-   This lets the app avoid needing to pass around an object reference 
-   to the main window.
-  */
+
   public static MainWindow getInstance() {
     return INSTANCE;
   }
@@ -136,7 +123,7 @@ public final class MainWindow {
 			String ad = link.text().trim();
 			String logoUrl = null;
 			String gsmArenaUrl = "http://www.gsmarena.com/"+ link.attr("href").trim();
-			Uretici uretici = new Uretici(null,ad,null,0,gsmArenaUrl);
+			Uretici uretici = new Uretici(null,ad,null,gsmArenaUrl,0);
 			String dosya =  (ad.replaceAll("[^\\w.-]", "_") + "." + (FilenameUtils.getExtension(imgElm.attr("src")))).toLowerCase();
 			if(!UreticiDAO.bul(uretici)){
 				Util.downloadImage(imgElm.attr("src"), "resources/logo", dosya);
@@ -237,12 +224,7 @@ public final class MainWindow {
     ureticiTable.getColumnModel().getColumn(1).setPreferredWidth(20);
     ureticiTable.getColumnModel().getColumn(2).setPreferredWidth(20);
     ureticiTable.getColumnModel().getColumn(3).setPreferredWidth(200);
-    /* 
-     Interesting: even though these methods are one-liners, it's 
-     still useful to create them, since, from the point of view of the caller, 
-     they *greatly* clarify the intent, and 
-     read at a higher level of abstraction. 
-    */
+
     clickOnHeaderSortsTable();
     doubleClickShowsEditDialog();
     rowSelectionEnablesActions();

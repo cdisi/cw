@@ -1,4 +1,4 @@
-package com.zk.cihaz;
+package com.zk.cw.cihaz;
 
 import com.zk.cw.util.ui.OnClose;
 import com.zk.cw.util.Edit;
