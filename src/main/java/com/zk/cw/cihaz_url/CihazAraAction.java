@@ -29,8 +29,7 @@ public final class CihazAraAction extends AbstractAction  {
   }
   
   @Override public void actionPerformed(ActionEvent aActionEvent) {
-	  UreticiDAO  ureticiDAO = new UreticiDAO();
-	  ArrayList<Uretici> ureticiler = ureticiDAO.bul(1);
+	  ArrayList<Uretici> ureticiler = UreticiDAO.bul(0);
 	  for (Uretici uretici : ureticiler) {
 		  System.out.println(uretici);
 		  Document doc;
@@ -41,12 +40,14 @@ public final class CihazAraAction extends AbstractAction  {
 					  .cookie("auth", "token")
 					  .timeout(3000)
 					  .post();
-			//System.out.println(doc.html());
 			Elements elms = doc.select("div.makers > ul > li > a");
 			CihazURLDAO dao = new CihazURLDAO();
 			for (Element elm : elms) {
-				System.out.println("link : " + elm.attr("href"));
-				System.out.println("text : " + elm.text());
+				CihazURL cihazURL = new CihazURL();
+				cihazURL.setUrl(elm.attr("abs:href").trim());
+				if(!dao.bul(cihazURL)){
+					dao.ekle(cihazURL, uretici);
+				}
 			}
 		  } catch (IOException e) {
 			e.printStackTrace();
