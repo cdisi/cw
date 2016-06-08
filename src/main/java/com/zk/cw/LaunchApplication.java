@@ -35,27 +35,14 @@ public final class LaunchApplication {
     fLogger.config("Launch thread now ending.");
   }
   
-  /** 
-  Defines the name of the app.
-  Could be used in an About box, trouble ticket emails, and so on.
-  */
   public static final String APP_NAME = "CW";
   
-  /** 
-   The version of this application (an arbitrary string). 
-   Here, the version string simply matches the version of the JDK. 
-  */
   public static final String APP_VERSION = "1.0.0";
   
-  // PRIVATE 
- 
-  /** It makes no sense to call this class's constructor, so it's made private. */
   private LaunchApplication(){ }
   
   private static final Logger fLogger = Util.getLogger(LaunchApplication.class);
 
-  /**   Set up JDK logging to emit logging entries to a file in the application's
-   installation directory. The file name is log.txt.  */
   private static void configureJDKLogging() {
     fLogger.setLevel(Level.FINE);
     boolean OVERWRITE = false;
@@ -78,15 +65,6 @@ public final class LaunchApplication {
     Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
   }
   
-   /**    Use the look which is usually used on the current operating system.
-    
-    <P>For example, on a Windows machine, use a Windows look and feel.    If you are using a non-default look and feel, then you should set it first thing.
-    For more info, see the 
-    <a href='http://java.sun.com/docs/books/tutorial/uiswing/lookandfeel/plaf.html#available'>Swing Tutorial</a>
-    
-    <P>Warning: on Windows, the native look & feel displays accelerator keys only when ALT key is held down. 
-    Otherwise, they are not displayed!
-  */
   private static void useNativeLookAndFeel() {
     try {
       UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -108,16 +86,6 @@ public final class LaunchApplication {
     }
   }
   
-  /**
-    Show the login screen. 
-    
-    <P>This is the first GUI element displayed to the end user.
-    When the GUI is realized, then all interaction with the GUI must be through the 
-    Event Dispatch thread.
-    
-    <P>For more info, see
-    <a href='http://www.javapractices.com/topic/TopicAction.do?Id=153'>this article</a>.
-   */
    private static void userLogin(){
      fLogger.config("Showing the login screen.");
      LoginController login = new LoginController();

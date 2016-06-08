@@ -12,11 +12,6 @@ import javax.swing.AbstractAction;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-/**
-  Show a simple 'About' box, displaying the application name and version.
-
-  <P>This implementation is very simple and plain, and uses a {@link javax.swing.JOptionPane}.
-*/
 public final class AboutAction extends AbstractAction {
 
   /** Constructor. */
@@ -41,10 +36,7 @@ public final class AboutAction extends AbstractAction {
   private String getMessageText() {
     StringBuilder result = new StringBuilder(LaunchApplication.APP_NAME + " ");
     result.append(LaunchApplication.APP_VERSION);
-    result.append(" - a simple example Java GUI application.");
     result.append(NEW_LINE);
-    result.append(NEW_LINE);
-    result.append("Please see javapractices.com for more information.");
     return result.toString();
   }
 }

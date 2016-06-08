@@ -3,6 +3,7 @@ package com.zk.cw.main;
 import com.zk.cw.LaunchApplication;
 import com.zk.cw.about.AboutAction;
 import com.zk.cw.cihaz_url.CihazAraAction;
+import com.zk.cw.cihaz_url.YeniCihazAction;
 import com.zk.cw.edit.MovieActionAdd;
 import com.zk.cw.edit.MovieActionChange;
 import com.zk.cw.edit.MovieActionDelete;
@@ -62,11 +63,6 @@ public final class MainWindow {
     return INSTANCE;
   }
   
-  /**
-   Build and display the main window.
-   @param aUserName user name, as validated by 
-   {@link hirondelle.movies.login.LoginController}. 
-  */
   public void buildAndShow(String aUserName){
     fUserName = aUserName;
     fLogger.fine("Building GUI for user : " + aUserName);
@@ -78,12 +74,6 @@ public final class MainWindow {
     fMovieTableModel.refreshView();
   }
   
-  /** 
-   Return the user name passed to {@link #buildAndShow(String)}.
-   
-  <P>The user name can be accessed anywhere using :
-  <PRE>MainWindow.getInstance().getUserName();</PRE>
-  */
   public String getUserName(){
     return fUserName;
   }
@@ -186,6 +176,8 @@ public final class MainWindow {
     Action cihazAraAction = new CihazAraAction(aFrame);
     fileMenu.add(new JMenuItem(cihazAraAction));
     
+    Action yeniCihazAction = new YeniCihazAction(aFrame);
+    fileMenu.add(new JMenuItem(yeniCihazAction));
     
     Action exitAction = new ExitAction();
     fileMenu.add(new JMenuItem(exitAction));
