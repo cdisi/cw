@@ -76,9 +76,7 @@ public final class MainWindow {
   
   public String getUserName(){
     return fUserName;
-  }
-  
-
+  }  
   
   /** Build the user interface. */
   private void buildGui(){
