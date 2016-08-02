@@ -58,6 +58,7 @@ public final class MainWindow {
   private Action fDeleteMovieAction;
   private String fUserName;
   private static final Logger fLogger = Util.getLogger(MainWindow.class); 
+  private JScrollPane mainPanel = new JScrollPane();
 
   public static MainWindow getInstance() {
     return INSTANCE;
@@ -170,7 +171,10 @@ public final class MainWindow {
 
     JMenu fileMenu = new JMenu("File");
     fileMenu.setMnemonic('F'); 
-    
+
+    Action ureticilerAction = new UreticilerAction(aFrame,mainPanel);
+    fileMenu.add(new JMenuItem(ureticilerAction));
+
     Action cihazAraAction = new CihazAraAction(aFrame);
     fileMenu.add(new JMenuItem(cihazAraAction));
     
@@ -219,13 +223,11 @@ public final class MainWindow {
     doubleClickShowsEditDialog();
     rowSelectionEnablesActions();
     
-    JScrollPane panel = new JScrollPane(ureticiTable);
-    aFrame.getContentPane().add(panel);  
+    mainPanel.setViewportView(ureticiTable);
+    aFrame.getContentPane().add(mainPanel);
   }
 
   private void clickOnHeaderSortsTable() {
-    //generic sorting, not performed here: 
-    //fMovieTable.setAutoCreateRowSorter(true); 
 	  ureticiTable.getTableHeader().addMouseListener(new SortMovieTable());
   }
   
