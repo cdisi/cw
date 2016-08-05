@@ -31,7 +31,6 @@ public final class CihazAraAction extends AbstractAction  {
   @Override public void actionPerformed(ActionEvent aActionEvent) {
 	  ArrayList<Uretici> ureticiler = UreticiDAO.bul(0);
 	  for (Uretici uretici : ureticiler) {
-		  System.out.println(uretici);
 		  Document doc;
 		  try {
 			doc = Jsoup.connect(uretici.gsmArenaUrlAl())
