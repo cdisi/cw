@@ -26,7 +26,7 @@ public class YeniCihazAction extends AbstractAction {
 	public void actionPerformed(ActionEvent aActionEvent) {
 	    this.mainPanel.removeAll();
 	    this.mainPanel.repaint();
-		//MovieView view = new MovieView(fFrame);
+		YeniCihazDAO = new YeniCihazDAO();
 	}	
 	
 }
