@@ -3,12 +3,12 @@ package com.zk.cw.main;
 import com.zk.cw.LaunchApplication;
 import com.zk.cw.about.AboutAction;
 import com.zk.cw.cihaz_url.CihazAraAction;
-import com.zk.cw.cihaz_url.YeniCihazAction;
 import com.zk.cw.edit.MovieActionAdd;
 import com.zk.cw.edit.MovieActionChange;
 import com.zk.cw.edit.MovieActionDelete;
 import com.zk.cw.exception.InvalidInputException;
 import com.zk.cw.uretici.*;
+import com.zk.cw.yeni_cihaz.*;
 import com.zk.cw.exit.ExitAction;
 import com.zk.cw.util.Util;
 import com.zk.cw.util.ui.UiUtil;
@@ -178,7 +178,7 @@ public final class MainWindow {
     Action cihazAraAction = new CihazAraAction(aFrame);
     fileMenu.add(new JMenuItem(cihazAraAction));
     
-    Action yeniCihazAction = new YeniCihazAction(aFrame);
+    Action yeniCihazAction = new YeniCihazAction(aFrame,mainPanel);
     fileMenu.add(new JMenuItem(yeniCihazAction));
     
     Action exitAction = new ExitAction();
