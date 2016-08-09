@@ -35,7 +35,6 @@ public class YeniCihazDAO {
 		while (rset.next()){
 			YeniCihaz cihaz = new YeniCihaz(rset.getInt("id"),rset.getInt("uretici_id"),rset.getString("url"),
 					 rset.getInt("aktif"));
-			
 			table.put(cihaz.getId(), cihaz);
 		}
 
@@ -44,12 +43,6 @@ public class YeniCihazDAO {
 
 		return cihazlar;
 	}
-	
-	private static YeniCihaz createCihaz(ResultSet rset) throws SQLException{
-		YeniCihaz cihaz = new YeniCihaz(rset.getInt("id"),rset.getInt("uretici_id"),rset.getString("url"),
-							 rset.getInt("aktif"));
-		return cihaz;
-	}	
 	
 	List<YeniCihaz> list() {
 		List<YeniCihaz> result = new ArrayList<>(table.values());

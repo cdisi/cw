@@ -178,7 +178,7 @@ public final class MainWindow {
     Action cihazAraAction = new CihazAraAction(aFrame);
     fileMenu.add(new JMenuItem(cihazAraAction));
     
-    Action yeniCihazAction = new YeniCihazAction(aFrame,mainPanel);
+    Action yeniCihazAction = new YeniCihazAction(aFrame);
     fileMenu.add(new JMenuItem(yeniCihazAction));
     
     Action exitAction = new ExitAction();
@@ -223,8 +223,9 @@ public final class MainWindow {
     doubleClickShowsEditDialog();
     rowSelectionEnablesActions();
     
-    mainPanel.setViewportView(ureticiTable);
-    aFrame.getContentPane().add(mainPanel);
+    JScrollPane panel = new JScrollPane(ureticiTable);
+    aFrame.getContentPane().add(panel);  
+    
   }
 
   private void clickOnHeaderSortsTable() {
