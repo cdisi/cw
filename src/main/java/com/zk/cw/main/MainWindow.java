@@ -172,23 +172,26 @@ public final class MainWindow {
     JMenu fileMenu = new JMenu("File");
     fileMenu.setMnemonic('F'); 
 
-    Action ureticilerAction = new UreticilerAction(aFrame,mainPanel);
+    Action ureticilerAction = new UreticilerAction(aFrame, mainPanel);
     fileMenu.add(new JMenuItem(ureticilerAction));
 
     Action cihazAraAction = new CihazAraAction(aFrame);
     fileMenu.add(new JMenuItem(cihazAraAction));
     
-    Action yeniCihazAction = new YeniCihazAction(aFrame);
+    Action yeniCihazAction = new YeniCihazAction(aFrame, menuBar);
     fileMenu.add(new JMenuItem(yeniCihazAction));
     
     Action exitAction = new ExitAction();
     fileMenu.add(new JMenuItem(exitAction));
     menuBar.add(fileMenu);
     
+    JMenu editMenu = new JMenu("Edit");
+    editMenu.setMnemonic('E');
+    
     JMenu helpMenu = new JMenu("Help");
     helpMenu.setMnemonic('H');
     helpMenu.add(new JMenuItem(new AboutAction(aFrame)));
-    menuBar.add(helpMenu);
+    menuBar.add(helpMenu);    
     
     aFrame.setJMenuBar(menuBar);
   }

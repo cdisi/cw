@@ -24,8 +24,7 @@ public class YeniCihazMainWindow {
 		buildContent(mainFrame);
 	}	
 	
-	private void buildContent(JFrame mainFrame) {
-	    
+	private void buildContent(JFrame mainFrame) {	    
 		yeniCihazTable.setBackground(Color.LIGHT_GRAY);
 		yeniCihazTable.getColumnModel().getColumn(0).setPreferredWidth(20);
 		yeniCihazTable.getColumnModel().getColumn(1).setPreferredWidth(100);
