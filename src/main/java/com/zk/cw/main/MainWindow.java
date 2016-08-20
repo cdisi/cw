@@ -172,7 +172,7 @@ public final class MainWindow {
     JMenu fileMenu = new JMenu("File");
     fileMenu.setMnemonic('F'); 
 
-    Action ureticilerAction = new UreticilerAction(aFrame, mainPanel);
+    Action ureticilerAction = new UreticilerAction(aFrame);
     fileMenu.add(new JMenuItem(ureticilerAction));
 
     Action cihazAraAction = new CihazAraAction(aFrame);

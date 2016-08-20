@@ -12,7 +12,7 @@ public class UreticilerAction extends AbstractAction  {
 	private JFrame fFrame;	
 	private JScrollPane mainPanel;
 	
-	public UreticilerAction(JFrame aFrame, JScrollPane mainPanel){
+	public UreticilerAction(JFrame aFrame){
 		    super("Üreticiler", null );
 		    putValue(SHORT_DESCRIPTION, "Üreticiler"); 
 		    putValue(MNEMONIC_KEY, new Integer(KeyEvent.VK_A) );

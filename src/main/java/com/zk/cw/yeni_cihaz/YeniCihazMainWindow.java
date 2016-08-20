@@ -10,7 +10,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import com.zk.cw.about.AboutAction;
 import com.zk.cw.cihaz_url.CihazAraAction;
+import com.zk.cw.exit.ExitAction;
 import com.zk.cw.uretici.UreticilerAction;
 
 public class YeniCihazMainWindow {
@@ -57,7 +59,11 @@ public class YeniCihazMainWindow {
 		    
 	    JMenu editMenu = new JMenu("Edit");
 	    editMenu.setMnemonic('E');
-		    
+	    CihazActionEkle cihazActionEkle = new CihazActionEkle(aFrame);
+	    editMenu.add(new JMenuItem(cihazActionEkle));
+	    
+	    menuBar.add(editMenu);
+	    
 	    JMenu helpMenu = new JMenu("Help");
 	    helpMenu.setMnemonic('H');
 	    helpMenu.add(new JMenuItem(new AboutAction(aFrame)));
