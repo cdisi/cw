@@ -1,5 +1,6 @@
 package com.zk.cw.yeni_cihaz;
 
+import java.awt.Dimension;
 import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -60,6 +61,7 @@ public class CihazView {
 	    JPanel panel = new JPanel();
 	    
 		JLabel label = new JLabel(aLabel);
+		label.setPreferredSize(new Dimension(80, 20));
 		panel.add(label);
 		panel.add(aTextField);
 	    aTextField.setColumns(25);

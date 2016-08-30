@@ -20,6 +20,7 @@ public class CihazActionEkle extends AbstractAction {
 	    putValue(MNEMONIC_KEY, new Integer(KeyEvent.VK_A) );
 	    mainFrame = aFrame;
 	    this.table=table;
+	    this.yeniCihazTableModel = yeniCihazTableModel;
 	  }
 	  
 	  @Override public void actionPerformed(ActionEvent aActionEvent) {

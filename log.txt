@@ -1,112 +1,20 @@
-Ağu 30, 2016 4:49:00 PM com.zk.cw.LaunchApplication main
+Ağu 30, 2016 10:54:05 PM com.zk.cw.LaunchApplication main
 CONFIG: Launching application...
-Ağu 30, 2016 4:49:00 PM com.zk.cw.LaunchApplication main
+Ağu 30, 2016 10:54:05 PM com.zk.cw.LaunchApplication main
 CONFIG: Operating System : Windows 8.1 6.3
-Ağu 30, 2016 4:49:00 PM com.zk.cw.LaunchApplication main
+Ağu 30, 2016 10:54:05 PM com.zk.cw.LaunchApplication main
 CONFIG: Java Version: 1.8.0_45
-Ağu 30, 2016 4:49:00 PM com.zk.cw.LaunchApplication main
+Ağu 30, 2016 10:54:05 PM com.zk.cw.LaunchApplication main
 CONFIG: Java Home: C:\Program Files\Java\jdk1.8.0_45\jre
-Ağu 30, 2016 4:49:00 PM com.zk.cw.LaunchApplication useCustomExceptionHandler
+Ağu 30, 2016 10:54:05 PM com.zk.cw.LaunchApplication useCustomExceptionHandler
 CONFIG: Setting up custom exception handler.
-Ağu 30, 2016 4:49:00 PM com.zk.cw.LaunchApplication main
+Ağu 30, 2016 10:54:05 PM com.zk.cw.LaunchApplication main
 CONFIG: Showing user login screen.
-Ağu 30, 2016 4:49:00 PM com.zk.cw.LaunchApplication userLogin
+Ağu 30, 2016 10:54:05 PM com.zk.cw.LaunchApplication userLogin
 CONFIG: Showing the login screen.
-Ağu 30, 2016 4:49:01 PM com.zk.cw.login.LoginController showMainWindow
+Ağu 30, 2016 10:54:07 PM com.zk.cw.login.LoginController showMainWindow
 CONFIG: Showing the main window.
-Ağu 30, 2016 4:49:04 PM com.zk.cw.main.MainWindow buildAndShow
-FINE: Building GUI for user : cc
-Ağu 30, 2016 4:49:04 PM com.zk.cw.LaunchApplication main
+Ağu 30, 2016 10:54:09 PM com.zk.cw.main.MainWindow buildAndShow
+FINE: Building GUI for user : ddd
+Ağu 30, 2016 10:54:09 PM com.zk.cw.LaunchApplication main
 CONFIG: Launch thread now ending.
-Ağu 30, 2016 4:49:05 PM com.zk.cw.main.MainWindow$EnableEditActions valueChanged
-FINE: List selection changed. First:0 Last 0
-Ağu 30, 2016 4:49:05 PM com.zk.cw.exception.ExceptionHandler uncaughtException
-SEVERE: java.lang.NullPointerException
-	at com.zk.cw.main.MainWindow$EnableEditActions.valueChanged(MainWindow.java:158)
-	at javax.swing.DefaultListSelectionModel.fireValueChanged(DefaultListSelectionModel.java:184)
-	at javax.swing.DefaultListSelectionModel.fireValueChanged(DefaultListSelectionModel.java:164)
-	at javax.swing.DefaultListSelectionModel.fireValueChanged(DefaultListSelectionModel.java:211)
-	at javax.swing.DefaultListSelectionModel.changeSelection(DefaultListSelectionModel.java:405)
-	at javax.swing.DefaultListSelectionModel.changeSelection(DefaultListSelectionModel.java:415)
-	at javax.swing.DefaultListSelectionModel.setSelectionInterval(DefaultListSelectionModel.java:459)
-	at javax.swing.JTable.changeSelectionModel(JTable.java:2389)
-	at javax.swing.JTable.changeSelection(JTable.java:2458)
-	at javax.swing.plaf.basic.BasicTableUI$Handler.adjustSelection(BasicTableUI.java:1115)
-	at javax.swing.plaf.basic.BasicTableUI$Handler.mousePressed(BasicTableUI.java:1038)
-	at java.awt.AWTEventMulticaster.mousePressed(AWTEventMulticaster.java:280)
-	at java.awt.AWTEventMulticaster.mousePressed(AWTEventMulticaster.java:279)
-	at java.awt.Component.processMouseEvent(Component.java:6522)
-	at javax.swing.JComponent.processMouseEvent(JComponent.java:3324)
-	at java.awt.Component.processEvent(Component.java:6290)
-	at java.awt.Container.processEvent(Container.java:2234)
-	at java.awt.Component.dispatchEventImpl(Component.java:4881)
-	at java.awt.Container.dispatchEventImpl(Container.java:2292)
-	at java.awt.Component.dispatchEvent(Component.java:4703)
-	at java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4898)
-	at java.awt.LightweightDispatcher.processMouseEvent(Container.java:4530)
-	at java.awt.LightweightDispatcher.dispatchEvent(Container.java:4462)
-	at java.awt.Container.dispatchEventImpl(Container.java:2278)
-	at java.awt.Window.dispatchEventImpl(Window.java:2750)
-	at java.awt.Component.dispatchEvent(Component.java:4703)
-	at java.awt.EventQueue.dispatchEventImpl(EventQueue.java:758)
-	at java.awt.EventQueue.access$500(EventQueue.java:97)
-	at java.awt.EventQueue$3.run(EventQueue.java:709)
-	at java.awt.EventQueue$3.run(EventQueue.java:703)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(ProtectionDomain.java:75)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(ProtectionDomain.java:86)
-	at java.awt.EventQueue$4.run(EventQueue.java:731)
-	at java.awt.EventQueue$4.run(EventQueue.java:729)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(ProtectionDomain.java:75)
-	at java.awt.EventQueue.dispatchEvent(EventQueue.java:728)
-	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:201)
-	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:116)
-	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:105)
-	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
-	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:93)
-	at java.awt.EventDispatchThread.run(EventDispatchThread.java:82)
-
-Ağu 30, 2016 4:49:14 PM com.zk.cw.exception.ExceptionHandler uncaughtException
-SEVERE: java.lang.NullPointerException
-	at com.zk.cw.yeni_cihaz.CihazActionEkle.actionPerformed(CihazActionEkle.java:27)
-	at javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:2022)
-	at javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2346)
-	at javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402)
-	at javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259)
-	at javax.swing.AbstractButton.doClick(AbstractButton.java:376)
-	at javax.swing.plaf.basic.BasicMenuItemUI.doClick(BasicMenuItemUI.java:833)
-	at javax.swing.plaf.basic.BasicMenuItemUI$Handler.mouseReleased(BasicMenuItemUI.java:877)
-	at java.awt.AWTEventMulticaster.mouseReleased(AWTEventMulticaster.java:289)
-	at java.awt.Component.processMouseEvent(Component.java:6525)
-	at javax.swing.JComponent.processMouseEvent(JComponent.java:3324)
-	at java.awt.Component.processEvent(Component.java:6290)
-	at java.awt.Container.processEvent(Container.java:2234)
-	at java.awt.Component.dispatchEventImpl(Component.java:4881)
-	at java.awt.Container.dispatchEventImpl(Container.java:2292)
-	at java.awt.Component.dispatchEvent(Component.java:4703)
-	at java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4898)
-	at java.awt.LightweightDispatcher.processMouseEvent(Container.java:4533)
-	at java.awt.LightweightDispatcher.dispatchEvent(Container.java:4462)
-	at java.awt.Container.dispatchEventImpl(Container.java:2278)
-	at java.awt.Window.dispatchEventImpl(Window.java:2750)
-	at java.awt.Component.dispatchEvent(Component.java:4703)
-	at java.awt.EventQueue.dispatchEventImpl(EventQueue.java:758)
-	at java.awt.EventQueue.access$500(EventQueue.java:97)
-	at java.awt.EventQueue$3.run(EventQueue.java:709)
-	at java.awt.EventQueue$3.run(EventQueue.java:703)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(ProtectionDomain.java:75)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(ProtectionDomain.java:86)
-	at java.awt.EventQueue$4.run(EventQueue.java:731)
-	at java.awt.EventQueue$4.run(EventQueue.java:729)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(ProtectionDomain.java:75)
-	at java.awt.EventQueue.dispatchEvent(EventQueue.java:728)
-	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:201)
-	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:116)
-	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:105)
-	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
-	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:93)
-	at java.awt.EventDispatchThread.run(EventDispatchThread.java:82)
-
