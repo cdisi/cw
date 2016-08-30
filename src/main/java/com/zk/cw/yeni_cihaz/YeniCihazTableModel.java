@@ -16,6 +16,9 @@ public class YeniCihazTableModel extends AbstractTableModel {
 		yeniCihazlar = DAO.list();
 	}
 	
+	public YeniCihaz getCihaz(int aRow){
+		return yeniCihazlar.get(aRow);
+	}
 	  
 	  /** Return the number of columns in the table. */
 	  @Override public int getColumnCount() {

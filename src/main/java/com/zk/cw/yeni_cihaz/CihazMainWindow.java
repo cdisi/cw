@@ -9,21 +9,23 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import com.zk.cw.about.AboutAction;
 import com.zk.cw.cihaz_url.CihazAraAction;
 import com.zk.cw.exit.ExitAction;
 import com.zk.cw.uretici.UreticilerAction;
 
-public class YeniCihazMainWindow {
+public class CihazMainWindow {
 	
-	private static YeniCihazMainWindow INSTANCE = new YeniCihazMainWindow();
+	private static CihazMainWindow INSTANCE = new CihazMainWindow();
 	private YeniCihazTableModel yeniCihazTableModel;
 	private JTable yeniCihazTable;	
+	private CihazActionEkle cihazActionEkle;
+	private CihazMainWindow() {  }
 	
-	private YeniCihazMainWindow() {  }
-	
-	public static YeniCihazMainWindow getInstance() {
+	public static CihazMainWindow getInstance() {
 	    return INSTANCE;
 	}
 	
@@ -59,7 +61,7 @@ public class YeniCihazMainWindow {
 		    
 	    JMenu editMenu = new JMenu("Edit");
 	    editMenu.setMnemonic('E');
-	    CihazActionEkle cihazActionEkle = new CihazActionEkle(aFrame);
+	    cihazActionEkle = new CihazActionEkle(aFrame,yeniCihazTable,yeniCihazTableModel);
 	    editMenu.add(new JMenuItem(cihazActionEkle));
 	    
 	    menuBar.add(editMenu);
@@ -79,12 +81,27 @@ public class YeniCihazMainWindow {
 		yeniCihazTable.getColumnModel().getColumn(1).setPreferredWidth(100);
 		yeniCihazTable.getColumnModel().getColumn(2).setPreferredWidth(400);
 		yeniCihazTable.getColumnModel().getColumn(3).setPreferredWidth(200);
-    
 		mainFrame.getContentPane().removeAll();
 		
 		JScrollPane panel = new JScrollPane(yeniCihazTable);
 	    mainFrame.getContentPane().add(panel); 
 	    mainFrame.revalidate(); 
 	    mainFrame.repaint();
+		rowSelectionEnablesActions();
     }	
+	
+	  /** Enable edit and delete actions only when something is selected in the table. */
+	  private final class EnableEditActions implements ListSelectionListener {
+	    @Override public void valueChanged(ListSelectionEvent aEvent) {
+	      if( aEvent.getFirstIndex() != -1) {
+	    	  cihazActionEkle.setEnabled(true);
+	      }
+	      else {
+	    	  cihazActionEkle.setEnabled(false);
+	      }
+	    }
+	  }	
+	  private void rowSelectionEnablesActions() {
+			yeniCihazTable.getSelectionModel().addListSelectionListener(new EnableEditActions());
+	  }	  
 }

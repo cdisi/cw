@@ -29,7 +29,7 @@ public class YeniCihazAction extends AbstractAction {
 	
 	@Override 
 	public void actionPerformed(ActionEvent aActionEvent) {
-		YeniCihazMainWindow yeniCihazMainWindow = YeniCihazMainWindow.getInstance();
+		CihazMainWindow yeniCihazMainWindow = CihazMainWindow.getInstance();
 		yeniCihazMainWindow.buildGui(mainFrame,this.menuBar);
 	}	
 	
