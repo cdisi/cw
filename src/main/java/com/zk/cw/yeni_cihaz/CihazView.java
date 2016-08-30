@@ -1,7 +1,6 @@
 package com.zk.cw.yeni_cihaz;
 
 import java.awt.Dimension;
-import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -13,9 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import com.zk.cw.edit.Movie;
 import com.zk.cw.util.Edit;
-import com.zk.cw.util.Util;
 import com.zk.cw.util.ui.OnClose;
 import com.zk.cw.util.ui.StandardDialog;
 import com.zk.cw.util.ui.UiUtil;
