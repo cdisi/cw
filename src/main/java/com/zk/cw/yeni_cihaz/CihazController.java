@@ -38,16 +38,12 @@ public class CihazController implements ActionListener {
 	    if ( isUserInputValid() ){
     	  try {
 			DAO.add(fCihaz,uretici);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	    try {
 			DAO.update(fView.getUrl());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	    
     	  fView.closeDialog();
 	      CihazMainWindow.getInstance().refreshView();
 	    }

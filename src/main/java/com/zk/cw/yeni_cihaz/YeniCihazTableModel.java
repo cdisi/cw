@@ -22,7 +22,6 @@ public class YeniCihazTableModel extends AbstractTableModel {
 	
 	public void refreshView() {
 		yeniCihazlar = DAO.list();
-	    fireTableDataChanged();
 	}	
 	
 	public YeniCihaz getCihaz(int aRow){
