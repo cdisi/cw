@@ -42,6 +42,9 @@ public class CihazView {
 	public String getAd(){
 		return this.ad.getText();
 	}
+	public String getUrl(){
+		return this.url.getText();
+	}
 	
 	private void buildGui(JFrame aParent, String aDialogTitle) {
 		fStandardDialog = new StandardDialog(

@@ -15,7 +15,8 @@ import com.zk.cw.uretici.Uretici;
 public class YeniCihazDAO {
 	
 	private static final Map<Integer, YeniCihaz> table = new LinkedHashMap<>();  
-	private static final String ALL = "SELECT * FROM cihaz_url";
+	private static final String ALL = "SELECT * FROM cihaz_url WHERE aktif=0";
+	private static final String UPDATE = "UPDATE cihaz_url SET aktif=? WHERE url=?";
 	private static final String INSERT = "INSERT INTO cihaz (ad,uretici_id,aktif) VALUES (?,?,?)";
 		
 	static {
@@ -72,4 +73,17 @@ public class YeniCihazDAO {
 		
 		return cihaz;
 	}	
+	
+	public void update(String url) throws SQLException {
+		Connection c = DaoFactory.openConnection();
+		
+		PreparedStatement pstmt = c.prepareStatement(UPDATE);
+
+		pstmt.setInt(1, 1);
+		pstmt.setString(2, url);
+		pstmt.executeUpdate();
+
+		pstmt.close();
+		c.close();
+	}		
 }

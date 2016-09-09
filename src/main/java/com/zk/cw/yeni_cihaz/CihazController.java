@@ -42,7 +42,13 @@ public class CihazController implements ActionListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	      fView.closeDialog();
+	    try {
+			DAO.update(fView.getUrl());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	  fView.closeDialog();
 	      CihazMainWindow.getInstance().refreshView();
 	    }
 	}	

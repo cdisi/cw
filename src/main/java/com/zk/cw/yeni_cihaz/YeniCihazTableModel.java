@@ -23,18 +23,18 @@ public class YeniCihazTableModel extends AbstractTableModel {
 	public void refreshView() {
 		yeniCihazlar = DAO.list();
 	    fireTableDataChanged();
-	 }	
+	}	
 	
 	public YeniCihaz getCihaz(int aRow){
 		return yeniCihazlar.get(aRow);
 	}
 	  
-	  /** Return the number of columns in the table. */
+	/** Return the number of columns in the table. */
 	@Override public int getColumnCount() {
 	    return 4;
 	}
 	  
-	  /** Return the number of rows in the table. */
+	/** Return the number of rows in the table. */
 	@Override public int getRowCount() {
 	    return yeniCihazlar.size();
 	}
