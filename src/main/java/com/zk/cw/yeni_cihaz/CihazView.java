@@ -12,7 +12,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.zk.cw.uretici.Uretici;
 import com.zk.cw.util.Edit;
+import com.zk.cw.util.GsmParser;
 import com.zk.cw.util.ui.OnClose;
 import com.zk.cw.util.ui.StandardDialog;
 import com.zk.cw.util.ui.UiUtil;
@@ -25,12 +27,20 @@ public class CihazView {
 	private JButton fEditButton;	
 	private JTextField url = new JTextField(); 
 	private JTextField ad = new JTextField(); 
+	private GsmParser gsmParser;
+	private Uretici uretici;
 	
-	CihazView(JFrame aParent, YeniCihaz selectedCihaz) {				    
+	CihazView(JFrame aParent, YeniCihaz selectedCihaz, Uretici uretici) {				    
 		fEdit = Edit.ADD;		
+		this.uretici=uretici;
+		gsmParser = new GsmParser(selectedCihaz.getUrl());
 		buildGui(aParent, "Cihaz Ekle");
 		populateFields(selectedCihaz);
 		fStandardDialog.display();
+	}
+	
+	public String getAd(){
+		return this.ad.getText();
 	}
 	
 	private void buildGui(JFrame aParent, String aDialogTitle) {
@@ -52,6 +62,7 @@ public class CihazView {
 	
 	private void populateFields(YeniCihaz selectedCihaz) {
 	    this.url.setText(selectedCihaz.getUrl());
+	    this.ad.setText(gsmParser.cihazAdiBul(uretici));
 	}	
 
 	private void addTextField(JTextField aTextField, String aLabel, JPanel aPanel) {
@@ -69,7 +80,7 @@ public class CihazView {
 	    java.util.List<JButton> result = new ArrayList<>();
 
 	    fEditButton = new JButton(fEdit.toString());
-	    fEditButton.addActionListener(new CihazController(this, fEdit));
+	    fEditButton.addActionListener(new CihazController(this, fEdit,uretici));
 	    result.add(fEditButton);
 
 	    JButton cancel = new JButton("Cancel");

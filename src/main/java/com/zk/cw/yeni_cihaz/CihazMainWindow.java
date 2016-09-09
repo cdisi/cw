@@ -29,6 +29,10 @@ public class CihazMainWindow {
 	    return INSTANCE;
 	}
 	
+	public void refreshView(){
+		yeniCihazTableModel.refreshView();
+	}	
+	
 	public void buildGui(JFrame mainFrame, JMenuBar menuBar){
 		yeniCihazTableModel = new YeniCihazTableModel();
 		yeniCihazTable = new JTable(yeniCihazTableModel);
@@ -36,7 +40,7 @@ public class CihazMainWindow {
 		buildContent(mainFrame);
 	}	
 	
-	  /** Build the menu bar. */
+	/** Build the menu bar. */
 	  
 	private void buildActionsAndMenu(JFrame aFrame, JMenuBar menuBar) {
 		menuBar.removeAll();

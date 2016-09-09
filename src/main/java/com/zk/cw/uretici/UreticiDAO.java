@@ -1,21 +1,12 @@
 package com.zk.cw.uretici;
 
 import com.zk.cw.exception.InvalidInputException;
-import com.zk.cw.main.MainWindow;
 import com.zk.cw.util.Util;
 
-import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
-import java.math.BigDecimal;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -24,19 +15,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Properties;
-import java.util.Scanner;
 import java.util.logging.Logger;
-import java.util.regex.Pattern;
 
-import org.ietf.jgss.GSSManager;
-
+import com.zk.cw.dao_factory.*;
 public final class UreticiDAO {
 	
     private static Connection conn = null;
@@ -46,11 +31,11 @@ public final class UreticiDAO {
     private static final String NULL = "NULL";
     private static final Logger fLogger = Util.getLogger(UreticiDAO.class);
     private final static Charset ENCODING = StandardCharsets.UTF_8;
-    
+	private static final String FIND_BY_ID = "SELECT * FROM uretici WHERE id = ?";		
+
     static {
       bul();
     }    
-
 
   public List<Uretici> list() {
     List<Uretici> result = new ArrayList<>(fTable.values());
@@ -61,6 +46,30 @@ public final class UreticiDAO {
   void delete(String aMovieId) {
     fTable.remove(aMovieId);
   }
+  
+	public Uretici findById(Integer id) throws SQLException {
+		Connection c = DaoFactory.openConnection();
+
+		PreparedStatement pstmt = c.prepareStatement(FIND_BY_ID);
+		pstmt.setInt(1, id);
+		
+		Uretici uretici = null;
+		ResultSet rset = pstmt.executeQuery();
+
+		while (rset.next()){
+			try {
+				uretici = new Uretici(rset.getInt("id"), rset.getString("ad"), rset.getString("logo_url"), rset.getString("gsm_arena_url"), rset.getInt("aktif"));
+			} catch (InvalidInputException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		pstmt.close();
+		c.close();
+
+		return uretici;
+	}
   
   public static ArrayList<Uretici> bul(int ureticiId) {
 	  Properties configProps = new Properties();
@@ -243,7 +252,5 @@ public final class UreticiDAO {
   private static String maybeNull(String aText) {
     return NULL.equals(aText) ? null : aText;
   }
-
-
 
 }
