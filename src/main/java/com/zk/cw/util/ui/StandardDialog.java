@@ -69,8 +69,9 @@ public final class StandardDialog {
     content.add(aBody);
     content.add(Box.createVerticalStrut(10));
     content.add(buildButtonPanel(aButtons));
-    fDialog.add(content);
-    fDialog.setResizable(false);
+    JScrollPane jsPane = new JScrollPane(content); 
+    fDialog.add(jsPane);
+    fDialog.setResizable(true);
     fDialog.setDefaultCloseOperation(aOnClose.getIntValue());
     addCancelByEscapeKey(aOnClose);
   }

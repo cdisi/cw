@@ -5,6 +5,8 @@ public class Cihaz {
 	private Integer id;
 	private String ad;
 	private Integer ureticiId;
+	private String resimAdi;
+	private String ikiGBant;
 	private String duyurulma;
 	private String duyurulmaYil;
 	private String duyurulmaAy;
@@ -39,6 +41,22 @@ public class Cihaz {
 	
 	public void setUreticiId(Integer ureticiId){
 		this.ureticiId=ureticiId;
+	}
+	
+	public String getResimAdi(){
+		return this.resimAdi;
+	}
+	
+	public void setResimAdi(String resimAdi){
+		this.resimAdi=resimAdi;
+	}
+	
+	public String getIkiGBant(){
+		return ikiGBant;
+	}
+	
+	public void setIkiGBant(String ikiGBant){
+		this.ikiGBant=ikiGBant;
 	}
 	
 	public void setDuyurulmaYil(String y){

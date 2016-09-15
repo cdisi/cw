@@ -21,7 +21,14 @@ public class YeniCihazTableModel extends AbstractTableModel {
 	}
 	
 	public void refreshView() {
+		try {
+			DAO.all();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		yeniCihazlar = DAO.list();
+		fireTableDataChanged();
 	}	
 	
 	public YeniCihaz getCihaz(int aRow){

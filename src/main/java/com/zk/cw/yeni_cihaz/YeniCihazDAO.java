@@ -15,9 +15,9 @@ import com.zk.cw.uretici.Uretici;
 public class YeniCihazDAO {
 	
 	private static Map<Integer, YeniCihaz> table = new LinkedHashMap<>();  
-	private static final String ALL = "SELECT * FROM cihaz_url WHERE aktif=0";
+	private static final String ALL = "SELECT * FROM cihaz_url WHERE aktif=0 LIMIT 100";
 	private static final String UPDATE = "UPDATE cihaz_url SET aktif=? WHERE url=?";
-	private static final String INSERT = "INSERT INTO cihaz (ad,uretici_id,aktif) VALUES (?,?,?)";
+	private static final String INSERT = "INSERT INTO cihaz (ad,uretici_id,aktif,resim_adi,duyurulma) VALUES (?,?,?,?,?)";
 		
 	static {
 		try {
@@ -27,10 +27,8 @@ public class YeniCihazDAO {
 		}
 	}
 	
-	public static List<YeniCihaz> all() throws SQLException {
-		
-		ArrayList<YeniCihaz> cihazlar = new ArrayList<YeniCihaz>();
-		
+	public static void all() throws SQLException {
+		table.clear();
 		Connection c = DaoFactory.openConnection();
 		PreparedStatement pstmt = c.prepareStatement(ALL);
 
@@ -44,7 +42,6 @@ public class YeniCihazDAO {
 		pstmt.close();
 		c.close();
 
-		return cihazlar;
 	}
 	
 	List<YeniCihaz> list() {
@@ -61,6 +58,8 @@ public class YeniCihazDAO {
 		pstmt.setString(1, cihaz.getAd());
 		pstmt.setInt(2, uretici.idAl());
 		pstmt.setInt(3, 1);
+		pstmt.setString(4, cihaz.getResimAdi());
+		pstmt.setString(5, cihaz.getDuyurulma());
 		pstmt.executeUpdate();
 
 		ResultSet rset = pstmt.getGeneratedKeys();
