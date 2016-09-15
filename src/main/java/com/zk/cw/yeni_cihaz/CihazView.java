@@ -70,6 +70,10 @@ public class CihazView {
 	private JTextField gpu = new JTextField(); 
 	private JTextField hafizaKarti = new JTextField(); 
 	private JTextField dahiliHafiza = new JTextField(); 
+	private JTextField arkaKam = new JTextField(); 
+	private JTextField arkaKamOz = new JTextField(); 
+	private JTextField video = new JTextField(); 
+	private JTextField onKam = new JTextField(); 
 	
 	CihazView(JFrame aParent, YeniCihaz selectedCihaz, Uretici uretici) {				    
 		fEdit = Edit.ADD;		
@@ -158,6 +162,19 @@ public class CihazView {
 	public String getDahiliHafiza(){
 		return this.dahiliHafiza.getText();
 	}	
+	public String getArkaKam(){
+		return this.arkaKam.getText();
+	}	
+	public String getArkaKamOz(){
+		return this.arkaKamOz.getText();
+	}	
+	public String getVideo(){
+		return this.video.getText();
+	}	
+	public String getOnKam(){
+		return this.onKam.getText();
+	}	
+	
 	private void buildGui(JFrame aParent, String aDialogTitle) {
 		fStandardDialog = new StandardDialog(
 		      aParent, aDialogTitle, true, OnClose.DISPOSE, getUserInputArea(), getButtons()
@@ -185,6 +202,10 @@ public class CihazView {
 	    addTextField("İşletim Sistemi",this.os,"Yonga Seti",this.yongaSeti, result);
 	    addTextField( "CPU",this.cpu,"GPU",this.gpu, result);
 	    addTextField( "Hafıza Kartı",this.hafizaKarti,"Dahili Hafıza",this.dahiliHafiza, result);
+	    addTextField(this.arkaKam, "Arka Kamera:", result);
+	    addTextField(this.arkaKamOz, "Özellikler:", result);
+	    addTextField(this.video, "Video:", result);
+	    addTextField(this.onKam, "Ön Kamera:", result);
 	    addPictureField(this.resimIkon,"Resim:", result);
 	    UiUtil.alignAllX(result, UiUtil.AlignX.LEFT);
 	    return result;
@@ -229,6 +250,10 @@ public class CihazView {
 		this.gpu.setText(gsmParser.gpuBul());
 		this.hafizaKarti.setText(gsmParser.hafizaKartiBul());
 		this.dahiliHafiza.setText(gsmParser.dahiliHafizaBul());
+		this.arkaKam.setText(gsmParser.arkaKamBul());
+		this.arkaKamOz.setText(gsmParser.arkaKamOzBul());
+		this.video.setText(gsmParser.videoBul());
+		this.onKam.setText(gsmParser.onKamBul());
 		
 	    try {
 			this.resimUrl = new URL( gsmParser.resimBul());

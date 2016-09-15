@@ -113,6 +113,18 @@ public class CihazController implements ActionListener {
 			if(!fView.getDahiliHafiza().equals("")){
 				cihazOzellikAtamaList.add(new CihazOzellikAtama(5,20, fView.getDahiliHafiza().trim()));
 			}
+			if(!fView.getArkaKam().equals("")){
+				cihazOzellikAtamaList.add(new CihazOzellikAtama(6,21, fView.getArkaKam().trim()));
+			}
+			if(!fView.getArkaKamOz().equals("")){
+				cihazOzellikAtamaList.add(new CihazOzellikAtama(6,22, fView.getArkaKamOz().trim()));
+			}
+			if(!fView.getVideo().equals("")){
+				cihazOzellikAtamaList.add(new CihazOzellikAtama(6,23, fView.getVideo().trim()));
+			}
+			if(!fView.getOnKam().equals("")){
+				cihazOzellikAtamaList.add(new CihazOzellikAtama(6,24, fView.getOnKam().trim()));
+			}
 	    }
 	    catch(InvalidInputException ex){
 	      informUserOfProblems(ex);

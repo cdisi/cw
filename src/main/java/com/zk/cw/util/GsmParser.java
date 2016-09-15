@@ -1,6 +1,7 @@
 package com.zk.cw.util;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -241,6 +242,38 @@ public class GsmParser {
 		Element elm = doc.select("a:contains(Internal)").first();
 	    if(elm != null){
 	    	deger = elm.parent().nextElementSibling().text().replaceAll("\\(.+\\)", "").replace("or", "veya").trim();		
+	    }
+		return deger;
+	}	
+	public String arkaKamBul(){
+	    String deger=null;
+		Element elm = doc.select("a:contains(Primary)").first();
+	    if(elm != null){
+	    	deger = elm.parent().nextElementSibling().text().toLowerCase(Locale.ENGLISH).replace("no", "Yok").replace("laser & phase detection autofocus", "lazer ve faz algılama otofokus").replace("autofocus", "otofokus").replace("dual-LED flash", "Çift LED flaş").replace("LED flash", "LED flaş").replace("optical zoom", "optik zum").trim();		
+	    }
+		return deger;
+	}	
+	public String arkaKamOzBul(){
+	    String deger=null;
+		Element elm = doc.select("a:contains(Features)").first();
+	    if(elm != null){
+	    	deger = elm.parent().nextElementSibling().text().replace("No", "Yok").replace("Yes", "Var").toLowerCase(Locale.ENGLISH).replace("sensor size", "sensör genişliği").replace("pixel size", "piksel genişliği").replace("face detection", "yüz bulma").replace("face/smile detection", "yüz/gülümseme algılama").replace("touch focus", "dokunmatik odaklama").replace("geo-tagging", "coğrafi konum etiketleme").replace("laser & phase detection autofocus", "lazer ve faz algılama otofokus").replace("autofocus", "otofokus").replace("dual-LED flash", "Çift LED flaş").replace("LED flash", "LED flaş").replace("optical zoom", "optik zum").trim();		
+	    }
+		return deger;
+	}	
+	public String videoBul(){
+	    String deger=null;
+		Element elm = doc.select("a:contains(Video)").first();
+	    if(elm != null){
+	    	deger = elm.parent().nextElementSibling().text().replace("No", "Yok").replace("Yes", "Var").trim();		
+	    }
+		return deger;
+	}	
+	public String onKamBul(){
+	    String deger=null;
+		Element elm = doc.select("a:contains(Secondary)").first();
+	    if(elm != null){
+	    	deger = elm.parent().nextElementSibling().text().replace("No", "Yok").toLowerCase(Locale.ENGLISH).replace("laser & phase detection autofocus", "lazer ve faz algılama otofokus").replace("autofocus", "otofokus").replace("dual-LED flash", "Çift LED flaş").replace("LED flash", "LED flaş").replace("optical zoom", "optik zum").trim();		
 	    }
 		return deger;
 	}	
