@@ -148,7 +148,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(SIM)").first();
 	    if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replace("Yes", "Var").replace("No", "Yok").replace("Single", "Tek").replace("Dual", "Çift").replace("Micro-SIM", "Mikro-SIM").replace("or", "veya").replace("Triple", "Üç");		
+	    	deger = elm.parent().nextElementSibling().text().replace("Yes", "Var").replace("No", "Yok").replace("Single", "Tek").replace("Dual", "Çift").replace("Micro-SIM", "Mikro-SIM").replace("or", "veya").replace("Triple", "Üç").replace(", dual stand-by", "");		
 	    }
 		return deger;
 	}
@@ -213,7 +213,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("td.ttl a:contains(CPU)").first();
 	    if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().trim();		
+	    	deger = elm.parent().nextElementSibling().text().replaceAll("Quad-core","Dört Çekirdek").replaceAll("Dual-core","Çift Çekirdek").replaceAll("Hexa-core","Altı Çekirdek").trim();		
 	    }
 		return deger;
 	}	
@@ -249,7 +249,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(Primary)").first();
 	    if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().toLowerCase(Locale.ENGLISH).replace("no", "Yok").replace("laser & phase detection autofocus", "lazer ve faz algılama otofokus").replace("autofocus", "otofokus").replace("dual-LED flash", "Çift LED flaş").replace("LED flash", "LED flaş").replace("optical zoom", "optik zum").trim();		
+	    	deger = elm.parent().nextElementSibling().text().replace(", check quality", "").replace("No", "Yok").replace("Yes", "Var").replaceAll(".ensor size", "sensör genişliği").replaceAll(".ixel size", "piksel genişliği").replaceAll(".ace detection", "yüz bulma").replaceAll(".ace/smile detection", "yüz/gülümseme algılama").replaceAll(".ouch focus", "dokunmatik odaklama").replaceAll(".eo-tagging", "coğrafi konum etiketleme").replaceAll(".aser & phase detection autofocus", "lazer ve faz algılama otofokus").replaceAll(".utofocus", "otofokus").replaceAll(".ual-LED flash", "Çift LED flaş").replaceAll(".ED flash", "LED flaş").replaceAll(".ptical zoom", "optik zum").trim();		
 	    }
 		return deger;
 	}	
@@ -257,7 +257,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(Features)").first();
 	    if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replace("No", "Yok").replace("Yes", "Var").toLowerCase(Locale.ENGLISH).replace("sensor size", "sensör genişliği").replace("pixel size", "piksel genişliği").replace("face detection", "yüz bulma").replace("face/smile detection", "yüz/gülümseme algılama").replace("touch focus", "dokunmatik odaklama").replace("geo-tagging", "coğrafi konum etiketleme").replace("laser & phase detection autofocus", "lazer ve faz algılama otofokus").replace("autofocus", "otofokus").replace("dual-LED flash", "Çift LED flaş").replace("LED flash", "LED flaş").replace("optical zoom", "optik zum").trim();		
+	    	deger = elm.parent().nextElementSibling().text().replace("No", "Yok").replace("Yes", "Var").replaceAll(".ensor size", "sensör genişliği").replaceAll(".ixel size", "piksel genişliği").replaceAll(".ace detection", "yüz bulma").replaceAll(".ace/smile detection", "yüz/gülümseme algılama").replaceAll(".ouch focus", "dokunmatik odaklama").replaceAll(".eo-tagging", "coğrafi konum etiketleme").replaceAll(".aser & phase detection autofocus", "lazer ve faz algılama otofokus").replaceAll(".utofocus", "otofokus").replaceAll(".ual-LED flash", "Çift LED flaş").replaceAll(".ED flash", "LED flaş").replaceAll(".ptical zoom", "optik zum").trim();		
 	    }
 		return deger;
 	}	
@@ -265,7 +265,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(Video)").first();
 	    if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replace("No", "Yok").replace("Yes", "Var").trim();		
+	    	deger = elm.parent().nextElementSibling().text().replace(", check quality", "").replace("No", "Yok").replace("Yes", "Var").trim();		
 	    }
 		return deger;
 	}	
@@ -273,10 +273,140 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(Secondary)").first();
 	    if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replace("No", "Yok").toLowerCase(Locale.ENGLISH).replace("laser & phase detection autofocus", "lazer ve faz algılama otofokus").replace("autofocus", "otofokus").replace("dual-LED flash", "Çift LED flaş").replace("LED flash", "LED flaş").replace("optical zoom", "optik zum").trim();		
+	    	deger = elm.parent().nextElementSibling().text().replace(", check quality", "").replace("No", "Yok").replace("Yes", "Var").replaceAll(".ensor size", "sensör genişliği").replaceAll(".ixel size", "piksel genişliği").replaceAll(".ace detection", "yüz bulma").replaceAll(".ace/smile detection", "yüz/gülümseme algılama").replaceAll(".ouch focus", "dokunmatik odaklama").replaceAll(".eo-tagging", "coğrafi konum etiketleme").replaceAll(".aser & phase detection autofocus", "lazer ve faz algılama otofokus").replaceAll(".utofocus", "otofokus").replaceAll(".ual-LED flash", "Çift LED flaş").replaceAll(".ED flash", "LED flaş").replaceAll(".ptical zoom", "optik zum").trim();		
 	    }
 		return deger;
 	}	
+	public String uyariTipBul(){
+	    String deger=null;
+		Element elm = doc.select("a:contains(Alert types)").first();
+	    if(elm != null){
+	    	deger = elm.parent().nextElementSibling().text().replaceAll(".ibration", "Titreşim").replaceAll(".ingtones", "zil sesleri").trim();		
+	    }
+		return deger;
+	}	
+	
+	public String hoparlorBul(){
+	    String deger=null;
+		Element elm = doc.select("a:contains(Loudspeaker)").first();
+	    if(elm != null){
+	    	deger = elm.parent().nextElementSibling().text().replaceAll("Yes", "Var").replaceAll("No", "Yok").trim();		
+	    }
+		return deger;
+	}	
+	public String kulGirBul(){
+	    String deger=null;
+		Element elm = doc.select("a:contains(3.5mm jack)").first();
+	    if(elm != null){
+	    	deger = elm.parent().nextElementSibling().text().replaceAll("Yes", "Var").replaceAll("No", "Yok").trim();		
+	    }
+		return deger;
+	}	
+	public String wlanBul(){
+	    String deger=null;
+		Element elm = doc.select("a:contains(WLAN)").first();
+	    if(elm != null){
+	    	deger = elm.parent().nextElementSibling().text().replaceAll("dual-band", "çift anten").replaceAll("Yes", "Var").replaceAll("No", "Yok").trim();		
+	    }
+		return deger;
+	}	
+	public String bluetoothBul(){
+	    String deger=null;
+		Element elm = doc.select("a:contains(Bluetooth)").first();
+	    if(elm != null){
+	    	deger = elm.parent().nextElementSibling().text().replaceAll("dual-band", "çift anten").replaceAll("Yes", "Var").replaceAll("No", "Yok").trim();		
+	    }
+		return deger;
+	}	
+	public String gpsBul(){
+	    String deger=null;
+		Element elm = doc.select("a:contains(GPS)").first();
+	    if(elm != null){
+	    	deger = elm.parent().nextElementSibling().text().replaceAll(" with", "").replaceAll("Yes", "Var").replaceAll("No", "Yok").trim();		
+	    }
+		return deger;
+	}	
+	public String nfcBul(){
+	    String deger=null;
+		Element elm = doc.select("a:contains(NFC)").first();
+	    if(elm != null){
+	    	deger = elm.parent().nextElementSibling().text().replaceAll("Yes", "Var").replaceAll("No", "Yok").trim();		
+	    }
+		return deger;
+	}	
+	public String kizilOtBul(){
+	    String deger=null;
+		Element elm = doc.select("a:contains(Infrared port)").first();
+	    if(elm != null){
+	    	deger = elm.parent().nextElementSibling().text().replaceAll("Yes", "Var").replaceAll("No", "Yok").trim();		
+	    }
+		return deger;
+	}	
+	public String radyoBul(){
+	    String deger=null;
+		Element elm = doc.select("a:contains(Radio)").first();
+	    if(elm != null){
+	    	deger = elm.parent().nextElementSibling().text().replaceAll("Yes", "Var").replaceAll("No", "Yok").replaceAll(".adio", "Radyo").replace("To be confirmed", "").trim();		
+	    }
+		return deger;
+	}		
+	public String usbBul(){
+	    String deger=null;
+		Element elm = doc.select("a:contains(USB)").first();
+	    if(elm != null){
+	    	deger = elm.parent().nextElementSibling().text().replaceAll("Yes", "Var").replaceAll("No", "Yok").replaceAll(" reversible connector", "").trim();		
+	    }
+		return deger;
+	}		
+	public String pilBul(){
+	    String deger=null;
+		Element elm = doc.select("th:contains(Battery)").first();
+		if(elm != null){
+	    	deger = elm.nextElementSibling().nextElementSibling().text().replaceAll("Non-removable", "Çıkarılamaz").replaceAll("Removable", "Çıkarılabilir").replaceAll("battery", "batarya").trim();		
+	    }
+		return deger;
+	}	
+	public String bekSureBul(){
+	    String deger=null;
+		Element elm = doc.select("a:contains(Stand-by)").first();
+		if(elm != null){
+	    	deger = elm.parent().nextElementSibling().text().replace("(multimedia)", "").replaceAll("Up to ", "").replaceAll("h", "saat ").replaceAll("min", "dakika").trim();		
+	    }
+		return deger;
+	}	
+	public String konSureBul(){
+	    String deger=null;
+		Element elm = doc.select("a:contains(Talk time)").first();
+		if(elm != null){
+	    	deger = elm.parent().nextElementSibling().text().replace("(multimedia)", "").replaceAll("Up to ", "").replaceAll("h", "saat ").replaceAll("min", "dakika").replaceAll("(multimedia)", "").trim();		
+	    }
+		return deger;
+	}	
+	
+	public String sensorBul(){
+	    String deger=null;
+		Element elm = doc.select("a:contains(Sensors)").first();
+		if(elm != null){
+	    	deger = elm.parent().nextElementSibling().text().toLowerCase(Locale.ENGLISH).replace("accelerometer", "İvmeölçer").replace("proximity", "Yakınlık Sensörü").replace("compass", "Pusula").replace("fingerprint", "Parmak İzi").replace("color spectrum", "Renk Spektrumu").replace("gyro", "Jiroskop").trim();		
+	    }
+		return deger;
+	}	
+	public String mesajBul(){
+	    String deger=null;
+		Element elm = doc.select("a:contains(Messaging)").first();
+		if(elm != null){
+	    	deger = elm.parent().nextElementSibling().text().replace("(threaded view)", "").trim();		
+	    }
+		return deger;
+	}	
+	public String javaBul(){
+	    String deger=null;
+		Element elm = doc.select("a:contains(Java)").first();
+		if(elm != null){
+	    	deger = elm.parent().nextElementSibling().text().replace("Yes", "Var").replace("No", "Yok").trim();		
+	    }
+		return deger;
+	}		
 	
 }
 

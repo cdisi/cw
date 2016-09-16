@@ -125,7 +125,62 @@ public class CihazController implements ActionListener {
 			if(!fView.getOnKam().equals("")){
 				cihazOzellikAtamaList.add(new CihazOzellikAtama(6,24, fView.getOnKam().trim()));
 			}
-	    }
+			if(!fView.getUyariTip().equals("")){
+				cihazOzellikAtamaList.add(new CihazOzellikAtama(7,25, fView.getUyariTip().trim()));
+			}
+			if(!fView.getHoparlor().equals("")){
+				cihazOzellikAtamaList.add(new CihazOzellikAtama(7,26, fView.getHoparlor().trim()));
+			}
+			if(!fView.getKulGir().equals("")){
+				cihazOzellikAtamaList.add(new CihazOzellikAtama(7,27, fView.getKulGir().trim()));
+			}
+			if(!fView.getSesDiger().equals("")){
+				cihazOzellikAtamaList.add(new CihazOzellikAtama(7,28, fView.getSesDiger().trim()));
+			}
+			
+			if(!fView.getWlan().equals("")){
+				cihazOzellikAtamaList.add(new CihazOzellikAtama(8,29, fView.getWlan().trim()));
+			}
+			if(!fView.getBluetooth().equals("")){
+				cihazOzellikAtamaList.add(new CihazOzellikAtama(8,30, fView.getBluetooth().trim()));
+			}
+			if(!fView.getGps().equals("")){
+				cihazOzellikAtamaList.add(new CihazOzellikAtama(8,31, fView.getGps().trim()));
+			}
+			if(!fView.getNfc().equals("")){
+				cihazOzellikAtamaList.add(new CihazOzellikAtama(8,32, fView.getNfc().trim()));
+			}
+			if(!fView.getKizilOt().equals("")){
+				cihazOzellikAtamaList.add(new CihazOzellikAtama(8,33, fView.getKizilOt().trim()));
+			}
+			if(!fView.getRadyo().equals("")){
+				cihazOzellikAtamaList.add(new CihazOzellikAtama(8,34, fView.getRadyo().trim()));
+			}
+			if(!fView.getUsb().equals("")){
+				cihazOzellikAtamaList.add(new CihazOzellikAtama(8,35, fView.getUsb().trim()));
+			}
+			if(!fView.getPil().equals("")){
+				cihazOzellikAtamaList.add(new CihazOzellikAtama(9,36, fView.getPil().trim()));
+			}
+			if(!fView.getBekSure().equals("")){
+				cihazOzellikAtamaList.add(new CihazOzellikAtama(9,37, fView.getBekSure().trim()));
+			}
+			if(!fView.getKonSure().equals("")){
+				cihazOzellikAtamaList.add(new CihazOzellikAtama(9,38, fView.getKonSure().trim()));
+			}
+
+			if(!fView.getSensor().equals("")){
+				cihazOzellikAtamaList.add(new CihazOzellikAtama(10,40, fView.getSensor().trim()));
+			}
+			if(!fView.getMesaj().equals("")){
+				cihazOzellikAtamaList.add(new CihazOzellikAtama(10,41, fView.getMesaj().trim()));
+			}
+			if(!fView.getJava().equals("")){
+				cihazOzellikAtamaList.add(new CihazOzellikAtama(10,42, fView.getJava().trim()));
+			}
+
+			
+		}
 	    catch(InvalidInputException ex){
 	      informUserOfProblems(ex);
 	    }

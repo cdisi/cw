@@ -74,6 +74,23 @@ public class CihazView {
 	private JTextField arkaKamOz = new JTextField(); 
 	private JTextField video = new JTextField(); 
 	private JTextField onKam = new JTextField(); 
+	private JTextField uyariTip = new JTextField(); 
+	private JTextField hoparlor = new JTextField(); 
+	private JTextField kulGir = new JTextField(); 
+	private JTextField sesDiger = new JTextField(); 
+	private JTextField wlan = new JTextField(); 
+	private JTextField bluetooth = new JTextField(); 
+	private JTextField gps = new JTextField(); 
+	private JTextField nfc = new JTextField(); 
+	private JTextField kizilOt = new JTextField(); 
+	private JTextField radyo = new JTextField(); 
+	private JTextField usb = new JTextField(); 
+	private JTextField pil = new JTextField(); 
+	private JTextField bekSure = new JTextField(); 
+	private JTextField konSure = new JTextField(); 
+	private JTextField sensor = new JTextField(); 
+	private JTextField mesaj = new JTextField(); 
+	private JTextField java = new JTextField(); 
 	
 	CihazView(JFrame aParent, YeniCihaz selectedCihaz, Uretici uretici) {				    
 		fEdit = Edit.ADD;		
@@ -174,7 +191,57 @@ public class CihazView {
 	public String getOnKam(){
 		return this.onKam.getText();
 	}	
-	
+	public String getUyariTip(){
+		return this.uyariTip.getText();
+	}	
+	public String getHoparlor(){
+		return this.hoparlor.getText();
+	}	
+	public String getKulGir(){
+		return this.kulGir.getText();
+	}	
+	public String getSesDiger(){
+		return this.sesDiger.getText();
+	}	
+	public String getWlan(){
+		return this.wlan.getText();
+	}	
+	public String getBluetooth(){
+		return this.bluetooth.getText();
+	}	
+	public String getGps(){
+		return this.gps.getText();
+	}	
+	public String getNfc(){
+		return this.nfc.getText();
+	}		
+	public String getKizilOt(){
+		return this.kizilOt.getText();
+	}		
+	public String getRadyo(){
+		return this.radyo.getText();
+	}	
+	public String getUsb(){
+		return this.usb.getText();
+	}		
+	public String getPil(){
+		return this.pil.getText();
+	}		
+	public String getBekSure(){
+		return this.bekSure.getText();
+	}		
+	public String getKonSure(){
+		return this.konSure.getText();
+	}		
+	public String getSensor(){
+		return this.sensor.getText();
+	}		
+	public String getMesaj(){
+		return this.mesaj.getText();
+	}		
+	public String getJava(){
+		return this.java.getText();
+	}		
 	private void buildGui(JFrame aParent, String aDialogTitle) {
 		fStandardDialog = new StandardDialog(
 		      aParent, aDialogTitle, true, OnClose.DISPOSE, getUserInputArea(), getButtons()
@@ -186,8 +253,7 @@ public class CihazView {
 	    JPanel result = new JPanel();
 	    result.setLayout(new BoxLayout(result, BoxLayout.Y_AXIS));
 
-	    addTextField(this.url, "Cihaz URL:", result);
-	    addTextField(this.ad, "Ad:", result);
+	    addTextField("Ad:",this.ad,"Cihaz URL:", this.url, result);
 	    addTextField(this.ikiGBant, "2G Bant:", result);
 	    addTextField(this.ucGBant, "3G Bant:", result);
 	    addTextField(this.dortGBant, "4G Bant:", result);
@@ -206,6 +272,16 @@ public class CihazView {
 	    addTextField(this.arkaKamOz, "Özellikler:", result);
 	    addTextField(this.video, "Video:", result);
 	    addTextField(this.onKam, "Ön Kamera:", result);
+	    addTextField("Uyarı Tipleri:",this.uyariTip,"Kullaklık Girişi:",this.kulGir, result);
+	    addTextField( "Hoparlör:",this.hoparlor,"Diğer:",this.sesDiger, result);
+	    addTextField( "Wlan:",this.wlan,"Bluetooth:",this.bluetooth, result);
+	    addTextField( "GPS:",this.gps,"NFC:",this.nfc, result);
+	    addTextField( "Kızıl Ötesi:",this.kizilOt,"Radyo:",this.radyo, result);
+	    addTextField(this.usb, "USB:", result);
+	    addTextField(this.pil, "Pil:", result);
+	    addTextField("Bekleme Süresi:",this.bekSure,"Konuşöa Süresi:",this.konSure, result);
+	    addTextField(this.sensor, "Sensör:", result);
+	    addTextField("Mesajlaşma:",this.mesaj,"Java",this.java, result);
 	    addPictureField(this.resimIkon,"Resim:", result);
 	    UiUtil.alignAllX(result, UiUtil.AlignX.LEFT);
 	    return result;
@@ -254,6 +330,22 @@ public class CihazView {
 		this.arkaKamOz.setText(gsmParser.arkaKamOzBul());
 		this.video.setText(gsmParser.videoBul());
 		this.onKam.setText(gsmParser.onKamBul());
+		this.uyariTip.setText(gsmParser.uyariTipBul());
+		this.hoparlor.setText(gsmParser.hoparlorBul());
+		this.kulGir.setText(gsmParser.kulGirBul());
+		this.wlan.setText(gsmParser.wlanBul());
+		this.bluetooth.setText(gsmParser.bluetoothBul());
+		this.gps.setText(gsmParser.gpsBul());
+		this.nfc.setText(gsmParser.nfcBul());
+		this.kizilOt.setText(gsmParser.kizilOtBul());
+		this.radyo.setText(gsmParser.radyoBul());
+		this.usb.setText(gsmParser.usbBul());
+		this.pil.setText(gsmParser.pilBul());
+		this.bekSure.setText(gsmParser.bekSureBul());
+		this.konSure.setText(gsmParser.konSureBul());
+		this.sensor.setText(gsmParser.sensorBul());
+		this.mesaj.setText(gsmParser.mesajBul());
+		this.java.setText(gsmParser.javaBul());
 		
 	    try {
 			this.resimUrl = new URL( gsmParser.resimBul());
@@ -326,14 +418,13 @@ public class CihazView {
 	}	
 	
 	private void addPictureField(ImageIcon resimIkon, String aLabel, JPanel aPanel) {
-	    JPanel panel = new JPanel();
+		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
 		JLabel label = new JLabel(aLabel);
-		label.setPreferredSize(new Dimension(120, 18));
+		label.setPreferredSize(new Dimension(100, 18));
 		panel.add(label);
 	    JLabel resimLabel = new JLabel(resimIkon);
 	    resimLabel.setPreferredSize(new Dimension(500, 100));
-	    resimLabel.setHorizontalAlignment(SwingConstants.LEFT);
 	    panel.add(resimLabel);
 	    aPanel.add(panel);
 	}	
