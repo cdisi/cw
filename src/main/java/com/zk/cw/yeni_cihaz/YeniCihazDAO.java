@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,9 +17,9 @@ import com.zk.cw.uretici.Uretici;
 public class YeniCihazDAO {
 	
 	private static Map<Integer, YeniCihaz> table = new LinkedHashMap<>();  
-	private static final String ALL = "SELECT * FROM cihaz_url WHERE aktif=0 LIMIT 100";
+	private static final String ALL = "SELECT * FROM cihaz_url WHERE aktif=0";
 	private static final String UPDATE = "UPDATE cihaz_url SET aktif=? WHERE url=?";
-	private static final String INSERT = "INSERT INTO cihaz (ad,uretici_id,aktif,resim_adi,duyurulma) VALUES (?,?,?,?,?)";
+	private static final String INSERT = "INSERT INTO cihaz (ad,uretici_id,aktif,resim_adi,duyurulma,created_at,turu) VALUES (?,?,?,?,?,?,?)";
 		
 	static {
 		try {
@@ -60,6 +62,11 @@ public class YeniCihazDAO {
 		pstmt.setInt(3, 1);
 		pstmt.setString(4, cihaz.getResimAdi());
 		pstmt.setString(5, cihaz.getDuyurulma());
+		
+	    Date dNow = new Date( );
+	    SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");	      
+		pstmt.setString(6, ft.format(dNow));
+		pstmt.setInt(7, cihaz.getTuru());
 		pstmt.executeUpdate();
 
 		ResultSet rset = pstmt.getGeneratedKeys();

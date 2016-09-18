@@ -69,8 +69,11 @@ public class CihazController implements ActionListener {
 				if(fCihaz.getDuyurulma().equals(""))
 					fCihaz.setDuyurulma(fView.getDuyurulmaYil());
 				else
-					fCihaz.setDuyurulma(fCihaz.getDuyurulma()+", "+fView.getDuyurulmaAy());
+					fCihaz.setDuyurulma(fCihaz.getDuyurulma()+"-"+fView.getDuyurulmaAy());
 			}
+			Object cTur = fView.getCihazTur();
+			fCihaz.setTuru(((CihazTur)cTur).getValue());
+			
 			if(!fView.getBoyutlar().equals("")){
 				cihazOzellikAtamaList.add(new CihazOzellikAtama(2,7, fView.getBoyutlar().trim()));
 			}
@@ -95,8 +98,32 @@ public class CihazController implements ActionListener {
 			if(!fView.getEkranKor().equals("")){
 				cihazOzellikAtamaList.add(new CihazOzellikAtama(3,14, fView.getEkranKor().trim()));
 			}
+			
+			String osId=null;
 			if(!fView.getOs().equals("")){
-				cihazOzellikAtamaList.add(new CihazOzellikAtama(4,15, fView.getOs().trim()));
+	  			  try {
+	  				  osId = CihazOS.find(fView.getOs());
+	  				  if(osId == null){						
+	 	  				 osId = CihazOS.insert(fView.getOs());
+					  }
+					  cihazOzellikAtamaList.add(new CihazOzellikAtama(4,15, osId));
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}				
+			}
+			String osSurumId=null;
+			if(!fView.getOsSurum().equals("")){
+	  			  try {
+	  				  osSurumId = CihazOSSurum.find(osId, fView.getOsSurum());
+	  				  if(osSurumId == null){
+	  					  osSurumId = CihazOSSurum.insert(osId, fView.getOsSurum());
+					  }
+	  				  cihazOzellikAtamaList.add(new CihazOzellikAtama(4,43, osSurumId));
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}				
 			}
 			if(!fView.getYongaSeti().equals("")){
 				cihazOzellikAtamaList.add(new CihazOzellikAtama(4,16, fView.getYongaSeti().trim()));
@@ -168,6 +195,9 @@ public class CihazController implements ActionListener {
 			if(!fView.getKonSure().equals("")){
 				cihazOzellikAtamaList.add(new CihazOzellikAtama(9,38, fView.getKonSure().trim()));
 			}
+			if(!fView.getRenk().equals("")){
+				cihazOzellikAtamaList.add(new CihazOzellikAtama(10,39, fView.getRenk().trim()));
+			}
 
 			if(!fView.getSensor().equals("")){
 				cihazOzellikAtamaList.add(new CihazOzellikAtama(10,40, fView.getSensor().trim()));
@@ -191,7 +221,12 @@ public class CihazController implements ActionListener {
 	  		  for(CihazOzellikAtama cihazOzellikAtama : cihazOzellikAtamaList){
 					CihazOzellikAtamaDAO.insert(fCihaz, cihazOzellikAtama);
 			  }
-    		  cihazDAO.update(fView.getUrl());
+	  		  if(!fView.getEkranGen().equals("")){
+	  			  if(!EkranBuyukluguDAO.find(fView.getEkranGen())){
+	  				  EkranBuyukluguDAO.insert(fView.getEkranGen());
+	  			  }
+	  		  }
+	  		  cihazDAO.update(fView.getUrl());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -220,9 +255,9 @@ public class CihazController implements ActionListener {
 		  
 	private void informUserOfProblems(InvalidInputException aException) {
 	    Object[] messages = aException.getErrorMessages().toArray();
-	    JOptionPane.showMessageDialog(
-	      fView.getDialog(), messages, 
-	      "Movie cannot be saved", JOptionPane.ERROR_MESSAGE
-	    );
+	    //JOptionPane.showMessageDialog(
+	      //fView.getDialog(), messages, 
+	      //"Movie cannot be saved", JOptionPane.ERROR_MESSAGE
+	    //);
 	}	
 }

@@ -11,6 +11,7 @@ public class Cihaz {
 	private String duyurulmaYil;
 	private String duyurulmaAy;
 	private String sim;
+	private Integer turu;
 	
 	public Cihaz(){
 	}	
@@ -89,5 +90,12 @@ public class Cihaz {
 	
 	public String getSim(){
 		return this.sim;
-	}	
+	}
+	public void setTuru(Integer s){
+		this.turu=s;
+	}
+	
+	public Integer getTuru(){
+		return this.turu;
+	}		
 }

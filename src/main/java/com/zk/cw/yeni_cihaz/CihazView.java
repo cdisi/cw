@@ -12,7 +12,10 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.Buffer;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
@@ -53,9 +56,11 @@ public class CihazView {
 	private JTextField hiz = new JTextField(); 
 	private JTextField gprs = new JTextField(); 
 	private JTextField edge = new JTextField(); 
-	private String aylarTr[]={"Ocak", "Şubat", "Mart ", "Nisan", "Mayıs", "Haziran", "Temmuz", "Agustos", "Eylül", "Ekim ", "Kasım", "Aralık"};
+    String aylarTr[] = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
+	//private String aylarTr[]={"Ocak", "Şubat", "Mart ", "Nisan", "Mayıs", "Haziran", "Temmuz", "Agustos", "Eylül", "Ekim ", "Kasım", "Aralık"};
 	private JComboBox duyurulmaYil = new JComboBox();
 	private JComboBox duyurulmaAy = new JComboBox();
+	private JComboBox<CihazTur> cihazTur = new JComboBox();
 	private JTextField boyutlar = new JTextField(); 
 	private JTextField agirlik = new JTextField(); 
 	private JTextField sim = new JTextField(); 
@@ -65,6 +70,7 @@ public class CihazView {
 	private JTextField multiTouch = new JTextField(); 
 	private JTextField ekranKor = new JTextField(); 
 	private JTextField os = new JTextField(); 
+	private JTextField osSurum = new JTextField(); 
 	private JTextField yongaSeti = new JTextField(); 
 	private JTextField cpu = new JTextField(); 
 	private JTextField gpu = new JTextField(); 
@@ -88,6 +94,7 @@ public class CihazView {
 	private JTextField pil = new JTextField(); 
 	private JTextField bekSure = new JTextField(); 
 	private JTextField konSure = new JTextField(); 
+	private JTextField renk = new JTextField(); 
 	private JTextField sensor = new JTextField(); 
 	private JTextField mesaj = new JTextField(); 
 	private JTextField java = new JTextField(); 
@@ -137,6 +144,9 @@ public class CihazView {
 	public String getDuyurulmaAy(){
 		return this.duyurulmaAy.getSelectedItem().toString();
 	}	
+	public Object getCihazTur(){
+		return this.cihazTur.getSelectedItem();
+	}		
 	public String getBoyutlar(){
 		return this.boyutlar.getText();
 	}	
@@ -163,6 +173,9 @@ public class CihazView {
 	}		
 	public String getOs(){
 		return this.os.getText();
+	}		
+	public String getOsSurum(){
+		return this.osSurum.getText();
 	}		
 	public String getYongaSeti(){
 		return this.yongaSeti.getText();
@@ -236,6 +249,9 @@ public class CihazView {
 	public String getSensor(){
 		return this.sensor.getText();
 	}		
+	public String getRenk(){
+		return this.renk.getText();
+	}		
 	public String getMesaj(){
 		return this.mesaj.getText();
 	}		
@@ -254,33 +270,28 @@ public class CihazView {
 	    result.setLayout(new BoxLayout(result, BoxLayout.Y_AXIS));
 
 	    addTextField("Ad:",this.ad,"Cihaz URL:", this.url, result);
-	    addTextField(this.ikiGBant, "2G Bant:", result);
-	    addTextField(this.ucGBant, "3G Bant:", result);
-	    addTextField(this.dortGBant, "4G Bant:", result);
-	    addTextField(this.hiz, "Hız:", result);
+	    addTextField("2G Bant:", this.ikiGBant,"3G Bant:",this.ucGBant, result);
+	    addTextField( "4G Bant:",this.dortGBant,"Hız:",this.hiz, result);
 	    addTextField("GPRS:",this.gprs, "EDGE:", this.edge, result);
-	    addDuyurulmaField(this.duyurulmaYil,this.duyurulmaAy, "Duyurulma:", result);
+	    addDuyurulmaField(this.duyurulmaYil,this.duyurulmaAy, "Duyurulma:", this.cihazTur, "Türü:", result);
 	    addTextField("Boyutlar:", this.boyutlar, "Ağırlık:", this.agirlik, result);
 	    addTextField(this.sim, "SIM:", result);
 	    addTextField("Ekran Tipi:", this.ekranTipi,"Ekran Genişliği:", this.ekranGen, result);
 	    addTextField("Ekran Çözünürlüğü:",this.ekranCoz,"Çoklu-dokunmatik", this.multiTouch, result);
 	    addTextField(this.ekranKor, "Ekran Koruma", result);
-	    addTextField("İşletim Sistemi",this.os,"Yonga Seti",this.yongaSeti, result);
+	    addTextField("İşletim Sistemi",this.os,"Sürüm",this.osSurum,"Yonga Seti",this.yongaSeti, result);
 	    addTextField( "CPU",this.cpu,"GPU",this.gpu, result);
 	    addTextField( "Hafıza Kartı",this.hafizaKarti,"Dahili Hafıza",this.dahiliHafiza, result);
-	    addTextField(this.arkaKam, "Arka Kamera:", result);
-	    addTextField(this.arkaKamOz, "Özellikler:", result);
-	    addTextField(this.video, "Video:", result);
-	    addTextField(this.onKam, "Ön Kamera:", result);
+	    addTextField("Arka Kamera:", this.arkaKam, "Özellikler:",this.arkaKamOz, result);
+	    addTextField( "Video:",this.video,"Ön Kamera:",this.onKam, result);
 	    addTextField("Uyarı Tipleri:",this.uyariTip,"Kullaklık Girişi:",this.kulGir, result);
 	    addTextField( "Hoparlör:",this.hoparlor,"Diğer:",this.sesDiger, result);
 	    addTextField( "Wlan:",this.wlan,"Bluetooth:",this.bluetooth, result);
 	    addTextField( "GPS:",this.gps,"NFC:",this.nfc, result);
 	    addTextField( "Kızıl Ötesi:",this.kizilOt,"Radyo:",this.radyo, result);
-	    addTextField(this.usb, "USB:", result);
-	    addTextField(this.pil, "Pil:", result);
-	    addTextField("Bekleme Süresi:",this.bekSure,"Konuşöa Süresi:",this.konSure, result);
-	    addTextField(this.sensor, "Sensör:", result);
+	    addTextField( "USB:",this.usb,"Pil:", this.pil,result);
+	    addTextField("Bekleme Süresi:",this.bekSure,"Konuşma Süresi:",this.konSure, result);
+	    addTextField("Renkler:",this.renk, "Sensör:", this.sensor,result);
 	    addTextField("Mesajlaşma:",this.mesaj,"Java",this.java, result);
 	    addPictureField(this.resimIkon,"Resim:", result);
 	    UiUtil.alignAllX(result, UiUtil.AlignX.LEFT);
@@ -311,16 +322,38 @@ public class CihazView {
 				duyurulmaAy.setSelectedItem(aylarTr[i]);
 			}
 		}
+
 		
 		this.boyutlar.setText(gsmParser.boyutBul());
 		this.agirlik.setText(gsmParser.agirlikBul());
 		this.sim.setText(gsmParser.simBul());
+		
 		this.ekranTipi.setText(gsmParser.ekranTipBul());
 		this.ekranGen.setText(gsmParser.ekranGenBul());
 		this.ekranCoz.setText(gsmParser.ekranCozBul());
 		this.multiTouch.setText(gsmParser.multiTouchBul());
 		this.ekranKor.setText(gsmParser.ekranKorBul());
-		this.os.setText(gsmParser.osBul());
+		
+		try {
+			CihazTur secilenTur=null;
+			for(CihazTur tur : CihazTurDAO.all()){
+				cihazTur.addItem(tur);
+			}
+			if(Float.parseFloat(this.ekranGen.getText()) > 7.0){
+				secilenTur = new CihazTur(2,"Tablet");
+			}else if(Float.parseFloat(this.ekranGen.getText()) > 2.0){
+				secilenTur = new CihazTur(1,"Telefon");
+			}else{
+				secilenTur = new CihazTur(3,"Akıllı Saat");
+			}
+			cihazTur.getModel().setSelectedItem(secilenTur);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		this.os.setText(gsmParser.osBul()[0].trim());
+		this.osSurum.setText(gsmParser.osBul()[1].trim());
 		this.yongaSeti.setText(gsmParser.yongaSetiBul());
 		this.cpu.setText(gsmParser.cpuBul());
 		this.gpu.setText(gsmParser.gpuBul());
@@ -343,6 +376,7 @@ public class CihazView {
 		this.pil.setText(gsmParser.pilBul());
 		this.bekSure.setText(gsmParser.bekSureBul());
 		this.konSure.setText(gsmParser.konSureBul());
+		this.renk.setText(gsmParser.renkBul());
 		this.sensor.setText(gsmParser.sensorBul());
 		this.mesaj.setText(gsmParser.mesajBul());
 		this.java.setText(gsmParser.javaBul());
@@ -368,11 +402,11 @@ public class CihazView {
 	    
 		JLabel label = new JLabel(aLabel);
 		label.setPreferredSize(new Dimension(100, 15));
-		label.setFont(new Font("Verdana", Font.PLAIN, 12));
+		label.setFont(new Font("Verdana", Font.PLAIN, 11));
 		panel.add(label);
 		panel.add(aTextField);
-	    aTextField.setPreferredSize(new Dimension(800, 18));
-	    aTextField.setFont(new Font("Verdana", Font.PLAIN, 12));
+	    aTextField.setPreferredSize(new Dimension(1100, 15));
+	    aTextField.setFont(new Font("Verdana", Font.PLAIN, 11));
 	    aPanel.add(panel);
 	}
 	
@@ -381,30 +415,61 @@ public class CihazView {
 	    
 		JLabel label = new JLabel(aLabel);
 		label.setPreferredSize(new Dimension(100, 15));
-		label.setFont(new Font("Verdana", Font.PLAIN, 12));
+		label.setFont(new Font("Verdana", Font.PLAIN, 11));
 		panel.add(label);
-	    aTextField.setPreferredSize(new Dimension(350, 18));
-	    aTextField.setFont(new Font("Verdana", Font.PLAIN, 12));
+	    aTextField.setPreferredSize(new Dimension(500, 15));
+	    aTextField.setFont(new Font("Verdana", Font.PLAIN, 11));
 		panel.add(aTextField);
 		
 	    
 		JLabel label1 = new JLabel(aLabel1);
 		label1.setPreferredSize(new Dimension(100, 15));
-		label1.setFont(new Font("Verdana", Font.PLAIN, 12));
+		label1.setFont(new Font("Verdana", Font.PLAIN, 11));
 		panel.add(label1);
 		panel.add(aTextField1);
 		
-		aTextField1.setPreferredSize(new Dimension(350, 18));
-		aTextField1.setFont(new Font("Verdana", Font.PLAIN, 12));	    
+		aTextField1.setPreferredSize(new Dimension(500, 15));
+		aTextField1.setFont(new Font("Verdana", Font.PLAIN, 11));	    
 	    
 	    aPanel.add(panel);
 	}	
 	
-	private void addDuyurulmaField(JComboBox duyurulmaYil, JComboBox duyurulmaAy, String aLabel, JPanel aPanel) {
+	private void addTextField(String aLabel, JTextField aTextField,  String aLabel1, JTextField aTextField1, String aLabel2, JTextField aTextField2,JPanel aPanel ) {
+		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+	    
+		JLabel label = new JLabel(aLabel);
+		label.setPreferredSize(new Dimension(100, 15));
+		label.setFont(new Font("Verdana", Font.PLAIN, 11));
+		panel.add(label);
+	    aTextField.setPreferredSize(new Dimension(300, 15));
+	    aTextField.setFont(new Font("Verdana", Font.PLAIN, 11));
+		panel.add(aTextField);
+		
+	    
+		JLabel label1 = new JLabel(aLabel1);
+		label1.setPreferredSize(new Dimension(100, 15));
+		label1.setFont(new Font("Verdana", Font.PLAIN, 11));
+		panel.add(label1);
+		panel.add(aTextField1);	
+		aTextField1.setPreferredSize(new Dimension(300, 15));
+		aTextField1.setFont(new Font("Verdana", Font.PLAIN, 11));	    
+
+		JLabel label2 = new JLabel(aLabel2);
+		label2.setPreferredSize(new Dimension(100, 15));
+		label2.setFont(new Font("Verdana", Font.PLAIN, 11));
+		panel.add(label2);
+		panel.add(aTextField2);	
+		aTextField2.setPreferredSize(new Dimension(300, 15));
+		aTextField2.setFont(new Font("Verdana", Font.PLAIN, 11));	    
+
+	    aPanel.add(panel);
+	}	
+	
+	private void addDuyurulmaField(JComboBox duyurulmaYil, JComboBox duyurulmaAy, String aLabel, JComboBox cihazTur, String aLabel1, JPanel aPanel) {
 	    JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel label = new JLabel(aLabel);
 		label.setPreferredSize(new Dimension(100, 15));
-		label.setFont(new Font("Verdana", Font.PLAIN, 12));
+		label.setFont(new Font("Verdana", Font.PLAIN, 11));
 		panel.add(label);
 		panel.add(duyurulmaYil);
 		ComboBoxModel duyurulmaAyModel = new DefaultComboBoxModel(aylarTr);
@@ -412,8 +477,16 @@ public class CihazView {
 		panel.add(duyurulmaAy);
 		duyurulmaAy.setPreferredSize(new Dimension(100, 15));
 		duyurulmaYil.setPreferredSize(new Dimension(100, 15));
-		duyurulmaAy.setFont(new Font("Verdana", Font.PLAIN, 12));
-		duyurulmaYil.setFont(new Font("Verdana", Font.PLAIN, 12));
+		duyurulmaAy.setFont(new Font("Verdana", Font.PLAIN, 11));
+		duyurulmaYil.setFont(new Font("Verdana", Font.PLAIN, 11));
+		
+		JLabel label1 = new JLabel(aLabel1);
+		label1.setPreferredSize(new Dimension(100, 15));
+		label1.setFont(new Font("Verdana", Font.PLAIN, 11));
+		panel.add(label1);
+		
+		panel.add(cihazTur);
+		
 		aPanel.add(panel);
 	}	
 	
@@ -421,10 +494,10 @@ public class CihazView {
 		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
 		JLabel label = new JLabel(aLabel);
-		label.setPreferredSize(new Dimension(100, 18));
+		label.setPreferredSize(new Dimension(100, 15));
 		panel.add(label);
 	    JLabel resimLabel = new JLabel(resimIkon);
-	    resimLabel.setPreferredSize(new Dimension(500, 100));
+	    resimLabel.setPreferredSize(new Dimension(500, 20));
 	    panel.add(resimLabel);
 	    aPanel.add(panel);
 	}	

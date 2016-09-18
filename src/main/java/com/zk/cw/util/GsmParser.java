@@ -1,6 +1,8 @@
 package com.zk.cw.util;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -10,6 +12,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import com.zk.cw.uretici.Uretici;
+import com.zk.cw.yeni_cihaz.RenkDAO;
 
 public class GsmParser {
 	
@@ -165,7 +168,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(Size)").first();
 	    if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replace("inches", "inç").replaceAll("\\(.+", "").trim();		
+	    	deger = elm.parent().nextElementSibling().text().replaceAll("inches.*", "").trim();		
 	    }
 		return deger;
 	}	
@@ -193,11 +196,12 @@ public class GsmParser {
 	    }
 		return deger;
 	}	
-	public String osBul(){
-	    String deger=null;
+	public String[] osBul(){
+	    String deger[]=null;
 		Element elm = doc.select("td.ttl a:contains(OS)").first();
 	    if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replaceAll(", upgradable.+", "").trim();		
+	    	deger = elm.parent().nextElementSibling().text().replaceAll(", upgradable.+", "").trim().split(",");	
+	    	
 	    }
 		return deger;
 	}	
@@ -230,8 +234,9 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(Card slot)").first();
 	    if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replace("up to ", "").replaceAll("\\(.+\\)", "").replace("No", "Yok").trim();		
-	    	if(deger != "Yok"){
+	    	deger = elm.parent().nextElementSibling().text().replaceAll("\\(.+\\)", "").replace("No", "Yok").trim();		
+	    	if(deger.contains("up to") == true){
+	    		deger = deger.replace("up to", "");
 	    		deger += "'a kadar";
 	    	}
 	    }
@@ -362,7 +367,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("th:contains(Battery)").first();
 		if(elm != null){
-	    	deger = elm.nextElementSibling().nextElementSibling().text().replaceAll("Non-removable", "Çıkarılamaz").replaceAll("Removable", "Çıkarılabilir").replaceAll("battery", "batarya").trim();		
+	    	deger = elm.nextElementSibling().nextElementSibling().text().replaceAll("Non-removable", "Çıkarılmaz").replaceAll("Removable", "Çıkarılabilir").replaceAll("battery", "batarya").trim();		
 	    }
 		return deger;
 	}	
@@ -382,6 +387,32 @@ public class GsmParser {
 	    }
 		return deger;
 	}	
+	
+	public String renkBul(){
+	    String deger=null;
+	    String[] renkler=null;
+		Element elm = doc.select("a:contains(Colors)").first();
+		if(elm != null){
+			renkler = elm.parent().nextElementSibling().text().trim().split(",");		
+	    }
+		String renkTr=null;
+		StringBuffer  strBuffer = new StringBuffer ();
+		String ayrac="";
+		for(String renk:renkler){
+			try {
+				renkTr = RenkDAO.findByNameEn(renk.trim());
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if(renkTr != null){
+				strBuffer.append(ayrac).append(renkTr);
+			}
+			ayrac=", ";
+		}
+		deger = strBuffer.toString();
+		return deger;
+	}		
 	
 	public String sensorBul(){
 	    String deger=null;
