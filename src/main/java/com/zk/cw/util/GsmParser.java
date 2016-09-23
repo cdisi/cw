@@ -34,6 +34,14 @@ public class GsmParser {
 	public String cihazAdiBul(Uretici uretici){
 		return doc.select("h1.specs-phone-name-title").first().text().replace(uretici.adAl(), "").trim();
 	}
+	public String digerAdBul(Uretici uretici){
+	    String deger=null;
+		Element elm = doc.select("div#specs-list p").first();
+	    if(elm != null){
+	    	deger = elm.text().replaceAll("Also known as ", "").replaceAll(uretici.adAl(), "").replaceAll("This is not a.+", "").replaceAll("Tablet with support for GSM.+", "").trim();
+	    }
+		return deger;
+	}
 	
 	public String resimBul(){
 	    String deger=null;
@@ -72,13 +80,13 @@ public class GsmParser {
 	
 
 	public String ikiGBantBul(){
-		return doc.select("a:contains(2G bands)").first().parent().nextElementSibling().text().replaceAll("N/A","Yok").replaceAll("-.+", "");
+		return doc.select("a:contains(2G bands)").first().parent().nextElementSibling().text().replaceAll("N/A","Yok").replaceAll("\\(.+\\)", "");
 	}
 	public String ucGBantBul(){
 	    String deger=null;
 		Element elm = doc.select("a:contains(3G bands)").first();
 	    if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replaceAll("N/A","Yok").replaceAll("-.+", "");
+	    	deger = elm.parent().nextElementSibling().text().replaceAll("N/A","Yok").replaceAll("-.+", "").replace("(AWS)", "");
 	    }
 		return deger;
 		
@@ -160,7 +168,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(Type)").first();
 	    if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replace("capacitive", "kapasitif").replace("touchscreen", "dokunmatik").replace("M", " Milyon").replace("colors", "renk");		
+	    	deger = elm.parent().nextElementSibling().text().replaceAll(".apacitive", "Kapasitif").replace("touchscreen", "dokunmatik").replace("M ", " Milyon").replace("colors", " renk");		
 	    }
 		return deger;
 	}	
@@ -176,7 +184,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(Resolution)").first();
 	    if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replace("pixels", "piksel").replace("~", "piksel yoğunluğu ").replace("pixel density", "").trim();		
+	    	deger = elm.parent().nextElementSibling().text().replace("pixels", "piksel").replace("~", "piksel yoğunluğu ").replace(" pixel density", "").trim();		
 	    }
 		return deger;
 	}	
@@ -184,7 +192,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(Multitouch)").first();
 	    if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replace("Yes", "Var").replace("No", "Yok").trim();		
+	    	deger = elm.parent().nextElementSibling().text().replace("Yes", "Var").replace("No", "Yok").replaceAll(", up to.+", "").trim();		
 	    }
 		return deger;
 	}	
@@ -217,7 +225,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("td.ttl a:contains(CPU)").first();
 	    if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replaceAll("Quad-core","Dört Çekirdek").replaceAll("Dual-core","Çift Çekirdek").replaceAll("Hexa-core","Altı Çekirdek").trim();		
+	    	deger = elm.parent().nextElementSibling().text().replaceAll("Quad-core","Dört Çekirdek").replaceAll("Dual-core","Çift Çekirdek").replaceAll("Hexa-core","Altı Çekirdek").replace("Octa-core", "Sekiz Çekirdek").trim();		
 	    }
 		return deger;
 	}	
@@ -248,13 +256,40 @@ public class GsmParser {
 	    if(elm != null){
 	    	deger = elm.parent().nextElementSibling().text().replaceAll("\\(.+\\)", "").replace("or", "veya").trim();		
 	    }
+		if(deger != null){
+		    String pattern = "([0-9\\/?]+.{2}B)";
+			Pattern r = Pattern.compile(pattern);
+		    Matcher m = r.matcher(deger);
+		    if (m.find()) {
+		    	deger = m.group(0).trim();
+		    }
+		}
 		return deger;
 	}	
+	
+	public String ramBul(){
+	    String deger=null;
+		Element elm = doc.select("a:contains(Internal)").first();
+	    if(elm != null){
+	    	deger = elm.parent().nextElementSibling().text().replaceAll("\\(.+\\)", "").replace("or", "veya").trim();		
+	    }
+	    if(deger != null){
+		    String pattern = "([0-9]+.{2}B) RAM";
+			Pattern r = Pattern.compile(pattern);
+		    Matcher m = r.matcher(deger);
+		    if (m.find()) {
+		    	deger = m.group(1).trim();
+		    }
+	    }
+	    
+		return deger;
+	}
+	
 	public String arkaKamBul(){
 	    String deger=null;
 		Element elm = doc.select("a:contains(Primary)").first();
 	    if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replace(", check quality", "").replace("No", "Yok").replace("Yes", "Var").replaceAll(".ensor size", "sensör genişliği").replaceAll(".ixel size", "piksel genişliği").replaceAll(".ace detection", "yüz bulma").replaceAll(".ace/smile detection", "yüz/gülümseme algılama").replaceAll(".ouch focus", "dokunmatik odaklama").replaceAll(".eo-tagging", "coğrafi konum etiketleme").replaceAll(".aser & phase detection autofocus", "lazer ve faz algılama otofokus").replaceAll(".utofocus", "otofokus").replaceAll(".ual-LED flash", "Çift LED flaş").replaceAll(".ED flash", "LED flaş").replaceAll(".ptical zoom", "optik zum").trim();		
+	    	deger = elm.parent().nextElementSibling().text().replace(", check quality", "").replace("No", "Yok").replace("Yes", "Var").replaceAll("\\(.+\\) ", "").replaceAll(".ensor size", "sensör genişliği").replaceAll(".ixel size", "piksel genişliği").replaceAll(".ace detection", "yüz bulma").replaceAll(".ace/smile detection", "yüz/gülümseme algılama").replaceAll(".ouch focus", "dokunmatik odaklama").replaceAll(".eo-tagging", "coğrafi konum etiketleme").replaceAll(".aser & phase detection autofocus", "lazer ve faz algılama otofokus").replaceAll("phase detection", "faz algılama").replaceAll(".utofocus", "otofokus").replaceAll(".ual-LED flash", "Çift LED flaş").replaceAll(".ED flash", "LED flaş").replaceAll(".ptical zoom", "optik zum").trim();		
 	    }
 		return deger;
 	}	
@@ -286,7 +321,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(Alert types)").first();
 	    if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replaceAll(".ibration", "Titreşim").replaceAll(".ingtones", "zil sesleri").trim();		
+	    	deger = elm.parent().nextElementSibling().text().replaceAll(".ibration", "Titreşim").replaceAll(".ingtones", "zil sesleri").replace("Polyphonic", "polifonik").trim();		
 	    }
 		return deger;
 	}	
@@ -295,7 +330,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(Loudspeaker)").first();
 	    if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replaceAll("Yes", "Var").replaceAll("No", "Yok").trim();		
+	    	deger = elm.parent().nextElementSibling().text().replaceAll(", with.+", "").replaceAll("Yes", "Var").replaceAll("No", "Yok").trim();		
 	    }
 		return deger;
 	}	
@@ -327,7 +362,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(GPS)").first();
 	    if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replaceAll(" with", "").replaceAll("Yes", "Var").replaceAll("No", "Yok").trim();		
+	    	deger = elm.parent().nextElementSibling().text().replace("only", "").replaceAll(" with", "").replaceAll("Yes", "Var").replaceAll("No", "Yok").replaceAll("\\(.+\\)", "").trim();		
 	    }
 		return deger;
 	}	
@@ -359,7 +394,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(USB)").first();
 	    if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replaceAll("Yes", "Var").replaceAll("No", "Yok").replaceAll(" reversible connector", "").trim();		
+	    	deger = elm.parent().nextElementSibling().text().replaceAll("Yes", "Var").replaceAll("No", "Yok").replaceAll(" reversible connector", "").replaceAll("\\(.+\\)", "").trim();		
 	    }
 		return deger;
 	}		
@@ -375,7 +410,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(Stand-by)").first();
 		if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replace("(multimedia)", "").replaceAll("Up to ", "").replaceAll("h", "saat ").replaceAll("min", "dakika").trim();		
+	    	deger = elm.parent().nextElementSibling().text().replaceAll("\\(.+\\)", "").replaceAll("Up to ", "").replaceAll("h", "saat ").replaceAll("min", "dakika").trim();		
 	    }
 		return deger;
 	}	
@@ -383,7 +418,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(Talk time)").first();
 		if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replace("(multimedia)", "").replaceAll("Up to ", "").replaceAll("h", "saat ").replaceAll("min", "dakika").replaceAll("(multimedia)", "").trim();		
+	    	deger = elm.parent().nextElementSibling().text().replaceAll("Up to ", "").replaceAll("h", "saat ").replaceAll("min", "dakika").replaceAll("\\(.+\\)", "").trim();		
 	    }
 		return deger;
 	}	
@@ -418,7 +453,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(Sensors)").first();
 		if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().toLowerCase(Locale.ENGLISH).replace("accelerometer", "İvmeölçer").replace("proximity", "Yakınlık Sensörü").replace("compass", "Pusula").replace("fingerprint", "Parmak İzi").replace("color spectrum", "Renk Spektrumu").replace("gyro", "Jiroskop").trim();		
+	    	deger = elm.parent().nextElementSibling().text().toLowerCase(Locale.ENGLISH).replaceAll(".ccelerometer", "İvmeölçer").replaceAll(".roximity", "Yakınlık Sensörü").replace("compass", "Pusula").replaceAll(".ingerprint", "Parmak İzi").replaceAll(".olor spectrum", "Renk Spektrumu").replaceAll(".yro", "Jiroskop").replaceAll(".eart rate", "Kalp Atış Hızı Sensörü").replaceAll(".ltimeter", "Yükseklik Ölçer").replaceAll("\\(.+\\)", "").replace("yes","").trim();		
 	    }
 		return deger;
 	}	
@@ -437,7 +472,16 @@ public class GsmParser {
 	    	deger = elm.parent().nextElementSibling().text().replace("Yes", "Var").replace("No", "Yok").trim();		
 	    }
 		return deger;
-	}		
+	}	
+	
+	public String digerBul(){
+	    String deger=null;
+		Element elm = doc.select("a:contains(Java)").first();
+		if(elm != null){
+	    	deger = elm.parent().parent().nextElementSibling().child(1).text().replace("player", "oynatıcı").replaceAll(".hoto", "Fotoğraf").replaceAll(".ocument viewer", "Belge görüntüleyici").replaceAll("editor", "editörü").replaceAll(".ast battery charging", "Hızlı pil şarzı").replace("Voice memo/dial", "Sesli notlar").replace("viewer", "görüntüleyici").replace("cloud storage", "bulut depolama").replace(" -", "<br />- ").trim();		
+	    }
+		return deger;
+	}
 	
 }
 

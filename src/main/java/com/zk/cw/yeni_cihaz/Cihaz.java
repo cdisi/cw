@@ -4,8 +4,9 @@ public class Cihaz {
 
 	private Integer id;
 	private String ad;
+	private String digerAd;
 	private Integer ureticiId;
-	private String resimAdi;
+	private byte[] resim;
 	private String ikiGBant;
 	private String duyurulma;
 	private String duyurulmaYil;
@@ -19,6 +20,7 @@ public class Cihaz {
 	public Cihaz(String ad){
 		this.ad=ad;
 	}
+	
 	
 	public Integer getId(){
 		return this.id;
@@ -36,6 +38,14 @@ public class Cihaz {
 		this.ad=ad;
 	}
 	
+	public String getDigerAd(){
+		return this.digerAd;
+	}
+	
+	public void setDigerAd(String ad){
+		this.digerAd=ad;
+	}	
+	
 	public Integer getUreticiId(){
 		return this.ureticiId;
 	}
@@ -44,12 +54,12 @@ public class Cihaz {
 		this.ureticiId=ureticiId;
 	}
 	
-	public String getResimAdi(){
-		return this.resimAdi;
+	public byte[] getResim(){
+		return this.resim;
 	}
 	
-	public void setResimAdi(String resimAdi){
-		this.resimAdi=resimAdi;
+	public void setResim(byte[] resim){
+		this.resim=resim;
 	}
 	
 	public String getIkiGBant(){

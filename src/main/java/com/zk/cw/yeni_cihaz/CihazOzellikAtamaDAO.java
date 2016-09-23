@@ -10,7 +10,7 @@ import com.zk.cw.dao_factory.DaoFactory;
 
 public class CihazOzellikAtamaDAO {
 	private static final String
-	INSERT = "INSERT INTO cihaz_ozellik_atama (cihaz_id,ozellik_kategori_id,ozellik_id,deger) VALUES (?,?,?,?)";
+	INSERT = "INSERT INTO cihaz_ozellik_atama (cihaz_id,kategori_id,ozellik_id,deger) VALUES (?,?,?,?)";
 	private static final String
 	UPDATE = "UPDATE cihaz_ozellik_atama SET deger=? WHERE cihaz_id=? AND ozellik_id=?";
 	private static final String

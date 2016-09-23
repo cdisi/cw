@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 import org.apache.commons.io.FilenameUtils;
@@ -29,22 +30,29 @@ public class CihazController implements ActionListener {
 	private final CihazView fView;
 	private Cihaz fCihaz;
 	private Edit fEdit;	
+	private JButton fEditButton;
 	private YeniCihazDAO cihazDAO = new YeniCihazDAO();
 	private Uretici uretici;
 	private static List<CihazOzellikAtama> cihazOzellikAtamaList = new ArrayList<CihazOzellikAtama>();
 	
-	CihazController(CihazView aView, Edit aEdit, Uretici uretici){
+	CihazController(CihazView aView, JButton aEditButton, Edit aEdit, Uretici uretici){
 		fView = aView;
 		fEdit = aEdit;
+		fEditButton = aEditButton;
 		this.uretici = uretici;
 	}
 	
 	@Override 
 	public void actionPerformed(ActionEvent aEvent){
-
+		fEditButton.setEnabled(false);
+		cihazOzellikAtamaList.clear();
 		try {
 	      createValidCihazFromUserInput();
-			if(!fView.getIkiGBant().equals("")){
+	        if(!fView.getDigerAd().equals("")){
+				fCihaz.setDigerAd(fView.getDigerAd());
+			}
+			
+	        if(!fView.getIkiGBant().equals("")){
 				cihazOzellikAtamaList.add(new CihazOzellikAtama(1,1, fView.getIkiGBant().trim()));
 			}
 			if(!fView.getUcGBant().equals("")){
@@ -97,6 +105,9 @@ public class CihazController implements ActionListener {
 			}
 			if(!fView.getEkranKor().equals("")){
 				cihazOzellikAtamaList.add(new CihazOzellikAtama(3,14, fView.getEkranKor().trim()));
+			}
+			if(!fView.getEkranDig().equals("")){
+				cihazOzellikAtamaList.add(new CihazOzellikAtama(3,44, fView.getEkranDig().trim()));
 			}
 			
 			String osId=null;
@@ -208,13 +219,24 @@ public class CihazController implements ActionListener {
 			if(!fView.getJava().equals("")){
 				cihazOzellikAtamaList.add(new CihazOzellikAtama(10,42, fView.getJava().trim()));
 			}
+			if(!fView.getDiger().equals("")){
+				cihazOzellikAtamaList.add(new CihazOzellikAtama(10,45, fView.getDiger().trim()));
+			}
+			if(!fView.getRam().equals("")){
+				cihazOzellikAtamaList.add(new CihazOzellikAtama(10,46, fView.getRam().trim()));
+			}
+			if(!fView.getGovdeDiger().equals("")){
+				cihazOzellikAtamaList.add(new CihazOzellikAtama(10,47, fView.getGovdeDiger().trim()));
+			}
 
 			
 		}
 	    catch(InvalidInputException ex){
 	      informUserOfProblems(ex);
 	    }
-		fCihaz.setResimAdi( ((uretici.adAl()+' '+fCihaz.getAd()).replaceAll("[^\\w-]", "_")).toLowerCase(Locale.ENGLISH)+".jpg");
+		//fCihaz.setResimAdi( ((uretici.adAl()+' '+fCihaz.getAd()).replaceAll("[^\\w-]", "_")).toLowerCase(Locale.ENGLISH)+".jpg");
+	    fCihaz.setResim(fView.getResim());
+	    System.out.println(fCihaz.getResim().length);
 	    if ( isUserInputValid() ){
     	  try {
     		  fCihaz = cihazDAO.add(fCihaz,uretici);
@@ -231,14 +253,14 @@ public class CihazController implements ActionListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	
+    	/*
     	try {
 			ImageIO.write(fView.getResim(), "jpg", new File("resources/cihaz/"+fCihaz.getResimAdi()));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+    	*/
 	   
     	  fView.closeDialog();
 	      CihazMainWindow.getInstance().refreshView();

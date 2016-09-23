@@ -1,6 +1,9 @@
 package com.zk.cw.yeni_cihaz;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.Action;
 import javax.swing.JFrame;
@@ -92,6 +95,7 @@ public class CihazMainWindow {
 	    mainFrame.revalidate(); 
 	    mainFrame.repaint();
 		rowSelectionEnablesActions();
+		doubleClickShowsEditDialog();
     }	
 	
 	  /** Enable edit and delete actions only when something is selected in the table. */
@@ -107,5 +111,16 @@ public class CihazMainWindow {
 	  }	
 	  private void rowSelectionEnablesActions() {
 			yeniCihazTable.getSelectionModel().addListSelectionListener(new EnableEditActions());
+	  }	 
+	  private void doubleClickShowsEditDialog() {
+		  yeniCihazTable.addMouseListener( new LaunchEditCihazDialog() );
 	  }	  
+	  private final class LaunchEditCihazDialog extends MouseAdapter {
+		    @Override public void mouseClicked(MouseEvent aEvent) {
+		      if( aEvent.getClickCount() == 2) {
+		        ActionEvent event = new ActionEvent(this, 0, "");
+		        cihazActionEkle.actionPerformed(event);
+		      }
+		    }
+		  }	  
 }

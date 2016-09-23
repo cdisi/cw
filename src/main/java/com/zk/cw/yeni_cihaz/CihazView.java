@@ -8,6 +8,9 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -27,7 +30,10 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 
 import com.zk.cw.uretici.Uretici;
@@ -47,8 +53,9 @@ public class CihazView {
 	private JButton fEditButton;	
 	private JTextField url = new JTextField(); 
 	private JTextField ad = new JTextField(); 
-	private URL resimUrl;
-	private BufferedImage resim;
+	private JTextField digerAd = new JTextField(); 
+	private String resimUrl;
+	private byte[] resim;
 	private ImageIcon resimIkon = new ImageIcon();
 	private JTextField ikiGBant = new JTextField(); 
 	private JTextField ucGBant = new JTextField(); 
@@ -56,7 +63,7 @@ public class CihazView {
 	private JTextField hiz = new JTextField(); 
 	private JTextField gprs = new JTextField(); 
 	private JTextField edge = new JTextField(); 
-    String aylarTr[] = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
+    String aylarTr[] = {"","01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
 	//private String aylarTr[]={"Ocak", "Şubat", "Mart ", "Nisan", "Mayıs", "Haziran", "Temmuz", "Agustos", "Eylül", "Ekim ", "Kasım", "Aralık"};
 	private JComboBox duyurulmaYil = new JComboBox();
 	private JComboBox duyurulmaAy = new JComboBox();
@@ -64,11 +71,13 @@ public class CihazView {
 	private JTextField boyutlar = new JTextField(); 
 	private JTextField agirlik = new JTextField(); 
 	private JTextField sim = new JTextField(); 
+	private JTextField govdeDiger = new JTextField(); 
 	private JTextField ekranTipi = new JTextField(); 
 	private JTextField ekranGen = new JTextField(); 
 	private JTextField ekranCoz = new JTextField(); 
 	private JTextField multiTouch = new JTextField(); 
 	private JTextField ekranKor = new JTextField(); 
+	private JTextField ekranDig = new JTextField(); 
 	private JTextField os = new JTextField(); 
 	private JTextField osSurum = new JTextField(); 
 	private JTextField yongaSeti = new JTextField(); 
@@ -76,6 +85,7 @@ public class CihazView {
 	private JTextField gpu = new JTextField(); 
 	private JTextField hafizaKarti = new JTextField(); 
 	private JTextField dahiliHafiza = new JTextField(); 
+	private JTextField ram = new JTextField(); 
 	private JTextField arkaKam = new JTextField(); 
 	private JTextField arkaKamOz = new JTextField(); 
 	private JTextField video = new JTextField(); 
@@ -98,6 +108,7 @@ public class CihazView {
 	private JTextField sensor = new JTextField(); 
 	private JTextField mesaj = new JTextField(); 
 	private JTextField java = new JTextField(); 
+	private JTextArea diger = new JTextArea(3,70); 
 	
 	CihazView(JFrame aParent, YeniCihaz selectedCihaz, Uretici uretici) {				    
 		fEdit = Edit.ADD;		
@@ -111,13 +122,16 @@ public class CihazView {
 	public String getAd(){
 		return this.ad.getText();
 	}
+	public String getDigerAd(){
+		return this.digerAd.getText();
+	}	
 	public String getUrl(){
 		return this.url.getText();
 	}
 	public String getResimUrl(){
-		return this.resimUrl.getPath();
+		return this.resimUrl;
 	}
-	public BufferedImage getResim(){
+	public byte[] getResim(){
 		return this.resim;
 	}
 	public String getIkiGBant(){
@@ -156,6 +170,9 @@ public class CihazView {
 	public String getSim(){
 		return this.sim.getText();
 	}
+	public String getGovdeDiger(){
+		return this.govdeDiger.getText();
+	}	
 	public String getEkranTip(){
 		return this.ekranTipi.getText();
 	}	
@@ -170,6 +187,9 @@ public class CihazView {
 	}		
 	public String getEkranKor(){
 		return this.ekranKor.getText();
+	}		
+	public String getEkranDig(){
+		return this.ekranDig.getText();
 	}		
 	public String getOs(){
 		return this.os.getText();
@@ -191,6 +211,9 @@ public class CihazView {
 	}	
 	public String getDahiliHafiza(){
 		return this.dahiliHafiza.getText();
+	}	
+	public String getRam(){
+		return this.ram.getText();
 	}	
 	public String getArkaKam(){
 		return this.arkaKam.getText();
@@ -258,6 +281,9 @@ public class CihazView {
 	public String getJava(){
 		return this.java.getText();
 	}		
+	public String getDiger(){
+		return this.diger.getText();
+	}		
 	private void buildGui(JFrame aParent, String aDialogTitle) {
 		fStandardDialog = new StandardDialog(
 		      aParent, aDialogTitle, true, OnClose.DISPOSE, getUserInputArea(), getButtons()
@@ -269,19 +295,19 @@ public class CihazView {
 	    JPanel result = new JPanel();
 	    result.setLayout(new BoxLayout(result, BoxLayout.Y_AXIS));
 
-	    addTextField("Ad:",this.ad,"Cihaz URL:", this.url, result);
+	    addTextField("Ad:",this.ad,"Diğer ad:",this.digerAd,"URL:", this.url, result);
 	    addTextField("2G Bant:", this.ikiGBant,"3G Bant:",this.ucGBant, result);
 	    addTextField( "4G Bant:",this.dortGBant,"Hız:",this.hiz, result);
 	    addTextField("GPRS:",this.gprs, "EDGE:", this.edge, result);
 	    addDuyurulmaField(this.duyurulmaYil,this.duyurulmaAy, "Duyurulma:", this.cihazTur, "Türü:", result);
 	    addTextField("Boyutlar:", this.boyutlar, "Ağırlık:", this.agirlik, result);
-	    addTextField(this.sim, "SIM:", result);
+	    addTextField("SIM:",this.sim, "Gövde Diğer", this.govdeDiger, result);
 	    addTextField("Ekran Tipi:", this.ekranTipi,"Ekran Genişliği:", this.ekranGen, result);
 	    addTextField("Ekran Çözünürlüğü:",this.ekranCoz,"Çoklu-dokunmatik", this.multiTouch, result);
-	    addTextField(this.ekranKor, "Ekran Koruma", result);
+	    addTextField( "Ekran Koruma",this.ekranKor, "Ekran Diğer",this.ekranDig, result);
 	    addTextField("İşletim Sistemi",this.os,"Sürüm",this.osSurum,"Yonga Seti",this.yongaSeti, result);
 	    addTextField( "CPU",this.cpu,"GPU",this.gpu, result);
-	    addTextField( "Hafıza Kartı",this.hafizaKarti,"Dahili Hafıza",this.dahiliHafiza, result);
+	    addTextField( "Hafıza Kartı",this.hafizaKarti,"Dahili Hafıza",this.dahiliHafiza,"RAM",this.ram, result);
 	    addTextField("Arka Kamera:", this.arkaKam, "Özellikler:",this.arkaKamOz, result);
 	    addTextField( "Video:",this.video,"Ön Kamera:",this.onKam, result);
 	    addTextField("Uyarı Tipleri:",this.uyariTip,"Kullaklık Girişi:",this.kulGir, result);
@@ -292,7 +318,7 @@ public class CihazView {
 	    addTextField( "USB:",this.usb,"Pil:", this.pil,result);
 	    addTextField("Bekleme Süresi:",this.bekSure,"Konuşma Süresi:",this.konSure, result);
 	    addTextField("Renkler:",this.renk, "Sensör:", this.sensor,result);
-	    addTextField("Mesajlaşma:",this.mesaj,"Java",this.java, result);
+	    addTextField("Mesajlaşma:",this.mesaj,"Java",this.java, "diğer:", this.diger, result);
 	    addPictureField(this.resimIkon,"Resim:", result);
 	    UiUtil.alignAllX(result, UiUtil.AlignX.LEFT);
 	    return result;
@@ -301,6 +327,7 @@ public class CihazView {
 	private void populateFields(YeniCihaz selectedCihaz) {
 	    this.url.setText(selectedCihaz.getUrl());
 	    this.ad.setText(gsmParser.cihazAdiBul(uretici));
+	    this.digerAd.setText(gsmParser.digerAdBul(uretici));
 	    this.ikiGBant.setText(gsmParser.ikiGBantBul());
 	    this.ucGBant.setText(gsmParser.ucGBantBul());
 	    this.dortGBant.setText(gsmParser.dortGBantBul());
@@ -315,7 +342,7 @@ public class CihazView {
 			}
 		}
 
-	    String months[] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+	    String months[] = {"","January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 		duyurulmaAy.setSelectedIndex(-1);
 		for(int i=0; i<months.length; i++ ){
 			if(months[i].equals(gsmParser.duyurulmaAyBul())){
@@ -339,12 +366,12 @@ public class CihazView {
 			for(CihazTur tur : CihazTurDAO.all()){
 				cihazTur.addItem(tur);
 			}
-			if(Float.parseFloat(this.ekranGen.getText()) > 7.0){
-				secilenTur = new CihazTur(2,"Tablet");
+			if(Float.parseFloat(this.ekranGen.getText()) >= 7.0){
+				secilenTur = new CihazTur(3,"Tablet");
 			}else if(Float.parseFloat(this.ekranGen.getText()) > 2.0){
-				secilenTur = new CihazTur(1,"Telefon");
+				secilenTur = new CihazTur(2,"Akıllı Telefon");
 			}else{
-				secilenTur = new CihazTur(3,"Akıllı Saat");
+				secilenTur = new CihazTur(4,"Akıllı Saat");
 			}
 			cihazTur.getModel().setSelectedItem(secilenTur);
 		} catch (SQLException e1) {
@@ -352,13 +379,21 @@ public class CihazView {
 			e1.printStackTrace();
 		}
 		
-		this.os.setText(gsmParser.osBul()[0].trim());
-		this.osSurum.setText(gsmParser.osBul()[1].trim());
+		String[] osSonuc =  gsmParser.osBul();
+		if(osSonuc != null){
+			if(osSonuc.length > 0 ){
+				this.os.setText(osSonuc[0].trim());
+			}
+			if(osSonuc.length > 1 ){
+				this.osSurum.setText(osSonuc[1].trim());
+			}
+		}
 		this.yongaSeti.setText(gsmParser.yongaSetiBul());
 		this.cpu.setText(gsmParser.cpuBul());
 		this.gpu.setText(gsmParser.gpuBul());
 		this.hafizaKarti.setText(gsmParser.hafizaKartiBul());
 		this.dahiliHafiza.setText(gsmParser.dahiliHafizaBul());
+		this.ram.setText(gsmParser.ramBul());
 		this.arkaKam.setText(gsmParser.arkaKamBul());
 		this.arkaKamOz.setText(gsmParser.arkaKamOzBul());
 		this.video.setText(gsmParser.videoBul());
@@ -380,18 +415,18 @@ public class CihazView {
 		this.sensor.setText(gsmParser.sensorBul());
 		this.mesaj.setText(gsmParser.mesajBul());
 		this.java.setText(gsmParser.javaBul());
+		this.diger.setText(gsmParser.digerBul());
 		
-	    try {
-			this.resimUrl = new URL( gsmParser.resimBul());
-			
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	    this.resimUrl = gsmParser.resimBul();
 		try {
-			this.resim = ImageIO.read(resimUrl);
-			resimIkon.setImage(this.resim);
-		} catch (IOException e) {
+			BufferedImage originalImage = ImageIO.read(new URL(resimUrl));
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ImageIO.write( originalImage, "jpg", baos );
+			baos.flush();
+			this.resim = baos.toByteArray();
+			baos.close();
+			resimIkon.setImage(originalImage);
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -432,7 +467,9 @@ public class CihazView {
 		aTextField1.setFont(new Font("Verdana", Font.PLAIN, 11));	    
 	    
 	    aPanel.add(panel);
-	}	
+	}
+	
+	
 	
 	private void addTextField(String aLabel, JTextField aTextField,  String aLabel1, JTextField aTextField1, String aLabel2, JTextField aTextField2,JPanel aPanel ) {
 		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -464,6 +501,39 @@ public class CihazView {
 
 	    aPanel.add(panel);
 	}	
+	
+	private void addTextField(String aLabel, JTextField aTextField,  String aLabel1, JTextField aTextField1, String aLabel2, JTextArea aTextField2,JPanel aPanel ) {
+		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+	    
+		JLabel label = new JLabel(aLabel);
+		label.setPreferredSize(new Dimension(100, 15));
+		label.setFont(new Font("Verdana", Font.PLAIN, 11));
+		panel.add(label);
+	    aTextField.setPreferredSize(new Dimension(200, 15));
+	    aTextField.setFont(new Font("Verdana", Font.PLAIN, 11));
+		panel.add(aTextField);
+		
+	    
+		JLabel label1 = new JLabel(aLabel1);
+		label1.setPreferredSize(new Dimension(50, 15));
+		label1.setFont(new Font("Verdana", Font.PLAIN, 11));
+		panel.add(label1);
+		panel.add(aTextField1);	
+		aTextField1.setPreferredSize(new Dimension(100, 15));
+		aTextField1.setFont(new Font("Verdana", Font.PLAIN, 11));	    
+
+		JLabel label2 = new JLabel(aLabel2);
+		label2.setPreferredSize(new Dimension(50, 15));
+		label2.setFont(new Font("Verdana", Font.PLAIN, 11));
+		panel.add(label2);
+		//aTextField2.setPreferredSize(new Dimension(300, 50));
+		aTextField2.setFont(new Font("Verdana", Font.PLAIN, 11));	    
+		JScrollPane scroll = new JScrollPane(aTextField2, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
+                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		panel.add(scroll);	
+	    
+	    aPanel.add(panel);
+	}		
 	
 	private void addDuyurulmaField(JComboBox duyurulmaYil, JComboBox duyurulmaAy, String aLabel, JComboBox cihazTur, String aLabel1, JPanel aPanel) {
 	    JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -506,9 +576,9 @@ public class CihazView {
 	    java.util.List<JButton> result = new ArrayList<>();
 
 	    fEditButton = new JButton(fEdit.toString());
-	    fEditButton.addActionListener(new CihazController(this, fEdit, uretici));
+	    fEditButton.addActionListener(new CihazController(this,fEditButton, fEdit, uretici));
 	    result.add(fEditButton);
-
+	    
 	    JButton cancel = new JButton("Cancel");
 	    cancel.addActionListener(new ActionListener() {
 	      @Override public void actionPerformed(ActionEvent arg0) {
