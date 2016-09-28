@@ -38,7 +38,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("div#specs-list p").first();
 	    if(elm != null){
-	    	deger = elm.text().replaceAll("Also known as ", "").replaceAll(uretici.adAl(), "").replaceAll("This is not a.+", "").replaceAll("Tablet with support for GSM.+", "").trim();
+	    	deger = elm.text().replaceAll("Also known as ", "").replaceAll(uretici.adAl(), "").replaceAll("This is not a.+", "").replaceAll("Tablet .+", "").trim();
 	    }
 		return deger;
 	}
@@ -168,7 +168,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(Type)").first();
 	    if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replaceAll(".apacitive", "Kapasitif").replace("touchscreen", "dokunmatik").replace("M ", " Milyon").replace("colors", " renk");		
+	    	deger = elm.parent().nextElementSibling().text().replaceAll(".apacitive", "Kapasitif").replace("touchscreen", "dokunmatik").replace("M ", " Milyon").replace("K ", " Bin").replace("colors", " renk");		
 	    }
 		return deger;
 	}	
@@ -289,7 +289,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(Primary)").first();
 	    if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replace(", check quality", "").replace("No", "Yok").replace("Yes", "Var").replaceAll("\\(.+\\) ", "").replaceAll(".ensor size", "sensör genişliği").replaceAll(".ixel size", "piksel genişliği").replaceAll(".ace detection", "yüz bulma").replaceAll(".ace/smile detection", "yüz/gülümseme algılama").replaceAll(".ouch focus", "dokunmatik odaklama").replaceAll(".eo-tagging", "coğrafi konum etiketleme").replaceAll(".aser & phase detection autofocus", "lazer ve faz algılama otofokus").replaceAll("phase detection", "faz algılama").replaceAll(".utofocus", "otofokus").replaceAll(".ual-LED flash", "Çift LED flaş").replaceAll(".ED flash", "LED flaş").replaceAll(".ptical zoom", "optik zum").trim();		
+	    	deger = elm.parent().nextElementSibling().text().replace(", check quality", "").replace("No", "Yok").replace("Yes", "Var").replaceAll("optical zoom", "optik zum").replaceAll(".ensor size", "sensör genişliği").replaceAll(".ixel size", "piksel genişliği").replaceAll(".ace detection", "yüz bulma").replaceAll(".ace/smile detection", "yüz/gülümseme algılama").replaceAll(".ouch focus", "dokunmatik odaklama").replaceAll(".eo-tagging", "coğrafi konum etiketleme").replaceAll(".aser & phase detection autofocus", "lazer ve faz algılama otofokus").replaceAll("phase detection", "faz algılama").replaceAll(".utofocus", "otofokus").replaceAll(".ual-LED", "Çift LED").replaceAll(".ED flash", "LED flaş").replaceAll(".ptical zoom", "optik zum").replace("flash", "flaş").trim();		
 	    }
 		return deger;
 	}	
@@ -297,7 +297,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(Features)").first();
 	    if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replace("No", "Yok").replace("Yes", "Var").replaceAll(".ensor size", "sensör genişliği").replaceAll(".ixel size", "piksel genişliği").replaceAll(".ace detection", "yüz bulma").replaceAll(".ace/smile detection", "yüz/gülümseme algılama").replaceAll(".ouch focus", "dokunmatik odaklama").replaceAll(".eo-tagging", "coğrafi konum etiketleme").replaceAll(".aser & phase detection autofocus", "lazer ve faz algılama otofokus").replaceAll(".utofocus", "otofokus").replaceAll(".ual-LED flash", "Çift LED flaş").replaceAll(".ED flash", "LED flaş").replaceAll(".ptical zoom", "optik zum").trim();		
+	    	deger = elm.parent().nextElementSibling().text().replace("No", "Yok").replace("Yes", "Var").replaceAll(".ensor size", "sensör genişliği").replaceAll(".ixel size", "piksel genişliği").replaceAll(".ace detection", "yüz bulma").replaceAll(".ace/smile detection", "yüz/gülümseme algılama").replaceAll(".ouch focus", "dokunmatik odaklama").replaceAll(".eo-tagging", "coğrafi konum etiketleme").replaceAll(".aser & phase detection autofocus", "lazer ve faz algılama otofokus").replaceAll(".utofocus", "otofokus").replaceAll(".ual-LED", "Çift LED").replaceAll("flash", "flaş").replaceAll(".ptical zoom", "optik zum").trim();		
 	    }
 		return deger;
 	}	
@@ -453,7 +453,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(Sensors)").first();
 		if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().toLowerCase(Locale.ENGLISH).replaceAll(".ccelerometer", "İvmeölçer").replaceAll(".roximity", "Yakınlık Sensörü").replace("compass", "Pusula").replaceAll(".ingerprint", "Parmak İzi").replaceAll(".olor spectrum", "Renk Spektrumu").replaceAll(".yro", "Jiroskop").replaceAll(".eart rate", "Kalp Atış Hızı Sensörü").replaceAll(".ltimeter", "Yükseklik Ölçer").replaceAll("\\(.+\\)", "").replace("yes","").trim();		
+	    	deger = elm.parent().nextElementSibling().text().toLowerCase(Locale.ENGLISH).replaceAll(".hermometer", "Termometre").replaceAll(".ccelerometer", "İvmeölçer").replaceAll(".roximity", "Yakınlık Sensörü").replace("compass", "Pusula").replaceAll(".ingerprint", "Parmak İzi").replaceAll(".olor spectrum", "Renk Spektrumu").replaceAll(".yro", "Jiroskop").replaceAll(".eart rate", "Kalp Atış Hızı Sensörü").replaceAll(".ltimeter", "Yükseklik Ölçer").replaceAll("\\(.+\\)", "").replaceAll(".arometer", "Basınçölçer").replace("yes","").trim();		
 	    }
 		return deger;
 	}	
@@ -461,7 +461,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(Messaging)").first();
 		if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replace("(threaded view)", "").trim();		
+	    	deger = elm.parent().nextElementSibling().text().replaceAll(" Instant Messaging", "Anlık Mesajlaşma").replace("(threaded view)", "").trim();		
 	    }
 		return deger;
 	}	
@@ -469,7 +469,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(Java)").first();
 		if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replace("Yes", "Var").replace("No", "Yok").trim();		
+	    	deger = elm.parent().nextElementSibling().text().replace("Yes", "Var").replace("No", "Yok").replaceAll(", via Java.+", "").trim();		
 	    }
 		return deger;
 	}	
@@ -478,7 +478,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(Java)").first();
 		if(elm != null){
-	    	deger = elm.parent().parent().nextElementSibling().child(1).text().replace("player", "oynatıcı").replaceAll(".hoto", "Fotoğraf").replaceAll(".ocument viewer", "Belge görüntüleyici").replaceAll("editor", "editörü").replaceAll(".ast battery charging", "Hızlı pil şarzı").replace("Voice memo/dial", "Sesli notlar").replace("viewer", "görüntüleyici").replace("cloud storage", "bulut depolama").replace(" -", "<br />- ").trim();		
+	    	deger = elm.parent().parent().nextElementSibling().child(1).text().replaceAll(".redictive text input", "Akıllı metin girişi").replace("Organizer", "Ajanda").replace("player", "oynatıcı").replaceAll(".hoto", "Fotoğraf").replaceAll(".ocument viewer", "Belge görüntüleyici").replaceAll(".ocument", "Döküman").replaceAll("editor", "editörü").replaceAll(".ast battery charging", "Hızlı pil şarzı").replace("Voice memo/dial", "Sesli notlar").replace("viewer", "görüntüleyici").replace("cloud storage", "bulut depolama").replace("Voice dial/commands", "Sesli arama/komut").replaceAll(".oice memo", "Sesli notlar").replace(" -", "<br />- ").trim();		
 	    }
 		return deger;
 	}
