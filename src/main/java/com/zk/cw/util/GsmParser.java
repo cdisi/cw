@@ -200,7 +200,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(Protection)").first();
 	    if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replace("Yes", "Var").replace("No", "Yok").trim();		
+	    	deger = elm.parent().nextElementSibling().text().replace("(unspecified version)", "").replace("Yes", "Var").replace("No", "Yok").trim();		
 	    }
 		return deger;
 	}	
@@ -225,7 +225,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("td.ttl a:contains(CPU)").first();
 	    if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replaceAll("Quad-core","Dört Çekirdek").replaceAll("Dual-core","Çift Çekirdek").replaceAll("Hexa-core","Altı Çekirdek").replace("Octa-core", "Sekiz Çekirdek").trim();		
+	    	deger = elm.parent().nextElementSibling().text().replaceAll("Deca-core", "On Çekirdek").replaceAll("Quad-core","Dört Çekirdek").replaceAll("Dual-core","Çift Çekirdek").replaceAll("Hexa-core","Altı Çekirdek").replace("Octa-core", "Sekiz Çekirdek").trim();		
 	    }
 		return deger;
 	}	
@@ -289,7 +289,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(Primary)").first();
 	    if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replace(", check quality", "").replace("No", "Yok").replace("Yes", "Var").replaceAll("optical zoom", "optik zum").replaceAll(".ensor size", "sensör genişliği").replaceAll(".ixel size", "piksel genişliği").replaceAll(".ace detection", "yüz bulma").replaceAll(".ace/smile detection", "yüz/gülümseme algılama").replaceAll(".ouch focus", "dokunmatik odaklama").replaceAll(".eo-tagging", "coğrafi konum etiketleme").replaceAll(".aser & phase detection autofocus", "lazer ve faz algılama otofokus").replaceAll("phase detection", "faz algılama").replaceAll(".utofocus", "otofokus").replaceAll(".ual-LED", "Çift LED").replaceAll(".ED flash", "LED flaş").replaceAll(".ptical zoom", "optik zum").replace("flash", "flaş").trim();		
+	    	deger = elm.parent().nextElementSibling().text().replace("(dual tone)", "").replace(", check quality", "").replace("No", "Yok").replace("Yes", "Var").replaceAll("optical zoom", "optik zum").replaceAll(".ensor size", "sensör genişliği").replaceAll(".ixel size", "piksel genişliği").replaceAll(".ace detection", "yüz bulma").replaceAll(".ace/smile detection", "yüz/gülümseme algılama").replaceAll(".ouch focus", "dokunmatik odaklama").replaceAll(".eo-tagging", "coğrafi konum etiketleme").replaceAll(".aser & phase detection autofocus", "lazer ve faz algılama otofokus").replaceAll("phase detection", "faz algılama").replaceAll(".utofocus", "otofokus").replaceAll(".ual-LED", "Çift LED").replaceAll(".ED flash", "LED flaş").replaceAll(".ptical zoom", "optik zum").replace("flash", "flaş").trim();		
 	    }
 		return deger;
 	}	

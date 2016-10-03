@@ -361,24 +361,6 @@ public class CihazView {
 		this.multiTouch.setText(gsmParser.multiTouchBul());
 		this.ekranKor.setText(gsmParser.ekranKorBul());
 		
-		try {
-			CihazTur secilenTur=null;
-			for(CihazTur tur : CihazTurDAO.all()){
-				cihazTur.addItem(tur);
-			}
-			if(Float.parseFloat(this.ekranGen.getText()) >= 7.0){
-				secilenTur = new CihazTur(3,"Tablet");
-			}else if(Float.parseFloat(this.ekranGen.getText()) > 2.0){
-				secilenTur = new CihazTur(2,"Akıllı Telefon");
-			}else{
-				secilenTur = new CihazTur(4,"Akıllı Saat");
-			}
-			cihazTur.getModel().setSelectedItem(secilenTur);
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
 		String[] osSonuc =  gsmParser.osBul();
 		if(osSonuc != null){
 			if(osSonuc.length > 0 ){
@@ -388,6 +370,29 @@ public class CihazView {
 				this.osSurum.setText(osSonuc[1].trim());
 			}
 		}
+		
+		try {
+			CihazTur secilenTur=null;
+			for(CihazTur tur : CihazTurDAO.all()){
+				cihazTur.addItem(tur);
+			}
+			if(!this.os.getText().equals("")){
+				if(Float.parseFloat(this.ekranGen.getText()) >= 7.0){
+					secilenTur = new CihazTur(3,"Tablet");
+				}else if(Float.parseFloat(this.ekranGen.getText()) > 2.0){
+					secilenTur = new CihazTur(2,"Akıllı Telefon");
+				}else{
+					secilenTur = new CihazTur(4,"Akıllı Saat");
+				}
+			}else{
+				secilenTur = new CihazTur(1,"Telefon");
+			}
+			cihazTur.getModel().setSelectedItem(secilenTur);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		this.yongaSeti.setText(gsmParser.yongaSetiBul());
 		this.cpu.setText(gsmParser.cpuBul());
 		this.gpu.setText(gsmParser.gpuBul());
