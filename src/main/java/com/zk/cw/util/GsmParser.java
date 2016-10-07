@@ -111,7 +111,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(GPRS)").first();
 	    if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replaceAll("N/A","Yok").replaceAll("Yes", "Var").replaceAll("No", "Yok");
+	    	deger = elm.parent().nextElementSibling().text().replaceAll("N/A","Yok").replaceAll("Yes", "Var").replaceAll("No", "Yok").replace("Up to ", "");
 	    }
 		return deger;
 	}	
@@ -119,7 +119,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(EDGE)").first();
 	    if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replaceAll("N/A","Yok").replaceAll("Yes", "Var").replaceAll("No", "Yok");
+	    	deger = elm.parent().nextElementSibling().text().replaceAll("N/A","Yok").replaceAll("Yes", "Var").replaceAll("No", "Yok").replace("Up to ", "");
 	    }
 		return deger;
 	}	
@@ -208,7 +208,7 @@ public class GsmParser {
 	    String deger[]=null;
 		Element elm = doc.select("td.ttl a:contains(OS)").first();
 	    if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replaceAll(", upgradable.+", "").trim().split(",");	
+	    	deger = elm.parent().nextElementSibling().text().replaceAll(", upgradable.+", "").replace("based wearable", "tabanlı giyilebilir").trim().split(",");	
 	    	
 	    }
 		return deger;
@@ -453,7 +453,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(Sensors)").first();
 		if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().toLowerCase(Locale.ENGLISH).replaceAll(".hermometer", "Termometre").replaceAll(".ccelerometer", "İvmeölçer").replaceAll(".roximity", "Yakınlık Sensörü").replace("compass", "Pusula").replaceAll(".ingerprint", "Parmak İzi").replaceAll(".olor spectrum", "Renk Spektrumu").replaceAll(".yro", "Jiroskop").replaceAll(".eart rate", "Kalp Atış Hızı Sensörü").replaceAll(".ltimeter", "Yükseklik Ölçer").replaceAll("\\(.+\\)", "").replaceAll(".arometer", "Basınçölçer").replace("yes","").trim();		
+	    	deger = elm.parent().nextElementSibling().text().toLowerCase(Locale.ENGLISH).replaceAll(".hermometer", "Termometre").replaceAll(".ccelerometer", "İvmeölçer").replaceAll(".roximity", "Yakınlık Sensörü").replace("compass", "Pusula").replaceAll(".ingerprint", "Parmak İzi").replaceAll(".olor spectrum", "Renk Spektrumu").replaceAll(".yro", "Jiroskop").replaceAll(".eart rate", "Kalp Atış Hızı Sensörü").replaceAll(".ltimeter", "Yükseklik Ölçer").replaceAll("\\(.+\\)", "").replaceAll(".arometer", "Basınçölçer").replaceAll(".ris scanner", "Göz Tarama").replaceAll(".emperature", "Isı Ölçer").replace("yes","").trim();		
 	    }
 		return deger;
 	}	
@@ -478,7 +478,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(Java)").first();
 		if(elm != null){
-	    	deger = elm.parent().parent().nextElementSibling().child(1).text().replaceAll(".redictive text input", "Akıllı metin girişi").replace("Organizer", "Ajanda").replace("player", "oynatıcı").replaceAll(".hoto", "Fotoğraf").replaceAll(".ocument viewer", "Belge görüntüleyici").replaceAll(".ocument", "Döküman").replaceAll("editor", "editörü").replaceAll(".ast battery charging", "Hızlı pil şarzı").replace("Voice memo/dial", "Sesli notlar").replace("viewer", "görüntüleyici").replace("cloud storage", "bulut depolama").replace("Voice dial/commands", "Sesli arama/komut").replaceAll(".oice memo", "Sesli notlar").replace(" -", "<br />- ").trim();		
+	    	deger = elm.parent().parent().nextElementSibling().child(1).text().replaceAll(".redictive text input", "Akıllı metin girişi").replace("Organizer", "Ajanda").replace("player", "oynatıcı").replaceAll(".hoto", "Fotoğraf").replaceAll(".ocument viewer", "Belge görüntüleyici").replaceAll(".ocument", "Döküman").replaceAll("editor", "editörü").replaceAll(".ast battery charging", "Hızlı pil şarzı").replace("Voice memo/dial", "Sesli notlar").replace("viewer", "görüntüleyici").replace("cloud storage", "bulut depolama").replace("Voice dial/commands", "Sesli arama/komut").replaceAll(".oice memo", "Sesli notlar").replace("commands", "komutlar").replace(" -", "<br />- ").trim();		
 	    }
 		return deger;
 	}
