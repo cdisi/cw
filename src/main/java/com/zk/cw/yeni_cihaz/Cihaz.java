@@ -6,7 +6,7 @@ public class Cihaz {
 	private String ad;
 	private String digerAd;
 	private Integer ureticiId;
-	private byte[] resim;
+	private int resimId;
 	private String ikiGBant;
 	private String duyurulma;
 	private String duyurulmaYil;
@@ -54,12 +54,12 @@ public class Cihaz {
 		this.ureticiId=ureticiId;
 	}
 	
-	public byte[] getResim(){
-		return this.resim;
+	public int getResimId(){
+		return this.resimId;
 	}
 	
-	public void setResim(byte[] resim){
-		this.resim=resim;
+	public void setResimId(int resimId){
+		this.resimId=resimId;
 	}
 	
 	public String getIkiGBant(){

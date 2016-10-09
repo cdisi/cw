@@ -2,10 +2,13 @@ package com.zk.cw.yeni_cihaz;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +25,7 @@ import com.zk.cw.exception.InvalidInputException;
 import com.zk.cw.main.MainWindow;
 import com.zk.cw.uretici.Uretici;
 import com.zk.cw.util.Edit;
+import com.zk.cw.util.Mobile91Parser;
 import com.zk.cw.util.Util;
 
 public class CihazController implements ActionListener {
@@ -229,18 +233,19 @@ public class CihazController implements ActionListener {
 				cihazOzellikAtamaList.add(new CihazOzellikAtama(10,47, fView.getGovdeDiger().trim()));
 			}
 
+
 			
 		}
 	    catch(InvalidInputException ex){
 	      informUserOfProblems(ex);
 	    }
 		//fCihaz.setResimAdi( ((uretici.adAl()+' '+fCihaz.getAd()).replaceAll("[^\\w-]", "_")).toLowerCase(Locale.ENGLISH)+".jpg");
-	    fCihaz.setResim(fView.getResim());
-	    System.out.println(fCihaz.getResim().length);
+	    //fCihaz.setResim(fView.getResim());
 	    if ( isUserInputValid() ){
     	  try {
+	  		  ResimDAO.add(fCihaz, fView.getResim());
     		  fCihaz = cihazDAO.add(fCihaz,uretici);
-	  		  for(CihazOzellikAtama cihazOzellikAtama : cihazOzellikAtamaList){
+    		  for(CihazOzellikAtama cihazOzellikAtama : cihazOzellikAtamaList){
 					CihazOzellikAtamaDAO.insert(fCihaz, cihazOzellikAtama);
 			  }
 	  		  if(!fView.getEkranGen().equals("")){
@@ -248,6 +253,10 @@ public class CihazController implements ActionListener {
 	  				  EkranBuyukluguDAO.insert(fView.getEkranGen());
 	  			  }
 	  		  }
+			  if(!fView.getMobile91Url().equals("")){
+					Mobile91Parser mobile91Parser = new Mobile91Parser(fView.getMobile91Url());
+					mobile91Parser.resimleriBul(fCihaz);
+			  }
 	  		  cihazDAO.update(fView.getUrl());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

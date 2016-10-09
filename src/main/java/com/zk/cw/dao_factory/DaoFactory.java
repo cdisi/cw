@@ -5,14 +5,15 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DaoFactory {
-	//private static String url = "jdbc:mysql://localhost:3306/";
-	private static String url = "jdbc:mysql://10.5.0.70:3306/";
-	private static String database = "beta?useUnicode=true&characterEncoding=utf-8";
+	private static String url = "jdbc:mysql://localhost:3306/";
+	//private static String url = "jdbc:mysql://10.5.0.70:3306/";
+	private static String database = "test";
+	//private static String database = "cw";
 	private static String driver = "com.mysql.jdbc.Driver";
-	//private static String user = "root";
-	private static String user = "zkaya";
-	//private static String password = "kaya";
-	private static String password = "";
+	private static String user = "root";
+	//private static String user = "zkaya";
+	private static String password = "kaya";
+	//private static String password = "";
 	
 	public static Connection openConnection() {   
 		try {
