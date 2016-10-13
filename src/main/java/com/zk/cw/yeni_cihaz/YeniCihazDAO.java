@@ -19,7 +19,7 @@ public class YeniCihazDAO {
 	private static Map<Integer, YeniCihaz> table = new LinkedHashMap<>();  
 	private static final String ALL = "SELECT * FROM cihaz_url INNER JOIN uretici ON cihaz_url.uretici_id=uretici.id WHERE uretici.aktif=1 AND cihaz_url.aktif=0";
 	private static final String UPDATE = "UPDATE cihaz_url SET aktif=? WHERE url=?";
-	private static final String INSERT = "INSERT INTO cihaz (ad,diger_ad,uretici_id,aktif,resim,duyurulma,created_at,turu) VALUES (?,?,?,?,?,?,?,?)";
+	private static final String INSERT = "INSERT INTO cihaz (ad,diger_ad,uretici_id,aktif,resim_id,duyurulma,created_at,turu) VALUES (?,?,?,?,?,?,?,?)";
 		
 	static {
 		try {
@@ -61,7 +61,7 @@ public class YeniCihazDAO {
 		pstmt.setString(2, cihaz.getDigerAd());
 		pstmt.setInt(3, uretici.idAl());
 		pstmt.setInt(4, 1);
-		pstmt.setBytes(5, cihaz.getResim());
+		pstmt.setInt(5, cihaz.getResimId());
 		pstmt.setString(6, cihaz.getDuyurulma());
 		
 	    Date dNow = new Date( );

@@ -52,6 +52,7 @@ public class CihazView {
 	private Edit fEdit;	
 	private JButton fEditButton;	
 	private JTextField url = new JTextField(); 
+	private JTextField mobile91Url = new JTextField(); 
 	private JTextField ad = new JTextField(); 
 	private JTextField digerAd = new JTextField(); 
 	private String resimUrl;
@@ -283,6 +284,9 @@ public class CihazView {
 	}		
 	public String getDiger(){
 		return this.diger.getText();
+	}	
+	public String getMobile91Url(){
+		return this.mobile91Url.getText();
 	}		
 	private void buildGui(JFrame aParent, String aDialogTitle) {
 		fStandardDialog = new StandardDialog(
@@ -319,7 +323,7 @@ public class CihazView {
 	    addTextField("Bekleme Süresi:",this.bekSure,"Konuşma Süresi:",this.konSure, result);
 	    addTextField("Renkler:",this.renk, "Sensör:", this.sensor,result);
 	    addTextField("Mesajlaşma:",this.mesaj,"Java",this.java, "diğer:", this.diger, result);
-	    addPictureField(this.resimIkon,"Resim:", result);
+	    addPictureField(this.resimIkon,"Resim:", "mobile91 url:",this.mobile91Url, result);
 	    UiUtil.alignAllX(result, UiUtil.AlignX.LEFT);
 	    return result;
 	}
@@ -565,15 +569,24 @@ public class CihazView {
 		aPanel.add(panel);
 	}	
 	
-	private void addPictureField(ImageIcon resimIkon, String aLabel, JPanel aPanel) {
+	private void addPictureField(ImageIcon resimIkon, String aLabel, String aLabel2, JTextField aTextField2,  JPanel aPanel) {
 		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
 		JLabel label = new JLabel(aLabel);
 		label.setPreferredSize(new Dimension(100, 15));
 		panel.add(label);
 	    JLabel resimLabel = new JLabel(resimIkon);
-	    resimLabel.setPreferredSize(new Dimension(500, 20));
+	    resimLabel.setPreferredSize(new Dimension(300, 20));
 	    panel.add(resimLabel);
+	    
+		JLabel label2 = new JLabel(aLabel2);
+		label2.setPreferredSize(new Dimension(100, 15));
+		label2.setFont(new Font("Verdana", Font.PLAIN, 11));
+		panel.add(label2);
+		panel.add(aTextField2);	
+		aTextField2.setPreferredSize(new Dimension(600, 15));
+		aTextField2.setFont(new Font("Verdana", Font.PLAIN, 11));	    
+	    
 	    aPanel.add(panel);
 	}	
 

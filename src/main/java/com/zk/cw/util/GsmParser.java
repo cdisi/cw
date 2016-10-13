@@ -330,7 +330,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(Loudspeaker)").first();
 	    if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replaceAll(", with.+", "").replaceAll("Yes", "Var").replaceAll("No", "Yok").trim();		
+	    	deger = elm.parent().nextElementSibling().text().replaceAll(", with.+", "").replaceAll("Yes", "Var").replaceAll("No", "Yok").replaceAll(".ual speakers", "çift hoparlör").trim();		
 	    }
 		return deger;
 	}	

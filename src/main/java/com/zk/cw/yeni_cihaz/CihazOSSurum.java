@@ -9,17 +9,17 @@ import com.zk.cw.dao_factory.DaoFactory;
 
 public class CihazOSSurum {
 	private static final String
-	INSERT = "INSERT INTO os_surum (os_id,surum) VALUES (?,?)";
+	INSERT = "INSERT INTO os_surum (os_id,ad) VALUES (?,?)";
 	private static final String
-	FIND = "SELECT * FROM os_surum WHERE os_id=? AND surum = ?";
+	FIND = "SELECT * FROM os_surum WHERE os_id=? AND ad = ?";
 	
-	public static String insert(String osId, String surum) throws SQLException {
+	public static String insert(String osId, String ad) throws SQLException {
 		Connection c = DaoFactory.openConnection();
 		
 		PreparedStatement pstmt = c.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
 
 		pstmt.setString(1, osId);
-		pstmt.setString(2, surum);
+		pstmt.setString(2, ad);
 		pstmt.executeUpdate();
 
 		ResultSet rset = pstmt.getGeneratedKeys();
@@ -34,12 +34,12 @@ public class CihazOSSurum {
 	}
 	
 	
-	public static String find(String osId, String surum) throws SQLException {
+	public static String find(String osId, String ad) throws SQLException {
 		Connection c = DaoFactory.openConnection();
 
 		PreparedStatement pstmt = c.prepareStatement(FIND);
 		pstmt.setString(1, osId);
-		pstmt.setString(2, surum);
+		pstmt.setString(2, ad);
 		ResultSet rset = pstmt.executeQuery();
 		String sonuc = null; 
 		while (rset.next()){

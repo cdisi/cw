@@ -6,8 +6,7 @@ import java.sql.SQLException;
 
 public class DaoFactory {
 	//private static String url = "jdbc:mysql://localhost:3306/";
-	private static String url = "jdbc:mysql://10.5.0.70:3306/";
-	private static String database = "beta?useUnicode=true&characterEncoding=utf-8";
+	private static String url = "jdbc:mysql://10.5.0.70:3306/cw?useUnicode=true&characterEncoding=UTF-8";
 	private static String driver = "com.mysql.jdbc.Driver";
 	//private static String user = "root";
 	private static String user = "zkaya";
@@ -17,14 +16,13 @@ public class DaoFactory {
 	public static Connection openConnection() {   
 		try {
 			Class.forName(driver).newInstance();
-			Connection connection = DriverManager.getConnection(url + database, user, password);
+			Connection connection = DriverManager.getConnection(url, user, password);
 			return connection;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception ex){
 			System.err.println(ex.getMessage());				
 		}
-		return null;
-		  
+		return null;		  
 	}
 }
