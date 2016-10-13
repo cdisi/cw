@@ -62,6 +62,7 @@ public class Mobile91Parser {
 				}	
 				
 				try {
+
 					ResimGalerisiDAO.add(cihaz, kucukResim, buyukResim);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block

@@ -33,7 +33,7 @@ public class CihazOzellikAtamaDAO {
 	}
 	
 	public CihazOzellikAtama update(Cihaz cihaz, CihazOzellikAtama cihazOzellikAtama) throws SQLException {
-		Connection c = DaoFactory.getDatabase().openConnection();
+		Connection c = DaoFactory.openConnection();
 		
 		PreparedStatement pstmt = c.prepareStatement(UPDATE, PreparedStatement.RETURN_GENERATED_KEYS);
 
@@ -49,7 +49,7 @@ public class CihazOzellikAtamaDAO {
 	}	
 	
 	public Boolean find(Cihaz cihaz, CihazOzellikAtama cihazOzellikAtama) throws SQLException {
-		Connection c = DaoFactory.getDatabase().openConnection();
+		Connection c = DaoFactory.openConnection();
 
 		PreparedStatement pstmt = c.prepareStatement(FIND);
 		pstmt.setInt(1, cihaz.getId());
