@@ -168,7 +168,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(Type)").first();
 	    if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replaceAll(".apacitive", "Kapasitif").replace("touchscreen", "dokunmatik").replace("M ", " Milyon").replace("K ", " Bin").replace("colors", " renk");		
+	    	deger = elm.parent().nextElementSibling().text().replaceAll(".apacitive", "Kapasitif").replace("touchscreen", "dokunmatik").replace("M ", " Milyon").replace("K ", " Bin").replace("colors", " renk").replaceAll(".esistive", "rezistif");		
 	    }
 		return deger;
 	}	
@@ -289,7 +289,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(Primary)").first();
 	    if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replace("(dual tone)", "").replace(", check quality", "").replace("No", "Yok").replace("Yes", "Var").replaceAll("optical zoom", "optik zum").replaceAll(".ensor size", "sensör genişliği").replaceAll(".ixel size", "piksel genişliği").replaceAll(".ace detection", "yüz bulma").replaceAll(".ace/smile detection", "yüz/gülümseme algılama").replaceAll(".ouch focus", "dokunmatik odaklama").replaceAll(".eo-tagging", "coğrafi konum etiketleme").replaceAll(".aser & phase detection autofocus", "lazer ve faz algılama otofokus").replaceAll("phase detection", "faz algılama").replaceAll(".utofocus", "otofokus").replaceAll(".ual-LED", "Çift LED").replaceAll(".ED flash", "LED flaş").replaceAll(".ptical zoom", "optik zum").replace("flash", "flaş").trim();		
+	    	deger = elm.parent().nextElementSibling().text().replace("(dual tone)", "").replace(", check quality", "").replace("No", "Yok").replace("Yes", "Var").replaceAll("optical zoom", "optik zum").replaceAll(".ensor size", "sensör genişliği").replaceAll(".ixel size", "piksel genişliği").replaceAll(".ace detection", "yüz bulma").replaceAll(".ace/smile detection", "yüz/gülümseme algılama").replaceAll(".ouch focus", "dokunmatik odaklama").replaceAll(".eo-tagging", "coğrafi konum etiketleme").replaceAll(".aser & phase detection autofocus", "lazer ve faz algılama otofokus").replaceAll("phase detection", "faz algılama").replaceAll(".utofocus", "otofokus").replaceAll(".ual-LED", "Çift LED").replaceAll(".ED flash", "LED flaş").replaceAll(".ptical zoom", "optik zum").replace("flash", "flaş").replace("Dual", "Çift").replaceAll(".ixed focus", "Sabit odaklı").trim();		
 	    }
 		return deger;
 	}	
@@ -386,7 +386,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(Radio)").first();
 	    if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replaceAll("Yes", "Var").replaceAll("No", "Yok").replaceAll(".adio", "Radyo").replace("To be confirmed", "").trim();		
+	    	deger = elm.parent().nextElementSibling().text().replaceAll("Yes", "Var").replaceAll("No", "Yok").replaceAll(".adio", "Radyo").replace("To be confirmed", "").replace(", recording", "").trim();		
 	    }
 		return deger;
 	}		
@@ -478,7 +478,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(Java)").first();
 		if(elm != null){
-	    	deger = elm.parent().parent().nextElementSibling().child(1).text().replaceAll(".redictive text input", "Akıllı metin girişi").replace("Organizer", "Ajanda").replace("player", "oynatıcı").replaceAll(".hoto", "Fotoğraf").replaceAll(".ocument viewer", "Belge görüntüleyici").replaceAll(".ocument", "Döküman").replaceAll("editor", "editörü").replaceAll(".ast battery charging", "Hızlı pil şarzı").replace("Voice memo/dial", "Sesli notlar").replace("viewer", "görüntüleyici").replace("cloud storage", "bulut depolama").replace("Voice dial/commands", "Sesli arama/komut").replaceAll(".oice memo", "Sesli notlar").replace("commands", "komutlar").replace(" -", "<br />- ").trim();		
+	    	deger = elm.parent().parent().nextElementSibling().child(1).text().replaceAll(".redictive text input", "Akıllı metin girişi").replace("Organizer", "Ajanda").replace("player", "oynatıcı").replaceAll(".hoto", "Fotoğraf").replaceAll(".ocument viewer", "Belge görüntüleyici").replaceAll(".ocument", "Döküman").replaceAll("editor", "editörü").replaceAll(".ast battery charging", "Hızlı pil şarzı").replace("Voice memo/dial", "Sesli notlar").replace("viewer", "görüntüleyici").replace("cloud storage", "bulut depolama").replace("Voice dial/commands", "Sesli arama/komut").replaceAll(".oice memo", "Sesli notlar").replace("commands", "komutlar").replace(" -", "<br />- ").replace("wireless charging", "kablosuz şarz").trim();		
 	    }
 		return deger;
 	}

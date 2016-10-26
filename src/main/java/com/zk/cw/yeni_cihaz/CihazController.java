@@ -232,6 +232,9 @@ public class CihazController implements ActionListener {
 			if(!fView.getGovdeDiger().equals("")){
 				cihazOzellikAtamaList.add(new CihazOzellikAtama(10,47, fView.getGovdeDiger().trim()));
 			}
+			if(fView.getAnasayfa()){
+				fCihaz.setAnasayfa(1);
+			}
 
 
 			

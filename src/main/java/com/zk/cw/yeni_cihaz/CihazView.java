@@ -26,6 +26,7 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -110,6 +111,7 @@ public class CihazView {
 	private JTextField mesaj = new JTextField(); 
 	private JTextField java = new JTextField(); 
 	private JTextArea diger = new JTextArea(3,70); 
+	private JCheckBox anasayfa = new JCheckBox();
 	
 	CihazView(JFrame aParent, YeniCihaz selectedCihaz, Uretici uretici) {				    
 		fEdit = Edit.ADD;		
@@ -287,7 +289,10 @@ public class CihazView {
 	}	
 	public String getMobile91Url(){
 		return this.mobile91Url.getText();
-	}		
+	}
+	public Boolean getAnasayfa(){
+		return this.anasayfa.isSelected();
+	}
 	private void buildGui(JFrame aParent, String aDialogTitle) {
 		fStandardDialog = new StandardDialog(
 		      aParent, aDialogTitle, true, OnClose.DISPOSE, getUserInputArea(), getButtons()
@@ -323,7 +328,7 @@ public class CihazView {
 	    addTextField("Bekleme Süresi:",this.bekSure,"Konuşma Süresi:",this.konSure, result);
 	    addTextField("Renkler:",this.renk, "Sensör:", this.sensor,result);
 	    addTextField("Mesajlaşma:",this.mesaj,"Java",this.java, "diğer:", this.diger, result);
-	    addPictureField(this.resimIkon,"Resim:", "mobile91 url:",this.mobile91Url, result);
+	    addPictureField(this.resimIkon,"Resim:", "mobile91 url:",this.mobile91Url, "Anasayfa:",this.anasayfa,result);
 	    UiUtil.alignAllX(result, UiUtil.AlignX.LEFT);
 	    return result;
 	}
@@ -569,7 +574,7 @@ public class CihazView {
 		aPanel.add(panel);
 	}	
 	
-	private void addPictureField(ImageIcon resimIkon, String aLabel, String aLabel2, JTextField aTextField2,  JPanel aPanel) {
+	private void addPictureField(ImageIcon resimIkon, String aLabel, String aLabel2, JTextField aTextField2, String aLabel3, JCheckBox aCheckBox,  JPanel aPanel) {
 		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
 		JLabel label = new JLabel(aLabel);
@@ -579,14 +584,20 @@ public class CihazView {
 	    resimLabel.setPreferredSize(new Dimension(300, 20));
 	    panel.add(resimLabel);
 	    
-		JLabel label2 = new JLabel(aLabel2);
+	    JLabel label2 = new JLabel(aLabel2);
 		label2.setPreferredSize(new Dimension(100, 15));
 		label2.setFont(new Font("Verdana", Font.PLAIN, 11));
 		panel.add(label2);
 		panel.add(aTextField2);	
 		aTextField2.setPreferredSize(new Dimension(600, 15));
 		aTextField2.setFont(new Font("Verdana", Font.PLAIN, 11));	    
+	    panel.add(aTextField2);
 	    
+		JLabel label3 = new JLabel(aLabel3);
+		label.setPreferredSize(new Dimension(100, 15));
+		panel.add(label3);
+	    panel.add(aCheckBox);	
+		
 	    aPanel.add(panel);
 	}	
 

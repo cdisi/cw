@@ -13,6 +13,7 @@ public class Cihaz {
 	private String duyurulmaAy;
 	private String sim;
 	private Integer turu;
+	private Integer anasayfa=0;
 	
 	public Cihaz(){
 	}	
@@ -107,5 +108,11 @@ public class Cihaz {
 	
 	public Integer getTuru(){
 		return this.turu;
-	}		
+	}	
+	public void setAnasayfa(Integer s){
+		this.anasayfa=s;
+	}	
+	public Integer getAnasayfa(){
+		return this.anasayfa;
+	}	
 }
