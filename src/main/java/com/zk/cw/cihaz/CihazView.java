@@ -24,6 +24,8 @@ public class CihazView {
 	private Edit fEdit;	
 	private JButton fEditButton;
 	private JTextField ad = new JTextField();
+	private JTextField digerAd = new JTextField();
+	private JTextField turu = new JTextField();
 	
 	CihazView(JFrame aParent) {				    
 		fEdit = Edit.ADD;		
@@ -46,18 +48,28 @@ public class CihazView {
 	}	
 	
 	private JPanel getUserInputArea() {
-	    JPanel result = new JPanel();
-	    result.setLayout(new BoxLayout(result, BoxLayout.X_AXIS));
+	    JPanel mainPanel = new JPanel();
+	    mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+	    mainPanel.setBorder(BorderFactory.createTitledBorder("GENEL"));
+	    JPanel genelPanel = new JPanel();
+	    getGenelInputArea(genelPanel);
+	    mainPanel.add(genelPanel);
 	    
+	    UiUtil.alignAllX(mainPanel, UiUtil.AlignX.LEFT);
+	    return mainPanel;	    
+	}
+	
+	private void getGenelInputArea(JPanel genelPanel){
+		JPanel result = new JPanel(new FlowLayout(FlowLayout.LEFT));
 	    addTextField(this.ad, "Ad", result);
-	    
-	    UiUtil.alignAllX(result, UiUtil.AlignX.LEFT);
-	    return result;	    
+	    addTextField(this.digerAd, "Diğer Ad", result);
+	    addTextField(this.turu, "Türü", result);
+	    genelPanel.add(result);
 	}
 	
 	private void addTextField(JTextField aTextField, String aLabel, JPanel aPanel) {
 		  JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		  panel.setBorder(BorderFactory.createTitledBorder("GENEL")); 
+
 		  JLabel label = new JLabel(aLabel);
 		  panel.add(label);
 		  panel.add(aTextField);
@@ -88,7 +100,7 @@ public class CihazView {
 	}	
 	
 	  /** Close the view. */
-	  void closeDialog() {
+	void closeDialog() {
 	    fStandardDialog.dispose();
-	  }		
+	}		
 }
