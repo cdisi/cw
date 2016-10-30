@@ -2,6 +2,7 @@ package com.zk.cw.main;
 
 import com.zk.cw.LaunchApplication;
 import com.zk.cw.about.AboutAction;
+import com.zk.cw.cihaz.CihazAction;
 import com.zk.cw.cihaz_url.CihazAraAction;
 import com.zk.cw.edit.MovieActionAdd;
 import com.zk.cw.edit.MovieActionChange;
@@ -180,6 +181,9 @@ public final class MainWindow {
     
     Action yeniCihazAction = new YeniCihazAction(aFrame, menuBar);
     fileMenu.add(new JMenuItem(yeniCihazAction));
+    
+    Action tumCihazlarAction = new CihazAction(aFrame, menuBar);
+    fileMenu.add(new JMenuItem(tumCihazlarAction));
     
     Action exitAction = new ExitAction();
     fileMenu.add(new JMenuItem(exitAction));

@@ -1,4 +1,4 @@
-package com.zk.cw.yeni_cihaz;
+package com.zk.cw.cihaz;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -19,26 +19,26 @@ import com.zk.cw.about.AboutAction;
 import com.zk.cw.cihaz_url.CihazAraAction;
 import com.zk.cw.exit.ExitAction;
 import com.zk.cw.uretici.UreticilerAction;
+import com.zk.cw.yeni_cihaz.YeniCihazAction;
+
+
 
 public class CihazMainWindow {
 	
 	private static CihazMainWindow INSTANCE = new CihazMainWindow();
-	private YeniCihazTableModel yeniCihazTableModel;
-	private JTable yeniCihazTable;	
-	private CihazActionEkle cihazActionEkle;
+	private CihazTableModel cihazTableModel;
+	private JTable cihazTable;	
+	private CihazActionEdit cihazActionEdit;
+	private CihazActionAdd cihazActionAdd;
+	
 	private CihazMainWindow() {  }
 	
 	public static CihazMainWindow getInstance() {
 	    return INSTANCE;
 	}
-	
-	public void refreshView(){
-		yeniCihazTableModel.refreshView();
-	}	
-	
 	public void buildGui(JFrame mainFrame, JMenuBar menuBar){
-		yeniCihazTableModel = new YeniCihazTableModel();
-		yeniCihazTable = new JTable(yeniCihazTableModel);
+		cihazTableModel = new CihazTableModel();
+		cihazTable = new JTable(cihazTableModel);
 		buildActionsAndMenu(mainFrame, menuBar);
 		buildContent(mainFrame);
 	}	
@@ -68,8 +68,10 @@ public class CihazMainWindow {
 		    
 	    JMenu editMenu = new JMenu("Edit");
 	    editMenu.setMnemonic('E');
-	    cihazActionEkle = new CihazActionEkle(aFrame,yeniCihazTable,yeniCihazTableModel);
-	    editMenu.add(new JMenuItem(cihazActionEkle));
+	    cihazActionAdd = new CihazActionAdd(aFrame,cihazTable,cihazTableModel);
+	    editMenu.add(new JMenuItem(cihazActionAdd));
+	    cihazActionEdit = new CihazActionEdit(aFrame,cihazTable,cihazTableModel);
+	    editMenu.add(new JMenuItem(cihazActionEdit));
 	    
 	    menuBar.add(editMenu);
 	    
@@ -80,17 +82,17 @@ public class CihazMainWindow {
 		    
 	    aFrame.setJMenuBar(menuBar);
 	
-	  }	
+	  }		
 	
 	private void buildContent(JFrame mainFrame) {	    
-		yeniCihazTable.setBackground(Color.LIGHT_GRAY);
-		yeniCihazTable.getColumnModel().getColumn(0).setPreferredWidth(20);
-		yeniCihazTable.getColumnModel().getColumn(1).setPreferredWidth(100);
-		yeniCihazTable.getColumnModel().getColumn(2).setPreferredWidth(400);
-		yeniCihazTable.getColumnModel().getColumn(3).setPreferredWidth(200);
+		cihazTable.setBackground(Color.LIGHT_GRAY);
+		cihazTable.getColumnModel().getColumn(0).setPreferredWidth(20);
+		cihazTable.getColumnModel().getColumn(1).setPreferredWidth(100);
+		cihazTable.getColumnModel().getColumn(2).setPreferredWidth(400);
+		cihazTable.getColumnModel().getColumn(3).setPreferredWidth(200);
 		mainFrame.getContentPane().removeAll();
 		
-		JScrollPane panel = new JScrollPane(yeniCihazTable);
+		JScrollPane panel = new JScrollPane(cihazTable);
 	    mainFrame.getContentPane().add(panel); 
 	    mainFrame.revalidate(); 
 	    mainFrame.repaint();
@@ -102,25 +104,25 @@ public class CihazMainWindow {
 	  private final class EnableEditActions implements ListSelectionListener {
 	    @Override public void valueChanged(ListSelectionEvent aEvent) {
 	      if( aEvent.getFirstIndex() != -1) {
-	    	  cihazActionEkle.setEnabled(true);
+	    	  cihazActionEdit.setEnabled(true);
 	      }
 	      else {
-	    	  cihazActionEkle.setEnabled(false);
+	    	  cihazActionEdit.setEnabled(false);
 	      }
 	    }
 	  }	
 	  private void rowSelectionEnablesActions() {
-			yeniCihazTable.getSelectionModel().addListSelectionListener(new EnableEditActions());
+			cihazTable.getSelectionModel().addListSelectionListener(new EnableEditActions());
 	  }	 
 	  private void doubleClickShowsEditDialog() {
-		  yeniCihazTable.addMouseListener( new LaunchEditCihazDialog() );
+		  cihazTable.addMouseListener( new LaunchEditCihazDialog() );
 	  }	  
 	  private final class LaunchEditCihazDialog extends MouseAdapter {
 		    @Override public void mouseClicked(MouseEvent aEvent) {
 		      if( aEvent.getClickCount() == 2) {
 		        ActionEvent event = new ActionEvent(this, 0, "");
-		        cihazActionEkle.actionPerformed(event);
+		        cihazActionEdit.actionPerformed(event);
 		      }
 		    }
-	  }	  
+	  }	
 }

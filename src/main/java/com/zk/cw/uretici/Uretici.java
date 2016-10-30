@@ -7,9 +7,9 @@ import com.zk.cw.exception.InvalidInputException;
 
 public final class Uretici implements Comparable<Uretici>{
 	  private Integer id;
-	  private final String ad;
+	  private String ad;
 	  private String logoUrl;
-	  private final String gsmArenaUrl;
+	  private String gsmArenaUrl;
 	  private Integer aktif;
 	  private static final int EQUAL = 0;
 	  private static final int DESCENDING = -1;	  
@@ -22,7 +22,11 @@ public final class Uretici implements Comparable<Uretici>{
 	    this.gsmArenaUrl=gsmArenaUrl;
 	  }
 	  
-	  public Integer idAl(){ 
+	  public Uretici() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Integer idAl(){ 
 		  return id; 
 	  }
 	  void idVer(Integer id){
