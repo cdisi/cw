@@ -9,12 +9,12 @@ import javax.swing.JFrame;
 import javax.swing.JTable;
 
 
-public class CihazActionEdit extends AbstractAction {
+public class CihazActionChange extends AbstractAction {
 	  private JFrame mainFrame;	
 	  private JTable table;
 	  private CihazTableModel cihazTableModel;
 	  /** Constructor. */
-	  public CihazActionEdit(JFrame aFrame, JTable table, CihazTableModel cihazTableModel){
+	  public CihazActionChange(JFrame aFrame, JTable table, CihazTableModel cihazTableModel){
 	    super("Edit...", null );
 	    putValue(SHORT_DESCRIPTION, "Cihaz Düzenle"); 
 	    putValue(MNEMONIC_KEY, new Integer(KeyEvent.VK_A) );

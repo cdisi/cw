@@ -14,6 +14,7 @@ public class Cihaz {
 	private String sim;
 	private Integer turu;
 	private Integer anasayfa=0;
+	private Integer aktif=0;
 	
 	public Cihaz(){
 	}	
@@ -114,5 +115,11 @@ public class Cihaz {
 	}	
 	public Integer getAnasayfa(){
 		return this.anasayfa;
+	}	
+	public void setAktif(Integer s){
+		this.aktif=s;
+	}	
+	public Integer getAktif(){
+		return this.aktif;
 	}	
 }

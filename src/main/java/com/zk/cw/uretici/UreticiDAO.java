@@ -19,7 +19,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.logging.Logger;
 
 import com.zk.cw.dao_factory.*;
 public final class UreticiDAO {
@@ -27,11 +26,11 @@ public final class UreticiDAO {
     private static Connection conn = null;
     private static Statement stmt = null;
     private static final Map<Integer, Uretici> fTable = new LinkedHashMap<>();
-    private static int fNextId = 0;
     private static final String NULL = "NULL";
-    private static final Logger fLogger = Util.getLogger(UreticiDAO.class);
     private final static Charset ENCODING = StandardCharsets.UTF_8;
 	private static final String FIND_BY_ID = "SELECT * FROM uretici WHERE id = ?";		
+	private static final String ALL = "SELECT * FROM uretici";
+
 
     static {
       bul();
@@ -47,7 +46,33 @@ public final class UreticiDAO {
     fTable.remove(aMovieId);
   }
   
-	public Uretici findById(Integer id) throws SQLException {
+	public List<Uretici> all() throws SQLException {
+		Connection c = DaoFactory.openConnection();
+		PreparedStatement pstmt = c.prepareStatement(ALL);
+
+		ResultSet rs = pstmt.executeQuery();
+		List<Uretici> ureticiler = new ArrayList<Uretici>();
+		while (rs.next()){
+	    	 Integer id = rs.getInt("id");
+	    	 String ad = rs.getString("ad");
+	    	 String logoUrl = rs.getString("logo_url");
+		     int aktif = rs.getInt("aktif");
+		     String gsmArenaUrl = rs.getString("gsm_arena_url");
+		     Uretici uretici = null;
+			 try {
+				uretici = new Uretici(id, ad, logoUrl, gsmArenaUrl, aktif);
+			 } catch (InvalidInputException e) {
+				e.printStackTrace();
+			 }	
+		     ureticiler.add(uretici);
+		}
+
+		pstmt.close();
+		c.close();
+		return ureticiler;
+	}  
+  
+  public Uretici findById(Integer id) throws SQLException {
 		Connection c = DaoFactory.openConnection();
 
 		PreparedStatement pstmt = c.prepareStatement(FIND_BY_ID);
@@ -234,10 +259,6 @@ public final class UreticiDAO {
 	   }
   }    
 
-  private static String nextId() {
-    ++fNextId;
-    return String.valueOf(fNextId);
-  }
 
   private void appendTo(StringBuilder aText, Object aField, String aAppend) {
     if (Util.textHasContent(Util.format(aField))) {

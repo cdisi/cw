@@ -28,7 +28,7 @@ public class CihazMainWindow {
 	private static CihazMainWindow INSTANCE = new CihazMainWindow();
 	private CihazTableModel cihazTableModel;
 	private JTable cihazTable;	
-	private CihazActionEdit cihazActionEdit;
+	private CihazActionChange cihazActionChange;
 	private CihazActionAdd cihazActionAdd;
 	
 	private CihazMainWindow() {  }
@@ -36,6 +36,10 @@ public class CihazMainWindow {
 	public static CihazMainWindow getInstance() {
 	    return INSTANCE;
 	}
+	
+	public void refreshView(){
+		cihazTableModel.refreshView();
+	}	
 	public void buildGui(JFrame mainFrame, JMenuBar menuBar){
 		cihazTableModel = new CihazTableModel();
 		cihazTable = new JTable(cihazTableModel);
@@ -70,8 +74,8 @@ public class CihazMainWindow {
 	    editMenu.setMnemonic('E');
 	    cihazActionAdd = new CihazActionAdd(aFrame,cihazTable,cihazTableModel);
 	    editMenu.add(new JMenuItem(cihazActionAdd));
-	    cihazActionEdit = new CihazActionEdit(aFrame,cihazTable,cihazTableModel);
-	    editMenu.add(new JMenuItem(cihazActionEdit));
+	    cihazActionChange = new CihazActionChange(aFrame,cihazTable,cihazTableModel);
+	    editMenu.add(new JMenuItem(cihazActionChange));
 	    
 	    menuBar.add(editMenu);
 	    
@@ -104,10 +108,10 @@ public class CihazMainWindow {
 	  private final class EnableEditActions implements ListSelectionListener {
 	    @Override public void valueChanged(ListSelectionEvent aEvent) {
 	      if( aEvent.getFirstIndex() != -1) {
-	    	  cihazActionEdit.setEnabled(true);
+	    	  cihazActionChange.setEnabled(true);
 	      }
 	      else {
-	    	  cihazActionEdit.setEnabled(false);
+	    	  cihazActionChange.setEnabled(false);
 	      }
 	    }
 	  }	
@@ -121,7 +125,7 @@ public class CihazMainWindow {
 		    @Override public void mouseClicked(MouseEvent aEvent) {
 		      if( aEvent.getClickCount() == 2) {
 		        ActionEvent event = new ActionEvent(this, 0, "");
-		        cihazActionEdit.actionPerformed(event);
+		        cihazActionChange.actionPerformed(event);
 		      }
 		    }
 	  }	

@@ -1,4 +1,4 @@
-package com.zk.cw.cihaz;
+package com.zk.cw.cihaz_tur;
 
 
 public class CihazTur {
