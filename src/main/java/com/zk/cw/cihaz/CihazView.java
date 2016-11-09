@@ -2,24 +2,34 @@ package com.zk.cw.cihaz;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.zk.cw.cihaz_resim.Resim;
+import com.zk.cw.cihaz_resim.ResimDAO;
 import com.zk.cw.cihaz_tur.CihazTur;
 import com.zk.cw.cihaz_tur.CihazTurCombBoxModel;
 import com.zk.cw.cihaz_tur.CihazTurComboBoxRenderer;
@@ -53,12 +63,17 @@ public class CihazView {
 	final JComboBox<String> fDuyurulmaAy = new JComboBox<String>(duyurulmaAyCombBoxModel); 
 	private JCheckBox fAnasayfa = new JCheckBox();
 	private JCheckBox fAktif = new JCheckBox();
+	JFileChooser fResimChooser= new JFileChooser();
+	private ImageIcon fResimIkon = new ImageIcon();
+	private byte[] fResim;
 
 	private UreticiDAO ureticiDAO = new UreticiDAO(); 
 	private Uretici selectedUretici;
 	
 	private CihazTurDAO cihazTurDAO = new CihazTurDAO(); 
 	private CihazTur selectedCihazTur;
+	
+	private ResimDAO resimDAO = new ResimDAO();
 	
 	CihazView(JFrame aParent) {				    
 		fEdit = Edit.ADD;		
@@ -107,6 +122,9 @@ public class CihazView {
 	}	
 	public Boolean getAktif(){
 		return this.fAktif.isSelected();
+	}		
+	public byte[] getResim(){
+		return fResim;
 	}	
 	
 	private void buildGui(JFrame aParent, String aDialogTitle) {
@@ -146,7 +164,7 @@ public class CihazView {
 	private JPanel getResimInputArea(){
 		JPanel result = new JPanel(new FlowLayout(FlowLayout.LEFT));	    
 		result.setBorder(BorderFactory.createTitledBorder("RESİM"));
-		addTextField(fAd, "Ad", result);
+		addResimIconField(fResimIkon, "Resim", result);
 	    return result;
 	}	
 	
@@ -227,6 +245,21 @@ public class CihazView {
 		aPanel.add(panel);		  
 	}	
 	
+	// resim fields
+	private void addResimIconField(ImageIcon resimIkon, String aLabel, JPanel aPanel) {
+
+  	    JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JLabel label = new JLabel(aLabel);
+		panel.add(label);		  
+	    
+	    JLabel resimLabel = new JLabel(resimIkon);
+	    resimLabel.setPreferredSize(new Dimension(110, 146));
+	    panel.add(resimLabel);
+		
+	    aPanel.add(panel);		  
+
+	}
+	
 	private void populateFields(Cihaz aSelectedCihaz) {
 		fAd.setText(aSelectedCihaz.getAd());
 		fDigerAd.setText(aSelectedCihaz.getDigerAd());
@@ -247,6 +280,22 @@ public class CihazView {
 		if(aSelectedCihaz.getAktif() == 1){
 			fAktif.setSelected(true);
 		}
+		Resim resim = null;
+		try {
+			resim = resimDAO.findById(aSelectedCihaz.getId());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		InputStream in = new ByteArrayInputStream(resim.getResim());
+		BufferedImage bufImage = null;
+		try {
+			bufImage = ImageIO.read(in);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		fResimIkon.setImage(bufImage);
 	}
 	
 	private java.util.List<JButton> getButtons() {
