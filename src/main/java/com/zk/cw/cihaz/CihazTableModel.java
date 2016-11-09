@@ -1,6 +1,8 @@
 package com.zk.cw.cihaz;
 
 import java.sql.SQLException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -19,6 +21,8 @@ public class CihazTableModel extends AbstractTableModel {
 	private Uretici uretici;
 	private CihazTurDAO cihazTurDAO = new CihazTurDAO();
 	private CihazTur cihazTur;
+	private int fNumClicks = 0;	
+	  
 	public CihazTableModel(){
 		DAO = new CihazDAO();
 		cihazlar = DAO.list();
@@ -38,6 +42,31 @@ public class CihazTableModel extends AbstractTableModel {
 	public Cihaz getCihaz(int aRow){
 		return cihazlar.get(aRow);
 	}	
+	/*
+	  public void sortByColumn(int aIdx){
+		    fNumClicks++;
+		    if( aIdx == 1 ) {
+		      Collections.sort(cihazlar);
+		    }
+		    else {
+		      Comparator<Kullanici> comparator = null;
+		      if ( aIdx == 0 ){
+		        comparator = Kullanici.TITLE_SORT;
+		      }
+		      else if ( aIdx == 2 ){
+		        comparator = Kullanici.RATING_SORT;
+		      }
+		      else if ( aIdx == 3 ){
+		        comparator = Kullanici.COMMENT_SORT;
+		      }
+		      Collections.sort(fKullanicilar, comparator);
+		    }
+		    if( (fNumClicks % 2) == 0){
+		      Collections.reverse(fKullanicilar);
+		    }
+		    fireTableDataChanged();
+	}	
+	*/
 	/** Return the number of columns in the table. */
 	@Override public int getColumnCount() {
 	    return 7;

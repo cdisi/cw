@@ -164,7 +164,8 @@ public class CihazView {
 	private JPanel getResimInputArea(){
 		JPanel result = new JPanel(new FlowLayout(FlowLayout.LEFT));	    
 		result.setBorder(BorderFactory.createTitledBorder("RESİM"));
-		addResimIconField(fResimIkon, "Resim", result);
+		addResimIconField(fResimIkon, result);
+		addResimChooserField(fResimChooser, result);
 	    return result;
 	}	
 	
@@ -246,19 +247,27 @@ public class CihazView {
 	}	
 	
 	// resim fields
-	private void addResimIconField(ImageIcon resimIkon, String aLabel, JPanel aPanel) {
+	private void addResimIconField(ImageIcon resimIkon, JPanel aPanel) {
 
   	    JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		JLabel label = new JLabel(aLabel);
-		panel.add(label);		  
 	    
 	    JLabel resimLabel = new JLabel(resimIkon);
 	    resimLabel.setPreferredSize(new Dimension(110, 146));
 	    panel.add(resimLabel);
 		
 	    aPanel.add(panel);		  
-
 	}
+	
+	private void addResimChooserField(JFileChooser resimChooser, JPanel aPanel) {
+
+  	    JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+  	    resimChooser.setDialogTitle("Resmi Seçiniz");
+	    resimChooser.setDialogType(0);
+  	    panel.add(resimChooser);
+		
+	    aPanel.add(panel);		  
+
+	}	
 	
 	private void populateFields(Cihaz aSelectedCihaz) {
 		fAd.setText(aSelectedCihaz.getAd());

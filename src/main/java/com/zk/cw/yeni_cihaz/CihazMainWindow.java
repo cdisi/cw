@@ -16,6 +16,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import com.zk.cw.about.AboutAction;
+import com.zk.cw.cihaz.CihazAction;
 import com.zk.cw.cihaz_url.CihazAraAction;
 import com.zk.cw.exit.ExitAction;
 import com.zk.cw.uretici.UreticilerAction;
@@ -58,9 +59,10 @@ public class CihazMainWindow {
 
 	    Action cihazAraAction = new CihazAraAction(aFrame);
 	    fileMenu.add(new JMenuItem(cihazAraAction));
-		    
-	    Action yeniCihazAction = new YeniCihazAction(aFrame, menuBar);
-	    fileMenu.add(new JMenuItem(yeniCihazAction));
+		    	    
+	    Action tumCihazlarAction = new CihazAction(aFrame, menuBar);
+	    fileMenu.add(new JMenuItem(tumCihazlarAction));
+	    
 		    
 	    Action exitAction = new ExitAction();
 	    fileMenu.add(new JMenuItem(exitAction));

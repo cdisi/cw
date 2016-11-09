@@ -47,6 +47,13 @@ public class CihazMainWindow {
 		buildContent(mainFrame);
 	}	
 	
+	private final class SortCihazTable extends MouseAdapter {
+		    @Override public void mouseClicked(MouseEvent aEvent) {
+		      int columnIdx = cihazTable.getColumnModel().getColumnIndexAtX(aEvent.getX());
+		      //cihazTableModel.sortByColumn(columnIdx);
+		    }
+	}	
+	
 	/** Build the menu bar. */
 	  
 	private void buildActionsAndMenu(JFrame aFrame, JMenuBar menuBar) {
@@ -90,16 +97,19 @@ public class CihazMainWindow {
 	
 	private void buildContent(JFrame mainFrame) {	    
 		cihazTable.setBackground(Color.LIGHT_GRAY);
-		cihazTable.getColumnModel().getColumn(0).setPreferredWidth(20);
-		cihazTable.getColumnModel().getColumn(1).setPreferredWidth(100);
-		cihazTable.getColumnModel().getColumn(2).setPreferredWidth(400);
-		cihazTable.getColumnModel().getColumn(3).setPreferredWidth(200);
+		cihazTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+		cihazTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+		cihazTable.getColumnModel().getColumn(2).setPreferredWidth(200);
+		cihazTable.getColumnModel().getColumn(3).setPreferredWidth(100);
+		cihazTable.getColumnModel().getColumn(4).setPreferredWidth(100);
+		cihazTable.getColumnModel().getColumn(5).setPreferredWidth(100);
 		mainFrame.getContentPane().removeAll();
 		
 		JScrollPane panel = new JScrollPane(cihazTable);
 	    mainFrame.getContentPane().add(panel); 
 	    mainFrame.revalidate(); 
 	    mainFrame.repaint();
+	    //clickOnHeaderSortsTable();
 		rowSelectionEnablesActions();
 		doubleClickShowsEditDialog();
     }	
@@ -120,6 +130,10 @@ public class CihazMainWindow {
 	  }	 
 	  private void doubleClickShowsEditDialog() {
 		  cihazTable.addMouseListener( new LaunchEditCihazDialog() );
+	  }	  
+	  
+	  private void clickOnHeaderSortsTable() {
+		  cihazTable.getTableHeader().addMouseListener(new SortCihazTable());
 	  }	  
 	  private final class LaunchEditCihazDialog extends MouseAdapter {
 		    @Override public void mouseClicked(MouseEvent aEvent) {
