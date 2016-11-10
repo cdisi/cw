@@ -2,11 +2,11 @@ package com.zk.cw.cihaz;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
@@ -64,7 +64,7 @@ public class CihazView {
 	private JCheckBox fAnasayfa = new JCheckBox();
 	private JCheckBox fAktif = new JCheckBox();
 	JFileChooser fResimChooser= new JFileChooser();
-	private ImageIcon fResimIkon = new ImageIcon();
+	private JLabel fResimLabel = new JLabel();
 	private byte[] fResim;
 
 	private UreticiDAO ureticiDAO = new UreticiDAO(); 
@@ -164,7 +164,7 @@ public class CihazView {
 	private JPanel getResimInputArea(){
 		JPanel result = new JPanel(new FlowLayout(FlowLayout.LEFT));	    
 		result.setBorder(BorderFactory.createTitledBorder("RESİM"));
-		addResimIconField(fResimIkon, result);
+		addResimLabelField(fResimLabel, result);
 		addResimChooserField(fResimChooser, result);
 	    return result;
 	}	
@@ -247,23 +247,43 @@ public class CihazView {
 	}	
 	
 	// resim fields
-	private void addResimIconField(ImageIcon resimIkon, JPanel aPanel) {
+	private void addResimLabelField(JLabel aResimLabel, JPanel aPanel) {
 
   	    JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 	    
-	    JLabel resimLabel = new JLabel(resimIkon);
-	    resimLabel.setPreferredSize(new Dimension(110, 146));
-	    panel.add(resimLabel);
+  	    aResimLabel.setPreferredSize(new Dimension(110, 146));
+	    panel.add(aResimLabel);
 		
 	    aPanel.add(panel);		  
 	}
 	
-	private void addResimChooserField(JFileChooser resimChooser, JPanel aPanel) {
+	private void addResimChooserField(JFileChooser aFileDialog, JPanel aPanel) {
 
   	    JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-  	    resimChooser.setDialogTitle("Resmi Seçiniz");
-	    resimChooser.setDialogType(0);
-  	    panel.add(resimChooser);
+	    JButton showFileDialogButton = new JButton("Resim Yükle");
+	    showFileDialogButton.addActionListener(new ActionListener() {
+	         @Override
+	         public void actionPerformed(ActionEvent e) {
+	            int returnVal = aFileDialog.showOpenDialog(aPanel);
+	            if (returnVal == JFileChooser.APPROVE_OPTION) {
+	               java.io.File file = aFileDialog.getSelectedFile();
+		       		try {
+		    			BufferedImage originalImage = ImageIO.read(file);
+		    			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		    			ImageIO.write( originalImage, "jpg", baos );
+		    			baos.flush();
+		    			fResim = baos.toByteArray();
+		    			baos.close();
+		    			fResimLabel.setIcon(new ImageIcon(fResim));
+		    		} catch (Exception ex) {
+		    			// TODO Auto-generated catch block
+		    			ex.printStackTrace();
+		    		}
+	            }	                 
+	         }
+	    });
+  	    
+  	    panel.add(showFileDialogButton);
 		
 	    aPanel.add(panel);		  
 
@@ -304,7 +324,7 @@ public class CihazView {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		fResimIkon.setImage(bufImage);
+		fResimLabel.setIcon(new ImageIcon(bufImage));
 	}
 	
 	private java.util.List<JButton> getButtons() {
