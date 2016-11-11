@@ -9,15 +9,17 @@ import com.zk.cw.cihaz.Cihaz;
 import com.zk.cw.dao_factory.DaoFactory;
 
 public class ResimDAO {
-	private static final String INSERT = "INSERT INTO cihaz_resim (resim) VALUES (?)";
+	private static final String INSERT = "INSERT INTO cihaz_resim (kucuk_resim,orta_resim,buyuk_resim) VALUES (?,?,?)";
 	private static final String FIND_BY_ID = "SELECT * FROM cihaz_resim WHERE id=?";
 	
-	public static Cihaz add(Cihaz cihaz, byte[] resim) throws SQLException {
+	public static Cihaz add(Cihaz cihaz, Resim resim) throws SQLException {
 		Connection c = DaoFactory.openConnection();
 		
 		PreparedStatement pstmt = c.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
 
-		pstmt.setBytes(1, resim);
+		pstmt.setBytes(1, resim.getKucukResim());
+		pstmt.setBytes(2, resim.getOrtaResim());
+		pstmt.setBytes(3, resim.getBuyukResim());
 		
 		pstmt.executeUpdate();
 		ResultSet rset = pstmt.getGeneratedKeys();

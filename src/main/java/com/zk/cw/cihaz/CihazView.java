@@ -67,7 +67,9 @@ public class CihazView {
 	private JCheckBox fAktif = new JCheckBox();
 	JFileChooser fResimChooser= new JFileChooser();
 	private JLabel fResimLabel = new JLabel();
-	private byte[] fResim;
+	private byte[] fKucukResim;
+	private byte[] fOrtaResim;
+	private byte[] fBuyukResim;
 
 	private UreticiDAO ureticiDAO = new UreticiDAO(); 
 	private Uretici selectedUretici;
@@ -125,8 +127,14 @@ public class CihazView {
 	public Boolean getAktif(){
 		return this.fAktif.isSelected();
 	}		
-	public byte[] getResim(){
-		return fResim;
+	public byte[] getKucukResim(){
+		return fKucukResim;
+	}	
+	public byte[] getOrtaResim(){
+		return fOrtaResim;
+	}	
+	public byte[] getBuyukResim(){
+		return fBuyukResim;
 	}	
 	
 	private void buildGui(JFrame aParent, String aDialogTitle) {
@@ -270,8 +278,10 @@ public class CihazView {
 	            if (returnVal == JFileChooser.APPROVE_OPTION) {
 	               java.io.File file = aFileDialog.getSelectedFile();
 		       		try {
-		    			fResim = ImageResize.reize(file, 100, 0);
-		    			fResimLabel.setIcon(new ImageIcon(fResim));
+		    			fOrtaResim = ImageResize.reize(file, 40, 53);
+		    			fOrtaResim = ImageResize.reize(file, 160, 212);
+		    			fBuyukResim = ImageResize.reize(file, 0, 0);
+		    			fResimLabel.setIcon(new ImageIcon(fKucukResim));
 		    		} catch (Exception ex) {
 		    			// TODO Auto-generated catch block
 		    			ex.printStackTrace();
@@ -313,7 +323,7 @@ public class CihazView {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		InputStream in = new ByteArrayInputStream(resim.getResim());
+		InputStream in = new ByteArrayInputStream(resim.getKucukResim());
 		BufferedImage bufImage = null;
 		try {
 			bufImage = ImageIO.read(in);
