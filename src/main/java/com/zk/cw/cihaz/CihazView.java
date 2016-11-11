@@ -2,6 +2,7 @@ package com.zk.cw.cihaz;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -36,6 +37,7 @@ import com.zk.cw.cihaz_tur.CihazTurComboBoxRenderer;
 import com.zk.cw.cihaz_tur.CihazTurDAO;
 import com.zk.cw.uretici.Uretici;
 import com.zk.cw.util.Edit;
+import com.zk.cw.util.ImageResize;
 import com.zk.cw.util.ui.OnClose;
 import com.zk.cw.util.ui.StandardDialog;
 import com.zk.cw.util.ui.UiUtil;
@@ -268,12 +270,7 @@ public class CihazView {
 	            if (returnVal == JFileChooser.APPROVE_OPTION) {
 	               java.io.File file = aFileDialog.getSelectedFile();
 		       		try {
-		    			BufferedImage originalImage = ImageIO.read(file);
-		    			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		    			ImageIO.write( originalImage, "jpg", baos );
-		    			baos.flush();
-		    			fResim = baos.toByteArray();
-		    			baos.close();
+		    			fResim = ImageResize.reize(file, 100, 0);
 		    			fResimLabel.setIcon(new ImageIcon(fResim));
 		    		} catch (Exception ex) {
 		    			// TODO Auto-generated catch block
