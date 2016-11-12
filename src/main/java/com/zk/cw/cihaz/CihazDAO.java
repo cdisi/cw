@@ -42,6 +42,7 @@ public class CihazDAO {
 			cihaz.setDuyurulma(rset.getString("duyurulma"));
 			cihaz.setAnasayfa(rset.getInt("anasayfa"));
 			cihaz.setAktif(rset.getInt("aktif"));
+			cihaz.setResimId(rset.getInt("resim_id"));
 			table.put(cihaz.getId(), cihaz);
 		}
 

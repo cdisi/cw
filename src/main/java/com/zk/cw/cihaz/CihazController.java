@@ -5,6 +5,10 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
+import javax.swing.text.View;
+
+import com.zk.cw.cihaz_resim.Resim;
+import com.zk.cw.cihaz_resim.ResimDAO;
 import com.zk.cw.exception.InvalidInputException;
 import com.zk.cw.main.MainWindow;
 import com.zk.cw.util.Edit;
@@ -15,6 +19,8 @@ public class CihazController implements ActionListener  {
 	private Cihaz fCihaz;
 	private Edit fEdit;	
 	private CihazDAO fDAO = new CihazDAO();	
+	private ResimDAO fResimDAO;	
+	private Resim fResim;
 	
 	public CihazController(CihazView aView, Edit aEdit){
 		fView = aView;
@@ -31,7 +37,8 @@ public class CihazController implements ActionListener  {
 		    if ( isUserInputValid() ){
 		      if( Edit.ADD == fEdit ) {
 		        try {
-					fDAO.add(fCihaz);
+					Cihaz cihaz = fDAO.add(fCihaz);
+					fResimDAO.add(cihaz, fResim);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -39,7 +46,8 @@ public class CihazController implements ActionListener  {
 		      }
 		      else if (Edit.CHANGE == fEdit) {
 		        try {
-					fDAO.change(fCihaz);
+		        	fDAO.change(fCihaz);
+					fResimDAO.update(fCihaz, fResim);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -77,6 +85,11 @@ public class CihazController implements ActionListener  {
 		}else{
 			fCihaz.setAktif(0);			
 		}
+		
+		if(fView.getResimYukleme()){
+			fResim = new Resim(fView.getResimId(),fView.getKucukResim(),fView.getResim(),fView.getBuyukResim());
+		}
+		
 		if(error){
 			fCihaz=null;
 		}

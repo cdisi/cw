@@ -3,14 +3,14 @@ package com.zk.cw.cihaz_resim;
 public class Resim {
 	
 	private Integer fId;
+	private byte[] fResim;
 	private byte[] fKucukResim;
-	private byte[] fOrtaResim;
 	private byte[] fBuyukResim;
 	
-	public Resim(Integer aId, byte[] aKucukResim,byte[] aOrtaResim,byte[] aBuyukResim){
+	public Resim(Integer aId, byte[] aKucukResim,byte[] aResim,byte[] aBuyukResim){
 		fId=aId;
 		fKucukResim=aKucukResim;
-		fOrtaResim = aOrtaResim;
+		fResim = aResim;
 		fBuyukResim = aBuyukResim;
 	}
 	
@@ -29,12 +29,12 @@ public class Resim {
 	public byte[] getKucukResim(){
 		return fKucukResim;
 	}	
-	public void setOrtaResim(byte[] aOrtaResim){
-		fOrtaResim = aOrtaResim;
+	public void setResim(byte[] aResim){
+		fResim = aResim;
 	}
 	
-	public byte[] getOrtaResim(){
-		return fOrtaResim;
+	public byte[] getResim(){
+		return fResim;
 	}
 	public void setBuyukResim(byte[] aBuyukResim){
 		fBuyukResim = aBuyukResim;

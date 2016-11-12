@@ -67,17 +67,19 @@ public class CihazView {
 	private JCheckBox fAktif = new JCheckBox();
 	JFileChooser fResimChooser= new JFileChooser();
 	private JLabel fResimLabel = new JLabel();
+	private Integer fResimId;
+	private byte[] fResim;
 	private byte[] fKucukResim;
-	private byte[] fOrtaResim;
 	private byte[] fBuyukResim;
-
+	private boolean fResimYukleme=false;
 	private UreticiDAO ureticiDAO = new UreticiDAO(); 
 	private Uretici selectedUretici;
 	
 	private CihazTurDAO cihazTurDAO = new CihazTurDAO(); 
 	private CihazTur selectedCihazTur;
 	
-	private ResimDAO resimDAO = new ResimDAO();
+	private ResimDAO resimDAO;
+	private Resim selectedResim;
 	
 	CihazView(JFrame aParent) {				    
 		fEdit = Edit.ADD;		
@@ -88,12 +90,13 @@ public class CihazView {
 	CihazView(JFrame aParent, Cihaz selectedCihaz) {				    
 		fEdit = Edit.CHANGE;		
 		fId = selectedCihaz.getId();
+		fResimId = selectedCihaz.getResimId();
 		buildGui(aParent, "Cihaz Güncelle");
 		try {
 			selectedUretici = ureticiDAO.findById(selectedCihaz.getUreticiId());
 			selectedCihazTur = cihazTurDAO.findById(selectedCihaz.getTuru());
+			selectedResim = ResimDAO.findById(selectedCihaz.getResimId());
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		populateFields(selectedCihaz);
@@ -126,17 +129,23 @@ public class CihazView {
 	}	
 	public Boolean getAktif(){
 		return this.fAktif.isSelected();
-	}		
+	}	
+	
+	public Integer getResimId(){
+		return fResimId;
+	}	
 	public byte[] getKucukResim(){
 		return fKucukResim;
 	}	
-	public byte[] getOrtaResim(){
-		return fOrtaResim;
+	public byte[] getResim(){
+		return fResim;
 	}	
 	public byte[] getBuyukResim(){
 		return fBuyukResim;
 	}	
-	
+	public boolean getResimYukleme(){
+		return fResimYukleme;
+	}	
 	private void buildGui(JFrame aParent, String aDialogTitle) {
 		fStandardDialog = new StandardDialog(
 		      aParent, aDialogTitle, true, OnClose.DISPOSE, getUserInputArea(), getButtons()
@@ -278,10 +287,11 @@ public class CihazView {
 	            if (returnVal == JFileChooser.APPROVE_OPTION) {
 	               java.io.File file = aFileDialog.getSelectedFile();
 		       		try {
-		    			fOrtaResim = ImageResize.reize(file, 40, 53);
-		    			fOrtaResim = ImageResize.reize(file, 160, 212);
+		    			fResim = ImageResize.reize(file, 160, 0);
+		    			fKucukResim = ImageResize.reize(file, 40, 0);
 		    			fBuyukResim = ImageResize.reize(file, 0, 0);
-		    			fResimLabel.setIcon(new ImageIcon(fKucukResim));
+		    			fResimLabel.setIcon(new ImageIcon(fResim));
+		    			fResimYukleme = true;
 		    		} catch (Exception ex) {
 		    			// TODO Auto-generated catch block
 		    			ex.printStackTrace();
@@ -316,19 +326,11 @@ public class CihazView {
 		if(aSelectedCihaz.getAktif() == 1){
 			fAktif.setSelected(true);
 		}
-		Resim resim = null;
-		try {
-			resim = resimDAO.findById(aSelectedCihaz.getId());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		InputStream in = new ByteArrayInputStream(resim.getKucukResim());
+		InputStream in = new ByteArrayInputStream(selectedResim.getResim());
 		BufferedImage bufImage = null;
 		try {
 			bufImage = ImageIO.read(in);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		fResimLabel.setIcon(new ImageIcon(bufImage));
