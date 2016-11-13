@@ -272,9 +272,9 @@ public class CihazView {
   	    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 	    
   	    aResimLabel.setPreferredSize(new Dimension(160, 225));
-	    panel.add(aResimLabel);
-		
-		
+  	    aResimLabel.setBorder(BorderFactory.createEmptyBorder(10,0,0,0));
+  	    panel.add(aResimLabel);
+				
 	    JButton showFileDialogButton = new JButton("Resim Yükle");
 	    showFileDialogButton.addActionListener(new ActionListener() {
 	         @Override
@@ -298,10 +298,8 @@ public class CihazView {
 	         }
 	    });
   	    
-  	    panel.add(showFileDialogButton);
-		
+  	    panel.add(showFileDialogButton);		
 	    aPanel.add(panel);		  
-
 	}	
 	
 	private void populateFields(Cihaz aSelectedCihaz) {
