@@ -7,7 +7,10 @@ public class Resim {
 	private byte[] fKucukResim;
 	private byte[] fBuyukResim;
 	
-	public Resim(Integer aId, byte[] aKucukResim,byte[] aResim,byte[] aBuyukResim){
+	public Resim(){
+		
+	}
+	public Resim(Integer aId, byte[] aKucukResim, byte[] aResim, byte[] aBuyukResim){
 		fId=aId;
 		fKucukResim=aKucukResim;
 		fResim = aResim;

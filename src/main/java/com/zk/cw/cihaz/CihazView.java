@@ -8,8 +8,10 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -67,7 +69,7 @@ public class CihazView {
 	private JCheckBox fAktif = new JCheckBox();
 	JFileChooser fResimChooser= new JFileChooser();
 	private JLabel fResimLabel = new JLabel();
-	private Integer fResimId;
+	private Integer fResimId=null;
 	private byte[] fResim;
 	private byte[] fKucukResim;
 	private byte[] fBuyukResim;
@@ -285,15 +287,17 @@ public class CihazView {
 	         public void actionPerformed(ActionEvent e) {
 	            int returnVal = aFileDialog.showOpenDialog(aPanel);
 	            if (returnVal == JFileChooser.APPROVE_OPTION) {
-	               java.io.File file = aFileDialog.getSelectedFile();
+	               File file = aFileDialog.getSelectedFile();
 		       		try {
 		    			fResim = ImageResize.reize(file, 160, 0);
 		    			fKucukResim = ImageResize.reize(file, 40, 0);
-		    			fBuyukResim = ImageResize.reize(file, 0, 0);
+		    			BufferedImage originalImage = ImageIO.read(file);
+		    			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		    			ImageIO.write( originalImage, "jpg", baos );
+		    			fBuyukResim = baos.toByteArray();
 		    			fResimLabel.setIcon(new ImageIcon(fResim));
 		    			fResimYukleme = true;
 		    		} catch (Exception ex) {
-		    			// TODO Auto-generated catch block
 		    			ex.printStackTrace();
 		    		}
 	            }	                 

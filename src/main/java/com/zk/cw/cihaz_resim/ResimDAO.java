@@ -63,7 +63,7 @@ public class ResimDAO {
 		ResultSet rset = pstmt.executeQuery();
 
 		while (rset.next()){
-			resim = new Resim(rset.getInt("id"), rset.getBytes("resim"),rset.getBytes("kucuk_resim"),rset.getBytes("buyuk_resim"));
+			resim = new Resim(rset.getInt("id"), rset.getBytes("kucuk_resim"), rset.getBytes("resim"), rset.getBytes("buyuk_resim"));
 		}
 
 		pstmt.close();

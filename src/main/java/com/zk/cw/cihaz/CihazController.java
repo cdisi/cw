@@ -37,8 +37,9 @@ public class CihazController implements ActionListener  {
 		    if ( isUserInputValid() ){
 		      if( Edit.ADD == fEdit ) {
 		        try {
+					Resim resim = fResimDAO.add(fCihaz, fResim);
+					fCihaz.setResimId(resim.getId());
 					Cihaz cihaz = fDAO.add(fCihaz);
-					fResimDAO.add(cihaz, fResim);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -46,10 +47,12 @@ public class CihazController implements ActionListener  {
 		      }
 		      else if (Edit.CHANGE == fEdit) {
 		        try {
+		        	fCihaz.setResimId(fView.getResimId());
 		        	fDAO.change(fCihaz);
-					fResimDAO.update(fCihaz, fResim);
+		        	if(fView.getResimYukleme()){
+		        		fResimDAO.update(fCihaz, fResim);
+		        	}
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 		      }
@@ -87,7 +90,15 @@ public class CihazController implements ActionListener  {
 		}
 		
 		if(fView.getResimYukleme()){
-			fResim = new Resim(fView.getResimId(),fView.getKucukResim(),fView.getResim(),fView.getBuyukResim());
+			if(fView.getResimId() != null){
+				fCihaz.setResimId(fView.getResimId());			
+				fResim = new Resim(fView.getResimId(),fView.getKucukResim(),fView.getResim(),fView.getBuyukResim());
+			}else{
+				fResim = new Resim();
+				fResim.setKucukResim(fView.getKucukResim());
+				fResim.setResim(fView.getResim());
+				fResim.setBuyukResim(fView.getBuyukResim());
+			}
 		}
 		
 		if(error){

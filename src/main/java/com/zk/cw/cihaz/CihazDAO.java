@@ -88,7 +88,6 @@ public class CihazDAO {
 	
 	public void change(Cihaz cihaz) throws SQLException {
 		Connection c = DaoFactory.openConnection();
-		
 		PreparedStatement pstmt = c.prepareStatement(UPDATE);
 
 		pstmt.setString(1, cihaz.getAd());
