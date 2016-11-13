@@ -131,8 +131,7 @@ public class CihazView {
 	}	
 	public Boolean getAktif(){
 		return this.fAktif.isSelected();
-	}	
-	
+	}		
 	public Integer getResimId(){
 		return fResimId;
 	}	
@@ -272,7 +271,7 @@ public class CihazView {
   	    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 	    
   	    aResimLabel.setPreferredSize(new Dimension(160, 225));
-  	    aResimLabel.setBorder(BorderFactory.createEmptyBorder(10,0,0,0));
+  	    aResimLabel.setBorder(BorderFactory.createEmptyBorder(0,0,10,0));
   	    panel.add(aResimLabel);
 				
 	    JButton showFileDialogButton = new JButton("Resim Yükle");
