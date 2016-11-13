@@ -185,8 +185,7 @@ public class CihazView {
 	private JPanel getResimInputArea(){
 		JPanel result = new JPanel(new FlowLayout(FlowLayout.LEFT));	    
 		result.setBorder(BorderFactory.createTitledBorder("RESİM"));
-		addResimLabelField(fResimLabel, result);
-		addResimChooserField(fResimChooser, result);
+		addResimChooserField(fResimChooser, fResimLabel, result);
 	    return result;
 	}	
 	
@@ -267,20 +266,15 @@ public class CihazView {
 		aPanel.add(panel);		  
 	}	
 	
-	// resim fields
-	private void addResimLabelField(JLabel aResimLabel, JPanel aPanel) {
+	private void addResimChooserField(JFileChooser aFileDialog, JLabel aResimLabel, JPanel aPanel) {
 
-  	    JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+  	    JPanel panel = new JPanel();
+  	    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 	    
-  	    aResimLabel.setPreferredSize(new Dimension(110, 146));
+  	    aResimLabel.setPreferredSize(new Dimension(160, 225));
 	    panel.add(aResimLabel);
 		
-	    aPanel.add(panel);		  
-	}
-	
-	private void addResimChooserField(JFileChooser aFileDialog, JPanel aPanel) {
-
-  	    JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		
 	    JButton showFileDialogButton = new JButton("Resim Yükle");
 	    showFileDialogButton.addActionListener(new ActionListener() {
 	         @Override
