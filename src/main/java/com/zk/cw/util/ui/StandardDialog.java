@@ -75,6 +75,7 @@ public final class StandardDialog {
     fDialog.setDefaultCloseOperation(aOnClose.getIntValue());
     addCancelByEscapeKey(aOnClose);
   }
+  
 
   /**
    Display the dialog.

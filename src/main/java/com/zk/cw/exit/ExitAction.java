@@ -1,12 +1,9 @@
 package com.zk.cw.exit;
 
-import com.zk.cw.edit.MovieDAO;
 import com.zk.cw.util.Util;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.util.logging.Logger;
-
 import javax.swing.AbstractAction;
 import javax.swing.KeyStroke;
 
@@ -23,18 +20,11 @@ public final class ExitAction extends AbstractAction {
     super("Exit", null);
     putValue(SHORT_DESCRIPTION, "Exit the application"); 
     putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_F4, ActionEvent.ALT_MASK));
-    //mnemonic activates only when alt is pressed and held down
     putValue(MNEMONIC_KEY, new Integer(KeyEvent.VK_X) );    
   }
   
-  /** Save all edits and exit the app. */
   @Override public void actionPerformed(ActionEvent aActionEvent) {
-    fLogger.config("Persisting data.");
-    MovieDAO dao = new MovieDAO();
-    dao.shutdown();
-    fLogger.config("Exiting the application.");
     System.exit(0);
   }
   
-  private static final Logger fLogger = Util.getLogger(ExitAction.class);
 }

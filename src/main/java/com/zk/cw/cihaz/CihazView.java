@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -33,6 +34,8 @@ import javax.swing.JTextField;
 
 import com.zk.cw.cihaz_resim.Resim;
 import com.zk.cw.cihaz_resim.ResimDAO;
+import com.zk.cw.cihaz_resim_galeri.ResimGaleri;
+import com.zk.cw.cihaz_resim_galeri.ResimGaleriDAO;
 import com.zk.cw.cihaz_tur.CihazTur;
 import com.zk.cw.cihaz_tur.CihazTurCombBoxModel;
 import com.zk.cw.cihaz_tur.CihazTurComboBoxRenderer;
@@ -74,6 +77,16 @@ public class CihazView {
 	private byte[] fKucukResim;
 	private byte[] fBuyukResim;
 	private boolean fResimYukleme=false;
+	//ikinci resim
+	JFileChooser fResimChooser1= new JFileChooser();
+	private JLabel fResimLabel1 = new JLabel();
+	private Integer fResimId1=null;
+	private byte[] fResim1;
+	private byte[] fKucukResim1;
+	private byte[] fBuyukResim1;
+	private boolean fResimYukleme1=false;
+
+	
 	private UreticiDAO ureticiDAO = new UreticiDAO(); 
 	private Uretici selectedUretici;
 	
@@ -82,7 +95,7 @@ public class CihazView {
 	
 	private ResimDAO resimDAO;
 	private Resim selectedResim;
-	
+
 	CihazView(JFrame aParent) {				    
 		fEdit = Edit.ADD;		
 		buildGui(aParent, "Cihaz Ekle");
@@ -98,6 +111,7 @@ public class CihazView {
 			selectedUretici = ureticiDAO.findById(selectedCihaz.getUreticiId());
 			selectedCihazTur = cihazTurDAO.findById(selectedCihaz.getTuru());
 			selectedResim = ResimDAO.findById(selectedCihaz.getResimId());
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -190,7 +204,6 @@ public class CihazView {
 	
 	private void addTextField(JTextField aTextField, String aLabel, JPanel aPanel) {
 		  JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-
 		  JLabel label = new JLabel(aLabel);
 		  panel.add(label);
 		  panel.add(aTextField);

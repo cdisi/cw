@@ -16,11 +16,11 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import com.zk.cw.about.AboutAction;
+import com.zk.cw.cihaz_resim_galeri.ResimAction;
 import com.zk.cw.cihaz_url.CihazAraAction;
 import com.zk.cw.exit.ExitAction;
 import com.zk.cw.uretici.UreticilerAction;
 import com.zk.cw.yeni_cihaz.YeniCihazAction;
-
 
 
 public class CihazMainWindow {
@@ -30,6 +30,7 @@ public class CihazMainWindow {
 	private JTable cihazTable;	
 	private CihazActionChange cihazActionChange;
 	private CihazActionAdd cihazActionAdd;
+	private ResimAction resimAction;
 	
 	private CihazMainWindow() {  }
 	
@@ -81,8 +82,12 @@ public class CihazMainWindow {
 	    editMenu.setMnemonic('E');
 	    cihazActionAdd = new CihazActionAdd(aFrame,cihazTable,cihazTableModel);
 	    editMenu.add(new JMenuItem(cihazActionAdd));
+	    
 	    cihazActionChange = new CihazActionChange(aFrame,cihazTable,cihazTableModel);
 	    editMenu.add(new JMenuItem(cihazActionChange));
+
+	    resimAction = new ResimAction(aFrame,cihazTable,cihazTableModel);
+	    editMenu.add(new JMenuItem(resimAction));	    
 	    
 	    menuBar.add(editMenu);
 	    

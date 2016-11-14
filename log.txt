@@ -1,20 +1,34 @@
-Kas 13, 2016 1:40:38 PM com.zk.cw.LaunchApplication main
+Kas 14, 2016 7:33:44 PM com.zk.cw.LaunchApplication main
 CONFIG: Launching application...
-Kas 13, 2016 1:40:38 PM com.zk.cw.LaunchApplication main
+Kas 14, 2016 7:33:44 PM com.zk.cw.LaunchApplication main
 CONFIG: Operating System : Windows 8.1 6.3
-Kas 13, 2016 1:40:38 PM com.zk.cw.LaunchApplication main
+Kas 14, 2016 7:33:44 PM com.zk.cw.LaunchApplication main
 CONFIG: Java Version: 1.8.0_66
-Kas 13, 2016 1:40:38 PM com.zk.cw.LaunchApplication main
+Kas 14, 2016 7:33:44 PM com.zk.cw.LaunchApplication main
 CONFIG: Java Home: C:\Program Files\Java\jdk1.8.0_66\jre
-Kas 13, 2016 1:40:38 PM com.zk.cw.LaunchApplication useCustomExceptionHandler
+Kas 14, 2016 7:33:44 PM com.zk.cw.LaunchApplication useCustomExceptionHandler
 CONFIG: Setting up custom exception handler.
-Kas 13, 2016 1:40:38 PM com.zk.cw.LaunchApplication main
+Kas 14, 2016 7:33:44 PM com.zk.cw.LaunchApplication main
 CONFIG: Showing user login screen.
-Kas 13, 2016 1:40:38 PM com.zk.cw.LaunchApplication userLogin
+Kas 14, 2016 7:33:44 PM com.zk.cw.LaunchApplication userLogin
 CONFIG: Showing the login screen.
-Kas 13, 2016 1:40:39 PM com.zk.cw.login.LoginController showMainWindow
+Kas 14, 2016 7:33:45 PM com.zk.cw.login.LoginController showMainWindow
 CONFIG: Showing the main window.
-Kas 13, 2016 1:40:40 PM com.zk.cw.main.MainWindow buildAndShow
-FINE: Building GUI for user : dd
-Kas 13, 2016 1:40:40 PM com.zk.cw.LaunchApplication main
+Kas 14, 2016 7:33:45 PM com.zk.cw.main.MainWindow buildAndShow
+FINE: Building GUI for user : fg
+Kas 14, 2016 7:33:45 PM com.zk.cw.LaunchApplication main
 CONFIG: Launch thread now ending.
+Kas 14, 2016 7:35:01 PM com.zk.cw.exit.ExitAction actionPerformed
+CONFIG: Persisting data.
+Kas 14, 2016 7:35:01 PM com.zk.cw.edit.MovieDAO readInMovieFileUponStartup
+FINE: Reading movies from :movie_list_for_fg.txt
+Kas 14, 2016 7:35:01 PM com.zk.cw.edit.MovieDAO readInMovieFileUponStartup
+SEVERE: Unable to access the movies file.
+Kas 14, 2016 7:35:01 PM com.zk.cw.edit.MovieDAO <clinit>
+CONFIG: Number of movies read in from file: 0
+Kas 14, 2016 7:35:01 PM com.zk.cw.edit.MovieDAO shutdown
+FINE: Saving all movie records to file.
+Kas 14, 2016 7:35:01 PM com.zk.cw.edit.MovieDAO writeStringToFile
+FINE: Writing movies to: movie_list_for_fg.txt
+Kas 14, 2016 7:35:02 PM com.zk.cw.exit.ExitAction actionPerformed
+CONFIG: Exiting the application.
