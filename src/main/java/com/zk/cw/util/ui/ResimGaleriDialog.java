@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
-public final class StandardDialog {
+public final class ResimGaleriDialog {
 
   /**
    Construct a standard dialog.
@@ -20,9 +20,9 @@ public final class StandardDialog {
    @param aBody the body of the dialog, where the user enters information
    @param aButtons a row of buttons appearing at the bottom of this dialog
    */
-  public StandardDialog (
+  public ResimGaleriDialog (
     JFrame aOwner, String aTitle, boolean aIsModal, OnClose aOnClose, 
-    JPanel aBody, java.util.List<JButton> aButtons
+    JPanel aBody, JFileChooser aButtons
   ) {
     String title = UiUtil.getDialogTitle(aTitle);
     fDialog = new JDialog(aOwner, title, aIsModal);
@@ -105,18 +105,11 @@ public final class StandardDialog {
     fDialog.getRootPane().getActionMap().put(CANCEL_ACTION_KEY, cancelAction);
   }
 
-  private JPanel buildButtonPanel(java.util.List<JButton> aButtons) {
+  private JPanel buildButtonPanel(JFileChooser aButtons) {
     JPanel result = new JPanel();
     result.setLayout(new BoxLayout(result, BoxLayout.LINE_AXIS));
     result.add(Box.createHorizontalGlue());
-    int count = 0;
-    for (JButton button : aButtons) {
-      count++;
-      result.add(button);
-      if (count < aButtons.size()) {
-        result.add(Box.createHorizontalStrut(6));
-      }
-    }
+    result.add(aButtons);
     result.add(Box.createHorizontalGlue());
     return result;
   }

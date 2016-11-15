@@ -57,10 +57,8 @@ public class ResimGaleriDAO {
 	
 	public static List<ResimGaleri> findByCihazId(Integer id) throws SQLException {
 		Connection c = DaoFactory.openConnection();
-
 		PreparedStatement pstmt = c.prepareStatement(FIND_BY_CIHAZ_ID);
-		pstmt.setInt(1, id);
-		
+		pstmt.setInt(1, id);		
 		List resimGaleriList = new ArrayList<ResimGaleri>();
 		ResultSet rset = pstmt.executeQuery();
 		ResimGaleri resimGaleri = null;
