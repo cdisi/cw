@@ -29,6 +29,7 @@ public class ResimGaleriView {
 	private StandardDialog fStandardDialog;
 	private JButton fButton;
 	private Integer fId;
+	JPanel mainPanel = new JPanel();
 	
 	private List<ResimGaleri> resimGaleriList;
 	
@@ -50,8 +51,7 @@ public class ResimGaleriView {
 		);
 		fStandardDialog.setDefaultButton(fButton);
 	}
-	private JPanel getUserInputArea() {
-	    JPanel mainPanel = new JPanel();
+	private JPanel getUserInputArea() {	    
 	    mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 	    JPanel galeriPanel = getGaleriInputArea();	    
 	    mainPanel.add(galeriPanel); 
@@ -62,7 +62,7 @@ public class ResimGaleriView {
 	
 	private JPanel getGaleriInputArea(){
 		JPanel result = new JPanel(new FlowLayout(FlowLayout.LEFT));	    
-		result.setBorder(BorderFactory.createTitledBorder("GALERİ"));
+		result.setBorder(BorderFactory.createTitledBorder("RESİM GALERİSİ"));
 		for(ResimGaleri resimGaleri: resimGaleriList)
 			addResimPanelField(resimGaleri, result);
 	    return result;
@@ -90,7 +90,7 @@ public class ResimGaleriView {
 	    java.util.List<JButton> result = new ArrayList<>();
 
 	    fButton = new JButton("Resim Yükle");
-	    fButton.addActionListener(new ResimGaleriController(this));
+	    fButton.addActionListener(new ResimGaleriController(this, mainPanel));
 	    result.add(fButton);
 	    
 	    JButton cancel = new JButton("İptal");

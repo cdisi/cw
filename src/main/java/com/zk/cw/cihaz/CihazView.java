@@ -77,14 +77,6 @@ public class CihazView {
 	private byte[] fKucukResim;
 	private byte[] fBuyukResim;
 	private boolean fResimYukleme=false;
-	//ikinci resim
-	JFileChooser fResimChooser1= new JFileChooser();
-	private JLabel fResimLabel1 = new JLabel();
-	private Integer fResimId1=null;
-	private byte[] fResim1;
-	private byte[] fKucukResim1;
-	private byte[] fBuyukResim1;
-	private boolean fResimYukleme1=false;
 
 	
 	private UreticiDAO ureticiDAO = new UreticiDAO(); 
