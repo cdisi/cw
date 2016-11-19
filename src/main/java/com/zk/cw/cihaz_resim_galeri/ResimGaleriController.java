@@ -17,6 +17,8 @@ public class ResimGaleriController implements ActionListener  {
 	JFileChooser fResimChooser= new JFileChooser();
 	ResimGaleriView fView;
 	JPanel fMainPanel;
+	ResimGaleri resimGaleri = new ResimGaleri();
+	ResimGaleriDAO resimGaleriDAO;
 	
 	public ResimGaleriController(ResimGaleriView aView, JPanel aMainPanel){
 		fView = aView;
@@ -32,13 +34,22 @@ public class ResimGaleriController implements ActionListener  {
        			byte[] fKucukResim;
        			byte[] fOrtaResim;
        			byte[] fBuyukResim;
-       			
-    			fKucukResim = ImageResize.reize(file, 40, 0);
-    			fOrtaResim = ImageResize.reize(file, 160, 0);
+       			resimGaleri.setCihazId(fView.getCihazId());
+       			resimGaleri.setKucukResim(ImageResize.reize(file, 40, 0));
+       			resimGaleri.setOrtaResim(ImageResize.reize(file, 160, 0));
     			BufferedImage originalImage = ImageIO.read(file);
     			ByteArrayOutputStream baos = new ByteArrayOutputStream();
     			ImageIO.write( originalImage, "jpg", baos );
-    			fBuyukResim = baos.toByteArray();
+    			resimGaleri.setBuyukResim(baos.toByteArray());
+    			JPanel resimGaleriPanel = fView.getResimGaleriPanel();
+    			resimGaleriPanel.removeAll();
+    			resimGaleriDAO.add(resimGaleri);
+    			resimGaleriPanel = fView.getGaleriInputArea();   			
+    			resimGaleriPanel.revalidate();
+    			//resimGaleriPanel.repaint();
+    			fMainPanel.revalidate();
+    			//fMainPanel.repaint();
+    			fMainPanel.add(resimGaleriPanel);
     			
     		} catch (Exception ex) {
     			ex.printStackTrace();

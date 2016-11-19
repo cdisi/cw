@@ -30,19 +30,22 @@ public class ResimGaleriView {
 	private JButton fButton;
 	private Integer fId;
 	JPanel mainPanel = new JPanel();
+	public JPanel resimGaleriPanel;
 	
 	private List<ResimGaleri> resimGaleriList;
 	
 	ResimGaleriView(JFrame aParent, Cihaz selectedCihaz) {				    
 		fId = selectedCihaz.getId();
-		try {
-			resimGaleriList = ResimGaleriDAO.findByCihazId(fId);			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 		buildGui(aParent, "Cihaz Güncelle");
-		//populateFields(selectedCihaz);
 		fStandardDialog.display();
+	}
+	
+	JPanel getResimGaleriPanel(){
+		return resimGaleriPanel;
+	}		
+	
+	Integer getCihazId(){
+		return fId;
 	}
 	
 	private void buildGui(JFrame aParent, String aDialogTitle) {
@@ -53,6 +56,7 @@ public class ResimGaleriView {
 	}
 	private JPanel getUserInputArea() {	    
 	    mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+	    mainPanel.setBorder(BorderFactory.createTitledBorder("RESİM GALERİSİ"));
 	    JPanel galeriPanel = getGaleriInputArea();	    
 	    mainPanel.add(galeriPanel); 
 	    
@@ -60,19 +64,23 @@ public class ResimGaleriView {
 	    return mainPanel;	    
 	}
 	
-	private JPanel getGaleriInputArea(){
-		JPanel result = new JPanel(new FlowLayout(FlowLayout.LEFT));	    
-		result.setBorder(BorderFactory.createTitledBorder("RESİM GALERİSİ"));
+	public JPanel getGaleriInputArea(){
+		resimGaleriPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));	    
+		try {
+			resimGaleriList = ResimGaleriDAO.findByCihazId(fId);			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		for(ResimGaleri resimGaleri: resimGaleriList)
-			addResimPanelField(resimGaleri, result);
-	    return result;
-	}	
+			addResimPanelField(resimGaleri, resimGaleriPanel);
+	    return resimGaleriPanel;
+	}
 	
 	private void addResimPanelField(ResimGaleri aResimGaleri, JPanel aPanel) {
 		JPanel result = new JPanel();
 		result.setLayout(new BoxLayout(result, BoxLayout.Y_AXIS));
 		JLabel label = new JLabel();
-		label.setIcon(new ImageIcon(aResimGaleri.getKucukResim()));
+		label.setIcon(new ImageIcon(aResimGaleri.getOrtaResim()));
 		result.add(label);
 		    
 		JButton sil = new JButton("Sil");

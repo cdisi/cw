@@ -35,6 +35,7 @@ public class Mobile91Parser {
 	public void resimleriBul(Cihaz cihaz){
 		Elements elms = doc.select("img.product_photos_thumb");
 		byte[] buyukResim=null;
+		byte[] ortaResim=null;		
 		byte[] kucukResim =null;
 		if(elms != null){
 	    	for(Element elm:elms){
@@ -50,12 +51,17 @@ public class Mobile91Parser {
 					e.printStackTrace();
 				}
 				try {
-					BufferedImage originalImage = ImageIO.read(new URL(elm.attr("data-large-src")));
+					URL url = new URL(elm.attr("data-large-src"));
+					BufferedImage originalImage = ImageIO.read(url);
 					ByteArrayOutputStream baos = new ByteArrayOutputStream();
 					ImageIO.write( originalImage, "jpg", baos );
 					baos.flush();
 					buyukResim = baos.toByteArray();
 					baos.close();
+					
+					ortaResim = ImageResize.reizeFromUrl(url, 160, 0);
+					kucukResim = ImageResize.reizeFromUrl(url, 40, 0);
+					
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -63,7 +69,7 @@ public class Mobile91Parser {
 				
 				try {
 
-					ResimGalerisiDAO.add(cihaz, kucukResim, buyukResim);
+					ResimGalerisiDAO.add(cihaz, kucukResim, ortaResim, buyukResim);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

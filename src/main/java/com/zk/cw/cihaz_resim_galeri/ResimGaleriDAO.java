@@ -15,26 +15,27 @@ public class ResimGaleriDAO {
 	private static final String UPDATE = "UPDATE cihaz_resim_galeri set kucuk_resim=?,orta_resim=?, buyuk_resim=? WHERE id=?";
 	private static final String FIND_BY_CIHAZ_ID = "SELECT * FROM cihaz_resim_galeri WHERE cihaz_id=?";
 	
-	public static Resim add(Cihaz cihaz, Resim resim) throws SQLException {
+	public static ResimGaleri add(ResimGaleri resimGaleri) throws SQLException {
 		Connection c = DaoFactory.openConnection();
 		
 		PreparedStatement pstmt = c.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
 
-		pstmt.setBytes(1, resim.getResim());
-		pstmt.setBytes(2, resim.getKucukResim());
-		pstmt.setBytes(3, resim.getBuyukResim());
+		pstmt.setInt(1, resimGaleri.getCihazId());
+		pstmt.setBytes(2, resimGaleri.getKucukResim());
+		pstmt.setBytes(3, resimGaleri.getOrtaResim());
+		pstmt.setBytes(4, resimGaleri.getBuyukResim());
 		
 		pstmt.executeUpdate();
 		ResultSet rset = pstmt.getGeneratedKeys();
 
 		rset.next();
 		Integer idGenerated = rset.getInt(1);
-		resim.setId(idGenerated);		
+		resimGaleri.setId(idGenerated);		
 
 		pstmt.close();
 		c.close();
 		
-		return resim;
+		return resimGaleri;
 	}
 	
 	public static Resim update(Cihaz cihaz, Resim resim) throws SQLException {
