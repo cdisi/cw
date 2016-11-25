@@ -24,7 +24,7 @@ import com.zk.cw.util.ui.OnClose;
 import com.zk.cw.util.ui.StandardDialog;
 import com.zk.cw.util.ui.UiUtil;
 
-public class ResimGaleriView {
+public class ResimView {
 	
 	private StandardDialog fStandardDialog;
 	private JButton fButton;
@@ -32,9 +32,9 @@ public class ResimGaleriView {
 	JPanel mainPanel = new JPanel();
 	public JPanel resimGaleriPanel;
 	
-	private List<ResimGaleri> resimGaleriList;
+	private List<Resim> resimGaleriList;
 	
-	ResimGaleriView(JFrame aParent, Cihaz selectedCihaz) {				    
+	ResimView(JFrame aParent, Cihaz selectedCihaz) {				    
 		fId = selectedCihaz.getId();
 		buildGui(aParent, "Cihaz Güncelle");
 		fStandardDialog.display();
@@ -67,16 +67,16 @@ public class ResimGaleriView {
 	public JPanel getGaleriInputArea(){
 		resimGaleriPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));	    
 		try {
-			resimGaleriList = ResimGaleriDAO.findByCihazId(fId);			
+			resimGaleriList = ResimDAO.findByCihazId(fId);			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		for(ResimGaleri resimGaleri: resimGaleriList)
+		for(Resim resimGaleri: resimGaleriList)
 			addResimPanelField(resimGaleri, resimGaleriPanel);
 	    return resimGaleriPanel;
 	}
 	
-	private void addResimPanelField(ResimGaleri aResimGaleri, JPanel aPanel) {
+	private void addResimPanelField(Resim aResimGaleri, JPanel aPanel) {
 		JPanel result = new JPanel();
 		result.setLayout(new BoxLayout(result, BoxLayout.Y_AXIS));
 		JLabel label = new JLabel();
@@ -98,7 +98,7 @@ public class ResimGaleriView {
 	    java.util.List<JButton> result = new ArrayList<>();
 
 	    fButton = new JButton("Resim Yükle");
-	    fButton.addActionListener(new ResimGaleriController(this, mainPanel));
+	    fButton.addActionListener(new ResimController(this, mainPanel));
 	    result.add(fButton);
 	    
 	    JButton cancel = new JButton("İptal");

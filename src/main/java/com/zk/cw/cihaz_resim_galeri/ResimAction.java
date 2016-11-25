@@ -27,6 +27,6 @@ public class ResimAction extends AbstractAction {
 	  @Override public void actionPerformed(ActionEvent aActionEvent) {
 	    int row = this.table.getSelectedRow();
 	    Cihaz selectedCihaz = cihazTableModel.getCihaz(row);
-	    ResimGaleriView view = new ResimGaleriView(mainFrame,selectedCihaz);
+	    ResimView view = new ResimView(mainFrame,selectedCihaz);
 	  }
 }

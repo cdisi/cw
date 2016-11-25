@@ -1,13 +1,13 @@
 package com.zk.cw.cihaz_resim_galeri;
 
-public class ResimGaleri {
+public class Resim {
 	private Integer fId;
 	private Integer fCihazId;
 	private byte[] fKucukResim;
 	private byte[] fOrtaResim;
 	private byte[] fBuyukResim;
 	
-	public ResimGaleri(){
+	public Resim(){
 		
 	}
 	

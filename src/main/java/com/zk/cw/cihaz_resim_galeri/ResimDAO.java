@@ -10,12 +10,13 @@ import java.util.List;
 import com.zk.cw.cihaz.Cihaz;
 import com.zk.cw.dao_factory.DaoFactory;
 
-public class ResimGaleriDAO {
-	private static final String INSERT = "INSERT INTO cihaz_resim_galeri (cihaz_id,kucuk_resim,orta_resim,buyuk_resim) VALUES (?,?,?,?)";
+public class ResimDAO {
+	
+	private static final String INSERT = "INSERT INTO cihaz_goruntu (cihaz_id,kucuk_resim,orta_resim,buyuk_resim) VALUES (?,?,?,?)";
 	private static final String UPDATE = "UPDATE cihaz_resim_galeri set kucuk_resim=?,orta_resim=?, buyuk_resim=? WHERE id=?";
 	private static final String FIND_BY_CIHAZ_ID = "SELECT * FROM cihaz_resim_galeri WHERE cihaz_id=?";
 	
-	public static ResimGaleri add(ResimGaleri resimGaleri) throws SQLException {
+	public static Resim add(Resim resimGaleri) throws SQLException {
 		Connection c = DaoFactory.openConnection();
 		
 		PreparedStatement pstmt = c.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -43,7 +44,7 @@ public class ResimGaleriDAO {
 		
 		PreparedStatement pstmt = c.prepareStatement(UPDATE);
 
-		pstmt.setBytes(1, resim.getResim());
+		pstmt.setBytes(1, resim.getOrtaResim());
 		pstmt.setBytes(2, resim.getKucukResim());
 		pstmt.setBytes(3, resim.getBuyukResim());
 		pstmt.setInt(4, resim.getId());
@@ -56,15 +57,15 @@ public class ResimGaleriDAO {
 		return resim;
 	}	
 	
-	public static List<ResimGaleri> findByCihazId(Integer id) throws SQLException {
+	public static List<Resim> findByCihazId(Integer id) throws SQLException {
 		Connection c = DaoFactory.openConnection();
 		PreparedStatement pstmt = c.prepareStatement(FIND_BY_CIHAZ_ID);
 		pstmt.setInt(1, id);		
-		List resimGaleriList = new ArrayList<ResimGaleri>();
+		List resimGaleriList = new ArrayList<Resim>();
 		ResultSet rset = pstmt.executeQuery();
-		ResimGaleri resimGaleri = null;
+		Resim resimGaleri = null;
 		while (rset.next()){
-			resimGaleri = new ResimGaleri();
+			resimGaleri = new Resim();
 			resimGaleri.setId(rset.getInt("id"));
 			resimGaleri.setCihazId(rset.getInt("cihaz_id"));
 			resimGaleri.setKucukResim(rset.getBytes("kucuk_resim"));
