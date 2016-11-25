@@ -27,6 +27,30 @@ public class CihazDAO {
 		}
 	}
 	
+	public static LinkedHashMap<Integer, Cihaz> tumu() throws SQLException {
+		LinkedHashMap<Integer, Cihaz> lhm = new LinkedHashMap<>(); 
+		Connection c = DaoFactory.openConnection();
+		PreparedStatement pstmt = c.prepareStatement(ALL);
+		ResultSet rset = pstmt.executeQuery();
+		while (rset.next()){
+			Cihaz cihaz = new Cihaz();
+			cihaz.setId(rset.getInt("id"));
+			cihaz.setAd(rset.getString("ad"));
+			cihaz.setDigerAd(rset.getString("diger_ad"));
+			cihaz.setUreticiId(rset.getInt("uretici_id"));
+			cihaz.setTuru(rset.getInt("turu"));
+			cihaz.setDuyurulma(rset.getString("duyurulma"));
+			cihaz.setAnasayfa(rset.getInt("anasayfa"));
+			cihaz.setAktif(rset.getInt("aktif"));
+			cihaz.setResimId(rset.getInt("resim_id"));
+			lhm.put(cihaz.getId(), cihaz);
+		}
+
+		pstmt.close();
+		c.close();
+		return lhm;		
+	}
+	
 	public static void all() throws SQLException {
 		table.clear();
 		Connection c = DaoFactory.openConnection();
