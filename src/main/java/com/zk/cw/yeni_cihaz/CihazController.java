@@ -246,7 +246,6 @@ public class CihazController implements ActionListener {
 	    //fCihaz.setResim(fView.getResim());
 	    if ( isUserInputValid() ){
     	  try {
-	  		  ResimDAO.add(fCihaz, fView.getResim());
     		  fCihaz = cihazDAO.add(fCihaz,uretici);
     		  for(CihazOzellikAtama cihazOzellikAtama : cihazOzellikAtamaList){
 					CihazOzellikAtamaDAO.insert(fCihaz, cihazOzellikAtama);
@@ -259,6 +258,8 @@ public class CihazController implements ActionListener {
 			  if(!fView.getMobile91Url().equals("")){
 					Mobile91Parser mobile91Parser = new Mobile91Parser(fView.getMobile91Url());
 					mobile91Parser.resimleriBul(fCihaz);
+			  }else{
+		  		  ResimDAO.add(fCihaz, fView.getResim());				  
 			  }
 	  		  cihazDAO.update(fView.getUrl());
 		} catch (SQLException e) {

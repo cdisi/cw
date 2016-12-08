@@ -19,7 +19,7 @@ public class YeniCihazDAO {
 	private static Map<Integer, YeniCihaz> table = new LinkedHashMap<>();  
 	private static final String ALL = "SELECT * FROM cihaz_url INNER JOIN uretici ON cihaz_url.uretici_id=uretici.id WHERE uretici.aktif=1 AND cihaz_url.aktif=0";
 	private static final String UPDATE = "UPDATE cihaz_url SET aktif=? WHERE url=?";
-	private static final String INSERT = "INSERT INTO cihaz (ad,diger_ad,uretici_id,aktif,resim_id,duyurulma,created_at,turu,anasayfa) VALUES (?,?,?,?,?,?,?,?,?)";
+	private static final String INSERT = "INSERT INTO cihaz (ad,diger_ad,uretici_id,aktif,duyurulma,created_at,turu,anasayfa) VALUES (?,?,?,?,?,?,?,?)";
 		
 	static {
 		try {
@@ -61,14 +61,13 @@ public class YeniCihazDAO {
 		pstmt.setString(2, cihaz.getDigerAd());
 		pstmt.setInt(3, uretici.idAl());
 		pstmt.setInt(4, 1);
-		pstmt.setInt(5, cihaz.getResimId());
-		pstmt.setString(6, cihaz.getDuyurulma());
+		pstmt.setString(5, cihaz.getDuyurulma());
 		
 	    Date dNow = new Date( );
 	    SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");	      
-		pstmt.setString(7, ft.format(dNow));
-		pstmt.setInt(8, cihaz.getTuru());
-		pstmt.setInt(9, cihaz.getAnasayfa());
+		pstmt.setString(6, ft.format(dNow));
+		pstmt.setInt(7, cihaz.getTuru());
+		pstmt.setInt(8, cihaz.getAnasayfa());
 		pstmt.executeUpdate();
 		ResultSet rset = pstmt.getGeneratedKeys();
 
