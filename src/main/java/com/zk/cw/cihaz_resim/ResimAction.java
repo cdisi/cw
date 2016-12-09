@@ -1,4 +1,4 @@
-package com.zk.cw.cihaz_resim_galeri;
+package com.zk.cw.cihaz_resim;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;

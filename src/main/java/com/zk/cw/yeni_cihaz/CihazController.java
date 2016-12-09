@@ -20,11 +20,13 @@ import javax.swing.JOptionPane;
 
 import org.apache.commons.io.FilenameUtils;
 
-import com.zk.cw.edit.Movie;
+import com.zk.cw.cihaz_resim.Resim;
+import com.zk.cw.cihaz_resim.ResimDAO;
 import com.zk.cw.exception.InvalidInputException;
 import com.zk.cw.main.MainWindow;
 import com.zk.cw.uretici.Uretici;
 import com.zk.cw.util.Edit;
+import com.zk.cw.util.ImageResize;
 import com.zk.cw.util.Mobile91Parser;
 import com.zk.cw.util.Util;
 
@@ -259,7 +261,11 @@ public class CihazController implements ActionListener {
 					Mobile91Parser mobile91Parser = new Mobile91Parser(fView.getMobile91Url());
 					mobile91Parser.resimleriBul(fCihaz);
 			  }else{
-		  		  ResimDAO.add(fCihaz, fView.getResim());				  
+				  Resim resim = new Resim();
+				  resim.setCihazId(fCihaz.getId());
+				  resim.setKucukResim(ImageResize.reizeFromByte(fView.getResim(), 40, 0));
+				  resim.setOrtaResim(ImageResize.reizeFromByte(fView.getResim(), 160, 0));				  
+				  ResimDAO.add(resim);				  
 			  }
 	  		  cihazDAO.update(fView.getUrl());
 		} catch (SQLException e) {

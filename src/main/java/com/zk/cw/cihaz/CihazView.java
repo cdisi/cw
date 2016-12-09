@@ -34,8 +34,6 @@ import javax.swing.JTextField;
 
 import com.zk.cw.cihaz_resim.Resim;
 import com.zk.cw.cihaz_resim.ResimDAO;
-import com.zk.cw.cihaz_resim_galeri.Resim;
-import com.zk.cw.cihaz_resim_galeri.ResimDAO;
 import com.zk.cw.cihaz_tur.CihazTur;
 import com.zk.cw.cihaz_tur.CihazTurCombBoxModel;
 import com.zk.cw.cihaz_tur.CihazTurComboBoxRenderer;

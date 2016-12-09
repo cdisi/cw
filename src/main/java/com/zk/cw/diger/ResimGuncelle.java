@@ -8,8 +8,8 @@ import java.util.Set;
 
 import com.zk.cw.cihaz.Cihaz;
 import com.zk.cw.cihaz.CihazDAO;
-import com.zk.cw.cihaz_resim_galeri.Resim;
-import com.zk.cw.cihaz_resim_galeri.ResimDAO;
+import com.zk.cw.cihaz_resim.Resim;
+import com.zk.cw.cihaz_resim.ResimDAO;
 import com.zk.cw.util.ImageResize;
 
 public class ResimGuncelle {

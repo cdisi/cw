@@ -16,7 +16,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import com.zk.cw.about.AboutAction;
-import com.zk.cw.cihaz_resim_galeri.ResimAction;
+import com.zk.cw.cihaz_resim.ResimAction;
 import com.zk.cw.cihaz_url.CihazAraAction;
 import com.zk.cw.exit.ExitAction;
 import com.zk.cw.uretici.UreticilerAction;

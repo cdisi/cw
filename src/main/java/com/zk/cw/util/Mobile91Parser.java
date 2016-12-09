@@ -13,8 +13,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.zk.cw.cihaz_resim.Resim;
+import com.zk.cw.cihaz_resim.ResimDAO;
 import com.zk.cw.yeni_cihaz.Cihaz;
-import com.zk.cw.yeni_cihaz.ResimGalerisiDAO;
 
 public class Mobile91Parser {
 	private Document doc;
@@ -34,42 +35,28 @@ public class Mobile91Parser {
 	
 	public void resimleriBul(Cihaz cihaz){
 		Elements elms = doc.select("img.product_photos_thumb");
-		byte[] buyukResim=null;
-		byte[] ortaResim=null;		
-		byte[] kucukResim =null;
+		Resim resim = new Resim();
 		if(elms != null){
 	    	for(Element elm:elms){
-				try {
-					BufferedImage originalImage = ImageIO.read(new URL(elm.attr("data-thumb-src")));
-					ByteArrayOutputStream baos = new ByteArrayOutputStream();
-					ImageIO.write( originalImage, "jpg", baos );
-					baos.flush();
-					kucukResim = baos.toByteArray();
-					baos.close();
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 				try {
 					URL url = new URL(elm.attr("data-large-src"));
 					BufferedImage originalImage = ImageIO.read(url);
 					ByteArrayOutputStream baos = new ByteArrayOutputStream();
 					ImageIO.write( originalImage, "jpg", baos );
 					baos.flush();
-					buyukResim = baos.toByteArray();
+					resim.setBuyukResim(baos.toByteArray());
 					baos.close();
 					
-					ortaResim = ImageResize.reizeFromUrl(url, 160, 0);
-					kucukResim = ImageResize.reizeFromUrl(url, 40, 0);
-					
+					resim.setOrtaResim(ImageResize.reizeFromByte(resim.getBuyukResim(), 160, 0));
+					resim.setKucukResim(ImageResize.reizeFromByte(resim.getBuyukResim(), 40, 0));
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}	
 				
 				try {
-
-					ResimGalerisiDAO.add(cihaz, kucukResim, ortaResim, buyukResim);
+					resim.setCihazId(cihaz.getId());
+					ResimDAO.add(resim);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

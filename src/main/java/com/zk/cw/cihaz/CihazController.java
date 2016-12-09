@@ -119,10 +119,10 @@ public class CihazController implements ActionListener  {
 	}
 	 
 	private void showErrorMessage(String messages) {
-		    JOptionPane.showMessageDialog(
-		    fView.getDialog(), messages, 
-			      "Hata", JOptionPane.ERROR_MESSAGE
-		    );
+	    JOptionPane.showMessageDialog(
+	    fView.getDialog(), messages, 
+		      "Hata", JOptionPane.ERROR_MESSAGE
+	    );
 	}	 
 
 }

@@ -1,20 +1,14 @@
 package com.zk.cw.cihaz_resim;
 
 public class Resim {
-	
 	private Integer fId;
-	private byte[] fResim;
+	private Integer fCihazId;
 	private byte[] fKucukResim;
+	private byte[] fOrtaResim;
 	private byte[] fBuyukResim;
 	
 	public Resim(){
 		
-	}
-	public Resim(Integer aId, byte[] aKucukResim, byte[] aResim, byte[] aBuyukResim){
-		fId=aId;
-		fKucukResim=aKucukResim;
-		fResim = aResim;
-		fBuyukResim = aBuyukResim;
 	}
 	
 	public void setId(Integer aId){
@@ -25,6 +19,14 @@ public class Resim {
 		return fId;
 	}
 	
+	public void setCihazId(Integer aCihazId){
+		fCihazId=aCihazId;
+	}
+	
+	public Integer getCihazId(){
+		return fCihazId;
+	}
+	
 	public void setKucukResim(byte[] aKucukResim){
 		fKucukResim = aKucukResim;
 	}
@@ -32,12 +34,12 @@ public class Resim {
 	public byte[] getKucukResim(){
 		return fKucukResim;
 	}	
-	public void setResim(byte[] aResim){
-		fResim = aResim;
+	public void setOrtaResim(byte[] aOrtaResim){
+		fOrtaResim = aOrtaResim;
 	}
 	
-	public byte[] getResim(){
-		return fResim;
+	public byte[] getOrtaResim(){
+		return fOrtaResim;
 	}
 	public void setBuyukResim(byte[] aBuyukResim){
 		fBuyukResim = aBuyukResim;
@@ -45,6 +47,5 @@ public class Resim {
 	
 	public byte[] getBuyukResim(){
 		return fBuyukResim;
-	}	
-	
+	}
 }
