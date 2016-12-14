@@ -16,8 +16,8 @@ import com.zk.cw.dao_factory.DaoFactory;
 public class CihazDAO {
 	private static Map<Integer, Cihaz> table = new LinkedHashMap<>(); 
 	private static final String ALL = "SELECT * FROM cihaz INNER JOIN uretici ON cihaz.uretici_id=uretici.id WHERE uretici.aktif=1 ORDER BY cihaz.duyurulma DESC,cihaz.created_at DESC ";
-	private static final String INSERT = "INSERT INTO cihaz (ad,diger_ad,uretici_id,aktif,resim_id,duyurulma,created_at,turu,anasayfa) VALUES (?,?,?,?,?,?,?,?,?)";
-	private static final String UPDATE = "UPDATE cihaz SET ad=?,diger_ad=?,uretici_id=?,aktif=?,resim_id=?,duyurulma=?,updated_at=?,turu=?,anasayfa=? WHERE id=?";
+	private static final String INSERT = "INSERT INTO cihaz (ad,diger_ad,uretici_id,aktif,duyurulma,created_at,turu,anasayfa) VALUES (?,?,?,?,?,?,?,?)";
+	private static final String UPDATE = "UPDATE cihaz SET ad=?,diger_ad=?,uretici_id=?,aktif=?,duyurulma=?,updated_at=?,turu=?,anasayfa=? WHERE id=?";
 	
 	static {
 		try {
@@ -42,7 +42,6 @@ public class CihazDAO {
 			cihaz.setDuyurulma(rset.getString("duyurulma"));
 			cihaz.setAnasayfa(rset.getInt("anasayfa"));
 			cihaz.setAktif(rset.getInt("aktif"));
-			cihaz.setResimId(rset.getInt("resim_id"));
 			lhm.put(cihaz.getId(), cihaz);
 		}
 
@@ -66,7 +65,6 @@ public class CihazDAO {
 			cihaz.setDuyurulma(rset.getString("duyurulma"));
 			cihaz.setAnasayfa(rset.getInt("anasayfa"));
 			cihaz.setAktif(rset.getInt("aktif"));
-			cihaz.setResimId(rset.getInt("resim_id"));
 			table.put(cihaz.getId(), cihaz);
 		}
 
@@ -89,14 +87,13 @@ public class CihazDAO {
 		pstmt.setString(2, cihaz.getDigerAd());
 		pstmt.setInt(3, cihaz.getUreticiId());
 		pstmt.setInt(4, cihaz.getAktif());
-		pstmt.setInt(5, cihaz.getResimId());
-		pstmt.setString(6, cihaz.getDuyurulma());
+		pstmt.setString(5, cihaz.getDuyurulma());
 		
 	    Date dNow = new Date( );
 	    SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");	      
-		pstmt.setString(7, ft.format(dNow));
-		pstmt.setInt(8, cihaz.getTuru());
-		pstmt.setInt(9, cihaz.getAnasayfa());
+		pstmt.setString(6, ft.format(dNow));
+		pstmt.setInt(7, cihaz.getTuru());
+		pstmt.setInt(8, cihaz.getAnasayfa());
 		pstmt.executeUpdate();
 		ResultSet rset = pstmt.getGeneratedKeys();
 
@@ -118,15 +115,14 @@ public class CihazDAO {
 		pstmt.setString(2, cihaz.getDigerAd());
 		pstmt.setInt(3, cihaz.getUreticiId());
 		pstmt.setInt(4, cihaz.getAktif());
-		pstmt.setInt(5, cihaz.getResimId());
-		pstmt.setString(6, cihaz.getDuyurulma());
+		pstmt.setString(5, cihaz.getDuyurulma());
 		
 	    Date dNow = new Date( );
 	    SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");	      
-		pstmt.setString(7, ft.format(dNow));
-		pstmt.setInt(8, cihaz.getTuru());
-		pstmt.setInt(9, cihaz.getAnasayfa());
-		pstmt.setInt(10, cihaz.getId());
+		pstmt.setString(6, ft.format(dNow));
+		pstmt.setInt(7, cihaz.getTuru());
+		pstmt.setInt(8, cihaz.getAnasayfa());
+		pstmt.setInt(9, cihaz.getId());
 		pstmt.executeUpdate();
 
 		pstmt.close();

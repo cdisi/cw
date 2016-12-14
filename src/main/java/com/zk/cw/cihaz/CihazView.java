@@ -68,14 +68,6 @@ public class CihazView {
 	final JComboBox<String> fDuyurulmaAy = new JComboBox<String>(duyurulmaAyCombBoxModel); 
 	private JCheckBox fAnasayfa = new JCheckBox();
 	private JCheckBox fAktif = new JCheckBox();
-	JFileChooser fResimChooser= new JFileChooser();
-	private JLabel fResimLabel = new JLabel();
-	private Integer fResimId=null;
-	private byte[] fResim;
-	private byte[] fKucukResim;
-	private byte[] fBuyukResim;
-	private boolean fResimYukleme=false;
-
 	
 	private UreticiDAO ureticiDAO = new UreticiDAO(); 
 	private Uretici selectedUretici;
@@ -95,12 +87,10 @@ public class CihazView {
 	CihazView(JFrame aParent, Cihaz selectedCihaz) {				    
 		fEdit = Edit.CHANGE;		
 		fId = selectedCihaz.getId();
-		fResimId = selectedCihaz.getResimId();
 		buildGui(aParent, "Cihaz Güncelle");
 		try {
 			selectedUretici = ureticiDAO.findById(selectedCihaz.getUreticiId());
 			selectedCihazTur = cihazTurDAO.findById(selectedCihaz.getTuru());
-			selectedResim = ResimDAO.findById(selectedCihaz.getResimId());
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -135,22 +125,7 @@ public class CihazView {
 	}	
 	public Boolean getAktif(){
 		return this.fAktif.isSelected();
-	}		
-	public Integer getResimId(){
-		return fResimId;
-	}	
-	public byte[] getKucukResim(){
-		return fKucukResim;
-	}	
-	public byte[] getResim(){
-		return fResim;
-	}	
-	public byte[] getBuyukResim(){
-		return fBuyukResim;
-	}	
-	public boolean getResimYukleme(){
-		return fResimYukleme;
-	}	
+	}			
 	private void buildGui(JFrame aParent, String aDialogTitle) {
 		fStandardDialog = new StandardDialog(
 		      aParent, aDialogTitle, true, OnClose.DISPOSE, getUserInputArea(), getButtons()
@@ -188,7 +163,6 @@ public class CihazView {
 	private JPanel getResimInputArea(){
 		JPanel result = new JPanel(new FlowLayout(FlowLayout.LEFT));	    
 		result.setBorder(BorderFactory.createTitledBorder("RESİM"));
-		addResimChooserField(fResimChooser, fResimLabel, result);
 	    return result;
 	}	
 	
@@ -268,41 +242,6 @@ public class CihazView {
 		aPanel.add(panel);		  
 	}	
 	
-	private void addResimChooserField(JFileChooser aFileDialog, JLabel aResimLabel, JPanel aPanel) {
-
-  	    JPanel panel = new JPanel();
-  	    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-	    
-  	    aResimLabel.setPreferredSize(new Dimension(160, 225));
-  	    aResimLabel.setBorder(BorderFactory.createEmptyBorder(0,0,10,0));
-  	    panel.add(aResimLabel);
-				
-	    JButton showFileDialogButton = new JButton("Resim Yükle");
-	    showFileDialogButton.addActionListener(new ActionListener() {
-	         @Override
-	         public void actionPerformed(ActionEvent e) {
-	            int returnVal = aFileDialog.showOpenDialog(aPanel);
-	            if (returnVal == JFileChooser.APPROVE_OPTION) {
-	               File file = aFileDialog.getSelectedFile();
-		       		try {
-		    			fResim = ImageResize.reize(file, 160, 0);
-		    			fKucukResim = ImageResize.reize(file, 40, 0);
-		    			BufferedImage originalImage = ImageIO.read(file);
-		    			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		    			ImageIO.write( originalImage, "jpg", baos );
-		    			fBuyukResim = baos.toByteArray();
-		    			fResimLabel.setIcon(new ImageIcon(fResim));
-		    			fResimYukleme = true;
-		    		} catch (Exception ex) {
-		    			ex.printStackTrace();
-		    		}
-	            }	                 
-	         }
-	    });
-  	    
-  	    panel.add(showFileDialogButton);		
-	    aPanel.add(panel);		  
-	}	
 	
 	private void populateFields(Cihaz aSelectedCihaz) {
 		fAd.setText(aSelectedCihaz.getAd());
@@ -324,14 +263,6 @@ public class CihazView {
 		if(aSelectedCihaz.getAktif() == 1){
 			fAktif.setSelected(true);
 		}
-		InputStream in = new ByteArrayInputStream(selectedResim.getResim());
-		BufferedImage bufImage = null;
-		try {
-			bufImage = ImageIO.read(in);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		fResimLabel.setIcon(new ImageIcon(bufImage));
 	}
 	
 	private java.util.List<JButton> getButtons() {

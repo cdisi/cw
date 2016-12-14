@@ -13,14 +13,14 @@ import javax.swing.JPanel;
 
 import com.zk.cw.util.ImageResize;
 
-public class ResimController implements ActionListener  {
+public class ResimControllerAdd implements ActionListener  {
 	JFileChooser fResimChooser= new JFileChooser();
 	ResimView fView;
 	JPanel fMainPanel;
 	Resim resimGaleri = new Resim();
 	ResimDAO resimGaleriDAO;
 	
-	public ResimController(ResimView aView, JPanel aMainPanel){
+	public ResimControllerAdd(ResimView aView, JPanel aMainPanel){
 		fView = aView;
 		fMainPanel = aMainPanel;
 	}

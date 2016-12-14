@@ -27,10 +27,11 @@ import com.zk.cw.util.ui.UiUtil;
 public class ResimView {
 	
 	private StandardDialog fStandardDialog;
-	private JButton fButton;
+	public JButton fButton;
 	private Integer fId;
 	JPanel mainPanel = new JPanel();
 	public JPanel resimGaleriPanel;
+	public JButton fSil;
 	
 	private List<Resim> resimGaleriList;
 	
@@ -83,14 +84,9 @@ public class ResimView {
 		label.setIcon(new ImageIcon(aResimGaleri.getOrtaResim()));
 		result.add(label);
 		    
-		JButton sil = new JButton("Sil");
-		//sil.setAlignmentX(Component.RIGHT_ALIGNMENT);
-		sil.addActionListener(new ActionListener() {
-		      @Override public void actionPerformed(ActionEvent arg0) {
-		        
-		      }
-		});		
-		result.add(sil);
+		fSil = new JButton("Sil");
+		fSil.addActionListener(new ResimControllerDelete(this, mainPanel));	
+		result.add(fSil);
 		aPanel.add(result);
 	}
 	
@@ -98,7 +94,7 @@ public class ResimView {
 	    java.util.List<JButton> result = new ArrayList<>();
 
 	    fButton = new JButton("Resim Yükle");
-	    fButton.addActionListener(new ResimController(this, mainPanel));
+	    fButton.addActionListener(new ResimControllerAdd(this, mainPanel));
 	    result.add(fButton);
 	    
 	    JButton cancel = new JButton("İptal");

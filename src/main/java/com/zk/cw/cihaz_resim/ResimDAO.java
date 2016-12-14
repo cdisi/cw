@@ -13,8 +13,9 @@ import com.zk.cw.dao_factory.DaoFactory;
 public class ResimDAO {
 	
 	private static final String INSERT = "INSERT INTO cihaz_goruntu (cihaz_id,kucuk_resim,orta_resim,buyuk_resim) VALUES (?,?,?,?)";
-	private static final String UPDATE = "UPDATE cihaz_resim_galeri set kucuk_resim=?,orta_resim=?, buyuk_resim=? WHERE id=?";
-	private static final String FIND_BY_CIHAZ_ID = "SELECT * FROM cihaz_resim_galeri WHERE cihaz_id=?";
+	private static final String UPDATE = "UPDATE cihaz_goruntu set kucuk_resim=?,orta_resim=?, buyuk_resim=? WHERE id=?";
+	private static final String FIND_BY_CIHAZ_ID = "SELECT * FROM cihaz_goruntu WHERE cihaz_id=?";
+	private static final String DELETE = "DELETE FROM cihaz_goruntu WHERE id=?";
 	
 	public static Resim add(Resim resimGaleri) throws SQLException {
 		Connection c = DaoFactory.openConnection();
@@ -80,6 +81,12 @@ public class ResimDAO {
 		return resimGaleriList;
 	}	
 	
-	
+	public static void delete(int id) throws SQLException {
+		Connection c = DaoFactory.openConnection();
+		PreparedStatement pstmt = c.prepareStatement(DELETE);
+		pstmt.execute();
+		pstmt.close();
+		c.close();
+	}	
 	
 }
