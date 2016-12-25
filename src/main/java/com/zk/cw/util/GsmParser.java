@@ -11,6 +11,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import com.zk.cw.ekran.EkranDAO;
+import com.zk.cw.ekran.EkranTip;
 import com.zk.cw.uretici.Uretici;
 import com.zk.cw.yeni_cihaz.RenkDAO;
 
@@ -169,6 +171,22 @@ public class GsmParser {
 		Element elm = doc.select("a:contains(Type)").first();
 	    if(elm != null){
 	    	deger = elm.parent().nextElementSibling().text().replaceAll(".apacitive", "Kapasitif").replace("touchscreen", "dokunmatik").replace("M ", " Milyon").replace("K ", " Bin").replace("colors", " renk").replaceAll(".esistive", "rezistif");		
+	    }
+	    if(deger.contains(",")){
+	    	String[] ekranTipiArr = deger.split(",");
+	    	EkranTip ekranTip = new EkranTip(null, ekranTipiArr[0].trim());
+	    	EkranDAO ekranDao = new EkranDAO();
+	    	try {
+	    		if(ekranDao.findByName(ekranTip.getAd()) == null){
+					ekranTip = ekranDao.add(ekranTip);
+					if(ekranTip.getId() == null){
+						System.out.println("Ekran tipi eklenemdi");
+					}
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	    }
 		return deger;
 	}	
@@ -478,7 +496,9 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(Java)").first();
 		if(elm != null){
-	    	deger = elm.parent().parent().nextElementSibling().child(1).text().replaceAll(".redictive text input", "Akıllı metin girişi").replace("Organizer", "Ajanda").replace("player", "oynatıcı").replaceAll(".hoto", "Fotoğraf").replaceAll(".ocument viewer", "Belge görüntüleyici").replaceAll(".ocument", "Döküman").replaceAll("editor", "editörü").replaceAll(".ast battery charging", "Hızlı pil şarzı").replace("Voice memo/dial", "Sesli notlar").replace("viewer", "görüntüleyici").replace("cloud storage", "bulut depolama").replace("Voice dial/commands", "Sesli arama/komut").replaceAll(".oice memo", "Sesli notlar").replace("commands", "komutlar").replace(" -", "<br />- ").replace("wireless charging", "kablosuz şarz").trim();		
+			elm = elm.parent().parent().nextElementSibling();
+	    	if(elm != null)
+	    		deger = elm.child(1).text().replaceAll(".redictive text input", "Akıllı metin girişi").replace("Organizer", "Ajanda").replace("player", "oynatıcı").replaceAll(".hoto", "Fotoğraf").replaceAll(".ocument viewer", "Belge görüntüleyici").replaceAll(".ocument", "Döküman").replaceAll("editor", "editörü").replaceAll(".ast battery charging", "Hızlı pil şarzı").replace("Voice memo/dial", "Sesli notlar").replace("viewer", "görüntüleyici").replace("cloud storage", "bulut depolama").replace("Voice dial/commands", "Sesli arama/komut").replaceAll(".oice memo", "Sesli notlar").replace("commands", "komutlar").replace(" -", "<br />- ").replace("wireless charging", "kablosuz şarz").trim();		
 	    }
 		return deger;
 	}
