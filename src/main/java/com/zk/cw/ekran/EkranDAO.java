@@ -11,10 +11,12 @@ import java.util.LinkedHashMap;
 import com.zk.cw.cihaz.Cihaz;
 import com.zk.cw.cihaz_tur.CihazTur;
 import com.zk.cw.dao_factory.DaoFactory;
+import com.zk.cw.ozellik_atama.OzellikAtama;
 
 public class EkranDAO {
 	private static final String ALL = "SELECT * FROM ekran_tipi";
-	private static final String ALL_OZELLIKLER = "SELECT * FROM cihaz_ozellik_atama WHERE ozellik_id=10";
+	private static final String TUM_OZELLIKLER = "SELECT * FROM cihaz_ozellik_atama WHERE ozellik_id=10";
+	private static final String FIND_BY_ID = "SELECT * FROM ekran_tipi WHERE id = ?";	
 	private static final String FIND_BY_NAME = "SELECT * FROM ekran_tipi WHERE ad = ?";	
 	private static final String INSERT = "INSERT INTO ekran_tipi (ad) VALUES (?)";
 
@@ -35,14 +37,14 @@ public class EkranDAO {
 		return ekranTipleri;
 	}	
 	
-	public static LinkedHashMap<Integer, EkranTip> allOzellikler() throws SQLException {
-			LinkedHashMap<Integer, EkranTip> lhm = new LinkedHashMap<>(); 
+	public static LinkedHashMap<Integer, OzellikAtama> tumOzellikler() throws SQLException {
+			LinkedHashMap<Integer, OzellikAtama> lhm = new LinkedHashMap<>(); 
 			Connection c = DaoFactory.openConnection();
-			PreparedStatement pstmt = c.prepareStatement(ALL_OZELLIKLER);
+			PreparedStatement pstmt = c.prepareStatement(TUM_OZELLIKLER);
 			ResultSet rset = pstmt.executeQuery();
 			while (rset.next()){
-				EkranTip ekranTip = new EkranTip(rset.getInt("cihaz_id"),rset.getString("deger"));
-				lhm.put(rset.getInt("cihaz_id"), ekranTip);
+				OzellikAtama ozellikAtama = new OzellikAtama(rset.getInt("id"),rset.getInt("cihaz_id"),rset.getInt("kategori_id"),rset.getInt("ozellik_id"),rset.getString("deger"));
+				lhm.put(rset.getInt("id"), ozellikAtama);
 			}
 
 			pstmt.close();
@@ -50,11 +52,11 @@ public class EkranDAO {
 			return lhm;		
 	}
 		
-	public EkranTip findByName(String ad) throws SQLException {
+	public EkranTip findByName(Integer id) throws SQLException {
 		Connection c = DaoFactory.openConnection();
 
 		PreparedStatement pstmt = c.prepareStatement(FIND_BY_NAME);
-		pstmt.setString(1, ad);
+		pstmt.setInt(1, id);
 		
 		EkranTip ekranTip = null;
 		ResultSet rset = pstmt.executeQuery();
@@ -68,6 +70,25 @@ public class EkranDAO {
 
 		return ekranTip;
 	}
+	
+	public EkranTip findById(Integer id) throws SQLException {
+		Connection c = DaoFactory.openConnection();
+
+		PreparedStatement pstmt = c.prepareStatement(FIND_BY_ID);
+		pstmt.setInt(1, id);
+		
+		EkranTip ekranTip = null;
+		ResultSet rset = pstmt.executeQuery();
+
+		while (rset.next()){
+			ekranTip = new EkranTip(rset.getInt("id"), rset.getString("ad"));
+		}
+
+		pstmt.close();
+		c.close();
+
+		return ekranTip;
+	}	
 	
 	public EkranTip add(EkranTip ekranTip) throws SQLException {
 		Connection c = DaoFactory.openConnection();

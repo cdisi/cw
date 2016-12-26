@@ -4,7 +4,8 @@ public class EkranTip {
 	
     private Integer id;
     private String ad;
-
+    public EkranTip() {
+    }
     public EkranTip(Integer id, String ad) {
         this.id = id;
         this.ad = ad;
@@ -15,6 +16,9 @@ public class EkranTip {
 	public Integer getId() {
         return this.id;
     }
+	public void setAd(String ad) {
+        this.ad=ad;
+    }	
 	public String getAd() {
         return this.ad;
     }	

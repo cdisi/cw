@@ -105,7 +105,7 @@ public class CihazView {
 			selectedCihazTur = cihazTurDAO.findById(selectedCihaz.getTuru());
 			//ekran tipi
 			ozellikAtama = ozellikAtamaDao.find(fId,10);
-			selectedEkranTip 
+			selectedEkranTip = ekranDAO.findById(Integer.parseInt(ozellikAtama.getDeger())); 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
