@@ -142,8 +142,8 @@ public class CihazView {
 	}
 	
 	// ekran
-	EkranTip getEkranTip() {
-		return (EkranTip) fEkranTip.getModel().getSelectedItem();
+	OzellikAtama getEkranTip() {
+		return (OzellikAtama) fEkranTip.getModel().getSelectedItem();
 	}
 	
 	private void buildGui(JFrame aParent, String aDialogTitle) {

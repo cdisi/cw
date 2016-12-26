@@ -3,14 +3,19 @@ package com.zk.cw.cihaz;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 import javax.swing.text.View;
 
 import com.zk.cw.cihaz_resim.Resim;
 import com.zk.cw.cihaz_resim.ResimDAO;
+import com.zk.cw.cihaz_tur.CihazTur;
+import com.zk.cw.cihaz_tur.CihazTurComboBoxRenderer;
 import com.zk.cw.exception.InvalidInputException;
 import com.zk.cw.main.MainWindow;
+import com.zk.cw.ozellik_atama.OzellikAtama;
+import com.zk.cw.ozellik_atama.OzellikAtamaDAO;
 import com.zk.cw.util.Edit;
 
 public class CihazController implements ActionListener  {
@@ -19,12 +24,13 @@ public class CihazController implements ActionListener  {
 	private Cihaz fCihaz;
 	private Edit fEdit;	
 	private CihazDAO fDAO = new CihazDAO();	
-	private ResimDAO fResimDAO;	
-	private Resim fResim;
+	private ArrayList<OzellikAtama> ozellikAtamaList;
+	private OzellikAtamaDAO ozellikAtamaDao = new OzellikAtamaDAO();
 	
 	public CihazController(CihazView aView, Edit aEdit){
 		fView = aView;
 		fEdit = aEdit;
+		ozellikAtamaList = new ArrayList<OzellikAtama>();
 	}
 
 	@Override public void actionPerformed(ActionEvent aEvent){
@@ -53,6 +59,9 @@ public class CihazController implements ActionListener  {
 		      else {
 		        throw new AssertionError();
 		      }
+			  for(OzellikAtama ozellikAtama : ozellikAtamaList){
+				  
+			  }
 		      fView.closeDialog();
 		      CihazMainWindow.getInstance().refreshView();
 		   }
@@ -82,6 +91,9 @@ public class CihazController implements ActionListener  {
 		}else{
 			fCihaz.setAktif(0);			
 		}
+		
+		if(fView.getEkranTip()!= null)
+			ozellikAtamaList.add(fView.getEkranTip());
 		
 		
 		if(error){
