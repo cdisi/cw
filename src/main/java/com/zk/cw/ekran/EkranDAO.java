@@ -6,14 +6,49 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
+import com.zk.cw.cihaz.Cihaz;
+import com.zk.cw.cihaz_tur.CihazTur;
 import com.zk.cw.dao_factory.DaoFactory;
 
 public class EkranDAO {
-	private static final String ALL = "SELECT * FROM cihaz_tur";
+	private static final String ALL = "SELECT * FROM ekran_tipi";
+	private static final String ALL_OZELLIKLER = "SELECT * FROM cihaz_ozellik_atama WHERE ozellik_id=10";
 	private static final String FIND_BY_NAME = "SELECT * FROM ekran_tipi WHERE ad = ?";	
 	private static final String INSERT = "INSERT INTO ekran_tipi (ad) VALUES (?)";
 
+	public List<EkranTip> all() throws SQLException {
+		Connection c = DaoFactory.openConnection();
+		PreparedStatement pstmt = c.prepareStatement(ALL);
+
+		ResultSet rset = pstmt.executeQuery();
+		List<EkranTip> ekranTipleri = new ArrayList<EkranTip>();
+		while (rset.next()){
+			EkranTip ekranTip = new EkranTip(rset.getInt("id"), rset.getString("ad"));
+					
+			ekranTipleri.add(ekranTip);
+		}
+
+		pstmt.close();
+		c.close();
+		return ekranTipleri;
+	}	
+	
+	public static LinkedHashMap<Integer, EkranTip> allOzellikler() throws SQLException {
+			LinkedHashMap<Integer, EkranTip> lhm = new LinkedHashMap<>(); 
+			Connection c = DaoFactory.openConnection();
+			PreparedStatement pstmt = c.prepareStatement(ALL_OZELLIKLER);
+			ResultSet rset = pstmt.executeQuery();
+			while (rset.next()){
+				EkranTip ekranTip = new EkranTip(rset.getInt("cihaz_id"),rset.getString("deger"));
+				lhm.put(rset.getInt("cihaz_id"), ekranTip);
+			}
+
+			pstmt.close();
+			c.close();
+			return lhm;		
+	}
 		
 	public EkranTip findByName(String ad) throws SQLException {
 		Connection c = DaoFactory.openConnection();

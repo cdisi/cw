@@ -38,6 +38,10 @@ import com.zk.cw.cihaz_tur.CihazTur;
 import com.zk.cw.cihaz_tur.CihazTurCombBoxModel;
 import com.zk.cw.cihaz_tur.CihazTurComboBoxRenderer;
 import com.zk.cw.cihaz_tur.CihazTurDAO;
+import com.zk.cw.ekran.EkranDAO;
+import com.zk.cw.ekran.EkranTip;
+import com.zk.cw.ozellik_atama.OzellikAtama;
+import com.zk.cw.ozellik_atama.OzellikAtamaDAO;
 import com.zk.cw.uretici.Uretici;
 import com.zk.cw.util.Edit;
 import com.zk.cw.util.ImageResize;
@@ -48,7 +52,7 @@ import com.zk.cw.util.ui.UiUtil;
 import com.zk.cw.uretici.UreticiCombBoxModel;
 import com.zk.cw.uretici.UreticiComboBoxRenderer;
 import com.zk.cw.uretici.UreticiDAO;
-
+import com.zk.cw.ekran.*;
 public class CihazView {
 	private StandardDialog fStandardDialog;
 	private Edit fEdit;	
@@ -77,7 +81,15 @@ public class CihazView {
 	
 	private ResimDAO resimDAO;
 	private Resim selectedResim;
-
+	
+	private ComboBoxModel<EkranTip> ekranTipCombBoxModel = new EkranTipComboBoxModel();
+	private JComboBox<EkranTip> fEkranTip = new JComboBox<EkranTip>(ekranTipCombBoxModel);	
+	private EkranDAO ekranDAO = new EkranDAO();	
+	private EkranTip selectedEkranTip;
+	
+	private OzellikAtama ozellikAtama;
+	private OzellikAtamaDAO ozellikAtamaDao = new OzellikAtamaDAO();
+	
 	CihazView(JFrame aParent) {				    
 		fEdit = Edit.ADD;		
 		buildGui(aParent, "Cihaz Ekle");
@@ -91,7 +103,9 @@ public class CihazView {
 		try {
 			selectedUretici = ureticiDAO.findById(selectedCihaz.getUreticiId());
 			selectedCihazTur = cihazTurDAO.findById(selectedCihaz.getTuru());
-			
+			//ekran tipi
+			ozellikAtama = ozellikAtamaDao.find(fId,10);
+			selectedEkranTip 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -125,7 +139,13 @@ public class CihazView {
 	}	
 	public Boolean getAktif(){
 		return this.fAktif.isSelected();
-	}			
+	}
+	
+	// ekran
+	EkranTip getEkranTip() {
+		return (EkranTip) fEkranTip.getModel().getSelectedItem();
+	}
+	
 	private void buildGui(JFrame aParent, String aDialogTitle) {
 		fStandardDialog = new StandardDialog(
 		      aParent, aDialogTitle, true, OnClose.DISPOSE, getUserInputArea(), getButtons()
@@ -139,8 +159,8 @@ public class CihazView {
 	    JPanel genelPanel = getGenelInputArea();	    
 	    mainPanel.add(genelPanel); 
 	    
-	    JPanel resimPanel = getResimInputArea();
-	    mainPanel.add(resimPanel);
+	    JPanel ekranPanel = getEkranInputArea();
+	    mainPanel.add(ekranPanel);
 	    
 	    UiUtil.alignAllX(mainPanel, UiUtil.AlignX.LEFT);
 	    return mainPanel;	    
@@ -160,10 +180,11 @@ public class CihazView {
 	    return result;
 	}
 	
-	private JPanel getResimInputArea(){
+	private JPanel getEkranInputArea(){
 		JPanel result = new JPanel(new FlowLayout(FlowLayout.LEFT));	    
-		result.setBorder(BorderFactory.createTitledBorder("RESİM"));
-	    return result;
+		result.setBorder(BorderFactory.createTitledBorder("EKRAN"));
+	    addEkranTipComboField(fEkranTip, "Ekran Tipi", result);	    
+		return result;
 	}	
 	
 	private void addTextField(JTextField aTextField, String aLabel, JPanel aPanel) {
@@ -242,6 +263,26 @@ public class CihazView {
 		aPanel.add(panel);		  
 	}	
 	
+	// Ekran
+	private void addEkranTipComboField(JComboBox<EkranTip> aComboField, String aLabel, JPanel aPanel) {
+  	    JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+		JLabel label = new JLabel(aLabel);
+		panel.add(label);
+		  		
+		try {
+			for(EkranTip ekranTip : ekranDAO.all()){
+				fEkranTip.addItem(ekranTip);
+				fEkranTip.setRenderer(new EkranTipComboBoxRenderer());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+
+	    panel.add(aComboField);		 
+		aPanel.add(panel);		  
+	}	
+	
 	
 	private void populateFields(Cihaz aSelectedCihaz) {
 		fAd.setText(aSelectedCihaz.getAd());
@@ -263,6 +304,7 @@ public class CihazView {
 		if(aSelectedCihaz.getAktif() == 1){
 			fAktif.setSelected(true);
 		}
+		fEkranTip.getModel().setSelectedItem(selectedEkranTip);
 	}
 	
 	private java.util.List<JButton> getButtons() {
