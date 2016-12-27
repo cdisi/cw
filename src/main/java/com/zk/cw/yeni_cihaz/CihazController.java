@@ -22,6 +22,10 @@ import org.apache.commons.io.FilenameUtils;
 
 import com.zk.cw.cihaz_resim.Resim;
 import com.zk.cw.cihaz_resim.ResimDAO;
+import com.zk.cw.ekran.EkranDAO;
+import com.zk.cw.ekran.EkranRenk;
+import com.zk.cw.ekran.EkranRenkDAO;
+import com.zk.cw.ekran.EkranTip;
 import com.zk.cw.exception.InvalidInputException;
 import com.zk.cw.main.MainWindow;
 import com.zk.cw.uretici.Uretici;
@@ -98,7 +102,47 @@ public class CihazController implements ActionListener {
 				cihazOzellikAtamaList.add(new CihazOzellikAtama(2,9, fView.getSim().trim()));
 			}
 			if(!fView.getEkranTip().equals("")){
-				cihazOzellikAtamaList.add(new CihazOzellikAtama(3,10, fView.getEkranTip().trim()));
+				EkranDAO ekranDao = new EkranDAO();
+				EkranTip ekranTip = new EkranTip();	
+				EkranRenkDAO ekranRenkDAO = new EkranRenkDAO();
+				EkranRenk ekranRenk = new EkranRenk();
+				String[] ekranTipiArr=null;
+				if(fView.getEkranTip().contains(",")){
+			    	ekranTipiArr = fView.getEkranTip().split(",");
+			    	ekranRenk.setAd(ekranTipiArr[1].trim());
+			    	try {
+			    		if(ekranRenkDAO.findByName(ekranRenk.getAd()) == null){
+							ekranRenk = ekranRenkDAO.add(ekranRenk);
+							if(ekranRenk.getId() == null){
+								System.out.println("Ekran rengi eklenemdi");
+							}
+						}else{
+							ekranRenk = ekranRenkDAO.findByName(ekranRenk.getAd());
+						}
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					cihazOzellikAtamaList.add(new CihazOzellikAtama(3,48, ekranRenk.getId().toString()));
+			    }
+				//ekran tip
+		    	ekranTip.setAd(ekranTipiArr[0]);
+		    	try {
+					if(ekranDao.findByName(ekranTip.getAd()) == null){
+						ekranTip = ekranDao.add(ekranTip);
+						if(ekranTip.getId() == null){
+							System.out.println("Ekran tipi eklenemdi");
+						}
+					}else{
+						ekranTip = ekranDao.findByName(ekranTip.getAd());
+					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}				
+				cihazOzellikAtamaList.add(new CihazOzellikAtama(3,10, ekranTip.getId().toString()));
+			    	
+			    
 			}
 			if(!fView.getEkranGen().equals("")){
 				cihazOzellikAtamaList.add(new CihazOzellikAtama(3,11, fView.getEkranGen().trim()));

@@ -20,15 +20,19 @@ public class EkranTipiDegistir {
 			String tip;
 			OzellikAtamaDAO ozellikAtamaDAO = new OzellikAtamaDAO();
 			EkranDAO ekranDao = new EkranDAO();
+			EkranRenkDAO ekranRenkDAO = new EkranRenkDAO();
 			while (itr.hasNext()){
 				Integer key = itr.next();
 				OzellikAtama ozellikAtama = lhm.get(key);
 			    EkranTip ekranTip = new EkranTip();
+			    EkranRenk ekranRenk = new EkranRenk();
 				if(ozellikAtama.getDeger().contains(",")){
 			    	String[] ekranTipiArr = ozellikAtama.getDeger().split(",");
-			    	ekranTip.setAd(ekranTipiArr[0].trim());			    	
+			    	ekranTip.setAd(ekranTipiArr[0].trim());	
+			    	ekranRenk.setAd(ekranTipiArr[1].trim());
 			    }else{
 			    	ekranTip.setAd(ozellikAtama.getDeger().trim());	
+			    	ekranRenk.setAd("");
 			    }
 				
 		    	try {		    		
@@ -40,10 +44,24 @@ public class EkranTipiDegistir {
 					}else{
 						ekranTip = ekranDao.findByName(ekranTip.getAd());
 					}
-		    		//özellik atama tablosunu güncelle
+		    		//ekran tip özellik atama tablosunu güncelle
 		    		ozellikAtamaDAO.update(ozellikAtama,ekranTip);
+		    		//ekran renk
+		    		if(!ekranRenk.getAd().equals("")){
+			    		if(ekranRenkDAO.findByName(ekranRenk.getAd()) == null){
+							ekranRenk = ekranRenkDAO.add(ekranRenk);
+							if(ekranRenk.getId() == null){
+								System.out.println("Ekran rengi eklenemdi");
+							}
+						}else{
+							ekranRenk = ekranRenkDAO.findByName(ekranRenk.getAd());
+						}
+			    		if(ozellikAtamaDAO.find(ozellikAtama.getCihazId(), 48) == null)
+			    			ozellikAtamaDAO.insert(ozellikAtama,ekranRenk);
+			    		else
+			    			ozellikAtamaDAO.update(ozellikAtama,ekranRenk);
+		    		}		    		
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 

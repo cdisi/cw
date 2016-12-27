@@ -71,6 +71,25 @@ public class EkranDAO {
 		return ekranTip;
 	}
 	
+	public EkranTip findByName(String ad) throws SQLException {
+		Connection c = DaoFactory.openConnection();
+
+		PreparedStatement pstmt = c.prepareStatement(FIND_BY_NAME);
+		pstmt.setString(1, ad);
+		
+		EkranTip ekranTip = null;
+		ResultSet rset = pstmt.executeQuery();
+
+		while (rset.next()){
+			ekranTip = new EkranTip(rset.getInt("id"), rset.getString("ad"));
+		}
+
+		pstmt.close();
+		c.close();
+
+		return ekranTip;
+	}	
+	
 	public EkranTip findById(Integer id) throws SQLException {
 		Connection c = DaoFactory.openConnection();
 
