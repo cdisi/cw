@@ -5,7 +5,7 @@ import java.awt.Component;
 import javax.swing.JList;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
 
-public class EkranTipComboBoxRenderer extends BasicComboBoxRenderer {
+public class EkranRenkComboBoxRenderer extends BasicComboBoxRenderer  {
     /**
 	 * 
 	 */
@@ -16,12 +16,11 @@ public class EkranTipComboBoxRenderer extends BasicComboBoxRenderer {
         {
             super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
      
-            if (value instanceof EkranTip)
+            if (value instanceof EkranRenk)
             {
-            	EkranTip ekranTip = (EkranTip)value;
-                setText( ekranTip.getAd());
-            }
-     
+            	EkranRenk ekranRenk = (EkranRenk)value;
+                setText( ekranRenk.getAd());
+            }     
             return this;
     }
 }

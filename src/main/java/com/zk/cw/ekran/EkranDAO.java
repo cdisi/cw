@@ -14,7 +14,7 @@ import com.zk.cw.dao_factory.DaoFactory;
 import com.zk.cw.ozellik_atama.OzellikAtama;
 
 public class EkranDAO {
-	private static final String ALL = "SELECT * FROM ekran_tipi";
+	private static final String ALL = "SELECT * FROM ekran_tipi ORDER BY ad";
 	private static final String TUM_OZELLIKLER = "SELECT * FROM cihaz_ozellik_atama WHERE ozellik_id=10";
 	private static final String FIND_BY_ID = "SELECT * FROM ekran_tipi WHERE id = ?";	
 	private static final String FIND_BY_NAME = "SELECT * FROM ekran_tipi WHERE ad = ?";	
@@ -46,7 +46,6 @@ public class EkranDAO {
 				OzellikAtama ozellikAtama = new OzellikAtama(rset.getInt("id"),rset.getInt("cihaz_id"),rset.getInt("kategori_id"),rset.getInt("ozellik_id"),rset.getString("deger"));
 				lhm.put(rset.getInt("id"), ozellikAtama);
 			}
-
 			pstmt.close();
 			c.close();
 			return lhm;		
@@ -107,6 +106,25 @@ public class EkranDAO {
 		c.close();
 
 		return ekranTip;
+	}	
+	
+	public EkranRenk findByRenk(Integer id) throws SQLException {
+		Connection c = DaoFactory.openConnection();
+
+		PreparedStatement pstmt = c.prepareStatement(FIND_BY_ID);
+		pstmt.setInt(1, id);
+		
+		EkranRenk ekranRenk = null;
+		ResultSet rset = pstmt.executeQuery();
+
+		while (rset.next()){
+			ekranRenk = new EkranRenk(rset.getInt("id"), rset.getString("ad"));
+		}
+
+		pstmt.close();
+		c.close();
+
+		return ekranRenk;
 	}	
 	
 	public EkranTip add(EkranTip ekranTip) throws SQLException {

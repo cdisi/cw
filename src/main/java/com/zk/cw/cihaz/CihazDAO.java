@@ -107,7 +107,7 @@ public class CihazDAO {
 		return cihaz;
 	}	
 	
-	public void change(Cihaz cihaz) throws SQLException {
+	public Cihaz change(Cihaz cihaz) throws SQLException {
 		Connection c = DaoFactory.openConnection();
 		PreparedStatement pstmt = c.prepareStatement(UPDATE);
 
@@ -126,7 +126,8 @@ public class CihazDAO {
 		pstmt.executeUpdate();
 
 		pstmt.close();
-		c.close();		
+		c.close();	
+		return cihaz;
 	}	
 
 }

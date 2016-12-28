@@ -86,7 +86,7 @@ public final class MainWindow {
       LaunchApplication.APP_NAME + 
       " - " + fUserName.toUpperCase(Locale.ENGLISH)
     ); 
-    //ureticiBul();
+    ureticiBul();
     
     ureticiTableModel = new UreticiTableModel();
     ureticiTable = new JTable(ureticiTableModel);
@@ -116,8 +116,8 @@ public final class MainWindow {
 			Uretici uretici = new Uretici(null,ad,null,gsmArenaUrl,0);
 			String dosya =  (ad.replaceAll("[^\\w.-]", "_") + "." + (FilenameUtils.getExtension(imgElm.attr("src")))).toLowerCase();
 			if(!UreticiDAO.bul(uretici)){
-				Util.downloadImage(imgElm.attr("src"), "resources/logo", dosya);
-				uretici.logoUrlVer("/img/logo/"+dosya);
+				//Util.downloadImage(imgElm.attr("src"), "resources/logo", dosya);
+				//uretici.logoUrlVer("/img/logo/"+dosya);
 				UreticiDAO.ekle(uretici);
 			}
 		}

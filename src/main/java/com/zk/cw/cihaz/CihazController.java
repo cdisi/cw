@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.text.View;
@@ -24,17 +25,17 @@ public class CihazController implements ActionListener  {
 	private Cihaz fCihaz;
 	private Edit fEdit;	
 	private CihazDAO fDAO = new CihazDAO();	
-	private ArrayList<OzellikAtama> ozellikAtamaList;
+	private List<OzellikAtama> ozellikAtamaList = new ArrayList<OzellikAtama>();
 	private OzellikAtamaDAO ozellikAtamaDao = new OzellikAtamaDAO();
 	
 	public CihazController(CihazView aView, Edit aEdit){
 		fView = aView;
 		fEdit = aEdit;
-		ozellikAtamaList = new ArrayList<OzellikAtama>();
 	}
 
 	@Override public void actionPerformed(ActionEvent aEvent){
-		    try {
+		ozellikAtamaList.clear();    
+		try {
 		      createValidCihazFromUserInput();
 		    }
 		    catch(InvalidInputException ex){
@@ -43,7 +44,7 @@ public class CihazController implements ActionListener  {
 		    if ( isUserInputValid() ){
 		      if( Edit.ADD == fEdit ) {
 		        try {
-					Cihaz cihaz = fDAO.add(fCihaz);
+					fDAO.add(fCihaz);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -59,8 +60,24 @@ public class CihazController implements ActionListener  {
 		      else {
 		        throw new AssertionError();
 		      }
-			  for(OzellikAtama ozellikAtama : ozellikAtamaList){
-				  
+		      
+		      ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 3, 10, fView.getEkranTip().getId().toString()));
+		      ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 3, 48, fView.getEkranRenk().getId().toString()));
+			  
+		      for(OzellikAtama ozellikAtama : ozellikAtamaList){
+				  try {
+					if( ozellikAtamaDao.find(ozellikAtama.getCihazId(), ozellikAtama.getOzellikId()) == null){
+						ozellikAtamaDao.insert(ozellikAtama);
+					  }else{
+						  ozellikAtamaDao.update(ozellikAtama);
+					  }
+				} catch (NumberFormatException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			  }
 		      fView.closeDialog();
 		      CihazMainWindow.getInstance().refreshView();
@@ -91,10 +108,6 @@ public class CihazController implements ActionListener  {
 		}else{
 			fCihaz.setAktif(0);			
 		}
-		
-		if(fView.getEkranTip()!= null)
-			ozellikAtamaList.add(fView.getEkranTip());
-		
 		
 		if(error){
 			fCihaz=null;
