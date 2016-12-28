@@ -86,7 +86,7 @@ public final class MainWindow {
       LaunchApplication.APP_NAME + 
       " - " + fUserName.toUpperCase(Locale.ENGLISH)
     ); 
-    ureticiBul();
+    //ureticiBul();
     
     ureticiTableModel = new UreticiTableModel();
     ureticiTable = new JTable(ureticiTableModel);

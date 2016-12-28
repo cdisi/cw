@@ -94,6 +94,12 @@ public class CihazView {
 	private EkranRenkDAO ekranRenkDAO = new EkranRenkDAO();	
 	private EkranRenk selectedEkranRenk;	
 	
+	//ekran genişliği
+	private ComboBoxModel<EkranGenisligi> ekranGenisligiCombBoxModel = new EkranGenisligiComboBoxModel();
+	private JComboBox<EkranGenisligi> fEkranGenisligi = new JComboBox<EkranGenisligi>(ekranGenisligiCombBoxModel);	
+	private EkranGenisligiDAO ekranGenisligiDAO = new EkranGenisligiDAO();	
+	private EkranGenisligi selectedEkranGenisligi;
+	
 	private OzellikAtama ozellikAtama;
 	private OzellikAtamaDAO ozellikAtamaDao = new OzellikAtamaDAO();
 	
@@ -113,9 +119,16 @@ public class CihazView {
 			//ekran tipi
 			ozellikAtama = ozellikAtamaDao.find(fId,10);
 			selectedEkranTip = ekranDAO.findById(Integer.parseInt(ozellikAtama.getDeger())); 
+			//ekran renk
 			ozellikAtama = ozellikAtamaDao.find(fId,48);
 			if(ozellikAtama!=null)
-				selectedEkranRenk = ekranDAO.findByRenk(Integer.parseInt(ozellikAtama.getDeger())); 
+				selectedEkranRenk = ekranDAO.findByRenk(Integer.parseInt(ozellikAtama.getDeger()));
+			//ekran genişlik
+			ozellikAtama = ozellikAtamaDao.find(fId,11);
+			if(ozellikAtama!=null)
+				selectedEkranGenisligi = ekranGenisligiDAO.findByGenislik(ozellikAtama.getDeger());			
+			
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -160,6 +173,10 @@ public class CihazView {
 		return (EkranRenk) fEkranRenk.getModel().getSelectedItem();
 	}
 	
+	EkranGenisligi getEkranGenisligi() {
+		return (EkranGenisligi) fEkranGenisligi.getModel().getSelectedItem();
+	}	
+	
 	private void buildGui(JFrame aParent, String aDialogTitle) {
 		fStandardDialog = new StandardDialog(
 		      aParent, aDialogTitle, true, OnClose.DISPOSE, getUserInputArea(), getButtons()
@@ -199,6 +216,7 @@ public class CihazView {
 		result.setBorder(BorderFactory.createTitledBorder("EKRAN"));
 	    addEkranTipComboField(fEkranTip, "Tipi", result);	    
 	    addEkranRenkComboField(fEkranRenk, "Renk", result);	    
+	    addEkranGenisligiComboField(fEkranGenisligi, "Genişlik", result);	    
 		return result;
 	}	
 	
@@ -317,6 +335,25 @@ public class CihazView {
 		aPanel.add(panel);		  
 	}	
 	
+	private void addEkranGenisligiComboField(JComboBox<EkranGenisligi> aComboField, String aLabel, JPanel aPanel) {
+  	    JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+		JLabel label = new JLabel(aLabel);
+		panel.add(label);
+		  		
+		try {
+			for(EkranGenisligi ekranGenisligi : ekranGenisligiDAO.all()){
+				fEkranGenisligi.addItem(ekranGenisligi);
+				fEkranGenisligi.setRenderer(new EkranGenisligiComboBoxRenderer());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+
+	    panel.add(aComboField);		 
+		aPanel.add(panel);		  
+	}	
+	
 	
 	private void populateFields(Cihaz aSelectedCihaz) {
 		fAd.setText(aSelectedCihaz.getAd());
@@ -339,6 +376,8 @@ public class CihazView {
 			fAktif.setSelected(true);
 		}
 		fEkranTip.getModel().setSelectedItem(selectedEkranTip);
+		fEkranRenk.getModel().setSelectedItem(selectedEkranRenk);
+		fEkranGenisligi.getModel().setSelectedItem(selectedEkranGenisligi);
 	}
 	
 	private java.util.List<JButton> getButtons() {

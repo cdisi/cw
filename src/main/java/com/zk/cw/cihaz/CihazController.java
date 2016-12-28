@@ -63,6 +63,7 @@ public class CihazController implements ActionListener  {
 		      
 		      ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 3, 10, fView.getEkranTip().getId().toString()));
 		      ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 3, 48, fView.getEkranRenk().getId().toString()));
+		      ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 3, 11, fView.getEkranGenisligi().getGenislik()));
 			  
 		      for(OzellikAtama ozellikAtama : ozellikAtamaList){
 				  try {
