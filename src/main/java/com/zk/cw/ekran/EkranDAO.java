@@ -15,7 +15,7 @@ import com.zk.cw.ozellik_atama.OzellikAtama;
 
 public class EkranDAO {
 	private static final String ALL = "SELECT * FROM ekran_tipi ORDER BY ad";
-	private static final String TUM_OZELLIKLER = "SELECT * FROM cihaz_ozellik_atama WHERE ozellik_id=10";
+	private static final String TUM_OZELLIKLER = "SELECT * FROM cihaz_ozellik_atama WHERE ozellik_id=12";
 	private static final String FIND_BY_ID = "SELECT * FROM ekran_tipi WHERE id = ?";	
 	private static final String FIND_BY_NAME = "SELECT * FROM ekran_tipi WHERE ad = ?";	
 	private static final String INSERT = "INSERT INTO ekran_tipi (ad) VALUES (?)";

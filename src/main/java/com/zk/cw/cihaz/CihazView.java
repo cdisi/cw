@@ -122,7 +122,7 @@ public class CihazView {
 			//ekran renk
 			ozellikAtama = ozellikAtamaDao.find(fId,48);
 			if(ozellikAtama!=null)
-				selectedEkranRenk = ekranDAO.findByRenk(Integer.parseInt(ozellikAtama.getDeger()));
+				selectedEkranRenk = ekranRenkDAO.findById(Integer.parseInt(ozellikAtama.getDeger()));
 			//ekran genişlik
 			ozellikAtama = ozellikAtamaDao.find(fId,11);
 			if(ozellikAtama!=null)

@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.zk.cw.dao_factory.DaoFactory;
+import com.zk.cw.ekran.EkranCozunurluk;
+import com.zk.cw.ekran.EkranPPI;
 import com.zk.cw.ekran.EkranRenk;
 import com.zk.cw.ekran.EkranTip;
 
@@ -73,6 +75,42 @@ public class OzellikAtamaDAO {
 		return ozellikAtama;
 	}
 	
+	public OzellikAtama update(OzellikAtama ozellikAtama, EkranCozunurluk ekranCozunurluk) throws SQLException {
+		Connection c = DaoFactory.openConnection();
+		
+		PreparedStatement pstmt = c.prepareStatement(OZELLIK_IDDEN_UPDATE);
+		pstmt.setInt(1, ozellikAtama.getCihazId());
+		pstmt.setInt(2, ozellikAtama.getKategoriId());
+		pstmt.setInt(3, 12);
+		pstmt.setInt(4, ekranCozunurluk.getId());
+		pstmt.setInt(5, ozellikAtama.getId());
+		
+		pstmt.executeUpdate();
+
+		pstmt.close();
+		c.close();
+		
+		return ozellikAtama;
+	}	
+	
+	public OzellikAtama update(OzellikAtama ozellikAtama, EkranPPI ekranPPI) throws SQLException {
+		Connection c = DaoFactory.openConnection();
+		
+		PreparedStatement pstmt = c.prepareStatement(OZELLIK_IDDEN_UPDATE);
+		pstmt.setInt(1, ozellikAtama.getCihazId());
+		pstmt.setInt(2, ozellikAtama.getKategoriId());
+		pstmt.setInt(3, 12);
+		pstmt.setInt(4, ekranPPI.getId());
+		pstmt.setInt(5, ozellikAtama.getId());
+		
+		pstmt.executeUpdate();
+
+		pstmt.close();
+		c.close();
+		
+		return ozellikAtama;
+	}	
+	
 	public OzellikAtama update(OzellikAtama ozellikAtama) throws SQLException {
 		Connection c = DaoFactory.openConnection();
 		
@@ -123,4 +161,21 @@ public class OzellikAtamaDAO {
 		
 		return ozellikAtama;
 	}
+	
+	public OzellikAtama insert(OzellikAtama ozellikAtama, EkranPPI ekranPPI) throws SQLException {
+		Connection c = DaoFactory.openConnection();
+		
+		PreparedStatement pstmt = c.prepareStatement(INSERT);
+		pstmt.setInt(1, ozellikAtama.getCihazId());
+		pstmt.setInt(2, ozellikAtama.getKategoriId());
+		pstmt.setInt(3, 49);
+		pstmt.setInt(4, ekranPPI.getId());
+		
+		pstmt.executeUpdate();
+
+		pstmt.close();
+		c.close();
+		
+		return ozellikAtama;
+	}	
 }

@@ -10,7 +10,7 @@ import java.util.List;
 import com.zk.cw.dao_factory.DaoFactory;
 
 public class EkranRenkDAO {
-	private static final String ALL = "SELECT * FROM ekran_renk";
+	private static final String ALL = "SELECT * FROM ekran_renk ORDER BY ad";
 	private static final String TUM_OZELLIKLER = "SELECT * FROM cihaz_ozellik_atama WHERE ozellik_id=10";
 	private static final String FIND_BY_ID = "SELECT * FROM ekran_renk WHERE id = ?";	
 	private static final String FIND_BY_NAME = "SELECT * FROM ekran_renk WHERE ad = ?";	
