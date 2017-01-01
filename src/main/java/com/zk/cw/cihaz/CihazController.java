@@ -61,9 +61,21 @@ public class CihazController implements ActionListener  {
 		        throw new AssertionError();
 		      }
 		      
-		      ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 3, 10, fView.getEkranTip().getId().toString()));
-		      ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 3, 48, fView.getEkranRenk().getId().toString()));
-		      ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 3, 11, fView.getEkranGenisligi().getGenislik()));
+		      if(fView.getEkranTip().getId() != null)
+		    	  ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 3, 10, fView.getEkranTip().getId().toString()));
+		      if(fView.getEkranRenk().getId() != null)
+		    	  ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 3, 48, fView.getEkranRenk().getId().toString()));		      
+		      if(fView.getEkranGenisligi().getId() != null)
+		    	  ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 3, 11, fView.getEkranGenisligi().getGenislik()));
+		      if(fView.getEkranCozunurluk().getId() != null)
+		    	  ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 3, 12, fView.getEkranCozunurluk().getId().toString()));
+		      if(fView.getEkranPPI().getId() != null)
+		    	  ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 3, 49, fView.getEkranPPI().getId().toString()));
+		      
+		      if(fView.getCokluDokunmatik().getDeger() != "Seçiniz")
+		    	  ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 3, 13, fView.getCokluDokunmatik().getDeger()));
+		      if(!fView.getEkranKor().equals(""))
+		    	  ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 3, 14, fView.getEkranKor()));
 			  
 		      for(OzellikAtama ozellikAtama : ozellikAtamaList){
 				  try {

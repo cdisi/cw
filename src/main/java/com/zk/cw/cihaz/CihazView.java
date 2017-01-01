@@ -82,6 +82,9 @@ public class CihazView {
 	private ResimDAO resimDAO;
 	private Resim selectedResim;
 	
+	private OzellikAtama ozellikAtama;
+	private OzellikAtamaDAO ozellikAtamaDao = new OzellikAtamaDAO();	
+	
 	//ekran tip
 	private ComboBoxModel<EkranTip> ekranTipCombBoxModel = new EkranTipComboBoxModel();
 	private JComboBox<EkranTip> fEkranTip = new JComboBox<EkranTip>(ekranTipCombBoxModel);	
@@ -99,9 +102,26 @@ public class CihazView {
 	private JComboBox<EkranGenisligi> fEkranGenisligi = new JComboBox<EkranGenisligi>(ekranGenisligiCombBoxModel);	
 	private EkranGenisligiDAO ekranGenisligiDAO = new EkranGenisligiDAO();	
 	private EkranGenisligi selectedEkranGenisligi;
+
+	//ekran çözünürlüğü
+	private ComboBoxModel<EkranCozunurluk> ekranCozunurlukCombBoxModel = new EkranCozunurlukComboBoxModel();
+	private JComboBox<EkranCozunurluk> fEkranCozunurluk = new JComboBox<EkranCozunurluk>(ekranCozunurlukCombBoxModel);	
+	private EkranCozunurlukDAO ekranCozunurlukDAO = new EkranCozunurlukDAO();	
+	private EkranCozunurluk selectedEkranCozunurluk;
 	
-	private OzellikAtama ozellikAtama;
-	private OzellikAtamaDAO ozellikAtamaDao = new OzellikAtamaDAO();
+	//ekran piksel yoğunluğu
+	private ComboBoxModel<EkranPPI> ekranPPICombBoxModel = new EkranPPIComboBoxModel();
+	private JComboBox<EkranPPI> fEkranPPI = new JComboBox<EkranPPI>(ekranPPICombBoxModel);	
+	private EkranPPIDAO ekranPPIDAO = new EkranPPIDAO();	
+	private EkranPPI selectedEkranPPI;
+	
+	// çoklu dokunmatik
+	private ComboBoxModel<CokluDokunmatik> cokluDokunmatikCombBoxModel = new CokluDokunmatikComboBoxModel();
+	private JComboBox<CokluDokunmatik> fCokluDokunmatik = new JComboBox<CokluDokunmatik>(cokluDokunmatikCombBoxModel);	
+	private CokluDokunmatik selectedCokluDokunmatik = new CokluDokunmatik();	
+	
+	private JTextField fEkranKor = new JTextField();
+
 	
 	CihazView(JFrame aParent) {				    
 		fEdit = Edit.ADD;		
@@ -118,16 +138,33 @@ public class CihazView {
 			selectedCihazTur = cihazTurDAO.findById(selectedCihaz.getTuru());
 			//ekran tipi
 			ozellikAtama = ozellikAtamaDao.find(fId,10);
-			selectedEkranTip = ekranDAO.findById(Integer.parseInt(ozellikAtama.getDeger())); 
+			if(ozellikAtama != null)
+				selectedEkranTip = ekranDAO.findById(Integer.parseInt(ozellikAtama.getDeger())); 
 			//ekran renk
 			ozellikAtama = ozellikAtamaDao.find(fId,48);
 			if(ozellikAtama!=null)
 				selectedEkranRenk = ekranRenkDAO.findById(Integer.parseInt(ozellikAtama.getDeger()));
 			//ekran genişlik
 			ozellikAtama = ozellikAtamaDao.find(fId,11);
-			if(ozellikAtama!=null)
+			if(ozellikAtama!=null){
 				selectedEkranGenisligi = ekranGenisligiDAO.findByGenislik(ozellikAtama.getDeger());			
-			
+			}
+			//ekran çözünürlük
+			ozellikAtama = ozellikAtamaDao.find(fId,12);
+			if(ozellikAtama!=null)
+				selectedEkranCozunurluk = ekranCozunurlukDAO.findBy(Integer.parseInt(ozellikAtama.getDeger()));			
+			//ekran ppi
+			ozellikAtama = ozellikAtamaDao.find(fId,49);
+			if(ozellikAtama!=null)
+				selectedEkranPPI = ekranPPIDAO.findBy(Integer.parseInt(ozellikAtama.getDeger()));			
+			//çoklu dokunmatik
+			ozellikAtama = ozellikAtamaDao.find(fId,13);
+			if(ozellikAtama!=null)
+				selectedCokluDokunmatik.settDeger(ozellikAtama.getDeger());			
+			//ekran koruma
+			ozellikAtama = ozellikAtamaDao.find(fId,14);
+			if(ozellikAtama!=null)
+				fEkranKor.setText(ozellikAtama.getDeger());		
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -171,12 +208,22 @@ public class CihazView {
 	
 	EkranRenk getEkranRenk() {
 		return (EkranRenk) fEkranRenk.getModel().getSelectedItem();
-	}
-	
+	}	
 	EkranGenisligi getEkranGenisligi() {
 		return (EkranGenisligi) fEkranGenisligi.getModel().getSelectedItem();
 	}	
-	
+	EkranCozunurluk getEkranCozunurluk() {
+		return (EkranCozunurluk) fEkranCozunurluk.getModel().getSelectedItem();
+	}	
+	EkranPPI getEkranPPI() {
+		return (EkranPPI) fEkranPPI.getModel().getSelectedItem();
+	}
+	CokluDokunmatik getCokluDokunmatik() {
+		return (CokluDokunmatik) fCokluDokunmatik.getModel().getSelectedItem();
+	}
+	String getEkranKor() {
+	    return fEkranKor.getText();
+	}			
 	private void buildGui(JFrame aParent, String aDialogTitle) {
 		fStandardDialog = new StandardDialog(
 		      aParent, aDialogTitle, true, OnClose.DISPOSE, getUserInputArea(), getButtons()
@@ -217,6 +264,10 @@ public class CihazView {
 	    addEkranTipComboField(fEkranTip, "Tipi", result);	    
 	    addEkranRenkComboField(fEkranRenk, "Renk", result);	    
 	    addEkranGenisligiComboField(fEkranGenisligi, "Genişlik", result);	    
+	    addEkranCozunurlukComboField(fEkranCozunurluk, "Çözünürlük", result);	    
+	    addEkranPPIComboField(fEkranPPI, "PPI", result);	    
+	    addCokluDokunmatikComboField(fCokluDokunmatik, "ÇD", result);	    
+		addTextField(fEkranKor, "EK", result);
 		return result;
 	}	
 	
@@ -225,8 +276,7 @@ public class CihazView {
 		  JLabel label = new JLabel(aLabel);
 		  panel.add(label);
 		  panel.add(aTextField);
-		  aTextField.setColumns(15);
-		  
+		  aTextField.setColumns(15);		  
 		  aPanel.add(panel);		  
 	}	
 	
@@ -302,7 +352,7 @@ public class CihazView {
 
 		JLabel label = new JLabel(aLabel);
 		panel.add(label);
-		  		
+		fEkranTip.addItem(new EkranTip(null, "Seçiniz"));		
 		try {
 			for(EkranTip ekranTip : ekranDAO.all()){
 				fEkranTip.addItem(ekranTip);
@@ -311,7 +361,7 @@ public class CihazView {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		
-
+		aComboField.setPreferredSize(new Dimension(200, aComboField.getPreferredSize().height));
 	    panel.add(aComboField);		 
 		aPanel.add(panel);		  
 	}	
@@ -321,7 +371,8 @@ public class CihazView {
 
 		JLabel label = new JLabel(aLabel);
 		panel.add(label);
-		  		
+		fEkranRenk.addItem(new EkranRenk(null, "Seçiniz"));		
+  		
 		try {
 			for(EkranRenk ekranRenk : ekranRenkDAO.all()){
 				fEkranRenk.addItem(ekranRenk);
@@ -340,7 +391,7 @@ public class CihazView {
 
 		JLabel label = new JLabel(aLabel);
 		panel.add(label);
-		  		
+		fEkranGenisligi.addItem(new EkranGenisligi(null, "Seçiniz"));  		
 		try {
 			for(EkranGenisligi ekranGenisligi : ekranGenisligiDAO.all()){
 				fEkranGenisligi.addItem(ekranGenisligi);
@@ -349,6 +400,58 @@ public class CihazView {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		
+
+	    panel.add(aComboField);		 
+		aPanel.add(panel);		  
+	}	
+	
+	private void addEkranCozunurlukComboField(JComboBox<EkranCozunurluk> aComboField, String aLabel, JPanel aPanel) {
+  	    JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+		JLabel label = new JLabel(aLabel);
+		panel.add(label);
+		fEkranCozunurluk.addItem(new EkranCozunurluk(null, "Seçiniz"));  	  		
+		try {
+			for(EkranCozunurluk ekranCozunurluk : ekranCozunurlukDAO.all()){
+				fEkranCozunurluk.addItem(ekranCozunurluk);
+				fEkranCozunurluk.setRenderer(new EkranCozunurlukComboBoxRenderer());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+
+	    panel.add(aComboField);		 
+		aPanel.add(panel);		  
+	}	
+	private void addEkranPPIComboField(JComboBox<EkranPPI> aComboField, String aLabel, JPanel aPanel) {
+  	    JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+		JLabel label = new JLabel(aLabel);
+		panel.add(label);
+		fEkranPPI.addItem(new EkranPPI(null, "Seçiniz"));  	  		
+		  		
+		try {
+			for(EkranPPI ekranPPI : ekranPPIDAO.all()){
+				fEkranPPI.addItem(ekranPPI);
+				fEkranPPI.setRenderer(new EkranPPIComboBoxRenderer());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+
+	    panel.add(aComboField);		 
+		aPanel.add(panel);		  
+	}	
+	
+	private void addCokluDokunmatikComboField(JComboBox<CokluDokunmatik> aComboField, String aLabel, JPanel aPanel) {
+  	    JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+		JLabel label = new JLabel(aLabel);
+		panel.add(label);
+		fCokluDokunmatik.addItem(new CokluDokunmatik("Seçiniz"));  	  		
+		fCokluDokunmatik.addItem(new CokluDokunmatik("Var"));  	  		
+		fCokluDokunmatik.addItem(new CokluDokunmatik("Yok"));  	  		
+		fCokluDokunmatik.setRenderer(new CokluDokunmatikComboBoxRenderer());		  			
 
 	    panel.add(aComboField);		 
 		aPanel.add(panel);		  
@@ -375,9 +478,21 @@ public class CihazView {
 		if(aSelectedCihaz.getAktif() == 1){
 			fAktif.setSelected(true);
 		}
-		fEkranTip.getModel().setSelectedItem(selectedEkranTip);
-		fEkranRenk.getModel().setSelectedItem(selectedEkranRenk);
-		fEkranGenisligi.getModel().setSelectedItem(selectedEkranGenisligi);
+		if(selectedEkranTip != null)
+			fEkranTip.getModel().setSelectedItem(selectedEkranTip);
+		if(selectedEkranRenk != null)
+			fEkranRenk.getModel().setSelectedItem(selectedEkranRenk);
+		if(selectedEkranGenisligi != null){
+			fEkranGenisligi.getModel().setSelectedItem(selectedEkranGenisligi);
+			selectedEkranGenisligi.toString();
+		}
+		if(selectedEkranCozunurluk != null)
+			fEkranCozunurluk.getModel().setSelectedItem(selectedEkranCozunurluk);
+		if(selectedEkranPPI != null)
+			fEkranPPI.getModel().setSelectedItem(selectedEkranPPI);
+		if(selectedCokluDokunmatik.getDeger()!=null)
+			fCokluDokunmatik.getModel().setSelectedItem(selectedCokluDokunmatik);
+		
 	}
 	
 	private java.util.List<JButton> getButtons() {

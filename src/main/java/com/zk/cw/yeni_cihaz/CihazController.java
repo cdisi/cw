@@ -22,7 +22,13 @@ import org.apache.commons.io.FilenameUtils;
 
 import com.zk.cw.cihaz_resim.Resim;
 import com.zk.cw.cihaz_resim.ResimDAO;
+import com.zk.cw.ekran.EkranCozunurluk;
+import com.zk.cw.ekran.EkranCozunurlukDAO;
 import com.zk.cw.ekran.EkranDAO;
+import com.zk.cw.ekran.EkranGenisligi;
+import com.zk.cw.ekran.EkranGenisligiDAO;
+import com.zk.cw.ekran.EkranPPI;
+import com.zk.cw.ekran.EkranPPIDAO;
 import com.zk.cw.ekran.EkranRenk;
 import com.zk.cw.ekran.EkranRenkDAO;
 import com.zk.cw.ekran.EkranTip;
@@ -141,14 +147,68 @@ public class CihazController implements ActionListener {
 					e.printStackTrace();
 				}				
 				cihazOzellikAtamaList.add(new CihazOzellikAtama(3,10, ekranTip.getId().toString()));
-			    	
-			    
 			}
+			// ekran genişliği
 			if(!fView.getEkranGen().equals("")){
-				cihazOzellikAtamaList.add(new CihazOzellikAtama(3,11, fView.getEkranGen().trim()));
+				EkranGenisligiDAO ekranGenisligiDAO = new EkranGenisligiDAO();
+				EkranGenisligi ekranGenisligi = new EkranGenisligi();	
+				ekranGenisligi.setGenislik(fView.getEkranGen().trim());
+				try {
+					ekranGenisligi = ekranGenisligiDAO.findByGenislik(ekranGenisligi.getGenislik());
+					if(ekranGenisligi == null){
+						ekranGenisligiDAO.add(ekranGenisligi);
+						if(ekranGenisligi.getId() == null){
+							System.out.println("Ekran tipi eklenemdi");
+						}
+					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				cihazOzellikAtamaList.add(new CihazOzellikAtama(3,11, ekranGenisligi.getGenislik()));
 			}
 			if(!fView.getEkranCoz().equals("")){
-				cihazOzellikAtamaList.add(new CihazOzellikAtama(3,12, fView.getEkranCoz().trim()));
+				EkranCozunurlukDAO ekranCozunurlukDAO = new EkranCozunurlukDAO();
+				EkranCozunurluk ekranCozunurluk = new EkranCozunurluk();	
+				EkranPPIDAO ekranPPIDAO = new EkranPPIDAO();
+				EkranPPI ekranPPI = new EkranPPI();
+				String[] ekranCozArr=null;
+				String ekranCoz = fView.getEkranCoz();
+				if(fView.getEkranCoz().contains(",")){
+					ekranCozArr = fView.getEkranCoz().split(",");
+					ekranCoz = ekranCozArr[0];
+					ekranPPI.setPpi(ekranCozArr[1].trim());
+			    	try {
+			    		if(ekranPPIDAO.findBy(ekranPPI.getPpi()) == null){
+			    			ekranPPIDAO.add(ekranPPI);
+							if(ekranPPI.getId() == null){
+								System.out.println("Ekran ppi eklenemedi");
+							}
+						}else{
+							ekranPPI = ekranPPIDAO.findBy(ekranPPI.getPpi());
+						}
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					cihazOzellikAtamaList.add(new CihazOzellikAtama(3,49, ekranPPI.getId().toString()));
+			    }
+				//ekran çöz
+		    	try {
+		    		ekranCozunurluk.setCozunurluk(ekranCoz);
+		    		if(ekranCozunurlukDAO.findBy(ekranCozunurluk.getCozunurluk()) == null){
+						ekranCozunurlukDAO.add(ekranCozunurluk);
+						if(ekranCozunurluk.getId() == null){
+							System.out.println("Ekran çöz eklenemedi");
+						}
+					}else{
+						ekranCozunurluk = ekranCozunurlukDAO.findBy(ekranCozunurluk.getCozunurluk());
+					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				cihazOzellikAtamaList.add(new CihazOzellikAtama(3,12, ekranCozunurluk.getId().toString()));
 			}
 			if(!fView.getMultiTouch().equals("")){
 				cihazOzellikAtamaList.add(new CihazOzellikAtama(3,13, fView.getMultiTouch().trim()));
