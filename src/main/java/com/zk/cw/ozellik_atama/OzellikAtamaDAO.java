@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.zk.cw.cihaz.Cihaz;
 import com.zk.cw.dao_factory.DaoFactory;
 import com.zk.cw.ekran.EkranCozunurluk;
 import com.zk.cw.ekran.EkranPPI;
@@ -18,6 +19,7 @@ public class OzellikAtamaDAO {
 	private static final String INSERT = "INSERT INTO cihaz_ozellik_atama (cihaz_id,kategori_id,ozellik_id,deger) VALUES (?,?,?,?)";	
 	private static final String OZELLIK_IDDEN_UPDATE = "UPDATE cihaz_ozellik_atama SET cihaz_id=?,kategori_id=?,ozellik_id=?,deger=? WHERE id=?";	
 	private static final String UPDATE = "UPDATE cihaz_ozellik_atama SET kategori_id=?,deger=? WHERE cihaz_id=? AND ozellik_id=?";	
+	private static final String DELETE = "DELETE FROM cihaz_ozellik_atama WHERE cihaz_id=? AND ozellik_id=?";	
 	
 	public OzellikAtama find(Integer cihazId, Integer ozellikId) throws SQLException {
 		Connection c = DaoFactory.openConnection();
@@ -177,5 +179,18 @@ public class OzellikAtamaDAO {
 		c.close();
 		
 		return ozellikAtama;
+	}
+	public void delete(Cihaz aCihaz, int ozellikId) throws SQLException {
+		Connection c = DaoFactory.openConnection();
+		
+		PreparedStatement pstmt = c.prepareStatement(DELETE);
+		pstmt.setInt(1, aCihaz.getId());
+		pstmt.setInt(2, ozellikId);
+		
+		pstmt.executeUpdate();
+
+		pstmt.close();
+		c.close();
+		
 	}	
 }

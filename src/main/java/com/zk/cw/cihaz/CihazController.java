@@ -76,7 +76,27 @@ public class CihazController implements ActionListener  {
 		    	  ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 3, 13, fView.getCokluDokunmatik().getDeger()));
 		      if(!fView.getEkranKor().equals(""))
 		    	  ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 3, 14, fView.getEkranKor()));
-			  
+		      if(!(fView.getBoyut().equals("") || fView.getBoyut().equals("100 x 100 x 10 mm"))){
+		    	  ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 2, 7, fView.getBoyut()));
+		      }else{
+		    	  try {
+					ozellikAtamaDao.delete(fCihaz,7);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		      }
+		      
+		      if(!(fView.getAgirlik().equals("") || fView.getAgirlik().equals("100 gr"))){
+		    	  ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 2, 8, fView.getAgirlik()));
+		      }else{
+		    	  try {
+					ozellikAtamaDao.delete(fCihaz,8);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		      }		      
 		      for(OzellikAtama ozellikAtama : ozellikAtamaList){
 				  try {
 					if( ozellikAtamaDao.find(ozellikAtama.getCihazId(), ozellikAtama.getOzellikId()) == null){

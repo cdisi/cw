@@ -115,12 +115,14 @@ public class CihazView {
 	private EkranPPIDAO ekranPPIDAO = new EkranPPIDAO();	
 	private EkranPPI selectedEkranPPI;
 	
-	// çoklu dokunmatik
+	//çoklu dokunmatik
 	private ComboBoxModel<CokluDokunmatik> cokluDokunmatikCombBoxModel = new CokluDokunmatikComboBoxModel();
 	private JComboBox<CokluDokunmatik> fCokluDokunmatik = new JComboBox<CokluDokunmatik>(cokluDokunmatikCombBoxModel);	
 	private CokluDokunmatik selectedCokluDokunmatik = new CokluDokunmatik();	
 	
 	private JTextField fEkranKor = new JTextField();
+	private JTextField fBoyut = new JTextField("100 x 100 x 10 mm");
+	private JTextField fAgirlik = new JTextField("100 gr");
 
 	
 	CihazView(JFrame aParent) {				    
@@ -224,6 +226,14 @@ public class CihazView {
 	String getEkranKor() {
 	    return fEkranKor.getText();
 	}			
+	//gövde
+	String getBoyut() {
+	    return fBoyut.getText();
+	}
+	String getAgirlik() {
+	    return fAgirlik.getText();
+	}	
+	
 	private void buildGui(JFrame aParent, String aDialogTitle) {
 		fStandardDialog = new StandardDialog(
 		      aParent, aDialogTitle, true, OnClose.DISPOSE, getUserInputArea(), getButtons()
@@ -239,6 +249,8 @@ public class CihazView {
 	    
 	    JPanel ekranPanel = getEkranInputArea();
 	    mainPanel.add(ekranPanel);
+	    JPanel govdePanel = getGovdeInputArea();
+	    mainPanel.add(govdePanel);
 	    
 	    UiUtil.alignAllX(mainPanel, UiUtil.AlignX.LEFT);
 	    return mainPanel;	    
@@ -268,6 +280,13 @@ public class CihazView {
 	    addEkranPPIComboField(fEkranPPI, "PPI", result);	    
 	    addCokluDokunmatikComboField(fCokluDokunmatik, "ÇD", result);	    
 		addTextField(fEkranKor, "EK", result);
+		return result;
+	}	
+	private JPanel getGovdeInputArea(){
+		JPanel result = new JPanel(new FlowLayout(FlowLayout.LEFT));	    
+		result.setBorder(BorderFactory.createTitledBorder("GÖVDE"));
+		addTextField(fBoyut, "Boyutlar", result);
+		addTextField(fAgirlik, "Ağırlık", result);
 		return result;
 	}	
 	
@@ -492,6 +511,21 @@ public class CihazView {
 			fEkranPPI.getModel().setSelectedItem(selectedEkranPPI);
 		if(selectedCokluDokunmatik.getDeger()!=null)
 			fCokluDokunmatik.getModel().setSelectedItem(selectedCokluDokunmatik);
+		
+		try {
+			ozellikAtama = ozellikAtamaDao.find(fId,7);
+			if(ozellikAtama!=null)
+				fBoyut.setText(ozellikAtama.getDeger());	
+			
+			ozellikAtama = ozellikAtamaDao.find(fId,8);
+			if(ozellikAtama!=null)
+				fAgirlik.setText(ozellikAtama.getDeger());			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		
 		
 	}
 	
