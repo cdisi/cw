@@ -11,6 +11,8 @@ import com.zk.cw.ekran.EkranCozunurluk;
 import com.zk.cw.ekran.EkranPPI;
 import com.zk.cw.ekran.EkranRenk;
 import com.zk.cw.ekran.EkranTip;
+import com.zk.cw.sim.Sim;
+import com.zk.cw.sim.SimSayisi;
 
 
 public class OzellikAtamaDAO {
@@ -113,6 +115,42 @@ public class OzellikAtamaDAO {
 		return ozellikAtama;
 	}	
 	
+	public OzellikAtama update(OzellikAtama ozellikAtama, SimSayisi simSayisi) throws SQLException {
+		Connection c = DaoFactory.openConnection();
+		
+		PreparedStatement pstmt = c.prepareStatement(OZELLIK_IDDEN_UPDATE);
+		pstmt.setInt(1, ozellikAtama.getCihazId());
+		pstmt.setInt(2, ozellikAtama.getKategoriId());
+		pstmt.setInt(3, 9);
+		pstmt.setInt(4, simSayisi.getId());
+		pstmt.setInt(5, ozellikAtama.getId());
+		
+		pstmt.executeUpdate();
+
+		pstmt.close();
+		c.close();
+		
+		return ozellikAtama;
+	}	
+	
+	public OzellikAtama update(OzellikAtama ozellikAtama, Sim sim) throws SQLException {
+		Connection c = DaoFactory.openConnection();
+		
+		PreparedStatement pstmt = c.prepareStatement(OZELLIK_IDDEN_UPDATE);
+		pstmt.setInt(1, ozellikAtama.getCihazId());
+		pstmt.setInt(2, ozellikAtama.getKategoriId());
+		pstmt.setInt(3, 50);
+		pstmt.setInt(4, sim.getId());
+		pstmt.setInt(5, ozellikAtama.getId());
+		
+		pstmt.executeUpdate();
+
+		pstmt.close();
+		c.close();
+		
+		return ozellikAtama;
+	}	
+	
 	public OzellikAtama update(OzellikAtama ozellikAtama) throws SQLException {
 		Connection c = DaoFactory.openConnection();
 		
@@ -180,6 +218,42 @@ public class OzellikAtamaDAO {
 		
 		return ozellikAtama;
 	}
+	
+	public OzellikAtama insert(OzellikAtama ozellikAtama, SimSayisi simSayisi) throws SQLException {
+		Connection c = DaoFactory.openConnection();
+		
+		PreparedStatement pstmt = c.prepareStatement(INSERT);
+		pstmt.setInt(1, ozellikAtama.getCihazId());
+		pstmt.setInt(2, ozellikAtama.getKategoriId());
+		pstmt.setInt(3, 9);
+		pstmt.setInt(4, simSayisi.getId());
+		
+		pstmt.executeUpdate();
+
+		pstmt.close();
+		c.close();
+		
+		return ozellikAtama;
+	}	
+	
+	public OzellikAtama insert(OzellikAtama ozellikAtama, Sim sim) throws SQLException {
+		Connection c = DaoFactory.openConnection();
+		
+		PreparedStatement pstmt = c.prepareStatement(INSERT);
+		pstmt.setInt(1, ozellikAtama.getCihazId());
+		pstmt.setInt(2, ozellikAtama.getKategoriId());
+		pstmt.setInt(3, 50);
+		pstmt.setInt(4, sim.getId());
+		
+		pstmt.executeUpdate();
+
+		pstmt.close();
+		c.close();
+		
+		return ozellikAtama;
+	}		
+	
+	
 	public void delete(Cihaz aCihaz, int ozellikId) throws SQLException {
 		Connection c = DaoFactory.openConnection();
 		
