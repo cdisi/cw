@@ -25,7 +25,8 @@ public class SimSayisiDAO {
 		ResultSet rset = pstmt.executeQuery();
 
 		while (rset.next()){
-			simSayisi = new SimSayisi(rset.getInt("id"), rset.getString("sayi"));
+			simSayisi.setId(rset.getInt("id"));
+			simSayisi.setSayi(rset.getString("sayi"));
 		}
 
 		pstmt.close();

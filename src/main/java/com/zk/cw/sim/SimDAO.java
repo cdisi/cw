@@ -37,7 +37,8 @@ public class SimDAO {
 		ResultSet rset = pstmt.executeQuery();
 
 		while (rset.next()){
-			sim = new Sim(rset.getInt("id"), rset.getString("ad"));
+			sim.setId(rset.getInt("id"));
+			sim.setAd(rset.getString("ad"));
 		}
 
 		pstmt.close();

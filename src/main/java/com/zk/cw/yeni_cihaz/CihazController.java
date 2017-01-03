@@ -34,6 +34,10 @@ import com.zk.cw.ekran.EkranRenkDAO;
 import com.zk.cw.ekran.EkranTip;
 import com.zk.cw.exception.InvalidInputException;
 import com.zk.cw.main.MainWindow;
+import com.zk.cw.sim.Sim;
+import com.zk.cw.sim.SimDAO;
+import com.zk.cw.sim.SimSayisi;
+import com.zk.cw.sim.SimSayisiDAO;
 import com.zk.cw.uretici.Uretici;
 import com.zk.cw.util.Edit;
 import com.zk.cw.util.ImageResize;
@@ -105,7 +109,33 @@ public class CihazController implements ActionListener {
 				cihazOzellikAtamaList.add(new CihazOzellikAtama(2,8, fView.getAgirlik().trim()));
 			}
 			if(!fView.getSim().equals("")){
-				cihazOzellikAtamaList.add(new CihazOzellikAtama(2,9, fView.getSim().trim()));
+				SimSayisi simSayisi = new SimSayisi();
+				Sim sim = new Sim();
+				if(fView.getSim().contains(",")){
+					String[] simArr = fView.getSim().split(",");
+					try {
+						simSayisi.setSayi(simArr[0].trim());
+						SimSayisiDAO.findBy(simSayisi);
+						if(simSayisi.getId() == null){
+							SimSayisiDAO.add(simSayisi);
+						}
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+					cihazOzellikAtamaList.add(new CihazOzellikAtama(2,9, simSayisi.getId().toString()));
+					sim.setAd(simArr[1].trim());
+					try {
+						SimDAO.findBy(sim);
+						if(sim.getId() == null){
+							SimDAO.add(sim);
+						}
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+					cihazOzellikAtamaList.add(new CihazOzellikAtama(2,50, sim.getId().toString()));
+
+
+				}
 			}
 			if(!fView.getEkranTip().equals("")){
 				EkranDAO ekranDao = new EkranDAO();
@@ -154,7 +184,7 @@ public class CihazController implements ActionListener {
 				EkranGenisligi ekranGenisligi = new EkranGenisligi();	
 				ekranGenisligi.setGenislik(fView.getEkranGen().trim());
 				try {
-					ekranGenisligi = ekranGenisligiDAO.findByGenislik(ekranGenisligi.getGenislik());
+					ekranGenisligiDAO.findByGenislik(ekranGenisligi.getGenislik());
 					if(ekranGenisligi == null){
 						ekranGenisligiDAO.add(ekranGenisligi);
 						if(ekranGenisligi.getId() == null){

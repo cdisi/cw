@@ -161,7 +161,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(SIM)").first();
 	    if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replace("Yes", "Var").replace("No", "Yok").replace("Single", "Tek").replace("Dual", "Çift").replace("Micro-SIM", "Mikro-SIM").replace("or", "veya").replace("Triple", "Üç").replace(", dual stand-by", "");		
+	    	deger = elm.parent().nextElementSibling().text().replace("Yes", "Var").replace("No", "Yok").replace("Single", "Tek").replace("Dual", "Çift").replace("Micro-SIM", "Mikro-SIM").replace("or", "veya").replace("Triple", "Üç").replace(", dual stand-by", "").replace(" (", ",").replace(")","").replace(" SIM", " Hat");		
 	    }
 		return deger;
 	}
