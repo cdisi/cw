@@ -14,6 +14,7 @@ public class Cihaz {
 	private String sim;
 	private Integer turu;
 	private Integer anasayfa=0;
+	private String fiyatGrubu;
 	
 	public Cihaz(){
 	}	
@@ -114,5 +115,12 @@ public class Cihaz {
 	}	
 	public Integer getAnasayfa(){
 		return this.anasayfa;
+	}	
+	public void setFiyatGrubu(String s){
+		this.fiyatGrubu=s;
+	}
+	
+	public String getFiyatGrubu(){
+		return this.fiyatGrubu;
 	}	
 }

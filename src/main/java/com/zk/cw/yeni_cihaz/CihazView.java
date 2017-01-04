@@ -112,6 +112,7 @@ public class CihazView {
 	private JTextField java = new JTextField(); 
 	private JTextArea diger = new JTextArea(3,70); 
 	private JCheckBox anasayfa = new JCheckBox();
+	private JTextField fiyatGrubu = new JTextField(); 
 	
 	CihazView(JFrame aParent, YeniCihaz selectedCihaz, Uretici uretici) {				    
 		fEdit = Edit.ADD;		
@@ -293,6 +294,9 @@ public class CihazView {
 	public Boolean getAnasayfa(){
 		return this.anasayfa.isSelected();
 	}
+	public String getFiyatGrubu(){
+		return this.fiyatGrubu.getText();
+	}
 	private void buildGui(JFrame aParent, String aDialogTitle) {
 		fStandardDialog = new StandardDialog(
 		      aParent, aDialogTitle, true, OnClose.DISPOSE, getUserInputArea(), getButtons()
@@ -313,20 +317,20 @@ public class CihazView {
 	    addTextField("SIM:",this.sim, "Gövde Diğer", this.govdeDiger, result);
 	    addTextField("Ekran Tipi:", this.ekranTipi,"Ekran Genişliği:", this.ekranGen, result);
 	    addTextField("Ekran Çözünürlüğü:",this.ekranCoz,"Çoklu-dokunmatik", this.multiTouch, result);
-	    addTextField( "Ekran Koruma",this.ekranKor, "Ekran Diğer",this.ekranDig, result);
+	    addTextField("Ekran Koruma",this.ekranKor, "Ekran Diğer",this.ekranDig, result);
 	    addTextField("İşletim Sistemi",this.os,"Sürüm",this.osSurum,"Yonga Seti",this.yongaSeti, result);
-	    addTextField( "CPU",this.cpu,"GPU",this.gpu, result);
-	    addTextField( "Hafıza Kartı",this.hafizaKarti,"Dahili Hafıza",this.dahiliHafiza,"RAM",this.ram, result);
+	    addTextField("CPU",this.cpu,"GPU",this.gpu, result);
+	    addTextField("Hafıza Kartı",this.hafizaKarti,"Dahili Hafıza",this.dahiliHafiza,"RAM",this.ram, result);
 	    addTextField("Arka Kamera:", this.arkaKam, "Özellikler:",this.arkaKamOz, result);
-	    addTextField( "Video:",this.video,"Ön Kamera:",this.onKam, result);
+	    addTextField("Video:",this.video,"Ön Kamera:",this.onKam, result);
 	    addTextField("Uyarı Tipleri:",this.uyariTip,"Kullaklık Girişi:",this.kulGir, result);
-	    addTextField( "Hoparlör:",this.hoparlor,"Diğer:",this.sesDiger, result);
-	    addTextField( "Wlan:",this.wlan,"Bluetooth:",this.bluetooth, result);
-	    addTextField( "GPS:",this.gps,"NFC:",this.nfc, result);
-	    addTextField( "Kızıl Ötesi:",this.kizilOt,"Radyo:",this.radyo, result);
-	    addTextField( "USB:",this.usb,"Pil:", this.pil,result);
+	    addTextField("Hoparlör:",this.hoparlor,"Diğer:",this.sesDiger, result);
+	    addTextField("Wlan:",this.wlan,"Bluetooth:",this.bluetooth, result);
+	    addTextField("GPS:",this.gps,"NFC:",this.nfc, result);
+	    addTextField("Kızıl Ötesi:",this.kizilOt,"Radyo:",this.radyo, result);
+	    addTextField("USB:",this.usb,"Pil:", this.pil,result);
 	    addTextField("Bekleme Süresi:",this.bekSure,"Konuşma Süresi:",this.konSure, result);
-	    addTextField("Renkler:",this.renk, "Sensör:", this.sensor,result);
+	    addTextField("Renkler:",this.renk, "Sensör:", this.sensor,"Fiyat:",this.fiyatGrubu,result);
 	    addTextField("Mesajlaşma:",this.mesaj,"Java",this.java, "diğer:", this.diger, result);
 	    addPictureField(this.resimIkon,"Resim:", "mobile91 url:",this.mobile91Url, "Anasayfa:",this.anasayfa,result);
 	    UiUtil.alignAllX(result, UiUtil.AlignX.LEFT);
@@ -430,6 +434,7 @@ public class CihazView {
 		this.mesaj.setText(gsmParser.mesajBul());
 		this.java.setText(gsmParser.javaBul());
 		this.diger.setText(gsmParser.digerBul());
+		this.fiyatGrubu.setText(gsmParser.fiyatGrupBul());
 		
 	    this.resimUrl = gsmParser.resimBul();
 		try {

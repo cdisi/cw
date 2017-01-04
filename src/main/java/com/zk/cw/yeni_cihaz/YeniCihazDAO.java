@@ -17,9 +17,9 @@ import com.zk.cw.uretici.Uretici;
 public class YeniCihazDAO {
 	
 	private static Map<Integer, YeniCihaz> table = new LinkedHashMap<>();  
-	private static final String ALL = "SELECT * FROM cihaz_url INNER JOIN uretici ON cihaz_url.uretici_id=uretici.id WHERE uretici.aktif=1 AND cihaz_url.aktif=0";
+	private static final String ALL = "SELECT * FROM cihaz_url INNER JOIN uretici ON cihaz_url.uretici_id=uretici.id WHERE uretici.aktif=1 AND cihaz_url.aktif != -1  ORDER BY cihaz_url.aktif";
 	private static final String UPDATE = "UPDATE cihaz_url SET aktif=? WHERE url=?";
-	private static final String INSERT = "INSERT INTO cihaz (ad,diger_ad,uretici_id,aktif,duyurulma,created_at,turu,anasayfa) VALUES (?,?,?,?,?,?,?,?)";
+	private static final String INSERT = "INSERT INTO cihaz (ad,diger_ad,uretici_id,aktif,duyurulma,created_at,turu,anasayfa,fiyat_grubu) VALUES (?,?,?,?,?,?,?,?,?)";
 		
 	static {
 		try {
@@ -68,6 +68,7 @@ public class YeniCihazDAO {
 		pstmt.setString(6, ft.format(dNow));
 		pstmt.setInt(7, cihaz.getTuru());
 		pstmt.setInt(8, cihaz.getAnasayfa());
+		pstmt.setString(9, cihaz.getFiyatGrubu());
 		pstmt.executeUpdate();
 		ResultSet rset = pstmt.getGeneratedKeys();
 

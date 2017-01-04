@@ -371,6 +371,9 @@ public class CihazController implements ActionListener {
 			if(fView.getAnasayfa()){
 				fCihaz.setAnasayfa(1);
 			}
+			if(!fView.getFiyatGrubu().equals("")){
+				fCihaz.setFiyatGrubu(fView.getFiyatGrubu());
+			}
 
 
 			

@@ -503,5 +503,15 @@ public class GsmParser {
 		return deger;
 	}
 	
+	public String fiyatGrupBul(){
+	    String deger=null;
+		Element elm = doc.select("a:contains(Price group)").first();
+	    if(elm != null){
+	    	deger = elm.parent().nextElementSibling().child(0).text().trim();		
+	    }
+		return deger;
+	}
+	
+	
 }
 
