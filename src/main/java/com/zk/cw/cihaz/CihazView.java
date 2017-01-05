@@ -646,14 +646,16 @@ public class CihazView {
 		JLabel label = new JLabel(aLabel);
 		panel.add(label);
 		fOSSurum.addItem(new OSSurum(null,null, "Seçiniz"));  	  		
-		try {
-			for(OSSurum os : OSSurumDAO.all(selectedOS)){
-				fOSSurum.addItem(os);
-				fOSSurum.setRenderer(new OSSurumComboBoxRenderer());
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}		
+		if(selectedOS.getId() != null){
+			try {
+				for(OSSurum os : OSSurumDAO.all(selectedOS)){
+					fOSSurum.addItem(os);
+					fOSSurum.setRenderer(new OSSurumComboBoxRenderer());
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}	
+		}
 	    panel.add(aComboField);		 
 		aPanel.add(panel);		  
 	}

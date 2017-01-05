@@ -14,7 +14,6 @@ public class OSChangeListener implements  ItemListener {
 	@Override
     public void itemStateChanged(ItemEvent event) {
        if (event.getStateChange() == ItemEvent.SELECTED) {
-           //OSSurum osSurum = (OSSurum) event.getItem();
            OS os = (OS) event.getItem();
           fView.refreshOSSurumComboField(os);
        }
