@@ -30,6 +30,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import com.zk.cw.cihaz_resim.Resim;
@@ -42,6 +43,14 @@ import com.zk.cw.ekran.EkranDAO;
 import com.zk.cw.ekran.EkranTip;
 import com.zk.cw.ozellik_atama.OzellikAtama;
 import com.zk.cw.ozellik_atama.OzellikAtamaDAO;
+import com.zk.cw.sim.Sim;
+import com.zk.cw.sim.SimComboBoxModel;
+import com.zk.cw.sim.SimComboBoxRenderer;
+import com.zk.cw.sim.SimDAO;
+import com.zk.cw.sim.SimSayisi;
+import com.zk.cw.sim.SimSayisiComboBoxModel;
+import com.zk.cw.sim.SimSayisiComboBoxRenderer;
+import com.zk.cw.sim.SimSayisiDAO;
 import com.zk.cw.uretici.Uretici;
 import com.zk.cw.util.Edit;
 import com.zk.cw.util.ImageResize;
@@ -49,11 +58,22 @@ import com.zk.cw.util.ui.OnClose;
 import com.zk.cw.util.ui.StandardDialog;
 import com.zk.cw.util.ui.UiUtil;
 
+import os.OS;
+import os.OSChangeListener;
+import os.OSComboBoxModel;
+import os.OSComboBoxRenderer;
+import os.OSDAO;
+import os.OSSurum;
+import os.OSSurumBoxModel;
+import os.OSSurumComboBoxRenderer;
+import os.OSSurumDAO;
+
 import com.zk.cw.uretici.UreticiCombBoxModel;
 import com.zk.cw.uretici.UreticiComboBoxRenderer;
 import com.zk.cw.uretici.UreticiDAO;
 import com.zk.cw.ekran.*;
 public class CihazView {
+	JPanel mainPanel;
 	private StandardDialog fStandardDialog;
 	private Edit fEdit;	
 	private JButton fEditButton;
@@ -121,10 +141,29 @@ public class CihazView {
 	private CokluDokunmatik selectedCokluDokunmatik = new CokluDokunmatik();	
 	
 	private JTextField fEkranKor = new JTextField();
+	private JTextArea fEkranDiger = new JTextArea(2,70); 
+
+	// gövde
 	private JTextField fBoyut = new JTextField("100 x 100 x 10 mm");
 	private JTextField fAgirlik = new JTextField("100 gr");
+	//hat sayısı
+	private ComboBoxModel<SimSayisi> simSayisiCombBoxModel = new SimSayisiComboBoxModel();
+	private JComboBox<SimSayisi> fSimSayisi = new JComboBox<SimSayisi>(simSayisiCombBoxModel);	
+	private SimSayisi selectedSimSayisi = new SimSayisi();	
+	//sim türü
+	private ComboBoxModel<Sim> simCombBoxModel = new SimComboBoxModel();
+	private JComboBox<Sim> fSim = new JComboBox<Sim>(simCombBoxModel);	
+	private Sim selectedSim = new Sim();	
+	private JTextArea fGovdeDiger = new JTextArea(2,30); 
+	//os
+	private ComboBoxModel<OS> osCombBoxModel = new OSComboBoxModel();
+	private JComboBox<OS> fOS = new JComboBox<OS>(osCombBoxModel);	
+	private OS selectedOS = new OS();	
+	//os sürüm
+	private ComboBoxModel<OSSurum> osSurumCombBoxModel = new OSSurumBoxModel();
+	private JComboBox<OSSurum> fOSSurum = new JComboBox<OSSurum>(osSurumCombBoxModel);	
+	private OSSurum selectedOSSurum = new OSSurum();	
 
-	
 	CihazView(JFrame aParent) {				    
 		fEdit = Edit.ADD;		
 		buildGui(aParent, "Cihaz Ekle");
@@ -134,7 +173,6 @@ public class CihazView {
 	CihazView(JFrame aParent, Cihaz selectedCihaz) {				    
 		fEdit = Edit.CHANGE;		
 		fId = selectedCihaz.getId();
-		buildGui(aParent, "Cihaz Güncelle");
 		try {
 			selectedUretici = ureticiDAO.findById(selectedCihaz.getUreticiId());
 			selectedCihazTur = cihazTurDAO.findById(selectedCihaz.getTuru());
@@ -167,10 +205,29 @@ public class CihazView {
 			ozellikAtama = ozellikAtamaDao.find(fId,14);
 			if(ozellikAtama!=null)
 				fEkranKor.setText(ozellikAtama.getDeger());		
+			//hat sayısı
+			ozellikAtama = ozellikAtamaDao.find(fId,9);
+			if(ozellikAtama!=null)
+				selectedSimSayisi = SimSayisiDAO.findBy(Integer.parseInt(ozellikAtama.getDeger()));
+			//sim türü
+			ozellikAtama = ozellikAtamaDao.find(fId,50);
+			if(ozellikAtama!=null)
+				selectedSim = SimDAO.findBy(Integer.parseInt(ozellikAtama.getDeger()));
+			//seçilen os
+			ozellikAtama = ozellikAtamaDao.find(fId,15);
+			if(ozellikAtama!=null)
+				selectedOS = OSDAO.findBy(Integer.parseInt(ozellikAtama.getDeger()));
+			//seçilen os sürüm
+			ozellikAtama = ozellikAtamaDao.find(fId,43);
+			if(ozellikAtama!=null)
+				selectedOSSurum = OSSurumDAO.findBy(Integer.parseInt(ozellikAtama.getDeger()));
+			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		buildGui(aParent, "Cihaz Güncelle");
+
 		populateFields(selectedCihaz);
 		fStandardDialog.display();
 	}
@@ -225,7 +282,10 @@ public class CihazView {
 	}
 	String getEkranKor() {
 	    return fEkranKor.getText();
-	}			
+	}	
+	String getEkranDiger() {
+	    return fEkranDiger.getText();
+	}	
 	//gövde
 	String getBoyut() {
 	    return fBoyut.getText();
@@ -233,7 +293,21 @@ public class CihazView {
 	String getAgirlik() {
 	    return fAgirlik.getText();
 	}	
-	
+	SimSayisi getSimSayisi() {
+		return (SimSayisi) fSimSayisi.getModel().getSelectedItem();
+	}
+	Sim getSim() {
+		return (Sim) fSim.getModel().getSelectedItem();
+	}
+	String getGovdeDiger() {
+	    return fGovdeDiger.getText();
+	}
+	OS getOS() {
+		return (OS) fOS.getModel().getSelectedItem();
+	}	
+	OSSurum getOSSurum() {
+		return (OSSurum) fOSSurum.getModel().getSelectedItem();
+	}	
 	private void buildGui(JFrame aParent, String aDialogTitle) {
 		fStandardDialog = new StandardDialog(
 		      aParent, aDialogTitle, true, OnClose.DISPOSE, getUserInputArea(), getButtons()
@@ -242,15 +316,19 @@ public class CihazView {
 	}	
 	
 	private JPanel getUserInputArea() {
-	    JPanel mainPanel = new JPanel();
+	    mainPanel = new JPanel();
 	    mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 	    JPanel genelPanel = getGenelInputArea();	    
 	    mainPanel.add(genelPanel); 
 	    
 	    JPanel ekranPanel = getEkranInputArea();
 	    mainPanel.add(ekranPanel);
+	    
 	    JPanel govdePanel = getGovdeInputArea();
 	    mainPanel.add(govdePanel);
+	    
+	    JPanel platformPanel = getPlatformInputArea();
+	    mainPanel.add(platformPanel);
 	    
 	    UiUtil.alignAllX(mainPanel, UiUtil.AlignX.LEFT);
 	    return mainPanel;	    
@@ -271,8 +349,11 @@ public class CihazView {
 	}
 	
 	private JPanel getEkranInputArea(){
+		JPanel ekranMainPanel = new JPanel();
+		ekranMainPanel.setLayout(new BoxLayout(ekranMainPanel, BoxLayout.Y_AXIS));
+		ekranMainPanel.setBorder(BorderFactory.createTitledBorder("EKRAN"));
+		
 		JPanel result = new JPanel(new FlowLayout(FlowLayout.LEFT));	    
-		result.setBorder(BorderFactory.createTitledBorder("EKRAN"));
 	    addEkranTipComboField(fEkranTip, "Tipi", result);	    
 	    addEkranRenkComboField(fEkranRenk, "Renk", result);	    
 	    addEkranGenisligiComboField(fEkranGenisligi, "Genişlik", result);	    
@@ -280,15 +361,40 @@ public class CihazView {
 	    addEkranPPIComboField(fEkranPPI, "PPI", result);	    
 	    addCokluDokunmatikComboField(fCokluDokunmatik, "ÇD", result);	    
 		addTextField(fEkranKor, "EK", result);
-		return result;
+		ekranMainPanel.add(result);
+		
+		JPanel ekranDigerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		addTextAreaField(fEkranDiger,"Diğer",ekranDigerPanel);
+		ekranMainPanel.add(ekranDigerPanel);
+
+		return ekranMainPanel;
 	}	
 	private JPanel getGovdeInputArea(){
 		JPanel result = new JPanel(new FlowLayout(FlowLayout.LEFT));	    
 		result.setBorder(BorderFactory.createTitledBorder("GÖVDE"));
 		addTextField(fBoyut, "Boyutlar", result);
 		addTextField(fAgirlik, "Ağırlık", result);
+	    addSimSayisiComboField(fSimSayisi, "Hat Sayısı", result);	    
+	    addSimComboField(fSim, "SIM türü", result);	    
+		addTextAreaField(fGovdeDiger,"Diğer",result);
 		return result;
 	}	
+	
+	private JPanel getPlatformInputArea(){
+		JPanel result = new JPanel(new FlowLayout(FlowLayout.LEFT));	    
+		result.setBorder(BorderFactory.createTitledBorder("PLATFORM"));
+	    addOSComboField(fOS, "OS", result);	    
+	    addOSSurumComboField(fOSSurum, "Sürüm", result);	    
+		return result;
+	}	
+	
+	private void addTextAreaField(JTextArea aTextField, String aLabel, JPanel aPanel) {
+		  JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		  JLabel label = new JLabel(aLabel);
+		  panel.add(label);
+		  panel.add(aTextField);
+		  aPanel.add(panel);		  
+	}
 	
 	private void addTextField(JTextField aTextField, String aLabel, JPanel aPanel) {
 		  JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -476,6 +582,94 @@ public class CihazView {
 		aPanel.add(panel);		  
 	}	
 	
+	private void addSimSayisiComboField(JComboBox<SimSayisi> aComboField, String aLabel, JPanel aPanel) {
+  	    JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+		JLabel label = new JLabel(aLabel);
+		panel.add(label);
+		fSimSayisi.addItem(new SimSayisi(null, "Seçiniz"));  	  		
+		try {
+			for(SimSayisi simSayisi : SimSayisiDAO.all()){
+				fSimSayisi.addItem(simSayisi);
+				fSimSayisi.setRenderer(new SimSayisiComboBoxRenderer());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+
+	    panel.add(aComboField);		 
+		aPanel.add(panel);		  
+	}	
+	
+	private void addSimComboField(JComboBox<Sim> aComboField, String aLabel, JPanel aPanel) {
+  	    JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+		JLabel label = new JLabel(aLabel);
+		panel.add(label);
+		fSim.addItem(new Sim(null, "Seçiniz"));  	  		
+		try {
+			for(Sim sim : SimDAO.all()){
+				fSim.addItem(sim);
+				fSim.setRenderer(new SimComboBoxRenderer());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+
+	    panel.add(aComboField);		 
+		aPanel.add(panel);		  
+	}
+	
+	private void addOSComboField(JComboBox<OS> aComboField, String aLabel, JPanel aPanel) {
+  	    JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+		JLabel label = new JLabel(aLabel);
+		panel.add(label);
+		fOS.addItem(new OS(null, "Seçiniz"));  	  		
+		try {
+			for(OS os : OSDAO.all()){
+				fOS.addItem(os);
+				fOS.setRenderer(new OSComboBoxRenderer());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+		fOS.addItemListener(new OSChangeListener(this));
+
+	    panel.add(aComboField);		 
+		aPanel.add(panel);		  
+	}	
+	
+	private void addOSSurumComboField(JComboBox<OSSurum> aComboField, String aLabel, JPanel aPanel) {
+  	    JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+		JLabel label = new JLabel(aLabel);
+		panel.add(label);
+		fOSSurum.addItem(new OSSurum(null,null, "Seçiniz"));  	  		
+		try {
+			for(OSSurum os : OSSurumDAO.all(selectedOS)){
+				fOSSurum.addItem(os);
+				fOSSurum.setRenderer(new OSSurumComboBoxRenderer());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+	    panel.add(aComboField);		 
+		aPanel.add(panel);		  
+	}
+	
+	public void refreshOSSurumComboField(OS aSelectedOS){
+		fOSSurum.removeAllItems();
+		fOSSurum.addItem(new OSSurum(null,null, "Seçiniz"));  	  		
+		try {
+			for(OSSurum os : OSSurumDAO.all(aSelectedOS)){
+				fOSSurum.addItem(os);
+				fOSSurum.setRenderer(new OSSurumComboBoxRenderer());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	private void populateFields(Cihaz aSelectedCihaz) {
 		fAd.setText(aSelectedCihaz.getAd());
@@ -520,13 +714,33 @@ public class CihazView {
 			ozellikAtama = ozellikAtamaDao.find(fId,8);
 			if(ozellikAtama!=null)
 				fAgirlik.setText(ozellikAtama.getDeger());			
+			ozellikAtama = ozellikAtamaDao.find(fId,44);
+			if(ozellikAtama!=null)
+				fEkranDiger.setText(ozellikAtama.getDeger());			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		if(selectedSimSayisi.getSayi()!=null)
+			fSimSayisi.getModel().setSelectedItem(selectedSimSayisi);
+		if(selectedSim.getAd()!=null)
+			fSim.getModel().setSelectedItem(selectedSim);
 	
+		try {
+			ozellikAtama = ozellikAtamaDao.find(fId,47);
+			if(ozellikAtama!=null)
+				fGovdeDiger.setText(ozellikAtama.getDeger());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
+		if(selectedOS.getAd()!=null)
+			fOS.getModel().setSelectedItem(selectedOS);
 		
+		if(selectedOSSurum.getAd()!=null)
+			fOSSurum.getModel().setSelectedItem(selectedOSSurum);
+
 	}
 	
 	private java.util.List<JButton> getButtons() {

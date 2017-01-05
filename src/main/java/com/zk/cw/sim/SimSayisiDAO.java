@@ -4,9 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.zk.cw.dao_factory.DaoFactory;
+import com.zk.cw.ekran.EkranCozunurluk;
 import com.zk.cw.ekran.EkranPPI;
+import com.zk.cw.ekran.EkranTip;
 
 public class SimSayisiDAO {
 	
@@ -53,4 +57,41 @@ public class SimSayisiDAO {
 		
 		return simSayisi;
 	}	
+	
+	public static List<SimSayisi> all() throws SQLException {
+		Connection c = DaoFactory.openConnection();
+		PreparedStatement pstmt = c.prepareStatement(ALL);
+
+		ResultSet rset = pstmt.executeQuery();
+		List<SimSayisi> simSayilari = new ArrayList<SimSayisi>();
+		while (rset.next()){
+			SimSayisi simSayisi = new SimSayisi(rset.getInt("id"), rset.getString("sayi"));
+					
+			simSayilari.add(simSayisi);
+		}
+
+		pstmt.close();
+		c.close();
+		return simSayilari;
+	}	
+	
+	public static SimSayisi findBy(Integer id) throws SQLException {
+		Connection c = DaoFactory.openConnection();
+
+		PreparedStatement pstmt = c.prepareStatement(FIND_BY_ID);
+		pstmt.setInt(1, id);
+		
+		SimSayisi simSayisi = null;
+		ResultSet rset = pstmt.executeQuery();
+
+		while (rset.next()){
+			simSayisi = new SimSayisi(rset.getInt("id"), rset.getString("sayi"));
+		}
+
+		pstmt.close();
+		c.close();
+
+		return simSayisi;
+	}	
 }
+

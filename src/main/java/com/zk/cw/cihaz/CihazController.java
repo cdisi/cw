@@ -71,6 +71,8 @@ public class CihazController implements ActionListener  {
 		    	  ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 3, 12, fView.getEkranCozunurluk().getId().toString()));
 		      if(fView.getEkranPPI().getId() != null)
 		    	  ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 3, 49, fView.getEkranPPI().getId().toString()));
+		      if(fView.getEkranDiger() != null)
+		    	  ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 3, 44, fView.getEkranDiger()));
 		      
 		      if(fView.getCokluDokunmatik().getDeger() != "Seçiniz")
 		    	  ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 3, 13, fView.getCokluDokunmatik().getDeger()));
@@ -97,6 +99,52 @@ public class CihazController implements ActionListener  {
 					e.printStackTrace();
 				}
 		      }		      
+		      if(!fView.getSimSayisi().getSayi().equals("Seçiniz")){
+		    	  ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 2, 9, fView.getSimSayisi().getId().toString()));
+		      }else{
+		    	  try {
+					ozellikAtamaDao.delete(fCihaz,9);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		      }		      
+		      if(!fView.getSim().getAd().equals("Seçiniz")){
+		    	  ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 2, 50, fView.getSim().getId().toString()));
+		      }else{
+		    	  try {
+					ozellikAtamaDao.delete(fCihaz,50);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		      }	
+		      
+		      if(fView.getGovdeDiger() != null)
+		    	  ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 3, 47, fView.getGovdeDiger()));
+		      
+		      if(!fView.getOS().getAd().equals("Seçiniz")){
+		    	  ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 4, 15, fView.getOS().getId().toString()));
+		      }else{
+		    	  try {
+					ozellikAtamaDao.delete(fCihaz,15);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		      }	
+		      
+		      if(!fView.getOSSurum().getAd().equals("Seçiniz")){
+		    	  ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 4, 43, fView.getOSSurum().getId().toString()));
+		      }else{
+		    	  try {
+					ozellikAtamaDao.delete(fCihaz,43);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		      }	
+		      
 		      for(OzellikAtama ozellikAtama : ozellikAtamaList){
 				  try {
 					if( ozellikAtamaDao.find(ozellikAtama.getCihazId(), ozellikAtama.getOzellikId()) == null){

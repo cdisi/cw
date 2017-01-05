@@ -4,15 +4,20 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import com.zk.cw.dao_factory.DaoFactory;
 import com.zk.cw.ozellik_atama.OzellikAtama;
 
 public class SimDAO {
+	
+	private static final String FIND_BY_ID = "SELECT * FROM sim WHERE id = ?";		
 	private static final String TUM_OZELLIKLER = "SELECT * FROM cihaz_ozellik_atama WHERE ozellik_id=9";
 	private static final String INSERT = "INSERT INTO sim (ad) VALUES (?)";
 	private static final String FIND_BY_NAME = "SELECT * FROM sim WHERE ad = ?";	
+	private static final String ALL = "SELECT * FROM sim ORDER BY ad";
 
 	public static LinkedHashMap<Integer, OzellikAtama> tumOzellikler() throws SQLException {
 		LinkedHashMap<Integer, OzellikAtama> lhm = new LinkedHashMap<>(); 
@@ -65,5 +70,38 @@ public class SimDAO {
 		
 		return sim;
 	}
+	public static Sim findBy(Integer id) throws SQLException {
+		Connection c = DaoFactory.openConnection();
+
+		PreparedStatement pstmt = c.prepareStatement(FIND_BY_ID);
+		pstmt.setInt(1, id);
+		
+		Sim sim = null;
+		ResultSet rset = pstmt.executeQuery();
+
+		while (rset.next()){
+			sim = new Sim(rset.getInt("id"), rset.getString("ad"));
+		}
+
+		pstmt.close();
+		c.close();
+
+		return sim;
+	}	
 	
+	public static List<Sim> all() throws SQLException {
+		Connection c = DaoFactory.openConnection();
+		PreparedStatement pstmt = c.prepareStatement(ALL);
+
+		ResultSet rset = pstmt.executeQuery();
+		List<Sim> simler = new ArrayList<Sim>();
+		while (rset.next()){
+			Sim sim = new Sim(rset.getInt("id"), rset.getString("ad"));
+			simler.add(sim);
+		}
+
+		pstmt.close();
+		c.close();
+		return simler;
+	}	
 }
