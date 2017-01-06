@@ -45,8 +45,8 @@ public class ResimDAO {
 		
 		PreparedStatement pstmt = c.prepareStatement(UPDATE);
 
-		pstmt.setBytes(1, resim.getOrtaResim());
-		pstmt.setBytes(2, resim.getKucukResim());
+		pstmt.setBytes(1, resim.getKucukResim());
+		pstmt.setBytes(2, resim.getOrtaResim());
 		pstmt.setBytes(3, resim.getBuyukResim());
 		pstmt.setInt(4, resim.getId());
 		

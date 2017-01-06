@@ -12,6 +12,14 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
+import org.opencv.core.Core;
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfByte;
+import org.opencv.core.Scalar;
+import org.opencv.core.Size;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.imgproc.Imgproc;
+
 
 public class ImageResize {
 	
@@ -86,5 +94,34 @@ public class ImageResize {
             System.out.println(e.getMessage());            
         }
         return null;
-    }	
+    }
+	
+	public static byte[] resizeKeepAspectRatio(byte[] img, int dtsSizeWidth, int dtsSizeHeight)
+	{
+	    Mat output = new Mat();
+
+		Mat input = Imgcodecs.imdecode(new MatOfByte(img), Imgcodecs.CV_LOAD_IMAGE_UNCHANGED);
+		double h1 = dtsSizeWidth * (input.rows()/(double)input.cols());
+	    double w2 = dtsSizeHeight * (input.cols()/(double)input.rows());
+	    if( h1 <= dtsSizeHeight) {
+	    	Imgproc.resize(input, output, new Size(dtsSizeWidth, h1) );
+	    } else {
+	        Imgproc.resize(input, output, new Size(w2, dtsSizeHeight) );
+	    }
+
+	    int top = (dtsSizeHeight-output.rows()) / 2;
+	    int down = (dtsSizeHeight-output.rows()+1) / 2;
+	    int left = (dtsSizeWidth - output.cols()) / 2;
+	    int right = (dtsSizeWidth - output.cols()+1) / 2;
+
+	    Core.copyMakeBorder(output, output, top, down, left, right, Core.BORDER_CONSTANT, new Scalar(255, 255, 255) );
+    	
+	    MatOfByte matOfByte = new MatOfByte();   	
+    	Imgcodecs.imencode(".jpg", output, matOfByte);
+    	byte[] matOfByteArr = matOfByte.toArray();	
+    	
+	    return matOfByteArr;
+	    
+	}
+	
 }
