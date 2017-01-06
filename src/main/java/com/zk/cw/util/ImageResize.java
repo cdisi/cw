@@ -98,7 +98,8 @@ public class ImageResize {
 	
 	public static byte[] resizeKeepAspectRatio(byte[] img, int dtsSizeWidth, int dtsSizeHeight)
 	{
-	    Mat output = new Mat();
+		System.loadLibrary( Core.NATIVE_LIBRARY_NAME );
+		Mat output = new Mat();
 
 		Mat input = Imgcodecs.imdecode(new MatOfByte(img), Imgcodecs.CV_LOAD_IMAGE_UNCHANGED);
 		double h1 = dtsSizeWidth * (input.rows()/(double)input.cols());
