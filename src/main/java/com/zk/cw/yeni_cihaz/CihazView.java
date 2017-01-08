@@ -419,6 +419,7 @@ public class CihazView {
 		this.uyariTip.setText(gsmParser.uyariTipBul());
 		this.hoparlor.setText(gsmParser.hoparlorBul());
 		this.kulGir.setText(gsmParser.kulGirBul());
+		this.sesDiger.setText(gsmParser.sesDigerBul());
 		this.wlan.setText(gsmParser.wlanBul());
 		this.bluetooth.setText(gsmParser.bluetoothBul());
 		this.gps.setText(gsmParser.gpsBul());

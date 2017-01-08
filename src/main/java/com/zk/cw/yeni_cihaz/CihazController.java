@@ -43,6 +43,8 @@ import com.zk.cw.util.Edit;
 import com.zk.cw.util.ImageResize;
 import com.zk.cw.util.Mobile91Parser;
 import com.zk.cw.util.Util;
+import com.zk.cw.yonga_seti.YongaSeti;
+import com.zk.cw.yonga_seti.YongaSetiDAO;
 
 public class CihazController implements ActionListener {
 	
@@ -277,7 +279,19 @@ public class CihazController implements ActionListener {
 				}				
 			}
 			if(!fView.getYongaSeti().equals("")){
-				cihazOzellikAtamaList.add(new CihazOzellikAtama(4,16, fView.getYongaSeti().trim()));
+				YongaSeti yongaSeti = new YongaSeti();
+				yongaSeti.setAd(fView.getYongaSeti().trim());
+				try {
+					YongaSetiDAO.findBy(yongaSeti);
+					if(yongaSeti.getId() == null){
+						YongaSetiDAO.add(yongaSeti);
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+
+				cihazOzellikAtamaList.add(new CihazOzellikAtama(4,16,yongaSeti.getId().toString() ));
+				
 			}
 			if(!fView.getCpu().equals("")){
 				cihazOzellikAtamaList.add(new CihazOzellikAtama(4,17, fView.getCpu().trim()));

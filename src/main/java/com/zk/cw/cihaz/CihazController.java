@@ -145,6 +145,28 @@ public class CihazController implements ActionListener  {
 				}
 		      }	
 		      
+		      if(!fView.getYongaSeti().getAd().equals("Seçiniz")){
+		    	  ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 4, 16, fView.getYongaSeti().getId().toString()));
+		      }else{
+		    	  try {
+					ozellikAtamaDao.delete(fCihaz,16);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		      }	
+		      
+		      if(!fView.getGpu().getAd().equals("Seçiniz")){
+		    	  ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 4, 18, fView.getGpu().getId().toString()));
+		      }else{
+		    	  try {
+					ozellikAtamaDao.delete(fCihaz,18);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		      }	
+		      
 		      for(OzellikAtama ozellikAtama : ozellikAtamaList){
 				  try {
 					if( ozellikAtamaDao.find(ozellikAtama.getCihazId(), ozellikAtama.getOzellikId()) == null){

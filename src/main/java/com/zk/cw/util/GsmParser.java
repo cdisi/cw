@@ -360,6 +360,17 @@ public class GsmParser {
 	    }
 		return deger;
 	}	
+	
+	public String sesDigerBul(){
+	    String deger=null;
+		Element elm = doc.select("a:contains(3.5mm jack)").first();
+		if(elm != null){
+			elm = elm.parent().parent().nextElementSibling();
+	    	if(elm != null)
+	    		deger = elm.child(1).text().replaceAll("Active noise cancellation with dedicated mic", "Gürültü önleyici ikinci mikrofon").trim();		
+	    }
+		return deger;
+	}
 	public String wlanBul(){
 	    String deger=null;
 		Element elm = doc.select("a:contains(WLAN)").first();

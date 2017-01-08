@@ -13,6 +13,9 @@ import com.zk.cw.ekran.EkranRenk;
 import com.zk.cw.ekran.EkranTip;
 import com.zk.cw.sim.Sim;
 import com.zk.cw.sim.SimSayisi;
+import com.zk.cw.yonga_seti.YongaSeti;
+
+import gpu.Gpu;
 
 
 public class OzellikAtamaDAO {
@@ -151,6 +154,42 @@ public class OzellikAtamaDAO {
 		return ozellikAtama;
 	}	
 	
+	public OzellikAtama update(OzellikAtama ozellikAtama, YongaSeti yongaSeti) throws SQLException {
+		Connection c = DaoFactory.openConnection();
+		
+		PreparedStatement pstmt = c.prepareStatement(OZELLIK_IDDEN_UPDATE);
+		pstmt.setInt(1, ozellikAtama.getCihazId());
+		pstmt.setInt(2, ozellikAtama.getKategoriId());
+		pstmt.setInt(3, 16);
+		pstmt.setInt(4, yongaSeti.getId());
+		pstmt.setInt(5, ozellikAtama.getId());
+		
+		pstmt.executeUpdate();
+
+		pstmt.close();
+		c.close();
+		
+		return ozellikAtama;
+	}	
+	
+	public OzellikAtama update(OzellikAtama ozellikAtama, Gpu gpu) throws SQLException {
+		Connection c = DaoFactory.openConnection();
+		
+		PreparedStatement pstmt = c.prepareStatement(OZELLIK_IDDEN_UPDATE);
+		pstmt.setInt(1, ozellikAtama.getCihazId());
+		pstmt.setInt(2, ozellikAtama.getKategoriId());
+		pstmt.setInt(3, 18);
+		pstmt.setInt(4, gpu.getId());
+		pstmt.setInt(5, ozellikAtama.getId());
+		
+		pstmt.executeUpdate();
+
+		pstmt.close();
+		c.close();
+		
+		return ozellikAtama;
+	}	
+	
 	public OzellikAtama update(OzellikAtama ozellikAtama) throws SQLException {
 		Connection c = DaoFactory.openConnection();
 		
@@ -167,6 +206,8 @@ public class OzellikAtamaDAO {
 		
 		return ozellikAtama;
 	}	
+	
+	
 	
 	public OzellikAtama insert(OzellikAtama ozellikAtama) throws SQLException {
 		Connection c = DaoFactory.openConnection();

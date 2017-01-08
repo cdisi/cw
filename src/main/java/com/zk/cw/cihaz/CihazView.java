@@ -57,7 +57,15 @@ import com.zk.cw.util.ImageResize;
 import com.zk.cw.util.ui.OnClose;
 import com.zk.cw.util.ui.StandardDialog;
 import com.zk.cw.util.ui.UiUtil;
+import com.zk.cw.yonga_seti.YongaSeti;
+import com.zk.cw.yonga_seti.YongaSetiBoxModel;
+import com.zk.cw.yonga_seti.YongaSetiComboBoxRenderer;
+import com.zk.cw.yonga_seti.YongaSetiDAO;
 
+import gpu.Gpu;
+import gpu.GpuCombBoxModel;
+import gpu.GpuComboBoxRenderer;
+import gpu.GpuDAO;
 import os.OS;
 import os.OSChangeListener;
 import os.OSComboBoxModel;
@@ -163,6 +171,14 @@ public class CihazView {
 	private ComboBoxModel<OSSurum> osSurumCombBoxModel = new OSSurumBoxModel();
 	private JComboBox<OSSurum> fOSSurum = new JComboBox<OSSurum>(osSurumCombBoxModel);	
 	private OSSurum selectedOSSurum = new OSSurum();	
+	//yongaseti
+	private ComboBoxModel<YongaSeti> yongaSetiCombBoxModel = new YongaSetiBoxModel();
+	private JComboBox<YongaSeti> fYongaSeti = new JComboBox<YongaSeti>(yongaSetiCombBoxModel);	
+	private YongaSeti selectedYongaSeti = new YongaSeti();	
+	//gpu
+	private ComboBoxModel<Gpu> gpuCombBoxModel = new GpuCombBoxModel();
+	private JComboBox<Gpu> fGpu = new JComboBox<Gpu>(gpuCombBoxModel);	
+	private Gpu selectedGpu = new Gpu();	
 
 	CihazView(JFrame aParent) {				    
 		fEdit = Edit.ADD;		
@@ -221,6 +237,14 @@ public class CihazView {
 			ozellikAtama = ozellikAtamaDao.find(fId,43);
 			if(ozellikAtama!=null)
 				selectedOSSurum = OSSurumDAO.findBy(Integer.parseInt(ozellikAtama.getDeger()));
+			//seçilen yonga seti
+			ozellikAtama = ozellikAtamaDao.find(fId,16);
+			if(ozellikAtama!=null)
+				selectedYongaSeti = YongaSetiDAO.findBy(Integer.parseInt(ozellikAtama.getDeger()));
+			//gpu
+			ozellikAtama = ozellikAtamaDao.find(fId,18);
+			if(ozellikAtama!=null)
+				selectedGpu = GpuDAO.findBy(Integer.parseInt(ozellikAtama.getDeger()));
 			
 			
 		} catch (SQLException e) {
@@ -308,6 +332,13 @@ public class CihazView {
 	OSSurum getOSSurum() {
 		return (OSSurum) fOSSurum.getModel().getSelectedItem();
 	}	
+	YongaSeti getYongaSeti() {
+		return (YongaSeti) fYongaSeti.getModel().getSelectedItem();
+	}	
+	Gpu getGpu() {
+		return (Gpu) fGpu.getModel().getSelectedItem();
+	}	
+	
 	private void buildGui(JFrame aParent, String aDialogTitle) {
 		fStandardDialog = new StandardDialog(
 		      aParent, aDialogTitle, true, OnClose.DISPOSE, getUserInputArea(), getButtons()
@@ -385,6 +416,8 @@ public class CihazView {
 		result.setBorder(BorderFactory.createTitledBorder("PLATFORM"));
 	    addOSComboField(fOS, "OS", result);	    
 	    addOSSurumComboField(fOSSurum, "Sürüm", result);	    
+	    addYongaSetiComboField(fYongaSeti, "Yongaseti", result);	    
+	    addGpuComboField(fGpu, "GPU", result);	    
 		return result;
 	}	
 	
@@ -673,6 +706,46 @@ public class CihazView {
 		}
 	}
 	
+	private void addYongaSetiComboField(JComboBox<YongaSeti> aComboField, String aLabel, JPanel aPanel) {
+  	    JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+		JLabel label = new JLabel(aLabel);
+		panel.add(label);
+		fYongaSeti.addItem(new YongaSeti(null, "Seçiniz"));  	  		
+		try {
+			for(YongaSeti yongaSeti : YongaSetiDAO.all()){
+				fYongaSeti.addItem(yongaSeti);
+				fYongaSeti.setRenderer(new YongaSetiComboBoxRenderer());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
+		aComboField.setPreferredSize(new Dimension(250, aComboField.getPreferredSize().height));
+
+	    panel.add(aComboField);		 
+		aPanel.add(panel);		  
+	}	
+	
+	private void addGpuComboField(JComboBox<Gpu> aComboField, String aLabel, JPanel aPanel) {
+  	    JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+		JLabel label = new JLabel(aLabel);
+		panel.add(label);
+		fGpu.addItem(new Gpu(null, "Seçiniz"));  	  		
+		try {
+			for(Gpu gpu : GpuDAO.all()){
+				fGpu.addItem(gpu);
+				fGpu.setRenderer(new GpuComboBoxRenderer());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
+		aComboField.setPreferredSize(new Dimension(250, aComboField.getPreferredSize().height));
+
+	    panel.add(aComboField);		 
+		aPanel.add(panel);		  
+	}	
+	
 	private void populateFields(Cihaz aSelectedCihaz) {
 		fAd.setText(aSelectedCihaz.getAd());
 		fDigerAd.setText(aSelectedCihaz.getDigerAd());
@@ -742,6 +815,12 @@ public class CihazView {
 		
 		if(selectedOSSurum.getAd()!=null)
 			fOSSurum.getModel().setSelectedItem(selectedOSSurum);
+		
+		if(selectedYongaSeti.getAd()!=null)
+			fYongaSeti.getModel().setSelectedItem(selectedYongaSeti);		
+		
+		if(selectedGpu.getAd()!=null)
+			fGpu.getModel().setSelectedItem(selectedGpu);		
 
 	}
 	
