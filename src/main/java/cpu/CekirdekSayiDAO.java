@@ -81,17 +81,16 @@ public class CekirdekSayiDAO {
 		
 		pstmt.executeUpdate();
 		ResultSet rset = pstmt.getGeneratedKeys();
-		CekirdekSayiAta  cpuOzellikAta = new CekirdekSayiAta();
+		CekirdekSayiAta  cekirdekSayiAta = new CekirdekSayiAta();
 		rset.next();
-		cpuOzellikAta.setId(rset.getInt(1));
-		cpuOzellikAta.setCihazId(cihaz.getId());
-		cpuOzellikAta.setCpuOzellikId(cekirdekSayi.getId());
-		
+		cekirdekSayiAta.setId(rset.getInt(1));
+		cekirdekSayiAta.setCihazId(cihaz.getId());
+		cekirdekSayiAta.setCpuCekirdekSayiId(cekirdekSayi.getId());
 
 		pstmt.close();
 		c.close();
 		
-		return cpuOzellikAta;
+		return cekirdekSayiAta;
 	}
 	public static CekirdekSayi findBy(Integer id) throws SQLException {
 		Connection c = DaoFactory.openConnection();

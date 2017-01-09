@@ -3,14 +3,14 @@ package cpu;
 public class CekirdekSayiAta {
 	private Integer id;
     private Integer cihazId;
-    private Integer cpuOzellikId;
+    private Integer cpuCekirdekSayiId;
     
     public CekirdekSayiAta() {
     }
-    public CekirdekSayiAta(Integer id, Integer cihazId, Integer cpuOzellikId) {
+    public CekirdekSayiAta(Integer id, Integer cihazId, Integer cpuCekirdekSayiId) {
         this.id = id;
         this.cihazId = cihazId;
-        this.cpuOzellikId = cpuOzellikId;
+        this.cpuCekirdekSayiId = cpuCekirdekSayiId;
     }
 	public void setId(Integer id) {
         this.id=id;
@@ -24,10 +24,10 @@ public class CekirdekSayiAta {
 	public void setCihazId(Integer cihazId) {
         this.cihazId=cihazId;
     }	
-	public Integer getCpuOzellikId() {
-        return this.cpuOzellikId;
+	public Integer getCpuCekirdekSayiId() {
+        return this.cpuCekirdekSayiId;
     }
-	public void setCpuOzellikId(Integer cpuOzellikId) {
-        this.cpuOzellikId=cpuOzellikId;
+	public void setCpuCekirdekSayiId(Integer cpuCekirdekSayiId) {
+        this.cpuCekirdekSayiId=cpuCekirdekSayiId;
     }		
 }

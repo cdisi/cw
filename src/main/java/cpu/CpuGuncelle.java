@@ -10,8 +10,9 @@ import java.util.regex.Pattern;
 import com.zk.cw.cihaz.Cihaz;
 import com.zk.cw.ozellik_atama.OzellikAtama;
 import com.zk.cw.ozellik_atama.OzellikAtamaDAO;
+import com.zk.cw.yonga_seti.YongaSetiDAO;
 
-public class CekirdekSayiGuncelle {
+public class CpuGuncelle {
 
 	public static void main(String[] args) {
 		//System.exit(0);
@@ -25,17 +26,26 @@ public class CekirdekSayiGuncelle {
 				Integer key = itr.next();
 				OzellikAtama ozellikAtama = lhm.get(key);
 				CekirdekSayi cekirdekSayi = new CekirdekSayi();
+				CekirdekHiz cekirdekHiz = new CekirdekHiz();
 				Cihaz cihaz = new Cihaz();
 				cihaz.setId(ozellikAtama.getCihazId());
+				System.out.println(ozellikAtama.getDeger());
 				if(ozellikAtama.getDeger().contains("&")){
-				    String pattern = "\\b[0-9]x[0-9\\.]+\\b";
+				    String pattern = "\\b[0-9]x[0-9\\.]+ .Hz\\b";
 					Pattern r = Pattern.compile(pattern);
 				    Matcher m = r.matcher(ozellikAtama.getDeger());
 				    while (m.find()) {
+				    	System.out.println(m.group());
 				    	String[] arr=null;
 				    	arr = m.group().trim().split("x");
 				    	cekirdekSayi.setId(Integer.parseInt(arr[0].trim()));
-				    	CekirdekSayiDAO.addOzellikAta(cihaz, cekirdekSayi);
+				    	
+						cekirdekHiz.setHiz(arr[1].trim());;
+				    	CekirdekHizDAO.findBy(cekirdekHiz);
+						if(cekirdekHiz.getId() == null){
+							CekirdekHizDAO.add(cekirdekHiz);
+						}
+						CpuSayiHizAtaDAO.add(cihaz,cekirdekSayi,cekirdekHiz);
 				    }
 				}else{
 					if(ozellikAtama.getDeger().contains("Çift Çekirdek")){
@@ -51,11 +61,24 @@ public class CekirdekSayiGuncelle {
 					}else{
 						cekirdekSayi.setId(1);
 					}
-					CekirdekSayiDAO.addOzellikAta(cihaz, cekirdekSayi);
+			    	
+				    String pattern = "([0-9\\.]+ .Hz)";
+					Pattern r = Pattern.compile(pattern);
+				    Matcher m = r.matcher(ozellikAtama.getDeger());
+				    if (m.find()) {
+				    	System.out.println(m.group());
+				    	cekirdekHiz.setHiz(m.group(0).trim());
+				    	
+				    	CekirdekHizDAO.findBy(cekirdekHiz);						
+				    	if(cekirdekHiz.getId() == null){
+							CekirdekHizDAO.add(cekirdekHiz);
+						}
+				    	CpuSayiHizAtaDAO.add(cihaz,cekirdekSayi,cekirdekHiz);
+				    }
+
 				}
 		    	
 
-	    		//ozellikAtamaDAO.update(ozellikAtama,cekirdekSayi);					
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
