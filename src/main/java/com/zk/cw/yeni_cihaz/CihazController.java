@@ -13,6 +13,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -45,6 +47,12 @@ import com.zk.cw.util.Mobile91Parser;
 import com.zk.cw.util.Util;
 import com.zk.cw.yonga_seti.YongaSeti;
 import com.zk.cw.yonga_seti.YongaSetiDAO;
+
+import cpu.CekirdekHiz;
+import cpu.CekirdekHizDAO;
+import cpu.CekirdekSayi;
+import cpu.CekirdekSayiDAO;
+import cpu.CpuSayiHizAtaDAO;
 
 public class CihazController implements ActionListener {
 	
@@ -293,9 +301,7 @@ public class CihazController implements ActionListener {
 				cihazOzellikAtamaList.add(new CihazOzellikAtama(4,16,yongaSeti.getId().toString() ));
 				
 			}
-			if(!fView.getCpu().equals("")){
-				cihazOzellikAtamaList.add(new CihazOzellikAtama(4,17, fView.getCpu().trim()));
-			}
+
 			if(!fView.getGpu().equals("")){
 				cihazOzellikAtamaList.add(new CihazOzellikAtama(4,18, fView.getGpu().trim()));
 			}
@@ -400,6 +406,95 @@ public class CihazController implements ActionListener {
 	    if ( isUserInputValid() ){
     	  try {
     		  fCihaz = cihazDAO.add(fCihaz,uretici);
+    		  
+  			if(!fView.getCpu().equals("")){
+  				
+				CekirdekSayi cekirdekSayi = new CekirdekSayi();
+				CekirdekHiz cekirdekHiz = new CekirdekHiz();
+				com.zk.cw.cihaz.Cihaz cihaz = new com.zk.cw.cihaz.Cihaz();
+				cihaz.setId(fCihaz.getId());
+				if(fView.getCpu().contains("&")){
+					String pattern = "\\b[0-9]x[0-9\\.]+\\b";
+					Pattern r = Pattern.compile(pattern);
+				    Matcher m = r.matcher(fView.getCpu());
+				    while (m.find()) {
+				    	String[] arr=null;
+				    	arr = m.group().trim().split("x");
+				    	cekirdekSayi.setId(Integer.parseInt(arr[0].trim()));
+				    	try {
+							CekirdekSayiDAO.findBy(cekirdekSayi.getId());
+						} catch (SQLException e2) {
+							// TODO Auto-generated catch block
+							e2.printStackTrace();
+						}
+				    	
+						cekirdekHiz.setHiz(arr[1].trim());
+				    	try {
+							CekirdekHizDAO.findBy(cekirdekHiz);
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						if(cekirdekHiz.getId() == null){
+							try {
+								CekirdekHizDAO.add(cekirdekHiz);
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+						
+						try {
+							CpuSayiHizAtaDAO.add(cihaz,cekirdekSayi,cekirdekHiz);
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+				    }
+				}else{
+					try {
+						for(CekirdekSayi  cekSayi: CekirdekSayiDAO.all() ){
+							if(fView.getCpu().contains(cekSayi.getAd())){
+								cekirdekSayi.setId(cekSayi.getId());
+							}
+						}
+						String pattern = "([0-9\\.]+)";
+						Pattern r = Pattern.compile(pattern);
+					    Matcher m = r.matcher(fView.getCpu());
+					    if (m.find()) {
+					    	cekirdekHiz.setHiz(m.group());
+					    	try {
+								CekirdekHizDAO.findBy(cekirdekHiz);
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							System.out.println(cekirdekHiz.getId());
+							if(cekirdekHiz.getId() == null){
+								try {
+									CekirdekHizDAO.add(cekirdekHiz);
+								} catch (SQLException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
+					    }
+
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					
+					try {
+						CpuSayiHizAtaDAO.add(cihaz,cekirdekSayi,cekirdekHiz);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+    		  
     		  for(CihazOzellikAtama cihazOzellikAtama : cihazOzellikAtamaList){
 					CihazOzellikAtamaDAO.insert(fCihaz, cihazOzellikAtama);
 			  }

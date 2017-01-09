@@ -17,7 +17,7 @@ public class CekirdekSayiDAO {
 	private static final String TUM_OZELLIKLER = "SELECT * FROM cihaz_ozellik_atama WHERE ozellik_id=17";
 	private static final String INSERT = "INSERT INTO cpu_cekirdek_sayi (sayi) VALUES (?)";
 	private static final String INSERT_OZELLIK_ATA = "INSERT INTO cpu_cekirdek_sayi_ata (cihaz_id,cpu_cekirdek_sayi_id) VALUES (?,?)";
-	private static final String FIND_BY_NAME = "SELECT * FROM cpu_cekirdek_sayi WHERE sayi = ?";	
+	private static final String FIND_BY_NAME = "SELECT * FROM cpu_cekirdek_sayi WHERE ad = ?";	
 	private static final String ALL = "SELECT * FROM cpu_cekirdek_sayi ORDER BY id";
 
 	public static LinkedHashMap<Integer, OzellikAtama> tumOzellikler() throws SQLException {

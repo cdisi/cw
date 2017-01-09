@@ -15,7 +15,7 @@ import com.zk.cw.yonga_seti.YongaSetiDAO;
 public class CpuGuncelle {
 
 	public static void main(String[] args) {
-		//System.exit(0);
+		System.exit(0);
 		LinkedHashMap<Integer, OzellikAtama> lhm = null;
 		OzellikAtamaDAO ozellikAtamaDAO = new OzellikAtamaDAO();
 		try {
