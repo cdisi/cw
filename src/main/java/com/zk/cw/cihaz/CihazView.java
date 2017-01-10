@@ -194,6 +194,10 @@ public class CihazView {
 	private ComboBoxModel<CekirdekSayi> cekirdekSayiComboBoxModel = new CekirdekSayiCombBoxModel();
 	private JComboBox<CekirdekSayi> fCekirdekSayi = new JComboBox<CekirdekSayi>(cekirdekSayiComboBoxModel);	
 	private CekirdekSayi selectedCekirdekSayi= new CekirdekSayi();
+	//Cpu Islemci Sayisi 2
+	private ComboBoxModel<CekirdekSayi> cekirdekSayi2ComboBoxModel = new CekirdekSayiCombBoxModel();
+	private JComboBox<CekirdekSayi> fCekirdekSayi2 = new JComboBox<CekirdekSayi>(cekirdekSayi2ComboBoxModel);	
+	private CekirdekSayi selectedCekirdekSayi2= new CekirdekSayi();
 	//Cpu işlemci hızı
 	private ComboBoxModel<CekirdekHiz> cekirdekHizComboBoxModel = new CekirdekHizCombBoxModel();
 	private JComboBox<CekirdekHiz> fCekirdekHiz= new JComboBox<CekirdekHiz>(cekirdekHizComboBoxModel);	
@@ -266,9 +270,10 @@ public class CihazView {
 				selectedGpu = GpuDAO.findBy(Integer.parseInt(ozellikAtama.getDeger()));
 			//cekirdek sayısı
 			CpuSayiHizAta cpuSayiHizAta = CpuSayiHizAtaDAO.findBy(selectedCihaz);
-			if(ozellikAtama!=null)
+			if(cpuSayiHizAta!=null){
 				selectedCekirdekSayi = CekirdekSayiDAO.findBy(cpuSayiHizAta.getSayiId());
-			
+				selectedCekirdekHiz = CekirdekHizDAO.findBy(cpuSayiHizAta.getHizId());
+			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -896,8 +901,10 @@ public class CihazView {
 		if(selectedGpu.getAd()!=null)
 			fGpu.getModel().setSelectedItem(selectedGpu);
 		
-		if(selectedCekirdekSayi.getId() != null)
+		if(selectedCekirdekSayi != null)
 			fCekirdekSayi.getModel().setSelectedItem(selectedCekirdekSayi);
+		if(selectedCekirdekHiz != null)
+			fCekirdekHiz.getModel().setSelectedItem(selectedCekirdekHiz);
 
 	}
 	

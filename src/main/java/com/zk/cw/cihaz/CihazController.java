@@ -19,6 +19,9 @@ import com.zk.cw.ozellik_atama.OzellikAtama;
 import com.zk.cw.ozellik_atama.OzellikAtamaDAO;
 import com.zk.cw.util.Edit;
 
+import cpu.CekirdekHiz;
+import cpu.CekirdekSayi;
+import cpu.CpuSayiHizAta;
 import cpu.CpuSayiHizAtaDAO;
 
 public class CihazController implements ActionListener  {
@@ -166,16 +169,33 @@ public class CihazController implements ActionListener  {
 				}
 		      }	
 		      
-		      if(fView.getCekirdekSayi().getId() != null){
+	    	  CekirdekSayi cekirdekSayi = new CekirdekSayi();
+	    	  CekirdekHiz cekirdekHiz = new CekirdekHiz();
+	    	  cekirdekSayi.setId(null);
+	    	  if(fView.getCekirdekSayi().getId() != null){
+	    		  cekirdekSayi.setId(fView.getCekirdekSayi().getId());
+		      }
+	    	  cekirdekHiz.setId(null);
+	    	  if(fView.getCekirdekHiz().getId() != null){
+	    		  cekirdekHiz.setId(fView.getCekirdekHiz().getId());
+		      }
+		      
+		      try {
 		    	  if(CpuSayiHizAtaDAO.findBy(fCihaz) == null)
-		    	  ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 4, 18, fView.getGpu().getId().toString()));
-		      }else{
-		    	  try {
-					ozellikAtamaDao.delete(fCihaz,18);
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-		      }	
+		    		  CpuSayiHizAtaDAO.add(fCihaz, cekirdekSayi, cekirdekHiz);
+		    	  else
+		    		  CpuSayiHizAtaDAO.update(fCihaz, cekirdekSayi, cekirdekHiz);
+		    	  
+		    if( (fView.getCekirdekHiz().getId() == null) && (fView.getCekirdekSayi().getId()==null) ){
+		    	CpuSayiHizAtaDAO.delete(fCihaz);
+		    }
+		    	
+					
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		      
 		      
 		      for(OzellikAtama ozellikAtama : ozellikAtamaList){
 				  try {
