@@ -19,6 +19,8 @@ import com.zk.cw.ozellik_atama.OzellikAtama;
 import com.zk.cw.ozellik_atama.OzellikAtamaDAO;
 import com.zk.cw.util.Edit;
 
+import cpu.CpuSayiHizAtaDAO;
+
 public class CihazController implements ActionListener  {
 	
 	private final CihazView fView;
@@ -140,7 +142,6 @@ public class CihazController implements ActionListener  {
 		    	  try {
 					ozellikAtamaDao.delete(fCihaz,43);
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 		      }	
@@ -151,7 +152,6 @@ public class CihazController implements ActionListener  {
 		    	  try {
 					ozellikAtamaDao.delete(fCihaz,16);
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 		      }	
@@ -162,7 +162,17 @@ public class CihazController implements ActionListener  {
 		    	  try {
 					ozellikAtamaDao.delete(fCihaz,18);
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		      }	
+		      
+		      if(fView.getCekirdekSayi().getId() != null){
+		    	  if(CpuSayiHizAtaDAO.findBy(fCihaz) == null)
+		    	  ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 4, 18, fView.getGpu().getId().toString()));
+		      }else{
+		    	  try {
+					ozellikAtamaDao.delete(fCihaz,18);
+				} catch (SQLException e) {
 					e.printStackTrace();
 				}
 		      }	
@@ -175,10 +185,8 @@ public class CihazController implements ActionListener  {
 						  ozellikAtamaDao.update(ozellikAtama);
 					  }
 				} catch (NumberFormatException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			  }

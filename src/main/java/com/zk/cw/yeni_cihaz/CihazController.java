@@ -53,6 +53,8 @@ import cpu.CekirdekHizDAO;
 import cpu.CekirdekSayi;
 import cpu.CekirdekSayiDAO;
 import cpu.CpuSayiHizAtaDAO;
+import gpu.Gpu;
+import gpu.GpuDAO;
 
 public class CihazController implements ActionListener {
 	
@@ -303,7 +305,17 @@ public class CihazController implements ActionListener {
 			}
 
 			if(!fView.getGpu().equals("")){
-				cihazOzellikAtamaList.add(new CihazOzellikAtama(4,18, fView.getGpu().trim()));
+				Gpu gpu = new Gpu();
+				gpu.setAd(fView.getGpu().trim());
+				try {
+					GpuDAO.findBy(gpu);
+					if(gpu.getId() == null){
+						GpuDAO.add(gpu);
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				cihazOzellikAtamaList.add(new CihazOzellikAtama(4,18, gpu.getId().toString()));
 			}
 			if(!fView.getHafizaKarti().equals("")){
 				cihazOzellikAtamaList.add(new CihazOzellikAtama(5,19, fView.getHafizaKarti().trim()));
@@ -414,7 +426,7 @@ public class CihazController implements ActionListener {
 				com.zk.cw.cihaz.Cihaz cihaz = new com.zk.cw.cihaz.Cihaz();
 				cihaz.setId(fCihaz.getId());
 				if(fView.getCpu().contains("&")){
-					String pattern = "\\b[0-9]x[0-9\\.]+\\b";
+					String pattern = "\\b[0-9]x[0-9\\.]+ .Hz\\b";
 					Pattern r = Pattern.compile(pattern);
 				    Matcher m = r.matcher(fView.getCpu());
 				    while (m.find()) {
@@ -458,7 +470,7 @@ public class CihazController implements ActionListener {
 								cekirdekSayi.setId(cekSayi.getId());
 							}
 						}
-						String pattern = "([0-9\\.]+)";
+						String pattern = "([0-9\\.]+ .Hz)";
 						Pattern r = Pattern.compile(pattern);
 					    Matcher m = r.matcher(fView.getCpu());
 					    if (m.find()) {
@@ -466,7 +478,6 @@ public class CihazController implements ActionListener {
 					    	try {
 								CekirdekHizDAO.findBy(cekirdekHiz);
 							} catch (SQLException e1) {
-								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
 							System.out.println(cekirdekHiz.getId());
