@@ -190,6 +190,8 @@ public class CihazView {
 	private JComboBox<Gpu> fGpu = new JComboBox<Gpu>(gpuCombBoxModel);	
 	private Gpu selectedGpu = new Gpu();
 	
+	CpuSayiHizAta cpuSayiHizAta;
+	CpuSayiHizAta cpuSayiHizAta2;
 	//Cpu Islemci Sayisi
 	private ComboBoxModel<CekirdekSayi> cekirdekSayiComboBoxModel = new CekirdekSayiCombBoxModel();
 	private JComboBox<CekirdekSayi> fCekirdekSayi = new JComboBox<CekirdekSayi>(cekirdekSayiComboBoxModel);	
@@ -202,6 +204,10 @@ public class CihazView {
 	private ComboBoxModel<CekirdekHiz> cekirdekHizComboBoxModel = new CekirdekHizCombBoxModel();
 	private JComboBox<CekirdekHiz> fCekirdekHiz= new JComboBox<CekirdekHiz>(cekirdekHizComboBoxModel);	
 	private CekirdekHiz selectedCekirdekHiz= new CekirdekHiz();
+	//Cpu işlemci hızı 2
+	private ComboBoxModel<CekirdekHiz> cekirdekHiz2ComboBoxModel = new CekirdekHizCombBoxModel();
+	private JComboBox<CekirdekHiz> fCekirdekHiz2= new JComboBox<CekirdekHiz>(cekirdekHiz2ComboBoxModel);	
+	private CekirdekHiz selectedCekirdekHiz2= new CekirdekHiz();
 
 	CihazView(JFrame aParent) {				    
 		fEdit = Edit.ADD;		
@@ -268,11 +274,17 @@ public class CihazView {
 			ozellikAtama = ozellikAtamaDao.find(fId,18);
 			if(ozellikAtama!=null)
 				selectedGpu = GpuDAO.findBy(Integer.parseInt(ozellikAtama.getDeger()));
-			//cekirdek sayısı
-			CpuSayiHizAta cpuSayiHizAta = CpuSayiHizAtaDAO.findBy(selectedCihaz);
+			//cekirdek sayısı ve hızı
+			cpuSayiHizAta = CpuSayiHizAtaDAO.findBy(selectedCihaz,0);
 			if(cpuSayiHizAta!=null){
 				selectedCekirdekSayi = CekirdekSayiDAO.findBy(cpuSayiHizAta.getSayiId());
 				selectedCekirdekHiz = CekirdekHizDAO.findBy(cpuSayiHizAta.getHizId());
+			}
+			//cekirdek sayısı ve hızı 2
+			cpuSayiHizAta2 = CpuSayiHizAtaDAO.findBy(selectedCihaz,1);
+			if(cpuSayiHizAta2!=null){
+				selectedCekirdekSayi2 = CekirdekSayiDAO.findBy(cpuSayiHizAta2.getSayiId());
+				selectedCekirdekHiz2 = CekirdekHizDAO.findBy(cpuSayiHizAta2.getHizId());
 			}
 			
 		} catch (SQLException e) {
@@ -365,12 +377,24 @@ public class CihazView {
 	}	
 	Gpu getGpu() {
 		return (Gpu) fGpu.getModel().getSelectedItem();
-	}	
+	}
+	CpuSayiHizAta getCpuSayiHizAta() {
+		return cpuSayiHizAta;
+	}
+	CpuSayiHizAta getCpuSayiHizAta2() {
+		return cpuSayiHizAta2;
+	}
 	CekirdekSayi getCekirdekSayi() {
 		return (CekirdekSayi) fCekirdekSayi.getModel().getSelectedItem();
-	}
+	}	
 	CekirdekHiz getCekirdekHiz() {
 		return (CekirdekHiz) fCekirdekHiz.getModel().getSelectedItem();
+	}	
+	CekirdekSayi getCekirdekSayi2() {
+		return (CekirdekSayi) fCekirdekSayi2.getModel().getSelectedItem();
+	}	
+	CekirdekHiz getCekirdekHiz2() {
+		return (CekirdekHiz) fCekirdekHiz2.getModel().getSelectedItem();
 	}	
 	private void buildGui(JFrame aParent, String aDialogTitle) {
 		fStandardDialog = new StandardDialog(
@@ -459,6 +483,8 @@ public class CihazView {
 		JPanel cpuPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		addCekirdekSayiComboField(fCekirdekSayi, cpuPanel);
 		addCekirdekHizComboField(fCekirdekHiz, cpuPanel);
+		addCekirdekSayi2ComboField(fCekirdekSayi2, cpuPanel);
+		addCekirdekHiz2ComboField(fCekirdekHiz2, cpuPanel);
 		platformMainPanel.add(cpuPanel);
 	    
 	    return platformMainPanel;
@@ -526,7 +552,7 @@ public class CihazView {
 		JLabel label = new JLabel(aLabel);
 		panel.add(label);
 
-	    aComboField.setSelectedItem("2016");
+	    aComboField.setSelectedItem("2017");
 	    panel.add(aComboField);		 
 		aPanel.add(panel);		  
 	}	
@@ -801,11 +827,29 @@ public class CihazView {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}	
-		aComboField.setPreferredSize(new Dimension(250, aComboField.getPreferredSize().height));
+		aComboField.setPreferredSize(new Dimension(200, aComboField.getPreferredSize().height));
 
 	    panel.add(aComboField);		 
 		aPanel.add(panel);		  
-	}	
+	}
+	
+	private void addCekirdekSayi2ComboField(JComboBox<CekirdekSayi> aComboField,  JPanel aPanel) {
+  	    JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+		fCekirdekSayi2.addItem(new CekirdekSayi(null, "Cekirdek Sayısı"));  	  		
+		try {
+			for(CekirdekSayi cekirdekSayi2 : CekirdekSayiDAO.all()){
+				fCekirdekSayi2.addItem(cekirdekSayi2);
+				fCekirdekSayi2.setRenderer(new CekirdekSayiComboBoxRenderer());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
+		aComboField.setPreferredSize(new Dimension(200, aComboField.getPreferredSize().height));
+
+	    panel.add(aComboField);		 
+		aPanel.add(panel);		  
+	}
 	
 	private void addCekirdekHizComboField(JComboBox<CekirdekHiz> aComboField,  JPanel aPanel) {
   	    JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -819,7 +863,25 @@ public class CihazView {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}	
-		aComboField.setPreferredSize(new Dimension(250, aComboField.getPreferredSize().height));
+		aComboField.setPreferredSize(new Dimension(200, aComboField.getPreferredSize().height));
+
+	    panel.add(aComboField);		 
+		aPanel.add(panel);		  
+	}	
+	
+	private void addCekirdekHiz2ComboField(JComboBox<CekirdekHiz> aComboField,  JPanel aPanel) {
+  	    JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+		fCekirdekHiz2.addItem(new CekirdekHiz(null, "Cekirdek Hızı"));  	  		
+		try {
+			for(CekirdekHiz cekirdekHiz2 : CekirdekHizDAO.all()){
+				fCekirdekHiz2.addItem(cekirdekHiz2);
+				fCekirdekHiz2.setRenderer(new CekirdekHizComboBoxRenderer());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
+		aComboField.setPreferredSize(new Dimension(200, aComboField.getPreferredSize().height));
 
 	    panel.add(aComboField);		 
 		aPanel.add(panel);		  
@@ -905,6 +967,10 @@ public class CihazView {
 			fCekirdekSayi.getModel().setSelectedItem(selectedCekirdekSayi);
 		if(selectedCekirdekHiz != null)
 			fCekirdekHiz.getModel().setSelectedItem(selectedCekirdekHiz);
+		if(selectedCekirdekSayi2 != null)
+			fCekirdekSayi2.getModel().setSelectedItem(selectedCekirdekSayi2);
+		if(selectedCekirdekHiz2 != null)
+			fCekirdekHiz2.getModel().setSelectedItem(selectedCekirdekHiz2);
 
 	}
 	

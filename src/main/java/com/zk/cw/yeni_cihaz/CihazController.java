@@ -52,6 +52,7 @@ import cpu.CekirdekHiz;
 import cpu.CekirdekHizDAO;
 import cpu.CekirdekSayi;
 import cpu.CekirdekSayiDAO;
+import cpu.CpuSayiHizAta;
 import cpu.CpuSayiHizAtaDAO;
 import gpu.Gpu;
 import gpu.GpuDAO;
@@ -424,7 +425,9 @@ public class CihazController implements ActionListener {
 				CekirdekSayi cekirdekSayi = new CekirdekSayi();
 				CekirdekHiz cekirdekHiz = new CekirdekHiz();
 				com.zk.cw.cihaz.Cihaz cihaz = new com.zk.cw.cihaz.Cihaz();
+				CpuSayiHizAta cpuSayiHizAta = new CpuSayiHizAta();
 				cihaz.setId(fCihaz.getId());
+				cpuSayiHizAta.setCihazId(fCihaz.getId());
 				if(fView.getCpu().contains("&")){
 					String pattern = "\\b[0-9]x[0-9\\.]+ .Hz\\b";
 					Pattern r = Pattern.compile(pattern);
@@ -439,7 +442,7 @@ public class CihazController implements ActionListener {
 							// TODO Auto-generated catch block
 							e2.printStackTrace();
 						}
-				    	
+				    	cpuSayiHizAta.setSayiId(cekirdekSayi.getId());
 						cekirdekHiz.setHiz(arr[1].trim());
 				    	try {
 							CekirdekHizDAO.findBy(cekirdekHiz);
@@ -455,9 +458,9 @@ public class CihazController implements ActionListener {
 								e.printStackTrace();
 							}
 						}
-						
+						cpuSayiHizAta.setHizId(cekirdekHiz.getId());
 						try {
-							CpuSayiHizAtaDAO.add(cihaz,cekirdekSayi,cekirdekHiz);
+							CpuSayiHizAtaDAO.add(cpuSayiHizAta);
 						} catch (SQLException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -470,6 +473,7 @@ public class CihazController implements ActionListener {
 								cekirdekSayi.setId(cekSayi.getId());
 							}
 						}
+						cpuSayiHizAta.setSayiId(cekirdekSayi.getId());
 						String pattern = "([0-9\\.]+ .Hz)";
 						Pattern r = Pattern.compile(pattern);
 					    Matcher m = r.matcher(fView.getCpu());
@@ -480,7 +484,7 @@ public class CihazController implements ActionListener {
 							} catch (SQLException e1) {
 								e1.printStackTrace();
 							}
-							System.out.println(cekirdekHiz.getId());
+							
 							if(cekirdekHiz.getId() == null){
 								try {
 									CekirdekHizDAO.add(cekirdekHiz);
@@ -489,6 +493,7 @@ public class CihazController implements ActionListener {
 									e.printStackTrace();
 								}
 							}
+							cpuSayiHizAta.setHizId(cekirdekHiz.getId());
 					    }
 
 					} catch (SQLException e) {
@@ -498,7 +503,7 @@ public class CihazController implements ActionListener {
 					
 					
 					try {
-						CpuSayiHizAtaDAO.add(cihaz,cekirdekSayi,cekirdekHiz);
+						CpuSayiHizAtaDAO.add(cpuSayiHizAta);
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

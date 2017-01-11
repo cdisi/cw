@@ -168,34 +168,52 @@ public class CihazController implements ActionListener  {
 					e.printStackTrace();
 				}
 		      }	
-		      
-	    	  CekirdekSayi cekirdekSayi = new CekirdekSayi();
-	    	  CekirdekHiz cekirdekHiz = new CekirdekHiz();
-	    	  cekirdekSayi.setId(null);
-	    	  if(fView.getCekirdekSayi().getId() != null){
-	    		  cekirdekSayi.setId(fView.getCekirdekSayi().getId());
-		      }
-	    	  cekirdekHiz.setId(null);
-	    	  if(fView.getCekirdekHiz().getId() != null){
-	    		  cekirdekHiz.setId(fView.getCekirdekHiz().getId());
-		      }
-		      
+		      // 1.işlemci
+	    	  CpuSayiHizAta cpuSayiHizAta = fView.getCpuSayiHizAta();
+	    	  if(fView.getCpuSayiHizAta() == null){
+	    		  cpuSayiHizAta = new CpuSayiHizAta(); 
+	    	  }
+    		  cpuSayiHizAta.setCihazId(fCihaz.getId());
+    		  cpuSayiHizAta.setSayiId(fView.getCekirdekSayi().getId());
+    		  cpuSayiHizAta.setHizId(fView.getCekirdekHiz().getId());
+
 		      try {
-		    	  if(CpuSayiHizAtaDAO.findBy(fCihaz) == null)
-		    		  CpuSayiHizAtaDAO.add(fCihaz, cekirdekSayi, cekirdekHiz);
-		    	  else
-		    		  CpuSayiHizAtaDAO.update(fCihaz, cekirdekSayi, cekirdekHiz);
-		    	  
-		    if( (fView.getCekirdekHiz().getId() == null) && (fView.getCekirdekSayi().getId()==null) ){
-		    	CpuSayiHizAtaDAO.delete(fCihaz);
-		    }
-		    	
+				 if( (fView.getCekirdekHiz().getId() == null) && (fView.getCekirdekSayi().getId()==null) ){
+				    	CpuSayiHizAtaDAO.delete(cpuSayiHizAta);
+				 }else{
+			    	  if(cpuSayiHizAta.getId() == null)
+			    		  CpuSayiHizAtaDAO.add(cpuSayiHizAta);
+			    	  else
+			    		  CpuSayiHizAtaDAO.update(cpuSayiHizAta);
+				 }
 					
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		      
+		      // 2.işlemci
+	    	  CpuSayiHizAta cpuSayiHizAta2 = fView.getCpuSayiHizAta2();
+	    	  if(fView.getCpuSayiHizAta2() == null){
+	    		  cpuSayiHizAta2 = new CpuSayiHizAta(); 
+	    	  }
+    		  cpuSayiHizAta2.setCihazId(fCihaz.getId());
+    		  cpuSayiHizAta2.setSayiId(fView.getCekirdekSayi2().getId());
+    		  cpuSayiHizAta2.setHizId(fView.getCekirdekHiz2().getId());
+
+		      try {
+				 if( (fView.getCekirdekHiz2().getId() == null) && (fView.getCekirdekSayi2().getId()==null) ){
+				    	if(cpuSayiHizAta2.getId() != null)
+				    		CpuSayiHizAtaDAO.delete(cpuSayiHizAta2);
+				 }else{
+			    	  if(cpuSayiHizAta2.getId() == null)
+			    		  CpuSayiHizAtaDAO.add(cpuSayiHizAta2);
+			    	  else
+			    		  CpuSayiHizAtaDAO.update(cpuSayiHizAta2);
+				 }
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}		     
 		      
 		      for(OzellikAtama ozellikAtama : ozellikAtamaList){
 				  try {

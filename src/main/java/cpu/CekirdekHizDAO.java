@@ -18,7 +18,7 @@ public class CekirdekHizDAO {
 	private static final String INSERT = "INSERT INTO cpu_hiz (hiz) VALUES (?)";
 	private static final String INSERT_OZELLIK_ATA = "INSERT INTO cpu_hiz_ata (cihaz_id,cpu_hiz_id) VALUES (?,?)";
 	private static final String FIND_BY_NAME = "SELECT * FROM cpu_hiz WHERE hiz = ?";	
-	private static final String ALL = "SELECT * FROM cpu_hiz ORDER BY id";
+	private static final String ALL = "SELECT * FROM cpu_hiz ORDER BY hiz";
 
 	public static LinkedHashMap<Integer, OzellikAtama> tumOzellikler() throws SQLException {
 		LinkedHashMap<Integer, OzellikAtama> lhm = new LinkedHashMap<>(); 
