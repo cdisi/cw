@@ -41,6 +41,10 @@ import com.zk.cw.cihaz_tur.CihazTurComboBoxRenderer;
 import com.zk.cw.cihaz_tur.CihazTurDAO;
 import com.zk.cw.ekran.EkranDAO;
 import com.zk.cw.ekran.EkranTip;
+import com.zk.cw.hafiza.DahiliHafiza;
+import com.zk.cw.hafiza.DahiliHafizaCombBoxModel;
+import com.zk.cw.hafiza.DahiliHafizaComboBoxRenderer;
+import com.zk.cw.hafiza.DahiliHafizaDAO;
 import com.zk.cw.ozellik_atama.OzellikAtama;
 import com.zk.cw.ozellik_atama.OzellikAtamaDAO;
 import com.zk.cw.sim.Sim;
@@ -208,6 +212,10 @@ public class CihazView {
 	private ComboBoxModel<CekirdekHiz> cekirdekHiz2ComboBoxModel = new CekirdekHizCombBoxModel();
 	private JComboBox<CekirdekHiz> fCekirdekHiz2= new JComboBox<CekirdekHiz>(cekirdekHiz2ComboBoxModel);	
 	private CekirdekHiz selectedCekirdekHiz2= new CekirdekHiz();
+	//Dahili Hafıza
+	private ComboBoxModel<DahiliHafiza> dahiliHafizaComboBoxModel = new DahiliHafizaCombBoxModel();
+	private JComboBox<DahiliHafiza> fDahiliHafiza= new JComboBox<DahiliHafiza>(dahiliHafizaComboBoxModel);	
+	private DahiliHafiza selectedDahiliHafiza= new DahiliHafiza();
 
 	CihazView(JFrame aParent) {				    
 		fEdit = Edit.ADD;		
@@ -285,6 +293,13 @@ public class CihazView {
 			if(cpuSayiHizAta2!=null){
 				selectedCekirdekSayi2 = CekirdekSayiDAO.findBy(cpuSayiHizAta2.getSayiId());
 				selectedCekirdekHiz2 = CekirdekHizDAO.findBy(cpuSayiHizAta2.getHizId());
+			}
+			//dahili hafıza
+			ozellikAtama = ozellikAtamaDao.find(fId,20);
+			if(ozellikAtama!=null){
+				DahiliHafiza dahiliHafiza = new DahiliHafiza();
+				dahiliHafiza.setBuyukluk(ozellikAtama.getDeger());
+				selectedDahiliHafiza = DahiliHafizaDAO.findBy(dahiliHafiza);
 			}
 			
 		} catch (SQLException e) {
@@ -395,7 +410,11 @@ public class CihazView {
 	}	
 	CekirdekHiz getCekirdekHiz2() {
 		return (CekirdekHiz) fCekirdekHiz2.getModel().getSelectedItem();
-	}	
+	}		
+	DahiliHafiza getDahiliHafiza() {
+		return (DahiliHafiza) fDahiliHafiza.getModel().getSelectedItem();
+	}
+	
 	private void buildGui(JFrame aParent, String aDialogTitle) {
 		fStandardDialog = new StandardDialog(
 		      aParent, aDialogTitle, true, OnClose.DISPOSE, getUserInputArea(), getButtons()
@@ -417,6 +436,9 @@ public class CihazView {
 	    
 	    JPanel platformPanel = getPlatformInputArea();
 	    mainPanel.add(platformPanel);
+	    
+	    JPanel hafizaPanel = getHafizaInputArea();
+	    mainPanel.add(hafizaPanel);
 	    
 	    UiUtil.alignAllX(mainPanel, UiUtil.AlignX.LEFT);
 	    return mainPanel;	    
@@ -489,6 +511,13 @@ public class CihazView {
 	    
 	    return platformMainPanel;
 	}	
+	
+	private JPanel getHafizaInputArea(){
+		JPanel result = new JPanel(new FlowLayout(FlowLayout.LEFT));	    
+		result.setBorder(BorderFactory.createTitledBorder("HAFIZA"));
+	    addDahiliHafizaComboField(fDahiliHafiza, result);	    
+		return result;
+	}		
 	
 	private void addTextAreaField(JTextArea aTextField, String aLabel, JPanel aPanel) {
 		  JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -885,7 +914,25 @@ public class CihazView {
 
 	    panel.add(aComboField);		 
 		aPanel.add(panel);		  
-	}	
+	}
+	
+	private void addDahiliHafizaComboField(JComboBox<DahiliHafiza> aComboField,  JPanel aPanel) {
+  	    JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+		fDahiliHafiza.addItem(new DahiliHafiza(null, "Dahili Hafıza"));  	  		
+		try {
+			for(DahiliHafiza dahiliHafiza : DahiliHafizaDAO.all()){
+				fDahiliHafiza.addItem(dahiliHafiza);
+				fDahiliHafiza.setRenderer(new DahiliHafizaComboBoxRenderer());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
+		aComboField.setPreferredSize(new Dimension(200, aComboField.getPreferredSize().height));
+
+	    panel.add(aComboField);		 
+		aPanel.add(panel);		  
+	}
 	
 	private void populateFields(Cihaz aSelectedCihaz) {
 		fAd.setText(aSelectedCihaz.getAd());
@@ -971,6 +1018,9 @@ public class CihazView {
 			fCekirdekSayi2.getModel().setSelectedItem(selectedCekirdekSayi2);
 		if(selectedCekirdekHiz2 != null)
 			fCekirdekHiz2.getModel().setSelectedItem(selectedCekirdekHiz2);
+		
+		if(selectedDahiliHafiza.getBuyukluk()!=null)
+			fDahiliHafiza.getModel().setSelectedItem(selectedDahiliHafiza);
 
 	}
 	

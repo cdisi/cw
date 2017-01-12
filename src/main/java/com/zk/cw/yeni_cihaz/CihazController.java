@@ -35,6 +35,8 @@ import com.zk.cw.ekran.EkranRenk;
 import com.zk.cw.ekran.EkranRenkDAO;
 import com.zk.cw.ekran.EkranTip;
 import com.zk.cw.exception.InvalidInputException;
+import com.zk.cw.hafiza.DahiliHafiza;
+import com.zk.cw.hafiza.DahiliHafizaDAO;
 import com.zk.cw.main.MainWindow;
 import com.zk.cw.sim.Sim;
 import com.zk.cw.sim.SimDAO;
@@ -321,9 +323,7 @@ public class CihazController implements ActionListener {
 			if(!fView.getHafizaKarti().equals("")){
 				cihazOzellikAtamaList.add(new CihazOzellikAtama(5,19, fView.getHafizaKarti().trim()));
 			}
-			if(!fView.getDahiliHafiza().equals("")){
-				cihazOzellikAtamaList.add(new CihazOzellikAtama(5,20, fView.getDahiliHafiza().trim()));
-			}
+
 			if(!fView.getArkaKam().equals("")){
 				cihazOzellikAtamaList.add(new CihazOzellikAtama(6,21, fView.getArkaKam().trim()));
 			}
@@ -509,6 +509,57 @@ public class CihazController implements ActionListener {
 						e.printStackTrace();
 					}
 				}
+			}
+  			
+			if(!fView.getDahiliHafiza().equals("")){
+				
+				String[] buyuklukArr = fView.getDahiliHafiza().split("/");
+				for(String buyukluk: buyuklukArr){
+					DahiliHafiza dahiliHafiza = new DahiliHafiza();
+					dahiliHafiza.setBuyukluk(buyukluk);
+					
+					if(fView.getDahiliHafiza().contains("GB")){
+						if(!dahiliHafiza.getBuyukluk().contains("GB")){
+							dahiliHafiza.setBuyukluk(buyukluk+" GB");
+						}
+					}
+					
+					if(fView.getDahiliHafiza().contains("MB")){
+						if(!dahiliHafiza.getBuyukluk().contains("MB")){
+							dahiliHafiza.setBuyukluk(buyukluk+" MB");
+						}
+					}
+					
+					if(fView.getDahiliHafiza().contains("kB")){
+						if(!dahiliHafiza.getBuyukluk().contains("kB")){
+							dahiliHafiza.setBuyukluk(buyukluk+" KB");
+						}
+					}					
+						
+					try {
+						DahiliHafizaDAO.findBy(dahiliHafiza);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					if(dahiliHafiza.getId() == null){
+						try {
+							DahiliHafizaDAO.add(dahiliHafiza);
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					com.zk.cw.cihaz.Cihaz cihaz = new com.zk.cw.cihaz.Cihaz();
+					cihaz.setId(fCihaz.getId());
+					try {
+						DahiliHafizaDAO.addOzellikAta(cihaz, dahiliHafiza);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}	
+				}
+				cihazOzellikAtamaList.add(new CihazOzellikAtama(5,20, fView.getDahiliHafiza().trim()));
 			}
     		  
     		  for(CihazOzellikAtama cihazOzellikAtama : cihazOzellikAtamaList){

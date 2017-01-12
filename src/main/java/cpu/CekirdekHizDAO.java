@@ -91,6 +91,7 @@ public class CekirdekHizDAO {
 		
 		return cekirdekHizAta;
 	}
+	
 	public static CekirdekHiz findBy(Integer id) throws SQLException {
 		Connection c = DaoFactory.openConnection();
 
