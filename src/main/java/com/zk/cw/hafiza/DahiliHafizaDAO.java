@@ -53,6 +53,25 @@ public class DahiliHafizaDAO {
 		return dahiliHafiza;
 	}	
 	
+	public static DahiliHafiza findById(DahiliHafiza dahiliHafiza) throws SQLException {
+		Connection c = DaoFactory.openConnection();
+
+		PreparedStatement pstmt = c.prepareStatement(FIND_BY_ID);
+		pstmt.setInt(1, dahiliHafiza.getId());
+		
+		ResultSet rset = pstmt.executeQuery();
+
+		while (rset.next()){
+			dahiliHafiza.setId(rset.getInt("id"));
+			dahiliHafiza.setBuyukluk(rset.getString("buyukluk"));
+		}
+
+		pstmt.close();
+		c.close();
+
+		return dahiliHafiza;
+	}	
+	
 	public static DahiliHafiza add(DahiliHafiza dahiliHafiza) throws SQLException {
 		Connection c = DaoFactory.openConnection();
 		
@@ -113,5 +132,7 @@ public class DahiliHafizaDAO {
 		
 		return dahiliHafizaAta;
 	}	
+	
+
 }
 

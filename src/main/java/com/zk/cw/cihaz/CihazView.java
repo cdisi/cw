@@ -42,6 +42,8 @@ import com.zk.cw.cihaz_tur.CihazTurDAO;
 import com.zk.cw.ekran.EkranDAO;
 import com.zk.cw.ekran.EkranTip;
 import com.zk.cw.hafiza.DahiliHafiza;
+import com.zk.cw.hafiza.DahiliHafizaAta;
+import com.zk.cw.hafiza.DahiliHafizaAtaDAO;
 import com.zk.cw.hafiza.DahiliHafizaCombBoxModel;
 import com.zk.cw.hafiza.DahiliHafizaComboBoxRenderer;
 import com.zk.cw.hafiza.DahiliHafizaDAO;
@@ -89,6 +91,12 @@ import os.OSSurum;
 import os.OSSurumBoxModel;
 import os.OSSurumComboBoxRenderer;
 import os.OSSurumDAO;
+import ram.Ram;
+import ram.RamAta;
+import ram.RamAtaDAO;
+import ram.RamCombBoxModel;
+import ram.RamComboBoxRenderer;
+import ram.RamDAO;
 
 import com.zk.cw.uretici.UreticiCombBoxModel;
 import com.zk.cw.uretici.UreticiComboBoxRenderer;
@@ -213,10 +221,27 @@ public class CihazView {
 	private JComboBox<CekirdekHiz> fCekirdekHiz2= new JComboBox<CekirdekHiz>(cekirdekHiz2ComboBoxModel);	
 	private CekirdekHiz selectedCekirdekHiz2= new CekirdekHiz();
 	//Dahili Hafıza
+	DahiliHafizaAta dahiliHafizaAta;
 	private ComboBoxModel<DahiliHafiza> dahiliHafizaComboBoxModel = new DahiliHafizaCombBoxModel();
 	private JComboBox<DahiliHafiza> fDahiliHafiza= new JComboBox<DahiliHafiza>(dahiliHafizaComboBoxModel);	
 	private DahiliHafiza selectedDahiliHafiza= new DahiliHafiza();
-
+	//Dahili Hafıza 2
+	DahiliHafizaAta dahiliHafizaAta2;
+	private ComboBoxModel<DahiliHafiza> dahiliHafiza2ComboBoxModel = new DahiliHafizaCombBoxModel();
+	private JComboBox<DahiliHafiza> fDahiliHafiza2= new JComboBox<DahiliHafiza>(dahiliHafiza2ComboBoxModel);	
+	private DahiliHafiza selectedDahiliHafiza2= new DahiliHafiza();
+	//Dahili Hafıza 3
+	DahiliHafizaAta dahiliHafizaAta3;
+	private ComboBoxModel<DahiliHafiza> dahiliHafiza3ComboBoxModel = new DahiliHafizaCombBoxModel();
+	private JComboBox<DahiliHafiza> fDahiliHafiza3= new JComboBox<DahiliHafiza>(dahiliHafiza3ComboBoxModel);	
+	private DahiliHafiza selectedDahiliHafiza3= new DahiliHafiza();
+	
+	//RAM
+	RamAta ramAta;
+	private ComboBoxModel<Ram> ramComboBoxModel = new RamCombBoxModel();
+	private JComboBox<Ram> fRam= new JComboBox<Ram>(ramComboBoxModel);	
+	private Ram selectedRam= new Ram();
+	
 	CihazView(JFrame aParent) {				    
 		fEdit = Edit.ADD;		
 		buildGui(aParent, "Cihaz Ekle");
@@ -295,11 +320,32 @@ public class CihazView {
 				selectedCekirdekHiz2 = CekirdekHizDAO.findBy(cpuSayiHizAta2.getHizId());
 			}
 			//dahili hafıza
-			ozellikAtama = ozellikAtamaDao.find(fId,20);
-			if(ozellikAtama!=null){
+			dahiliHafizaAta = DahiliHafizaAtaDAO.findBy(selectedCihaz,0);
+			if(dahiliHafizaAta!=null){
 				DahiliHafiza dahiliHafiza = new DahiliHafiza();
-				dahiliHafiza.setBuyukluk(ozellikAtama.getDeger());
-				selectedDahiliHafiza = DahiliHafizaDAO.findBy(dahiliHafiza);
+				dahiliHafiza.setId(dahiliHafizaAta.getDahiliHafizaId());
+				selectedDahiliHafiza = DahiliHafizaDAO.findById(dahiliHafiza);
+			}
+			//dahili hafıza 2
+			dahiliHafizaAta2 = DahiliHafizaAtaDAO.findBy(selectedCihaz,1);
+			if(dahiliHafizaAta2!=null){
+				DahiliHafiza dahiliHafiza2 = new DahiliHafiza();
+				dahiliHafiza2.setId(dahiliHafizaAta2.getDahiliHafizaId());
+				selectedDahiliHafiza2 = DahiliHafizaDAO.findById(dahiliHafiza2);
+			}
+			//dahili hafıza 3
+			dahiliHafizaAta3 = DahiliHafizaAtaDAO.findBy(selectedCihaz,2);
+			if(dahiliHafizaAta3!=null){
+				DahiliHafiza dahiliHafiza3 = new DahiliHafiza();
+				dahiliHafiza3.setId(dahiliHafizaAta3.getDahiliHafizaId());
+				selectedDahiliHafiza3 = DahiliHafizaDAO.findById(dahiliHafiza3);
+			}
+			//ram
+			ramAta = RamAtaDAO.findBy(selectedCihaz);
+			if(ramAta!=null){
+				Ram ram = new Ram();
+				ram.setId(ramAta.getRamId());
+				selectedRam = RamDAO.findById(ram);
 			}
 			
 		} catch (SQLException e) {
@@ -414,6 +460,27 @@ public class CihazView {
 	DahiliHafiza getDahiliHafiza() {
 		return (DahiliHafiza) fDahiliHafiza.getModel().getSelectedItem();
 	}
+	DahiliHafizaAta getDahiliHafizaAta() {
+		return dahiliHafizaAta;
+	}	
+	DahiliHafiza getDahiliHafiza2() {
+		return (DahiliHafiza) fDahiliHafiza2.getModel().getSelectedItem();
+	}
+	DahiliHafizaAta getDahiliHafizaAta2() {
+		return dahiliHafizaAta2;
+	}	
+	DahiliHafiza getDahiliHafiza3() {
+		return (DahiliHafiza) fDahiliHafiza3.getModel().getSelectedItem();
+	}
+	DahiliHafizaAta getDahiliHafizaAta3() {
+		return dahiliHafizaAta3;
+	}	
+	Ram getRam() {
+		return (Ram) fRam.getModel().getSelectedItem();
+	}
+	RamAta getRamAta() {
+		return ramAta;
+	}	
 	
 	private void buildGui(JFrame aParent, String aDialogTitle) {
 		fStandardDialog = new StandardDialog(
@@ -516,6 +583,9 @@ public class CihazView {
 		JPanel result = new JPanel(new FlowLayout(FlowLayout.LEFT));	    
 		result.setBorder(BorderFactory.createTitledBorder("HAFIZA"));
 	    addDahiliHafizaComboField(fDahiliHafiza, result);	    
+	    addDahiliHafiza2ComboField(fDahiliHafiza2, result);	    
+	    addDahiliHafiza3ComboField(fDahiliHafiza3, result);	    
+	    addRamComboField(fRam, result);	    
 		return result;
 	}		
 	
@@ -934,6 +1004,60 @@ public class CihazView {
 		aPanel.add(panel);		  
 	}
 	
+	private void addDahiliHafiza2ComboField(JComboBox<DahiliHafiza> aComboField,  JPanel aPanel) {
+  	    JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+		fDahiliHafiza2.addItem(new DahiliHafiza(null, "Dahili Hafıza"));  	  		
+		try {
+			for(DahiliHafiza dahiliHafiza : DahiliHafizaDAO.all()){
+				fDahiliHafiza2.addItem(dahiliHafiza);
+				fDahiliHafiza2.setRenderer(new DahiliHafizaComboBoxRenderer());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
+		aComboField.setPreferredSize(new Dimension(200, aComboField.getPreferredSize().height));
+
+	    panel.add(aComboField);		 
+		aPanel.add(panel);		  
+	}
+	
+	private void addDahiliHafiza3ComboField(JComboBox<DahiliHafiza> aComboField,  JPanel aPanel) {
+  	    JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+		fDahiliHafiza3.addItem(new DahiliHafiza(null, "Dahili Hafıza"));  	  		
+		try {
+			for(DahiliHafiza dahiliHafiza : DahiliHafizaDAO.all()){
+				fDahiliHafiza3.addItem(dahiliHafiza);
+				fDahiliHafiza3.setRenderer(new DahiliHafizaComboBoxRenderer());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
+		aComboField.setPreferredSize(new Dimension(200, aComboField.getPreferredSize().height));
+
+	    panel.add(aComboField);		 
+		aPanel.add(panel);		  
+	}	
+	
+	private void addRamComboField(JComboBox<Ram> aComboField,  JPanel aPanel) {
+  	    JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+		fRam.addItem(new Ram(null, "Ram bellek"));  	  		
+		try {
+			for(Ram ram : RamDAO.all()){
+				fRam.addItem(ram);
+				fRam.setRenderer(new RamComboBoxRenderer());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
+		aComboField.setPreferredSize(new Dimension(200, aComboField.getPreferredSize().height));
+
+	    panel.add(aComboField);		 
+		aPanel.add(panel);		  
+	}	
+	
 	private void populateFields(Cihaz aSelectedCihaz) {
 		fAd.setText(aSelectedCihaz.getAd());
 		fDigerAd.setText(aSelectedCihaz.getDigerAd());
@@ -1021,6 +1145,13 @@ public class CihazView {
 		
 		if(selectedDahiliHafiza.getBuyukluk()!=null)
 			fDahiliHafiza.getModel().setSelectedItem(selectedDahiliHafiza);
+		if(selectedDahiliHafiza2.getBuyukluk()!=null)
+			fDahiliHafiza2.getModel().setSelectedItem(selectedDahiliHafiza2);
+		if(selectedDahiliHafiza3.getBuyukluk()!=null)
+			fDahiliHafiza3.getModel().setSelectedItem(selectedDahiliHafiza3);
+		
+		if(selectedRam.getBuyukluk()!=null)
+			fRam.getModel().setSelectedItem(selectedRam);
 
 	}
 	

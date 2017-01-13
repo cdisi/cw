@@ -14,6 +14,9 @@ import com.zk.cw.cihaz_resim.ResimDAO;
 import com.zk.cw.cihaz_tur.CihazTur;
 import com.zk.cw.cihaz_tur.CihazTurComboBoxRenderer;
 import com.zk.cw.exception.InvalidInputException;
+import com.zk.cw.hafiza.DahiliHafiza;
+import com.zk.cw.hafiza.DahiliHafizaAta;
+import com.zk.cw.hafiza.DahiliHafizaAtaDAO;
 import com.zk.cw.main.MainWindow;
 import com.zk.cw.ozellik_atama.OzellikAtama;
 import com.zk.cw.ozellik_atama.OzellikAtamaDAO;
@@ -23,6 +26,9 @@ import cpu.CekirdekHiz;
 import cpu.CekirdekSayi;
 import cpu.CpuSayiHizAta;
 import cpu.CpuSayiHizAtaDAO;
+import ram.RamAta;
+import ram.RamAtaDAO;
+import ram.RamDAO;
 
 public class CihazController implements ActionListener  {
 	
@@ -214,8 +220,89 @@ public class CihazController implements ActionListener  {
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}		     
+		      // dahili hafıza		     
+		      DahiliHafizaAta dahiliHafizaAta = fView.getDahiliHafizaAta();
+	    	  if(dahiliHafizaAta == null){
+	    		  dahiliHafizaAta = new DahiliHafizaAta(); 
+	    	  }
+	    	  dahiliHafizaAta.setCihazId(fCihaz.getId());
+	    	  dahiliHafizaAta.setDahiliHafizaId(fView.getDahiliHafiza().getId());
+		      try {
+				 if( (fView.getDahiliHafiza().getId() == null) ){
+				    	if(dahiliHafizaAta.getId() != null)
+				    		DahiliHafizaAtaDAO.delete(dahiliHafizaAta);
+				 }else{
+			    	  if(dahiliHafizaAta.getId() == null)
+			    		  DahiliHafizaAtaDAO.add(dahiliHafizaAta);
+			    	  else
+			    		  DahiliHafizaAtaDAO.update(dahiliHafizaAta);
+				 }
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		      // dahili hafıza 2	     
+		      DahiliHafizaAta dahiliHafizaAta2 = fView.getDahiliHafizaAta2();
+	    	  if(dahiliHafizaAta2 == null){
+	    		  dahiliHafizaAta2 = new DahiliHafizaAta(); 
+	    	  }
+	    	  dahiliHafizaAta2.setCihazId(fCihaz.getId());
+	    	  dahiliHafizaAta2.setDahiliHafizaId(fView.getDahiliHafiza2().getId());
+		      try {
+				 if( (fView.getDahiliHafiza2().getId() == null) ){
+				    	if(dahiliHafizaAta2.getId() != null)
+				    		DahiliHafizaAtaDAO.delete(dahiliHafizaAta2);
+				 }else{
+			    	  if(dahiliHafizaAta2.getId() == null)
+			    		  DahiliHafizaAtaDAO.add(dahiliHafizaAta2);
+			    	  else
+			    		  DahiliHafizaAtaDAO.update(dahiliHafizaAta2);
+				 }
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		      // dahili hafıza 3	     
+		      DahiliHafizaAta dahiliHafizaAta3 = fView.getDahiliHafizaAta3();
+	    	  if(dahiliHafizaAta3 == null){
+	    		  dahiliHafizaAta3 = new DahiliHafizaAta(); 
+	    	  }
+	    	  dahiliHafizaAta3.setCihazId(fCihaz.getId());
+	    	  dahiliHafizaAta3.setDahiliHafizaId(fView.getDahiliHafiza3().getId());
+		      try {
+				 if( (fView.getDahiliHafiza3().getId() == null) ){
+				    	if(dahiliHafizaAta3.getId() != null)
+				    		DahiliHafizaAtaDAO.delete(dahiliHafizaAta3);
+				 }else{
+			    	  if(dahiliHafizaAta3.getId() == null)
+			    		  DahiliHafizaAtaDAO.add(dahiliHafizaAta3);
+			    	  else
+			    		  DahiliHafizaAtaDAO.update(dahiliHafizaAta3);
+				 }
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 		      
-		      for(OzellikAtama ozellikAtama : ozellikAtamaList){
+		      // dahili hafıza 3	     
+		      RamAta ramAta = fView.getRamAta();
+	    	  if(ramAta == null){
+	    		  ramAta = new RamAta(); 
+	    	  }
+	    	  ramAta.setCihazId(fCihaz.getId());
+	    	  ramAta.setRamId(fView.getRam().getId());
+		      try {
+				 if( (fView.getRam().getId() == null) ){
+				    	if(ramAta.getId() != null)
+				    		RamAtaDAO.delete(ramAta);
+				 }else{
+			    	  if(ramAta.getId() == null)
+			    		  RamAtaDAO.add(ramAta);
+			    	  else
+			    		  RamAtaDAO.update(ramAta);
+				 }
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}		      
+
+		    for(OzellikAtama ozellikAtama : ozellikAtamaList){
 				  try {
 					if( ozellikAtamaDao.find(ozellikAtama.getCihazId(), ozellikAtama.getOzellikId()) == null){
 						ozellikAtamaDao.insert(ozellikAtama);
