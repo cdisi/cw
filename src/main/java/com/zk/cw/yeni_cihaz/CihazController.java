@@ -58,6 +58,8 @@ import cpu.CpuSayiHizAta;
 import cpu.CpuSayiHizAtaDAO;
 import gpu.Gpu;
 import gpu.GpuDAO;
+import ram.Ram;
+import ram.RamDAO;
 
 public class CihazController implements ActionListener {
 	
@@ -395,9 +397,7 @@ public class CihazController implements ActionListener {
 			if(!fView.getDiger().equals("")){
 				cihazOzellikAtamaList.add(new CihazOzellikAtama(10,45, fView.getDiger().trim()));
 			}
-			if(!fView.getRam().equals("")){
-				cihazOzellikAtamaList.add(new CihazOzellikAtama(10,46, fView.getRam().trim()));
-			}
+
 			if(!fView.getGovdeDiger().equals("")){
 				cihazOzellikAtamaList.add(new CihazOzellikAtama(10,47, fView.getGovdeDiger().trim()));
 			}
@@ -560,6 +560,31 @@ public class CihazController implements ActionListener {
 					}	
 				}
 				cihazOzellikAtamaList.add(new CihazOzellikAtama(5,20, fView.getDahiliHafiza().trim()));
+			}
+			
+			if(!fView.getRam().equals("")){
+				
+				Ram ram = new Ram();
+				ram.setBuyukluk(fView.getRam().trim());
+				try {
+					RamDAO.findBy(ram);
+					if(ram.getId() == null){
+						RamDAO.add(ram);
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+
+				com.zk.cw.cihaz.Cihaz cihaz = new com.zk.cw.cihaz.Cihaz();
+				cihaz.setId(fCihaz.getId());
+				try {
+					RamDAO.addOzellikAta(cihaz, ram);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				//cihazOzellikAtamaList.add(new CihazOzellikAtama(10,46, ram.getId().toString()));
+			
 			}
     		  
     		  for(CihazOzellikAtama cihazOzellikAtama : cihazOzellikAtamaList){
