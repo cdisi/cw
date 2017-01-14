@@ -584,7 +584,7 @@ public class CihazController implements ActionListener {
 					e.printStackTrace();
 				}
 				//cihazOzellikAtamaList.add(new CihazOzellikAtama(10,46, ram.getId().toString()));
-			
+		
 			}
     		  
     		  for(CihazOzellikAtama cihazOzellikAtama : cihazOzellikAtamaList){
