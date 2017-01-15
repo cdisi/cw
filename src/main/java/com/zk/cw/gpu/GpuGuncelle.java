@@ -1,4 +1,4 @@
-package com.zk.cw.yonga_seti;
+package com.zk.cw.gpu;
 
 import java.sql.SQLException;
 import java.util.Iterator;
@@ -8,26 +8,25 @@ import java.util.Set;
 import com.zk.cw.ozellik_atama.OzellikAtama;
 import com.zk.cw.ozellik_atama.OzellikAtamaDAO;
 
-public class YongaSetiGuncelle {
-
+public class GpuGuncelle {
 	public static void main(String[] args) {
 		System.exit(0);
 		LinkedHashMap<Integer, OzellikAtama> lhm = null;
 		OzellikAtamaDAO ozellikAtamaDAO = new OzellikAtamaDAO();
 		try {
-			lhm = OzellikAtamaDAO.tumOzellikler();
+			lhm = GpuDAO.tumOzellikler();
 			Set<Integer> ks = lhm.keySet();
 			Iterator<Integer> itr = ks.iterator();
 			while (itr.hasNext()){
 				Integer key = itr.next();
 				OzellikAtama ozellikAtama = lhm.get(key);
-				YongaSeti yongaSeti = new YongaSeti();
-				yongaSeti.setAd(ozellikAtama.getDeger());
-				YongaSetiDAO.findBy(yongaSeti);
-				if(yongaSeti.getId() == null){
-					YongaSetiDAO.add(yongaSeti);
+				Gpu gpu = new Gpu();
+				gpu.setAd(ozellikAtama.getDeger().trim());
+				GpuDAO.findBy(gpu);
+				if(gpu.getId() == null){
+					GpuDAO.add(gpu);
 				}
-	    		ozellikAtamaDAO.update(ozellikAtama,yongaSeti);					
+	    		ozellikAtamaDAO.update(ozellikAtama,gpu);					
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

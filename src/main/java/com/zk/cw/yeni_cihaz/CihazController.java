@@ -24,6 +24,12 @@ import org.apache.commons.io.FilenameUtils;
 
 import com.zk.cw.cihaz_resim.Resim;
 import com.zk.cw.cihaz_resim.ResimDAO;
+import com.zk.cw.cpu.CekirdekHiz;
+import com.zk.cw.cpu.CekirdekHizDAO;
+import com.zk.cw.cpu.CekirdekSayi;
+import com.zk.cw.cpu.CekirdekSayiDAO;
+import com.zk.cw.cpu.CpuSayiHizAta;
+import com.zk.cw.cpu.CpuSayiHizAtaDAO;
 import com.zk.cw.ekran.EkranCozunurluk;
 import com.zk.cw.ekran.EkranCozunurlukDAO;
 import com.zk.cw.ekran.EkranDAO;
@@ -35,9 +41,17 @@ import com.zk.cw.ekran.EkranRenk;
 import com.zk.cw.ekran.EkranRenkDAO;
 import com.zk.cw.ekran.EkranTip;
 import com.zk.cw.exception.InvalidInputException;
+import com.zk.cw.gpu.Gpu;
+import com.zk.cw.gpu.GpuDAO;
 import com.zk.cw.hafiza.DahiliHafiza;
 import com.zk.cw.hafiza.DahiliHafizaDAO;
+import com.zk.cw.harici_hafiza.HariciHafizaBuyukluk;
+import com.zk.cw.harici_hafiza.HariciHafizaBuyuklukDAO;
+import com.zk.cw.harici_hafiza.HariciHafizaTipi;
+import com.zk.cw.harici_hafiza.HariciHafizaTipiDAO;
 import com.zk.cw.main.MainWindow;
+import com.zk.cw.ram.Ram;
+import com.zk.cw.ram.RamDAO;
 import com.zk.cw.sim.Sim;
 import com.zk.cw.sim.SimDAO;
 import com.zk.cw.sim.SimSayisi;
@@ -49,17 +63,6 @@ import com.zk.cw.util.Mobile91Parser;
 import com.zk.cw.util.Util;
 import com.zk.cw.yonga_seti.YongaSeti;
 import com.zk.cw.yonga_seti.YongaSetiDAO;
-
-import cpu.CekirdekHiz;
-import cpu.CekirdekHizDAO;
-import cpu.CekirdekSayi;
-import cpu.CekirdekSayiDAO;
-import cpu.CpuSayiHizAta;
-import cpu.CpuSayiHizAtaDAO;
-import gpu.Gpu;
-import gpu.GpuDAO;
-import ram.Ram;
-import ram.RamDAO;
 
 public class CihazController implements ActionListener {
 	
@@ -323,7 +326,35 @@ public class CihazController implements ActionListener {
 				cihazOzellikAtamaList.add(new CihazOzellikAtama(4,18, gpu.getId().toString()));
 			}
 			if(!fView.getHafizaKarti().equals("")){
-				cihazOzellikAtamaList.add(new CihazOzellikAtama(5,19, fView.getHafizaKarti().trim()));
+				HariciHafizaTipi hariciHafizaTipi = new HariciHafizaTipi();
+				HariciHafizaBuyukluk hariciHafizaBuyukluk = new HariciHafizaBuyukluk();
+				String[] hariciHafiza = fView.getHafizaKarti().split(",");
+				if(hariciHafiza[0] != null){
+					hariciHafizaTipi.setAd(hariciHafiza[0].trim());
+					try {
+						HariciHafizaTipiDAO.findBy(hariciHafizaTipi);
+						if(hariciHafizaTipi.getId() == null){
+							HariciHafizaTipiDAO.add(hariciHafizaTipi);
+						}
+						cihazOzellikAtamaList.add(new CihazOzellikAtama(5,19, hariciHafizaTipi.getId().toString()));
+
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+				if(hariciHafiza[1] != null){
+					hariciHafizaBuyukluk.setBuyukluk(hariciHafiza[1].trim());
+					try {
+						HariciHafizaBuyuklukDAO.findBy(hariciHafizaBuyukluk);
+						if(hariciHafizaBuyukluk.getId() == null){
+							HariciHafizaBuyuklukDAO.add(hariciHafizaBuyukluk);
+						}
+						cihazOzellikAtamaList.add(new CihazOzellikAtama(5,51, hariciHafizaBuyukluk.getId().toString()));
+
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
 			}
 
 			if(!fView.getArkaKam().equals("")){

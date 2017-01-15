@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedHashMap;
 
 import com.zk.cw.cihaz.Cihaz;
 import com.zk.cw.dao_factory.DaoFactory;
@@ -11,11 +12,10 @@ import com.zk.cw.ekran.EkranCozunurluk;
 import com.zk.cw.ekran.EkranPPI;
 import com.zk.cw.ekran.EkranRenk;
 import com.zk.cw.ekran.EkranTip;
+import com.zk.cw.gpu.Gpu;
 import com.zk.cw.sim.Sim;
 import com.zk.cw.sim.SimSayisi;
 import com.zk.cw.yonga_seti.YongaSeti;
-
-import gpu.Gpu;
 
 
 public class OzellikAtamaDAO {

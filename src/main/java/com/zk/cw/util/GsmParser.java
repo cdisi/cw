@@ -170,7 +170,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(Type)").first();
 	    if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replaceAll(".apacitive", "Kapasitif").replace("touchscreen", "dokunmatik").replace("M ", " Milyon").replace("K ", " Bin").replace("colors", " renk").replaceAll(".esistive", "rezistif");		
+	    	deger = elm.parent().nextElementSibling().text().replaceAll(".apacitive", "Kapasitif").replace("touchscreen", "dokunmatik").replace("M ", " Milyon").replace("K ", " Bin").replace("colors", "").replaceAll(".esistive", "rezistif");		
 	    }
 	    if(deger.contains(",")){
 	    	String[] ekranTipiArr = deger.split(",");
@@ -260,11 +260,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(Card slot)").first();
 	    if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replaceAll("\\(.+\\)", "").replace("No", "Yok").trim();		
-	    	if(deger.contains("up to") == true){
-	    		deger = deger.replace("up to", "");
-	    		deger += "'a kadar";
-	    	}
+	    	deger = elm.parent().nextElementSibling().text().replaceAll("\\(.+\\)", "").replace("No", "Yok").replace("up to", "").trim();		
 	    }
 		return deger;
 	}	

@@ -13,6 +13,10 @@ import com.zk.cw.cihaz_resim.Resim;
 import com.zk.cw.cihaz_resim.ResimDAO;
 import com.zk.cw.cihaz_tur.CihazTur;
 import com.zk.cw.cihaz_tur.CihazTurComboBoxRenderer;
+import com.zk.cw.cpu.CekirdekHiz;
+import com.zk.cw.cpu.CekirdekSayi;
+import com.zk.cw.cpu.CpuSayiHizAta;
+import com.zk.cw.cpu.CpuSayiHizAtaDAO;
 import com.zk.cw.exception.InvalidInputException;
 import com.zk.cw.hafiza.DahiliHafiza;
 import com.zk.cw.hafiza.DahiliHafizaAta;
@@ -20,15 +24,10 @@ import com.zk.cw.hafiza.DahiliHafizaAtaDAO;
 import com.zk.cw.main.MainWindow;
 import com.zk.cw.ozellik_atama.OzellikAtama;
 import com.zk.cw.ozellik_atama.OzellikAtamaDAO;
+import com.zk.cw.ram.RamAta;
+import com.zk.cw.ram.RamAtaDAO;
+import com.zk.cw.ram.RamDAO;
 import com.zk.cw.util.Edit;
-
-import cpu.CekirdekHiz;
-import cpu.CekirdekSayi;
-import cpu.CpuSayiHizAta;
-import cpu.CpuSayiHizAtaDAO;
-import ram.RamAta;
-import ram.RamAtaDAO;
-import ram.RamDAO;
 
 public class CihazController implements ActionListener  {
 	
@@ -281,7 +280,7 @@ public class CihazController implements ActionListener  {
 				e1.printStackTrace();
 			}
 		      
-		      // dahili hafıza 3	     
+		      // ram	     
 		      RamAta ramAta = fView.getRamAta();
 	    	  if(ramAta == null){
 	    		  ramAta = new RamAta(); 
@@ -300,8 +299,30 @@ public class CihazController implements ActionListener  {
 				 }
 			} catch (SQLException e1) {
 				e1.printStackTrace();
-			}		      
+			}
+		      
+		    // harici hafıza tipi 
+		    if(fView.getHariciHafizaTipi().getId() != null){
+		    	  ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 5, 19, fView.getHariciHafizaTipi().getId().toString()));
+		    }else{
+		    	  try {
+					ozellikAtamaDao.delete(fCihaz,19);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		    }	
 
+		    // harici hafıza büyüklük 
+		    if(fView.getHariciHafizaBuyukluk().getId() != null){
+		    	  ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 5, 51, fView.getHariciHafizaBuyukluk().getId().toString()));
+		    }else{
+		    	  try {
+					ozellikAtamaDao.delete(fCihaz,51);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		    }	
+		    
 		    for(OzellikAtama ozellikAtama : ozellikAtamaList){
 				  try {
 					if( ozellikAtamaDao.find(ozellikAtama.getCihazId(), ozellikAtama.getOzellikId()) == null){

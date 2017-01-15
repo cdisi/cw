@@ -39,16 +39,53 @@ import com.zk.cw.cihaz_tur.CihazTur;
 import com.zk.cw.cihaz_tur.CihazTurCombBoxModel;
 import com.zk.cw.cihaz_tur.CihazTurComboBoxRenderer;
 import com.zk.cw.cihaz_tur.CihazTurDAO;
+import com.zk.cw.cpu.CekirdekHiz;
+import com.zk.cw.cpu.CekirdekHizCombBoxModel;
+import com.zk.cw.cpu.CekirdekHizComboBoxRenderer;
+import com.zk.cw.cpu.CekirdekHizDAO;
+import com.zk.cw.cpu.CekirdekSayi;
+import com.zk.cw.cpu.CekirdekSayiCombBoxModel;
+import com.zk.cw.cpu.CekirdekSayiComboBoxRenderer;
+import com.zk.cw.cpu.CekirdekSayiDAO;
+import com.zk.cw.cpu.CpuSayiHizAta;
+import com.zk.cw.cpu.CpuSayiHizAtaDAO;
 import com.zk.cw.ekran.EkranDAO;
 import com.zk.cw.ekran.EkranTip;
+import com.zk.cw.gpu.Gpu;
+import com.zk.cw.gpu.GpuCombBoxModel;
+import com.zk.cw.gpu.GpuComboBoxRenderer;
+import com.zk.cw.gpu.GpuDAO;
 import com.zk.cw.hafiza.DahiliHafiza;
 import com.zk.cw.hafiza.DahiliHafizaAta;
 import com.zk.cw.hafiza.DahiliHafizaAtaDAO;
 import com.zk.cw.hafiza.DahiliHafizaCombBoxModel;
 import com.zk.cw.hafiza.DahiliHafizaComboBoxRenderer;
 import com.zk.cw.hafiza.DahiliHafizaDAO;
+import com.zk.cw.harici_hafiza.HariciHafizaBuyukluk;
+import com.zk.cw.harici_hafiza.HariciHafizaBuyuklukCombBoxModel;
+import com.zk.cw.harici_hafiza.HariciHafizaBuyuklukComboBoxRenderer;
+import com.zk.cw.harici_hafiza.HariciHafizaBuyuklukDAO;
+import com.zk.cw.harici_hafiza.HariciHafizaTipi;
+import com.zk.cw.harici_hafiza.HariciHafizaTipiCombBoxModel;
+import com.zk.cw.harici_hafiza.HariciHafizaTipiComboBoxRenderer;
+import com.zk.cw.harici_hafiza.HariciHafizaTipiDAO;
+import com.zk.cw.os.OS;
+import com.zk.cw.os.OSChangeListener;
+import com.zk.cw.os.OSComboBoxModel;
+import com.zk.cw.os.OSComboBoxRenderer;
+import com.zk.cw.os.OSDAO;
+import com.zk.cw.os.OSSurum;
+import com.zk.cw.os.OSSurumBoxModel;
+import com.zk.cw.os.OSSurumComboBoxRenderer;
+import com.zk.cw.os.OSSurumDAO;
 import com.zk.cw.ozellik_atama.OzellikAtama;
 import com.zk.cw.ozellik_atama.OzellikAtamaDAO;
+import com.zk.cw.ram.Ram;
+import com.zk.cw.ram.RamAta;
+import com.zk.cw.ram.RamAtaDAO;
+import com.zk.cw.ram.RamCombBoxModel;
+import com.zk.cw.ram.RamComboBoxRenderer;
+import com.zk.cw.ram.RamDAO;
 import com.zk.cw.sim.Sim;
 import com.zk.cw.sim.SimComboBoxModel;
 import com.zk.cw.sim.SimComboBoxRenderer;
@@ -67,37 +104,6 @@ import com.zk.cw.yonga_seti.YongaSeti;
 import com.zk.cw.yonga_seti.YongaSetiBoxModel;
 import com.zk.cw.yonga_seti.YongaSetiComboBoxRenderer;
 import com.zk.cw.yonga_seti.YongaSetiDAO;
-
-import cpu.CekirdekHiz;
-import cpu.CekirdekHizCombBoxModel;
-import cpu.CekirdekHizComboBoxRenderer;
-import cpu.CekirdekHizDAO;
-import cpu.CekirdekSayi;
-import cpu.CekirdekSayiCombBoxModel;
-import cpu.CekirdekSayiComboBoxRenderer;
-import cpu.CekirdekSayiDAO;
-import cpu.CpuSayiHizAta;
-import cpu.CpuSayiHizAtaDAO;
-import gpu.Gpu;
-import gpu.GpuCombBoxModel;
-import gpu.GpuComboBoxRenderer;
-import gpu.GpuDAO;
-import os.OS;
-import os.OSChangeListener;
-import os.OSComboBoxModel;
-import os.OSComboBoxRenderer;
-import os.OSDAO;
-import os.OSSurum;
-import os.OSSurumBoxModel;
-import os.OSSurumComboBoxRenderer;
-import os.OSSurumDAO;
-import ram.Ram;
-import ram.RamAta;
-import ram.RamAtaDAO;
-import ram.RamCombBoxModel;
-import ram.RamComboBoxRenderer;
-import ram.RamDAO;
-
 import com.zk.cw.uretici.UreticiCombBoxModel;
 import com.zk.cw.uretici.UreticiComboBoxRenderer;
 import com.zk.cw.uretici.UreticiDAO;
@@ -242,6 +248,16 @@ public class CihazView {
 	private JComboBox<Ram> fRam= new JComboBox<Ram>(ramComboBoxModel);	
 	private Ram selectedRam= new Ram();
 	
+	//harici hafıza tipi
+	private ComboBoxModel<HariciHafizaTipi> hariciHafizaTipiComboBoxModel = new HariciHafizaTipiCombBoxModel();
+	private JComboBox<HariciHafizaTipi> fHariciHafizaTipi= new JComboBox<HariciHafizaTipi>(hariciHafizaTipiComboBoxModel);	
+	private HariciHafizaTipi selectedHariciHafizaTipi= new HariciHafizaTipi();
+	
+	//harici hafıza tipi
+	private ComboBoxModel<HariciHafizaBuyukluk> hariciHafizaBuyuklukComboBoxModel = new HariciHafizaBuyuklukCombBoxModel();
+	private JComboBox<HariciHafizaBuyukluk> fHariciHafizaBuyukluk= new JComboBox<HariciHafizaBuyukluk>(hariciHafizaBuyuklukComboBoxModel);	
+	private HariciHafizaBuyukluk selectedHariciHafizaBuyukluk= new HariciHafizaBuyukluk();
+
 	CihazView(JFrame aParent) {				    
 		fEdit = Edit.ADD;		
 		buildGui(aParent, "Cihaz Ekle");
@@ -347,6 +363,15 @@ public class CihazView {
 				ram.setId(ramAta.getRamId());
 				selectedRam = RamDAO.findById(ram);
 			}
+			//seçilen harici hafıza tipi
+			ozellikAtama = ozellikAtamaDao.find(fId,19);
+			if(ozellikAtama!=null)
+				selectedHariciHafizaTipi = HariciHafizaTipiDAO.findBy(Integer.parseInt(ozellikAtama.getDeger()));
+			//seçilen harici hafıza büyüklüğü
+			ozellikAtama = ozellikAtamaDao.find(fId,51);
+			if(ozellikAtama!=null)
+				selectedHariciHafizaBuyukluk = HariciHafizaBuyuklukDAO.findBy(Integer.parseInt(ozellikAtama.getDeger()));
+			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -481,7 +506,13 @@ public class CihazView {
 	RamAta getRamAta() {
 		return ramAta;
 	}	
+	HariciHafizaTipi getHariciHafizaTipi() {
+		return (HariciHafizaTipi) fHariciHafizaTipi.getModel().getSelectedItem();
+	}	
 	
+	HariciHafizaBuyukluk getHariciHafizaBuyukluk() {
+		return (HariciHafizaBuyukluk) fHariciHafizaBuyukluk.getModel().getSelectedItem();
+	}
 	private void buildGui(JFrame aParent, String aDialogTitle) {
 		fStandardDialog = new StandardDialog(
 		      aParent, aDialogTitle, true, OnClose.DISPOSE, getUserInputArea(), getButtons()
@@ -586,6 +617,8 @@ public class CihazView {
 	    addDahiliHafiza2ComboField(fDahiliHafiza2, result);	    
 	    addDahiliHafiza3ComboField(fDahiliHafiza3, result);	    
 	    addRamComboField(fRam, result);	    
+	    addHariciHafizaTipiComboField(fHariciHafizaTipi, result);	    
+	    addHariciHafizaBuyuklukComboField(fHariciHafizaBuyukluk, result);	    
 		return result;
 	}		
 	
@@ -1058,6 +1091,42 @@ public class CihazView {
 		aPanel.add(panel);		  
 	}	
 	
+	private void addHariciHafizaTipiComboField(JComboBox<HariciHafizaTipi> aComboField,  JPanel aPanel) {
+  	    JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+		fHariciHafizaTipi.addItem(new HariciHafizaTipi(null, "Hafıza Kartı Tipi"));  	  		
+		try {
+			for(HariciHafizaTipi ram : HariciHafizaTipiDAO.all()){
+				fHariciHafizaTipi.addItem(ram);
+				fHariciHafizaTipi.setRenderer(new HariciHafizaTipiComboBoxRenderer());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
+		aComboField.setPreferredSize(new Dimension(200, aComboField.getPreferredSize().height));
+
+	    panel.add(aComboField);		 
+		aPanel.add(panel);		  
+	}
+	
+	private void addHariciHafizaBuyuklukComboField(JComboBox<HariciHafizaBuyukluk> aComboField,  JPanel aPanel) {
+  	    JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+		fHariciHafizaBuyukluk.addItem(new HariciHafizaBuyukluk(null, "Hafıza Kartı Tipi"));  	  		
+		try {
+			for(HariciHafizaBuyukluk hariciHafizaBuyukluk : HariciHafizaBuyuklukDAO.all()){
+				fHariciHafizaBuyukluk.addItem(hariciHafizaBuyukluk);
+				fHariciHafizaBuyukluk.setRenderer(new HariciHafizaBuyuklukComboBoxRenderer());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
+		aComboField.setPreferredSize(new Dimension(200, aComboField.getPreferredSize().height));
+
+	    panel.add(aComboField);		 
+		aPanel.add(panel);		  
+	}	
+	
 	private void populateFields(Cihaz aSelectedCihaz) {
 		fAd.setText(aSelectedCihaz.getAd());
 		fDigerAd.setText(aSelectedCihaz.getDigerAd());
@@ -1145,13 +1214,20 @@ public class CihazView {
 		
 		if(selectedDahiliHafiza.getBuyukluk()!=null)
 			fDahiliHafiza.getModel().setSelectedItem(selectedDahiliHafiza);
+		
 		if(selectedDahiliHafiza2.getBuyukluk()!=null)
 			fDahiliHafiza2.getModel().setSelectedItem(selectedDahiliHafiza2);
+		
 		if(selectedDahiliHafiza3.getBuyukluk()!=null)
 			fDahiliHafiza3.getModel().setSelectedItem(selectedDahiliHafiza3);
 		
 		if(selectedRam.getBuyukluk()!=null)
 			fRam.getModel().setSelectedItem(selectedRam);
+		
+		if(selectedHariciHafizaTipi.getAd()!=null)
+			fHariciHafizaTipi.getModel().setSelectedItem(selectedHariciHafizaTipi);
+		if(selectedHariciHafizaBuyukluk.getBuyukluk()!=null)
+			fHariciHafizaBuyukluk.getModel().setSelectedItem(selectedHariciHafizaBuyukluk);
 
 	}
 	

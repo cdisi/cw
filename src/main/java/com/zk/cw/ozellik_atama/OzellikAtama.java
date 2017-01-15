@@ -19,16 +19,25 @@ public class OzellikAtama {
 	public Integer getId(){
 		return this.id;		
 	}
+	public void setId(Integer id){
+		this.id=id;		
+	}
 	public Integer getCihazId(){
 		return this.cihazId;		
 	}
 	public Integer getOzellikId(){
 		return this.ozellikId;		
 	}
+	public void setOzellikId(Integer ozellikId){
+		this.ozellikId=ozellikId;		
+	}
 	public Integer getKategoriId(){
 		return this.kategoriId;		
 	}	
 	public String getDeger(){
 		return this.deger;		
+	}	
+	public void setDeger(String deger){
+		this.deger=deger;		
 	}	
 }
