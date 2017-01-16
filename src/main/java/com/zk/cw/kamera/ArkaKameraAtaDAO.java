@@ -16,8 +16,8 @@ import com.zk.cw.ozellik_atama.OzellikAtama;
 public class ArkaKameraAtaDAO {
 	private static final String FIND_BY_CIHAZ_ID = "SELECT * FROM arka_kamera_ata WHERE cihaz_id = ? ORDER BY id LIMIT 1 OFFSET ?";		
 	private static final String DELETE = "DELETE FROM arka_kamera_ata WHERE id=?";	
-	private static final String INSERT = "INSERT INTO arka_kamera_ata (cihaz_id,arka_kamera_id) VALUES (?,?)";
-	private static final String UPDATE = "UPDATE arka_kamera_ata SET cihaz_id=?,arka_kamera_id=? WHERE id=?";
+	private static final String INSERT = "INSERT INTO arka_kamera_ata (cihaz_id,arka_kamera_cozunurluk_id,diyafram_acikligi_id,piksel_buyuklugu_id) VALUES (?,?,?,?)";
+	private static final String UPDATE = "UPDATE arka_kamera_ata SET cihaz_id=?,arka_kamera_cozunurluk_id=?,diyafram_acikligi_id=?,piksel_buyuklugu_id=? WHERE id=?";
 	private static final String TUM_OZELLIKLER = "SELECT * FROM cihaz_ozellik_atama WHERE ozellik_id=21";
 
 	public static LinkedHashMap<Integer, OzellikAtama> tumOzellikler() throws SQLException {
@@ -40,7 +40,9 @@ public class ArkaKameraAtaDAO {
 		
 		PreparedStatement pstmt = c.prepareStatement(INSERT);
 		pstmt.setInt(1, arkaKameraAta.getCihazId());
-		pstmt.setInt(2, arkaKameraAta.getArkaKameraId());
+		pstmt.setInt(2, arkaKameraAta.getArkaKameraCozunurlukId());
+		pstmt.setInt(3, arkaKameraAta.getDiyaframAcikligiIdId());
+		pstmt.setInt(4, arkaKameraAta.getPikselBuyukluguId());
 		
 		pstmt.executeUpdate();
 
@@ -53,8 +55,10 @@ public class ArkaKameraAtaDAO {
 		
 		PreparedStatement pstmt = c.prepareStatement(UPDATE);
 		pstmt.setInt(1, arkaKameraAta.getCihazId());
-		pstmt.setInt(2, arkaKameraAta.getArkaKameraId());
-		pstmt.setInt(3, arkaKameraAta.getId());
+		pstmt.setInt(2, arkaKameraAta.getArkaKameraCozunurlukId());
+		pstmt.setInt(3, arkaKameraAta.getDiyaframAcikligiIdId());
+		pstmt.setInt(4, arkaKameraAta.getPikselBuyukluguId());
+		pstmt.setInt(5, arkaKameraAta.getId());
 		
 		pstmt.executeUpdate();
 
@@ -73,7 +77,7 @@ public class ArkaKameraAtaDAO {
 		ResultSet rset = pstmt.executeQuery();
 
 		while (rset.next()){
-			arkaKameraAta = new ArkaKameraAta(rset.getInt("id"),rset.getInt("cihaz_id"),rset.getInt("arka_kamera_id"));
+			arkaKameraAta = new ArkaKameraAta(rset.getInt("id"),rset.getInt("cihaz_id"),rset.getInt("arka_kamera_cozunurluk_id"),rset.getInt("diyafram_acikligi_id"),rset.getInt("piksel_buyuklugu_id"));
 		}
 
 		pstmt.close();
