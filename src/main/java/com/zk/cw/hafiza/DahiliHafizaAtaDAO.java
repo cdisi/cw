@@ -11,7 +11,6 @@ import com.zk.cw.dao_factory.DaoFactory;
 public class DahiliHafizaAtaDAO {
 	private static final String FIND_BY_CIHAZ_ID = "SELECT * FROM dahili_hafiza_ata WHERE cihaz_id = ? ORDER BY id LIMIT 1 OFFSET ?";		
 	private static final String DELETE = "DELETE FROM dahili_hafiza_ata WHERE id=?";	
-
 	private static final String INSERT = "INSERT INTO dahili_hafiza_ata (cihaz_id,dahili_hafiza_id) VALUES (?,?)";
 	private static final String UPDATE = "UPDATE dahili_hafiza_ata SET cihaz_id=?,dahili_hafiza_id=? WHERE id=?";
 
