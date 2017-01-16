@@ -1,4 +1,4 @@
-package com.zk.cw.hafiza;
+package com.zk.cw.kamera;
 
 public class Diyafram {
 	private Integer id;

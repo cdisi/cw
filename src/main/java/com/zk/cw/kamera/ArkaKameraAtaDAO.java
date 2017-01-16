@@ -35,7 +35,7 @@ public class ArkaKameraAtaDAO {
 	}
 
 	
-	public static void add(ArkaKameraAta arkaKameraAta) throws SQLException {
+	public static ArkaKameraAta add(ArkaKameraAta arkaKameraAta) throws SQLException {
 		Connection c = DaoFactory.openConnection();
 		
 		PreparedStatement pstmt = c.prepareStatement(INSERT);
@@ -48,6 +48,7 @@ public class ArkaKameraAtaDAO {
 
 		pstmt.close();
 		c.close();
+		return arkaKameraAta;
 	}
 	
 	public static void update(ArkaKameraAta arkaKameraAta) throws SQLException {

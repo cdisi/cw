@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.zk.cw.dao_factory.DaoFactory;
-import com.zk.cw.hafiza.Diyafram;
 
 public class DiyaframDAO {
 	private static final String FIND_BY_ID = "SELECT * FROM kamera_diyafram_acikligi WHERE id = ?";		

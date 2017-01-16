@@ -17,9 +17,9 @@ public class ArkaKameraGuncelle {
 	public static void main(String[] args) {
 		//System.exit(0);
 		LinkedHashMap<Integer, OzellikAtama> lhm = null;
-		ArkaKameraCozunurlukDAO arkaKameraDAO = new ArkaKameraCozunurlukDAO();
+		ArkaKameraAtaDAO arkaKameraAtaDAO = new ArkaKameraAtaDAO();
 		try {
-			lhm = arkaKameraDAO.tumOzellikler();
+			lhm = arkaKameraAtaDAO.tumOzellikler();
 			Set<Integer> ks = lhm.keySet();
 			Iterator<Integer> itr = ks.iterator();
 			int i=1;
@@ -27,20 +27,38 @@ public class ArkaKameraGuncelle {
 				Integer key = itr.next();
 				OzellikAtama ozellikAtama = lhm.get(key);
 				ArkaKameraCozunurluk arkaKamera = new ArkaKameraCozunurluk();
-				Cihaz cihaz = new Cihaz();
-				cihaz.setId(ozellikAtama.getCihazId());
-				String pattern = "\\b[0-9\\.\\s]+MP\\b";
+				Diyafram diyafram = new Diyafram();
+				ArkaKameraAta arkaKameraAta = new ArkaKameraAta();
+				arkaKameraAta.setCihazId(ozellikAtama.getCihazId());
+				String pattern = "\\b([0-9\\.\\s]+MP).*(f/[0-9\\.])\\b";
 				Pattern r = Pattern.compile(pattern);
 			    Matcher m = r.matcher(ozellikAtama.getDeger());
 			    while (m.find()) {
-			    	System.out.println(i+":"+ozellikAtama.getDeger()+":"+m.group());
+			    	// çözünürlük
+			    	System.out.println(i+":"+ozellikAtama.getDeger()+":"+m.group(0)+":"+m.group(1));
 			    	arkaKamera.setCozunurluk(m.group());
 			    	ArkaKameraCozunurlukDAO.findBy(arkaKamera);
 					if(arkaKamera.getId() == null){
 						ArkaKameraCozunurlukDAO.add(arkaKamera);
 					}
-					ArkaKameraAtaDAO.add(cihaz,arkaKamera);
+					// diyafram
+					//ArkaKameraAtaDAO.add(arkaKameraAta);
 			    }
+			    /*
+				String pattern2 = "\\bf/[0-9\\.]+\\b";
+				Pattern r2 = Pattern.compile(pattern2);
+			    Matcher m2 = r2.matcher(ozellikAtama.getDeger());
+			    while (m.find()) {
+			    	System.out.println(i+":"+ozellikAtama.getDeger()+":"+m.group());
+			    	diyafram.setAciklik(m.group());
+			    	DiyaframDAO.findBy(diyafram);
+					if(diyafram.getId() == null){
+						DiyaframDAO.add(diyafram);
+					}
+			    	arkaKameraAta.setDiyaframAcikligiId(diyafram.getId());
+			    	ArkaKameraAtaDAO.update(arkaKameraAta);
+			    }
+			    */
 			    i++;
 				
 			}
