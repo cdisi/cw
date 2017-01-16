@@ -3,16 +3,16 @@ package com.zk.cw.kamera;
 public class ArkaKameraAta {
 	private Integer id;
     private Integer cihazId;
-    private Integer arkaKameraCozunurlukId;
+    private Integer cozunurlukId;
     private Integer diyaframAcikligiId;
     private Integer pikselBuyukluguId;
     
     public ArkaKameraAta() {
     }
-    public ArkaKameraAta(Integer id, Integer cihazId, Integer arkaKameraCozunurlukId,Integer diyaframAcikligiId,Integer pikselBuyukluguId) {
+    public ArkaKameraAta(Integer id, Integer cihazId, Integer cozunurlukId,Integer diyaframAcikligiId,Integer pikselBuyukluguId) {
         this.id = id;
         this.cihazId = cihazId;
-        this.arkaKameraCozunurlukId = arkaKameraCozunurlukId;
+        this.cozunurlukId = cozunurlukId;
         this.diyaframAcikligiId = diyaframAcikligiId;
         this.pikselBuyukluguId = pikselBuyukluguId;
     }
@@ -28,11 +28,11 @@ public class ArkaKameraAta {
 	public void setCihazId(Integer cihazId) {
         this.cihazId=cihazId;
     }	
-	public Integer getArkaKameraCozunurlukId() {
-        return this.arkaKameraCozunurlukId;
+	public Integer getKameraCozunurlukId() {
+        return this.cozunurlukId;
     }
-	public void setArkaKameraCozunurlukId(Integer arkaKameraCozunurlukId) {
-        this.arkaKameraCozunurlukId=arkaKameraCozunurlukId;
+	public void setKameraCozunurlukId(Integer cozunurlukId) {
+        this.cozunurlukId=cozunurlukId;
     }
 	public Integer getDiyaframAcikligiIdId() {
         return this.diyaframAcikligiId;

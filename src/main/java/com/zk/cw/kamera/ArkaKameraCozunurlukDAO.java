@@ -12,10 +12,10 @@ import com.zk.cw.dao_factory.DaoFactory;
 import com.zk.cw.ozellik_atama.OzellikAtama;
 
 public class ArkaKameraCozunurlukDAO {
-	private static final String FIND_BY_ID = "SELECT * FROM arka_kamera_cozunurluk WHERE id = ?";		
-	private static final String INSERT = "INSERT INTO arka_kamera_cozunurluk (cozunurluk) VALUES (?)";
-	private static final String FIND_BY_NAME = "SELECT * FROM arka_kamera_cozunurluk WHERE cozunurluk = ?";	
-	private static final String ALL = "SELECT * FROM arka_kamera_cozunurluk ORDER BY cozunurluk";
+	private static final String FIND_BY_ID = "SELECT * FROM kamera_cozunurluk WHERE id = ?";		
+	private static final String INSERT = "INSERT INTO kamera_cozunurluk (cozunurluk) VALUES (?)";
+	private static final String FIND_BY_NAME = "SELECT * FROM kamera_cozunurluk WHERE cozunurluk = ?";	
+	private static final String ALL = "SELECT * FROM kamera_cozunurluk ORDER BY cozunurluk";
 	
 	public static ArkaKameraCozunurluk findBy(ArkaKameraCozunurluk arkaKamera) throws SQLException {
 		Connection c = DaoFactory.openConnection();

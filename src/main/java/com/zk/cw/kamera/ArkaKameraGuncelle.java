@@ -29,20 +29,36 @@ public class ArkaKameraGuncelle {
 				ArkaKameraCozunurluk arkaKamera = new ArkaKameraCozunurluk();
 				Diyafram diyafram = new Diyafram();
 				ArkaKameraAta arkaKameraAta = new ArkaKameraAta();
+				PikselBuyuklugu pikselBuyuklugu = new PikselBuyuklugu();
 				arkaKameraAta.setCihazId(ozellikAtama.getCihazId());
-				String pattern = "\\b([0-9\\.\\s]+MP).*(f/[0-9\\.])\\b";
+				String pattern = "\\b([0-9\\.\\s]+MP).*(f/[0-9\\.]+).*([0-9]+mm)\\b";
 				Pattern r = Pattern.compile(pattern);
 			    Matcher m = r.matcher(ozellikAtama.getDeger());
 			    while (m.find()) {
 			    	// çözünürlük
-			    	System.out.println(i+":"+ozellikAtama.getDeger()+":"+m.group(0)+":"+m.group(1));
-			    	arkaKamera.setCozunurluk(m.group());
+			    	System.out.println(i+":"+ozellikAtama.getDeger()+":"+m.group(1)+":"+m.group(2)+":"+m.group(3));
+			    	arkaKamera.setCozunurluk(m.group(1).trim());
 			    	ArkaKameraCozunurlukDAO.findBy(arkaKamera);
 					if(arkaKamera.getId() == null){
 						ArkaKameraCozunurlukDAO.add(arkaKamera);
 					}
+					arkaKameraAta.setKameraCozunurlukId(arkaKamera.getId());
 					// diyafram
-					//ArkaKameraAtaDAO.add(arkaKameraAta);
+			    	diyafram.setAciklik(m.group(2));
+			    	DiyaframDAO.findBy(diyafram);
+					if(diyafram.getId() == null){
+						DiyaframDAO.add(diyafram);
+					}
+			    	arkaKameraAta.setDiyaframAcikligiId(diyafram.getId());
+					// piksel büyüklüğü
+			    	pikselBuyuklugu.setBuyukluk(m.group(3));
+			    	PikselBuyukluguDAO.findBy(pikselBuyuklugu);
+					if(pikselBuyuklugu.getId() == null){
+						PikselBuyukluguDAO.add(pikselBuyuklugu);
+					}
+			    	arkaKameraAta.setPikselBuyukluguId(pikselBuyuklugu.getId());
+			    	
+					ArkaKameraAtaDAO.add(arkaKameraAta);
 			    }
 			    /*
 				String pattern2 = "\\bf/[0-9\\.]+\\b";
