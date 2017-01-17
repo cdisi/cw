@@ -49,6 +49,14 @@ import com.zk.cw.harici_hafiza.HariciHafizaBuyukluk;
 import com.zk.cw.harici_hafiza.HariciHafizaBuyuklukDAO;
 import com.zk.cw.harici_hafiza.HariciHafizaTipi;
 import com.zk.cw.harici_hafiza.HariciHafizaTipiDAO;
+import com.zk.cw.kamera.ArkaKameraAta;
+import com.zk.cw.kamera.ArkaKameraAtaDAO;
+import com.zk.cw.kamera.ArkaKameraCozunurluk;
+import com.zk.cw.kamera.ArkaKameraCozunurlukDAO;
+import com.zk.cw.kamera.Diyafram;
+import com.zk.cw.kamera.DiyaframDAO;
+import com.zk.cw.kamera.PikselBuyuklugu;
+import com.zk.cw.kamera.PikselBuyukluguDAO;
 import com.zk.cw.main.MainWindow;
 import com.zk.cw.ram.Ram;
 import com.zk.cw.ram.RamDAO;
@@ -357,9 +365,6 @@ public class CihazController implements ActionListener {
 				}
 			}
 
-			if(!fView.getArkaKam().equals("")){
-				cihazOzellikAtamaList.add(new CihazOzellikAtama(6,21, fView.getArkaKam().trim()));
-			}
 			if(!fView.getArkaKamOz().equals("")){
 				cihazOzellikAtamaList.add(new CihazOzellikAtama(6,22, fView.getArkaKamOz().trim()));
 			}
@@ -616,6 +621,59 @@ public class CihazController implements ActionListener {
 				}
 				//cihazOzellikAtamaList.add(new CihazOzellikAtama(10,46, ram.getId().toString()));
 		
+			}
+			
+			if(!fView.getArkaKam().equals("")){
+				
+				String patternCoz = "\\b([0-9\\.\\s]+MP)\\b";
+				Pattern rCoz = Pattern.compile(patternCoz);
+			    Matcher mCoz = rCoz.matcher(fView.getArkaKam());
+				
+			    String patternDiy = "\\b(f/[0-9\\.]+)\\b";
+				Pattern rDiy = Pattern.compile(patternDiy);
+			    Matcher mDiy = rDiy.matcher(fView.getArkaKam());
+				
+			    String patternPik = "\\b([0-9]+mm)\\b";
+				Pattern rPik = Pattern.compile(patternPik);
+			    Matcher mPik = rPik.matcher(fView.getArkaKam());
+			    int count= 0;
+			    while (mCoz.find()) {
+					ArkaKameraCozunurluk arkaKamera = new ArkaKameraCozunurluk();
+					Diyafram diyafram = new Diyafram();
+					ArkaKameraAta arkaKameraAta = new ArkaKameraAta();
+					PikselBuyuklugu pikselBuyuklugu = new PikselBuyuklugu();
+					arkaKameraAta.setCihazId(fCihaz.getId());
+
+			    	//çözünürlük
+			    	arkaKamera.setCozunurluk(mCoz.group().trim());
+			    	ArkaKameraCozunurlukDAO.findBy(arkaKamera);
+					if(arkaKamera.getId() == null){
+						ArkaKameraCozunurlukDAO.add(arkaKamera);
+					}
+					arkaKameraAta.setKameraCozunurlukId(arkaKamera.getId());
+					// diyafram
+			    	if(mDiy.find()){
+				    	diyafram.setAciklik(mDiy.group().trim());
+				    	DiyaframDAO.findBy(diyafram);
+						if(diyafram.getId() == null){
+							DiyaframDAO.add(diyafram);
+						}
+				    	arkaKameraAta.setDiyaframAcikligiId(diyafram.getId());
+			    	}
+					// piksel büyüklüğü
+			    	if(mPik.find()){
+				    	pikselBuyuklugu.setBuyukluk(mPik.group().trim());
+				    	PikselBuyukluguDAO.findBy(pikselBuyuklugu);
+						if(pikselBuyuklugu.getId() == null){
+							PikselBuyukluguDAO.add(pikselBuyuklugu);
+						}
+				    	arkaKameraAta.setPikselBuyukluguId(pikselBuyuklugu.getId());
+			    	}
+					ArkaKameraAtaDAO.add(arkaKameraAta);
+			    }
+				
+				cihazOzellikAtamaList.add(new CihazOzellikAtama(6,21, fView.getArkaKam().trim()));
+				
 			}
     		  
     		  for(CihazOzellikAtama cihazOzellikAtama : cihazOzellikAtamaList){

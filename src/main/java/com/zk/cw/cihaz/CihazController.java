@@ -21,6 +21,8 @@ import com.zk.cw.exception.InvalidInputException;
 import com.zk.cw.hafiza.DahiliHafiza;
 import com.zk.cw.hafiza.DahiliHafizaAta;
 import com.zk.cw.hafiza.DahiliHafizaAtaDAO;
+import com.zk.cw.kamera.ArkaKameraAta;
+import com.zk.cw.kamera.ArkaKameraAtaDAO;
 import com.zk.cw.main.MainWindow;
 import com.zk.cw.ozellik_atama.OzellikAtama;
 import com.zk.cw.ozellik_atama.OzellikAtamaDAO;
@@ -321,7 +323,79 @@ public class CihazController implements ActionListener  {
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-		    }	
+		    }
+		    
+		    // arka kamera çözünürlük		     
+		    ArkaKameraAta arkaKameraAta = fView.getArkaKameraAta();
+	    	if(arkaKameraAta == null){
+	    		  arkaKameraAta = new ArkaKameraAta(); 
+	    	}
+	    	arkaKameraAta.setCihazId(fCihaz.getId());
+	    	arkaKameraAta.setKameraCozunurlukId(fView.getArkaKameraCozunurluk().getId());
+		    try {
+				 if( (fView.getArkaKameraCozunurluk().getId() == null) ){
+				    	if(arkaKameraAta.getId() != null)
+				    		ArkaKameraAtaDAO.delete(arkaKameraAta);
+				 }else{
+			    	  if(arkaKameraAta.getId() == null)
+			    		  ArkaKameraAtaDAO.add(arkaKameraAta);
+			    	  else
+			    		  ArkaKameraAtaDAO.update(arkaKameraAta);
+				 }
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		    // arka kamera diyafram
+		    try {
+		    	arkaKameraAta.setDiyaframAcikligiId(fView.getArkaKameraDiyafram().getId());  
+		    	ArkaKameraAtaDAO.update(arkaKameraAta);
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		    
+		    // arka kamera piksel büyüklüğü
+		    try {
+		    	arkaKameraAta.setPikselBuyukluguId(fView.getArkaKameraPikselBuyuklugu().getId());  
+		    	ArkaKameraAtaDAO.update(arkaKameraAta);
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		    
+		    // 2.arka kamera çözünürlük		     
+		    ArkaKameraAta arkaKameraAta2 = fView.getArkaKameraAta2();
+	    	if(arkaKameraAta2 == null){
+	    		  arkaKameraAta2 = new ArkaKameraAta(); 
+	    	}
+	    	arkaKameraAta2.setCihazId(fCihaz.getId());
+	    	arkaKameraAta2.setKameraCozunurlukId(fView.getArkaKameraCozunurluk2().getId());
+		    try {
+				 if( (fView.getArkaKameraCozunurluk2().getId() == null) ){
+				    	if(arkaKameraAta2.getId() != null)
+				    		ArkaKameraAtaDAO.delete(arkaKameraAta2);
+				 }else{
+			    	  if(arkaKameraAta2.getId() == null)
+			    		  ArkaKameraAtaDAO.add(arkaKameraAta2);
+			    	  else
+			    		  ArkaKameraAtaDAO.update(arkaKameraAta2);
+				 }
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		    // 2.arka kamera diyafram
+		    try {
+		    	arkaKameraAta2.setDiyaframAcikligiId(fView.getArkaKameraDiyafram2().getId());  
+		    	ArkaKameraAtaDAO.update(arkaKameraAta2);
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		    
+		    // 2.arka kamera piksel büyüklüğü
+		    try {
+		    	arkaKameraAta2.setPikselBuyukluguId(fView.getArkaKameraPikselBuyuklugu2().getId());  
+		    	ArkaKameraAtaDAO.update(arkaKameraAta2);
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}		    
 		    
 		    for(OzellikAtama ozellikAtama : ozellikAtamaList){
 				  try {

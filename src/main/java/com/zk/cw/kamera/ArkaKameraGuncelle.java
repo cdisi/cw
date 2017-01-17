@@ -15,68 +15,67 @@ import com.zk.cw.ozellik_atama.OzellikAtama;
 public class ArkaKameraGuncelle {
 
 	public static void main(String[] args) {
-		//System.exit(0);
+		System.exit(0);
 		LinkedHashMap<Integer, OzellikAtama> lhm = null;
 		ArkaKameraAtaDAO arkaKameraAtaDAO = new ArkaKameraAtaDAO();
 		try {
 			lhm = arkaKameraAtaDAO.tumOzellikler();
 			Set<Integer> ks = lhm.keySet();
 			Iterator<Integer> itr = ks.iterator();
-			int i=1;
 			while (itr.hasNext()){
 				Integer key = itr.next();
 				OzellikAtama ozellikAtama = lhm.get(key);
-				ArkaKameraCozunurluk arkaKamera = new ArkaKameraCozunurluk();
-				Diyafram diyafram = new Diyafram();
-				ArkaKameraAta arkaKameraAta = new ArkaKameraAta();
-				PikselBuyuklugu pikselBuyuklugu = new PikselBuyuklugu();
-				arkaKameraAta.setCihazId(ozellikAtama.getCihazId());
-				String pattern = "\\b([0-9\\.\\s]+MP).*(f/[0-9\\.]+).*([0-9]+mm)\\b";
-				Pattern r = Pattern.compile(pattern);
-			    Matcher m = r.matcher(ozellikAtama.getDeger());
-			    while (m.find()) {
-			    	// çözünürlük
-			    	System.out.println(i+":"+ozellikAtama.getDeger()+":"+m.group(1)+":"+m.group(2)+":"+m.group(3));
-			    	arkaKamera.setCozunurluk(m.group(1).trim());
+				
+				String patternCoz = "\\b([0-9\\.\\s]+MP)\\b";
+				Pattern rCoz = Pattern.compile(patternCoz);
+			    Matcher mCoz = rCoz.matcher(ozellikAtama.getDeger());
+				
+			    String patternDiy = "\\b(f/[0-9\\.]+)\\b";
+				Pattern rDiy = Pattern.compile(patternDiy);
+			    Matcher mDiy = rDiy.matcher(ozellikAtama.getDeger());
+				
+			    String patternPik = "\\b([0-9]+mm)\\b";
+				Pattern rPik = Pattern.compile(patternPik);
+			    Matcher mPik = rPik.matcher(ozellikAtama.getDeger());
+			    int count= 0;
+			    while (mCoz.find()) {
+					ArkaKameraCozunurluk arkaKamera = new ArkaKameraCozunurluk();
+					Diyafram diyafram = new Diyafram();
+					ArkaKameraAta arkaKameraAta = new ArkaKameraAta();
+					PikselBuyuklugu pikselBuyuklugu = new PikselBuyuklugu();
+					arkaKameraAta.setCihazId(ozellikAtama.getCihazId());
+
+			    	//çözünürlük
+			    	System.out.println(ozellikAtama.getCihazId()+":"+ozellikAtama.getDeger()+":"+mCoz.group());
+			    	arkaKamera.setCozunurluk(mCoz.group().trim());
 			    	ArkaKameraCozunurlukDAO.findBy(arkaKamera);
 					if(arkaKamera.getId() == null){
 						ArkaKameraCozunurlukDAO.add(arkaKamera);
 					}
 					arkaKameraAta.setKameraCozunurlukId(arkaKamera.getId());
 					// diyafram
-			    	diyafram.setAciklik(m.group(2));
-			    	DiyaframDAO.findBy(diyafram);
-					if(diyafram.getId() == null){
-						DiyaframDAO.add(diyafram);
-					}
-			    	arkaKameraAta.setDiyaframAcikligiId(diyafram.getId());
+			    	if(mDiy.find()){
+						System.out.println(ozellikAtama.getCihazId()+":"+ozellikAtama.getDeger()+":"+mDiy.group());
+				    	diyafram.setAciklik(mDiy.group().trim());
+				    	DiyaframDAO.findBy(diyafram);
+						if(diyafram.getId() == null){
+							DiyaframDAO.add(diyafram);
+						}
+				    	arkaKameraAta.setDiyaframAcikligiId(diyafram.getId());
+			    	}
 					// piksel büyüklüğü
-			    	pikselBuyuklugu.setBuyukluk(m.group(3));
-			    	PikselBuyukluguDAO.findBy(pikselBuyuklugu);
-					if(pikselBuyuklugu.getId() == null){
-						PikselBuyukluguDAO.add(pikselBuyuklugu);
-					}
-			    	arkaKameraAta.setPikselBuyukluguId(pikselBuyuklugu.getId());
-			    	
+			    	if(mPik.find()){
+						System.out.println(ozellikAtama.getCihazId()+":"+ozellikAtama.getDeger()+":"+mPik.group());
+				    	pikselBuyuklugu.setBuyukluk(mPik.group().trim());
+				    	PikselBuyukluguDAO.findBy(pikselBuyuklugu);
+						if(pikselBuyuklugu.getId() == null){
+							PikselBuyukluguDAO.add(pikselBuyuklugu);
+						}
+				    	arkaKameraAta.setPikselBuyukluguId(pikselBuyuklugu.getId());
+			    	}
 					ArkaKameraAtaDAO.add(arkaKameraAta);
+					count++;
 			    }
-			    /*
-				String pattern2 = "\\bf/[0-9\\.]+\\b";
-				Pattern r2 = Pattern.compile(pattern2);
-			    Matcher m2 = r2.matcher(ozellikAtama.getDeger());
-			    while (m.find()) {
-			    	System.out.println(i+":"+ozellikAtama.getDeger()+":"+m.group());
-			    	diyafram.setAciklik(m.group());
-			    	DiyaframDAO.findBy(diyafram);
-					if(diyafram.getId() == null){
-						DiyaframDAO.add(diyafram);
-					}
-			    	arkaKameraAta.setDiyaframAcikligiId(diyafram.getId());
-			    	ArkaKameraAtaDAO.update(arkaKameraAta);
-			    }
-			    */
-			    i++;
-				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

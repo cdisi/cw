@@ -38,14 +38,26 @@ public class ArkaKameraAtaDAO {
 	public static ArkaKameraAta add(ArkaKameraAta arkaKameraAta) throws SQLException {
 		Connection c = DaoFactory.openConnection();
 		
-		PreparedStatement pstmt = c.prepareStatement(INSERT);
+		PreparedStatement pstmt = c.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
+		
+		
 		pstmt.setInt(1, arkaKameraAta.getCihazId());
 		pstmt.setInt(2, arkaKameraAta.getKameraCozunurlukId());
-		pstmt.setInt(3, arkaKameraAta.getDiyaframAcikligiIdId());
-		pstmt.setInt(4, arkaKameraAta.getPikselBuyukluguId());
+		if(arkaKameraAta.getDiyaframAcikligiIdId() == null)
+			pstmt.setNull(3, java.sql.Types.INTEGER);
+		else			
+			pstmt.setInt(3, arkaKameraAta.getDiyaframAcikligiIdId());
+		if(arkaKameraAta.getPikselBuyukluguId() == null)
+			pstmt.setNull(4, java.sql.Types.INTEGER);
+		else
+			pstmt.setInt(4, arkaKameraAta.getPikselBuyukluguId());
 		
 		pstmt.executeUpdate();
-
+		ResultSet rset = pstmt.getGeneratedKeys();
+		rset.next();
+		Integer idGenerated = rset.getInt(1);		
+		arkaKameraAta.setId(idGenerated);
+		
 		pstmt.close();
 		c.close();
 		return arkaKameraAta;
@@ -56,9 +68,18 @@ public class ArkaKameraAtaDAO {
 		
 		PreparedStatement pstmt = c.prepareStatement(UPDATE);
 		pstmt.setInt(1, arkaKameraAta.getCihazId());
-		pstmt.setInt(2, arkaKameraAta.getKameraCozunurlukId());
-		pstmt.setInt(3, arkaKameraAta.getDiyaframAcikligiIdId());
-		pstmt.setInt(4, arkaKameraAta.getPikselBuyukluguId());
+		if(arkaKameraAta.getKameraCozunurlukId() != null)
+			pstmt.setInt(2, arkaKameraAta.getKameraCozunurlukId());
+		else
+			pstmt.setNull(2, java.sql.Types.INTEGER);
+		if(arkaKameraAta.getDiyaframAcikligiIdId() == null)
+			pstmt.setNull(3, java.sql.Types.INTEGER);
+		else			
+			pstmt.setInt(3, arkaKameraAta.getDiyaframAcikligiIdId());
+		if(arkaKameraAta.getPikselBuyukluguId() == null)
+			pstmt.setNull(4, java.sql.Types.INTEGER);
+		else
+			pstmt.setInt(4, arkaKameraAta.getPikselBuyukluguId());
 		pstmt.setInt(5, arkaKameraAta.getId());
 		
 		pstmt.executeUpdate();
