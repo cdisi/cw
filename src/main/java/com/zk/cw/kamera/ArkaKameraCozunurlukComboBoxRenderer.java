@@ -14,9 +14,9 @@ public class ArkaKameraCozunurlukComboBoxRenderer extends BasicComboBoxRenderer 
         {
             super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
      
-            if (value instanceof ArkaKameraCozunurluk)
+            if (value instanceof KameraCozunurluk)
             {
-            	ArkaKameraCozunurluk arkaKameraCozunurluk = (ArkaKameraCozunurluk)value;
+            	KameraCozunurluk arkaKameraCozunurluk = (KameraCozunurluk)value;
                 setText( arkaKameraCozunurluk.getCozunurluk());
             }     
             return this;

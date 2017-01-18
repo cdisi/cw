@@ -39,7 +39,7 @@ public class ArkaKameraGuncelle {
 			    Matcher mPik = rPik.matcher(ozellikAtama.getDeger());
 			    int count= 0;
 			    while (mCoz.find()) {
-					ArkaKameraCozunurluk arkaKamera = new ArkaKameraCozunurluk();
+					KameraCozunurluk arkaKamera = new KameraCozunurluk();
 					Diyafram diyafram = new Diyafram();
 					ArkaKameraAta arkaKameraAta = new ArkaKameraAta();
 					PikselBuyuklugu pikselBuyuklugu = new PikselBuyuklugu();

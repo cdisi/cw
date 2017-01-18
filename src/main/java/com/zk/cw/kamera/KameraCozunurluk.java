@@ -1,12 +1,12 @@
 package com.zk.cw.kamera;
 
-public class ArkaKameraCozunurluk {
+public class KameraCozunurluk {
 	private Integer id;
     private String cozunurluk;
     
-    public ArkaKameraCozunurluk() {
+    public KameraCozunurluk() {
     }
-    public ArkaKameraCozunurluk(Integer id, String cozunurluk) {
+    public KameraCozunurluk(Integer id, String cozunurluk) {
         this.id = id;
         this.cozunurluk = cozunurluk;
     }

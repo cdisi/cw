@@ -17,7 +17,7 @@ public class ArkaKameraCozunurlukDAO {
 	private static final String FIND_BY_NAME = "SELECT * FROM kamera_cozunurluk WHERE cozunurluk = ?";	
 	private static final String ALL = "SELECT * FROM kamera_cozunurluk ORDER BY cozunurluk";
 	
-	public static ArkaKameraCozunurluk findBy(ArkaKameraCozunurluk arkaKamera) throws SQLException {
+	public static KameraCozunurluk findBy(KameraCozunurluk arkaKamera) throws SQLException {
 		Connection c = DaoFactory.openConnection();
 
 		PreparedStatement pstmt = c.prepareStatement(FIND_BY_NAME);
@@ -36,7 +36,7 @@ public class ArkaKameraCozunurlukDAO {
 		return arkaKamera;
 	}	
 	
-	public static ArkaKameraCozunurluk findById(ArkaKameraCozunurluk arkaKamera) throws SQLException {
+	public static KameraCozunurluk findById(KameraCozunurluk arkaKamera) throws SQLException {
 		Connection c = DaoFactory.openConnection();
 
 		PreparedStatement pstmt = c.prepareStatement(FIND_BY_ID);
@@ -55,7 +55,7 @@ public class ArkaKameraCozunurlukDAO {
 		return arkaKamera;
 	}	
 	
-	public static ArkaKameraCozunurluk add(ArkaKameraCozunurluk arkaKamera) throws SQLException {
+	public static KameraCozunurluk add(KameraCozunurluk arkaKamera) throws SQLException {
 		Connection c = DaoFactory.openConnection();
 		
 		PreparedStatement pstmt = c.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -74,14 +74,14 @@ public class ArkaKameraCozunurlukDAO {
 		return arkaKamera;
 	}
 	
-	public static List<ArkaKameraCozunurluk> all() throws SQLException {
+	public static List<KameraCozunurluk> all() throws SQLException {
 		Connection c = DaoFactory.openConnection();
 		PreparedStatement pstmt = c.prepareStatement(ALL);
 
 		ResultSet rset = pstmt.executeQuery();
-		List<ArkaKameraCozunurluk> kamler = new ArrayList<ArkaKameraCozunurluk>();
+		List<KameraCozunurluk> kamler = new ArrayList<KameraCozunurluk>();
 		while (rset.next()){
-			ArkaKameraCozunurluk arkaKamera = new ArkaKameraCozunurluk(rset.getInt("id"), rset.getString("cozunurluk"));
+			KameraCozunurluk arkaKamera = new KameraCozunurluk(rset.getInt("id"), rset.getString("cozunurluk"));
 			kamler.add(arkaKamera);
 		}
 

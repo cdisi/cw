@@ -71,14 +71,16 @@ import com.zk.cw.harici_hafiza.HariciHafizaTipiComboBoxRenderer;
 import com.zk.cw.harici_hafiza.HariciHafizaTipiDAO;
 import com.zk.cw.kamera.ArkaKameraAta;
 import com.zk.cw.kamera.ArkaKameraAtaDAO;
-import com.zk.cw.kamera.ArkaKameraCozunurluk;
-import com.zk.cw.kamera.ArkaKameraCozunurlukCombBoxModel;
+import com.zk.cw.kamera.KameraCozunurluk;
+import com.zk.cw.kamera.KameraCozunurlukCombBoxModel;
 import com.zk.cw.kamera.ArkaKameraCozunurlukComboBoxRenderer;
 import com.zk.cw.kamera.ArkaKameraCozunurlukDAO;
 import com.zk.cw.kamera.Diyafram;
 import com.zk.cw.kamera.DiyaframCombBoxModel;
 import com.zk.cw.kamera.DiyaframComboBoxRenderer;
 import com.zk.cw.kamera.DiyaframDAO;
+import com.zk.cw.kamera.OnKameraAta;
+import com.zk.cw.kamera.OnKameraAtaDAO;
 import com.zk.cw.kamera.PikselBuyuklugu;
 import com.zk.cw.kamera.PikselBuyukluguCombBoxModel;
 import com.zk.cw.kamera.PikselBuyukluguComboBoxRenderer;
@@ -275,9 +277,9 @@ public class CihazView {
 	//arka kamera çözünürlük
 	ArkaKameraAtaDAO arkaKameraAtaDAO;
 	ArkaKameraAta arkaKameraAta;
-	private ComboBoxModel<ArkaKameraCozunurluk> arkaKameraCozunurlukComboBoxModel = new ArkaKameraCozunurlukCombBoxModel();
-	private JComboBox<ArkaKameraCozunurluk> fArkaKameraCozunurluk= new JComboBox<ArkaKameraCozunurluk>(arkaKameraCozunurlukComboBoxModel);	
-	private ArkaKameraCozunurluk selectedArkaKameraCozunurluk= new ArkaKameraCozunurluk();
+	private ComboBoxModel<KameraCozunurluk> arkaKameraCozunurlukComboBoxModel = new KameraCozunurlukCombBoxModel();
+	private JComboBox<KameraCozunurluk> fArkaKameraCozunurluk= new JComboBox<KameraCozunurluk>(arkaKameraCozunurlukComboBoxModel);	
+	private KameraCozunurluk selectedArkaKameraCozunurluk= new KameraCozunurluk();
 	
 	//arka kamera diyafram
 	private ComboBoxModel<Diyafram> arkaKameraDiyaframComboBoxModel = new DiyaframCombBoxModel();
@@ -291,10 +293,9 @@ public class CihazView {
 	//2.arka kamera çözünürlük
 	ArkaKameraAtaDAO arkaKameraAta2DAO;
 	ArkaKameraAta arkaKameraAta2;
-	private ComboBoxModel<ArkaKameraCozunurluk> arkaKameraCozunurluk2ComboBoxModel = new ArkaKameraCozunurlukCombBoxModel();
-	private JComboBox<ArkaKameraCozunurluk> fArkaKameraCozunurluk2= new JComboBox<ArkaKameraCozunurluk>(arkaKameraCozunurluk2ComboBoxModel);	
-	private ArkaKameraCozunurluk selectedArkaKameraCozunurluk2= new ArkaKameraCozunurluk();
-	
+	private ComboBoxModel<KameraCozunurluk> arkaKameraCozunurluk2ComboBoxModel = new KameraCozunurlukCombBoxModel();
+	private JComboBox<KameraCozunurluk> fArkaKameraCozunurluk2= new JComboBox<KameraCozunurluk>(arkaKameraCozunurluk2ComboBoxModel);	
+	private KameraCozunurluk selectedArkaKameraCozunurluk2= new KameraCozunurluk();	
 
 	//2.arka kamera diyafram
 	private ComboBoxModel<Diyafram> arkaKameraDiyafram2ComboBoxModel = new DiyaframCombBoxModel();
@@ -307,7 +308,14 @@ public class CihazView {
 
 	private JTextArea fArkaKameraDiger = new JTextArea(2,30); 
 	private JTextField fArkaKameraVideo = new JTextField();
-
+	
+	//Ön kamera çözünürlük
+	OnKameraAtaDAO onKameraAtaDAO;
+	OnKameraAta onKameraAta;
+	private ComboBoxModel<KameraCozunurluk> onKameraCozunurlukComboBoxModel = new KameraCozunurlukCombBoxModel();
+	private JComboBox<KameraCozunurluk> fOnKameraCozunurluk= new JComboBox<KameraCozunurluk>(onKameraCozunurlukComboBoxModel);	
+	private KameraCozunurluk selectedOnKameraCozunurluk= new KameraCozunurluk();	
+	
 	CihazView(JFrame aParent) {				    
 		fEdit = Edit.ADD;		
 		buildGui(aParent, "Cihaz Ekle");
@@ -425,7 +433,7 @@ public class CihazView {
 			//birinci arka kamera çözünürlük 
 			arkaKameraAta = ArkaKameraAtaDAO.findBy(selectedCihaz,0);
 			if(arkaKameraAta!=null){
-				ArkaKameraCozunurluk arkaKameraCozunurluk = new ArkaKameraCozunurluk();
+				KameraCozunurluk arkaKameraCozunurluk = new KameraCozunurluk();
 				arkaKameraCozunurluk.setId(arkaKameraAta.getKameraCozunurlukId());
 				selectedArkaKameraCozunurluk  = ArkaKameraCozunurlukDAO.findById(arkaKameraCozunurluk);
 				
@@ -441,10 +449,10 @@ public class CihazView {
 				}
 			}
 			
-			//2. arka kamera çözünürlük 
+			//2.arka kamera çözünürlük 
 			arkaKameraAta2 = ArkaKameraAtaDAO.findBy(selectedCihaz,1);
 			if(arkaKameraAta2!=null){
-				ArkaKameraCozunurluk arkaKameraCozunurluk2 = new ArkaKameraCozunurluk();
+				KameraCozunurluk arkaKameraCozunurluk2 = new KameraCozunurluk();
 				arkaKameraCozunurluk2.setId(arkaKameraAta2.getKameraCozunurlukId());
 				selectedArkaKameraCozunurluk2  = ArkaKameraCozunurlukDAO.findById(arkaKameraCozunurluk2);
 				if(arkaKameraAta2.getDiyaframAcikligiIdId() != null){
@@ -599,8 +607,8 @@ public class CihazView {
 	HariciHafizaBuyukluk getHariciHafizaBuyukluk() {
 		return (HariciHafizaBuyukluk) fHariciHafizaBuyukluk.getModel().getSelectedItem();
 	}
-	ArkaKameraCozunurluk getArkaKameraCozunurluk() {
-		return (ArkaKameraCozunurluk) fArkaKameraCozunurluk.getModel().getSelectedItem();
+	KameraCozunurluk getArkaKameraCozunurluk() {
+		return (KameraCozunurluk) fArkaKameraCozunurluk.getModel().getSelectedItem();
 	}
 	ArkaKameraAta getArkaKameraAta() {
 		return arkaKameraAta;
@@ -613,8 +621,8 @@ public class CihazView {
 		return (PikselBuyuklugu) fArkaKameraPikselBuyuklugu.getModel().getSelectedItem();
 	}
 	
-	ArkaKameraCozunurluk getArkaKameraCozunurluk2() {
-		return (ArkaKameraCozunurluk) fArkaKameraCozunurluk2.getModel().getSelectedItem();
+	KameraCozunurluk getArkaKameraCozunurluk2() {
+		return (KameraCozunurluk) fArkaKameraCozunurluk2.getModel().getSelectedItem();
 	}
 	ArkaKameraAta getArkaKameraAta2() {
 		return arkaKameraAta2;
@@ -662,7 +670,10 @@ public class CihazView {
 	    
 	    JPanel arkaKameraPanel = getArkaKameraInputArea();
 	    mainPanel.add(arkaKameraPanel);
-	    
+
+	    JPanel onKameraPanel = getOnKameraInputArea();
+	    mainPanel.add(onKameraPanel);
+
 	    UiUtil.alignAllX(mainPanel, UiUtil.AlignX.LEFT);
 	    return mainPanel;	    
 	}
@@ -758,6 +769,13 @@ public class CihazView {
 	    addArkaKameraPikselBuyuklugu2ComboField(fArkaKameraPikselBuyuklugu2, result);	
 		addTextAreaField(fArkaKameraDiger,"Diğer",result);
 		addTextField(fArkaKameraVideo, "Video", result);
+		return result;
+	}
+	
+	private JPanel getOnKameraInputArea(){
+		JPanel result = new JPanel(new FlowLayout(FlowLayout.LEFT));	    
+		result.setBorder(BorderFactory.createTitledBorder("ÖN KAMERA"));
+	    addOnKameraCozunurlukComboField(fOnKameraCozunurluk, result);	    
 		return result;
 	}
 	
@@ -1266,12 +1284,12 @@ public class CihazView {
 		aPanel.add(panel);		  
 	}	
 	
-	private void addArkaKameraCozunurlukComboField(JComboBox<ArkaKameraCozunurluk> aComboField,  JPanel aPanel) {
+	private void addArkaKameraCozunurlukComboField(JComboBox<KameraCozunurluk> aComboField,  JPanel aPanel) {
   	    JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
-		fArkaKameraCozunurluk.addItem(new ArkaKameraCozunurluk(null, "Çözünürlük"));  	  		
+		fArkaKameraCozunurluk.addItem(new KameraCozunurluk(null, "Çözünürlük"));  	  		
 		try {
-			for(ArkaKameraCozunurluk arkaKameraCozunurluk : ArkaKameraCozunurlukDAO.all()){
+			for(KameraCozunurluk arkaKameraCozunurluk : ArkaKameraCozunurlukDAO.all()){
 				fArkaKameraCozunurluk.addItem(arkaKameraCozunurluk);
 				fArkaKameraCozunurluk.setRenderer(new ArkaKameraCozunurlukComboBoxRenderer());
 			}
@@ -1320,12 +1338,12 @@ public class CihazView {
 		aPanel.add(panel);		  
 	}
 	
-	private void addArkaKameraCozunurluk2ComboField(JComboBox<ArkaKameraCozunurluk> aComboField,  JPanel aPanel) {
+	private void addArkaKameraCozunurluk2ComboField(JComboBox<KameraCozunurluk> aComboField,  JPanel aPanel) {
   	    JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
-		fArkaKameraCozunurluk2.addItem(new ArkaKameraCozunurluk(null, "Çözünürlük"));  	  		
+		fArkaKameraCozunurluk2.addItem(new KameraCozunurluk(null, "Çözünürlük"));  	  		
 		try {
-			for(ArkaKameraCozunurluk arkaKameraCozunurluk : ArkaKameraCozunurlukDAO.all()){
+			for(KameraCozunurluk arkaKameraCozunurluk : ArkaKameraCozunurlukDAO.all()){
 				fArkaKameraCozunurluk2.addItem(arkaKameraCozunurluk);
 				fArkaKameraCozunurluk2.setRenderer(new ArkaKameraCozunurlukComboBoxRenderer());
 			}
@@ -1373,6 +1391,24 @@ public class CihazView {
 	    panel.add(aComboField);		 
 		aPanel.add(panel);		  
 	}	
+	
+	private void addOnKameraCozunurlukComboField(JComboBox<KameraCozunurluk> aComboField,  JPanel aPanel) {
+  	    JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+		fOnKameraCozunurluk.addItem(new KameraCozunurluk(null, "Çözünürlük"));  	  		
+		try {
+			for(KameraCozunurluk onKameraCozunurluk : ArkaKameraCozunurlukDAO.all()){
+				fOnKameraCozunurluk.addItem(onKameraCozunurluk);
+				fOnKameraCozunurluk.setRenderer(new KameraCozunurlukComboBoxRenderer());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
+		aComboField.setPreferredSize(new Dimension(100, aComboField.getPreferredSize().height));
+
+	    panel.add(aComboField);		 
+		aPanel.add(panel);		  
+	}		
 	
 	private void populateFields(Cihaz aSelectedCihaz) {
 		fAd.setText(aSelectedCihaz.getAd());
