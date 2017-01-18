@@ -5,7 +5,7 @@ import java.awt.Component;
 import javax.swing.JList;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
 
-public class ArkaKameraCozunurlukComboBoxRenderer extends BasicComboBoxRenderer {
+public class KameraCozunurlukComboBoxRenderer extends BasicComboBoxRenderer {
 	private static final long serialVersionUID = 1L;
 
 	public Component getListCellRendererComponent(
@@ -16,8 +16,8 @@ public class ArkaKameraCozunurlukComboBoxRenderer extends BasicComboBoxRenderer 
      
             if (value instanceof KameraCozunurluk)
             {
-            	KameraCozunurluk arkaKameraCozunurluk = (KameraCozunurluk)value;
-                setText( arkaKameraCozunurluk.getCozunurluk());
+            	KameraCozunurluk kameraCozunurluk = (KameraCozunurluk)value;
+                setText( kameraCozunurluk.getCozunurluk());
             }     
             return this;
     }

@@ -11,7 +11,7 @@ import java.util.List;
 import com.zk.cw.dao_factory.DaoFactory;
 import com.zk.cw.ozellik_atama.OzellikAtama;
 
-public class ArkaKameraCozunurlukDAO {
+public class KameraCozunurlukDAO {
 	private static final String FIND_BY_ID = "SELECT * FROM kamera_cozunurluk WHERE id = ?";		
 	private static final String INSERT = "INSERT INTO kamera_cozunurluk (cozunurluk) VALUES (?)";
 	private static final String FIND_BY_NAME = "SELECT * FROM kamera_cozunurluk WHERE cozunurluk = ?";	

@@ -12,7 +12,7 @@ public class KameraCozunurlukCombBoxModel extends DefaultComboBoxModel<KameraCoz
  
     @Override
     public KameraCozunurluk getSelectedItem() {
-    	KameraCozunurluk selectedArkaKameraCozunurluk = (KameraCozunurluk) super.getSelectedItem();
-        return selectedArkaKameraCozunurluk;
+    	KameraCozunurluk selectedKameraCozunurluk = (KameraCozunurluk) super.getSelectedItem();
+        return selectedKameraCozunurluk;
     }
 }

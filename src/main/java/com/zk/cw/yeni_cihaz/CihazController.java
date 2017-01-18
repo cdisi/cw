@@ -52,7 +52,7 @@ import com.zk.cw.harici_hafiza.HariciHafizaTipiDAO;
 import com.zk.cw.kamera.ArkaKameraAta;
 import com.zk.cw.kamera.ArkaKameraAtaDAO;
 import com.zk.cw.kamera.KameraCozunurluk;
-import com.zk.cw.kamera.ArkaKameraCozunurlukDAO;
+import com.zk.cw.kamera.KameraCozunurlukDAO;
 import com.zk.cw.kamera.Diyafram;
 import com.zk.cw.kamera.DiyaframDAO;
 import com.zk.cw.kamera.PikselBuyuklugu;
@@ -646,9 +646,9 @@ public class CihazController implements ActionListener {
 
 			    	//çözünürlük
 			    	arkaKamera.setCozunurluk(mCoz.group().trim());
-			    	ArkaKameraCozunurlukDAO.findBy(arkaKamera);
+			    	KameraCozunurlukDAO.findBy(arkaKamera);
 					if(arkaKamera.getId() == null){
-						ArkaKameraCozunurlukDAO.add(arkaKamera);
+						KameraCozunurlukDAO.add(arkaKamera);
 					}
 					arkaKameraAta.setKameraCozunurlukId(arkaKamera.getId());
 					// diyafram

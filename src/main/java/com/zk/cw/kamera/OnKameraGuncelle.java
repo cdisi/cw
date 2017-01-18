@@ -7,19 +7,16 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.zk.cw.cihaz.Cihaz;
-import com.zk.cw.cpu.CekirdekHizDAO;
-import com.zk.cw.cpu.CpuSayiHizAtaDAO;
 import com.zk.cw.ozellik_atama.OzellikAtama;
 
-public class ArkaKameraGuncelle {
+public class OnKameraGuncelle {
 
 	public static void main(String[] args) {
 		System.exit(0);
 		LinkedHashMap<Integer, OzellikAtama> lhm = null;
-		ArkaKameraAtaDAO arkaKameraAtaDAO = new ArkaKameraAtaDAO();
+		OnKameraAtaDAO onKameraAtaDAO = new OnKameraAtaDAO();
 		try {
-			lhm = arkaKameraAtaDAO.tumOzellikler();
+			lhm = onKameraAtaDAO.tumOzellikler();
 			Set<Integer> ks = lhm.keySet();
 			Iterator<Integer> itr = ks.iterator();
 			while (itr.hasNext()){
@@ -41,9 +38,9 @@ public class ArkaKameraGuncelle {
 			    while (mCoz.find()) {
 					KameraCozunurluk arkaKamera = new KameraCozunurluk();
 					Diyafram diyafram = new Diyafram();
-					ArkaKameraAta arkaKameraAta = new ArkaKameraAta();
+					OnKameraAta onKameraAta = new OnKameraAta();
 					PikselBuyuklugu pikselBuyuklugu = new PikselBuyuklugu();
-					arkaKameraAta.setCihazId(ozellikAtama.getCihazId());
+					onKameraAta.setCihazId(ozellikAtama.getCihazId());
 
 			    	//çözünürlük
 			    	System.out.println(ozellikAtama.getCihazId()+":"+ozellikAtama.getDeger()+":"+mCoz.group());
@@ -52,7 +49,7 @@ public class ArkaKameraGuncelle {
 					if(arkaKamera.getId() == null){
 						KameraCozunurlukDAO.add(arkaKamera);
 					}
-					arkaKameraAta.setKameraCozunurlukId(arkaKamera.getId());
+					onKameraAta.setKameraCozunurlukId(arkaKamera.getId());
 					// diyafram
 			    	if(mDiy.find()){
 						System.out.println(ozellikAtama.getCihazId()+":"+ozellikAtama.getDeger()+":"+mDiy.group());
@@ -61,7 +58,7 @@ public class ArkaKameraGuncelle {
 						if(diyafram.getId() == null){
 							DiyaframDAO.add(diyafram);
 						}
-				    	arkaKameraAta.setDiyaframAcikligiId(diyafram.getId());
+						onKameraAta.setDiyaframAcikligiId(diyafram.getId());
 			    	}
 					// piksel büyüklüğü
 			    	if(mPik.find()){
@@ -71,9 +68,9 @@ public class ArkaKameraGuncelle {
 						if(pikselBuyuklugu.getId() == null){
 							PikselBuyukluguDAO.add(pikselBuyuklugu);
 						}
-				    	arkaKameraAta.setPikselBuyukluguId(pikselBuyuklugu.getId());
+						onKameraAta.setPikselBuyukluguId(pikselBuyuklugu.getId());
 			    	}
-					ArkaKameraAtaDAO.add(arkaKameraAta);
+					OnKameraAtaDAO.add(onKameraAta);
 					count++;
 			    }
 			}
