@@ -427,22 +427,23 @@ public class CihazController implements ActionListener  {
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
-		    // ön kamera diyafram
-		    try {
-		    	onKameraAta.setDiyaframAcikligiId(fView.getOnKameraDiyafram().getId());  
-		    	OnKameraAtaDAO.update(onKameraAta);
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-		    
-		    // ön kamera piksel büyüklüğü
-		    try {
-		    	onKameraAta.setPikselBuyukluguId(fView.getOnKameraPikselBuyuklugu().getId());  
-		    	OnKameraAtaDAO.update(onKameraAta);
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-		    		    
+		    if(onKameraAta.getId() != null){
+			    // ön kamera diyafram
+			    try {
+			    	onKameraAta.setDiyaframAcikligiId(fView.getOnKameraDiyafram().getId());  
+			    	OnKameraAtaDAO.update(onKameraAta);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			    
+			    // ön kamera piksel büyüklüğü
+			    try {
+			    	onKameraAta.setPikselBuyukluguId(fView.getOnKameraPikselBuyuklugu().getId());  
+			    	OnKameraAtaDAO.update(onKameraAta);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+		    }	    
 		    //2.ön kamera çözünürlük		     
 		    OnKameraAta onKameraAta2 = fView.getOnKameraAta2();
 	    	if(onKameraAta2 == null){
@@ -464,21 +465,23 @@ public class CihazController implements ActionListener  {
 				e1.printStackTrace();
 			}
 		    // 2.ön kamera diyafram
-		    try {
-		    	onKameraAta2.setDiyaframAcikligiId(fView.getOnKameraDiyafram2().getId());  
-		    	OnKameraAtaDAO.update(onKameraAta2);
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-		    
-		    // 2.ön kamera piksel büyüklüğü
-		    try {
-		    	onKameraAta2.setPikselBuyukluguId(fView.getOnKameraPikselBuyuklugu2().getId());  
-		    	OnKameraAtaDAO.update(onKameraAta2);
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-		    		    		    
+		    if(onKameraAta2.getId() != null){
+			    try {
+			    	
+			    	onKameraAta2.setDiyaframAcikligiId(fView.getOnKameraDiyafram2().getId());  
+			    	OnKameraAtaDAO.update(onKameraAta2);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			    
+			    // 2.ön kamera piksel büyüklüğü
+			    try {
+			    	onKameraAta2.setPikselBuyukluguId(fView.getOnKameraPikselBuyuklugu2().getId());  
+			    	OnKameraAtaDAO.update(onKameraAta2);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+		    }	    		    
 		    for(OzellikAtama ozellikAtama : ozellikAtamaList){
 				  try {
 					if( ozellikAtamaDao.find(ozellikAtama.getCihazId(), ozellikAtama.getOzellikId()) == null){
