@@ -305,6 +305,9 @@ public class CihazView {
 	private JComboBox<PikselBuyuklugu> fArkaKameraPikselBuyuklugu2= new JComboBox<PikselBuyuklugu>(arkaKameraPikselBuyuklugu2ComboBoxModel);	
 	private PikselBuyuklugu selectedArkaKameraPikselBuyuklugu2= new PikselBuyuklugu();
 
+	private JTextArea fArkaKameraDiger = new JTextArea(2,30); 
+	private JTextField fArkaKameraVideo = new JTextField();
+
 	CihazView(JFrame aParent) {				    
 		fEdit = Edit.ADD;		
 		buildGui(aParent, "Cihaz Ekle");
@@ -623,6 +626,15 @@ public class CihazView {
 	PikselBuyuklugu getArkaKameraPikselBuyuklugu2() {
 		return (PikselBuyuklugu) fArkaKameraPikselBuyuklugu2.getModel().getSelectedItem();
 	}
+	
+	String getArkaKameraDiger() {
+	    return fArkaKameraDiger.getText();
+	}
+	
+	String getArkaKameraVideo() {
+	    return fArkaKameraVideo.getText();
+	}
+	
 	private void buildGui(JFrame aParent, String aDialogTitle) {
 		fStandardDialog = new StandardDialog(
 		      aParent, aDialogTitle, true, OnClose.DISPOSE, getUserInputArea(), getButtons()
@@ -743,7 +755,9 @@ public class CihazView {
 	    addArkaKameraPikselBuyukluguComboField(fArkaKameraPikselBuyuklugu, result);	    
 	    addArkaKameraCozunurluk2ComboField(fArkaKameraCozunurluk2, result);	    
 	    addArkaKameraDiyafram2ComboField(fArkaKameraDiyafram2, result);	    
-	    addArkaKameraPikselBuyuklugu2ComboField(fArkaKameraPikselBuyuklugu2, result);	    
+	    addArkaKameraPikselBuyuklugu2ComboField(fArkaKameraPikselBuyuklugu2, result);	
+		addTextAreaField(fArkaKameraDiger,"Diğer",result);
+		addTextField(fArkaKameraVideo, "Video", result);
 		return result;
 	}
 	
@@ -1264,7 +1278,7 @@ public class CihazView {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}	
-		aComboField.setPreferredSize(new Dimension(200, aComboField.getPreferredSize().height));
+		aComboField.setPreferredSize(new Dimension(100, aComboField.getPreferredSize().height));
 
 	    panel.add(aComboField);		 
 		aPanel.add(panel);		  
@@ -1282,7 +1296,7 @@ public class CihazView {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}	
-		aComboField.setPreferredSize(new Dimension(200, aComboField.getPreferredSize().height));
+		aComboField.setPreferredSize(new Dimension(100, aComboField.getPreferredSize().height));
 
 	    panel.add(aComboField);		 
 		aPanel.add(panel);		  
@@ -1300,7 +1314,7 @@ public class CihazView {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}	
-		aComboField.setPreferredSize(new Dimension(200, aComboField.getPreferredSize().height));
+		aComboField.setPreferredSize(new Dimension(100, aComboField.getPreferredSize().height));
 
 	    panel.add(aComboField);		 
 		aPanel.add(panel);		  
@@ -1318,7 +1332,7 @@ public class CihazView {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}	
-		aComboField.setPreferredSize(new Dimension(200, aComboField.getPreferredSize().height));
+		aComboField.setPreferredSize(new Dimension(100, aComboField.getPreferredSize().height));
 
 	    panel.add(aComboField);		 
 		aPanel.add(panel);		  
@@ -1336,7 +1350,7 @@ public class CihazView {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}	
-		aComboField.setPreferredSize(new Dimension(200, aComboField.getPreferredSize().height));
+		aComboField.setPreferredSize(new Dimension(100, aComboField.getPreferredSize().height));
 
 	    panel.add(aComboField);		 
 		aPanel.add(panel);		  
@@ -1354,7 +1368,7 @@ public class CihazView {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}	
-		aComboField.setPreferredSize(new Dimension(200, aComboField.getPreferredSize().height));
+		aComboField.setPreferredSize(new Dimension(100, aComboField.getPreferredSize().height));
 
 	    panel.add(aComboField);		 
 		aPanel.add(panel);		  
@@ -1474,7 +1488,24 @@ public class CihazView {
 			fArkaKameraDiyafram2.getModel().setSelectedItem(selectedArkaKameraDiyafram2);
 		if(selectedArkaKameraPikselBuyuklugu2.getId()!=null)
 			fArkaKameraPikselBuyuklugu2.getModel().setSelectedItem(selectedArkaKameraPikselBuyuklugu2);
-
+		
+		try {
+			ozellikAtama = ozellikAtamaDao.find(fId,22);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(ozellikAtama!=null)
+			fArkaKameraDiger.setText(ozellikAtama.getDeger());
+		try {
+			ozellikAtama = ozellikAtamaDao.find(fId,23);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(ozellikAtama!=null)
+			fArkaKameraVideo.setPreferredSize(new Dimension(400, fArkaKameraVideo.getPreferredSize().height));
+			fArkaKameraVideo.setText(ozellikAtama.getDeger());
 	}
 	
 	private java.util.List<JButton> getButtons() {

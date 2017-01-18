@@ -96,7 +96,6 @@ public class CihazController implements ActionListener  {
 		    	  try {
 					ozellikAtamaDao.delete(fCihaz,7);
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 		      }
@@ -325,7 +324,7 @@ public class CihazController implements ActionListener  {
 				}
 		    }
 		    
-		    // arka kamera çözünürlük		     
+		    //arka kamera çözünürlük		     
 		    ArkaKameraAta arkaKameraAta = fView.getArkaKameraAta();
 	    	if(arkaKameraAta == null){
 	    		  arkaKameraAta = new ArkaKameraAta(); 
@@ -383,19 +382,29 @@ public class CihazController implements ActionListener  {
 			}
 		    // 2.arka kamera diyafram
 		    try {
-		    	arkaKameraAta2.setDiyaframAcikligiId(fView.getArkaKameraDiyafram2().getId());  
-		    	ArkaKameraAtaDAO.update(arkaKameraAta2);
+		    	if(fView.getArkaKameraDiyafram2().getId() != null){
+		    		arkaKameraAta2.setDiyaframAcikligiId(fView.getArkaKameraDiyafram2().getId());  
+		    		ArkaKameraAtaDAO.update(arkaKameraAta2);
+		    	}
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
 		    
 		    // 2.arka kamera piksel büyüklüğü
 		    try {
-		    	arkaKameraAta2.setPikselBuyukluguId(fView.getArkaKameraPikselBuyuklugu2().getId());  
-		    	ArkaKameraAtaDAO.update(arkaKameraAta2);
+		    	if(fView.getArkaKameraPikselBuyuklugu2().getId() != null){
+		    		arkaKameraAta2.setPikselBuyukluguId(fView.getArkaKameraPikselBuyuklugu2().getId());  
+		    		ArkaKameraAtaDAO.update(arkaKameraAta2);
+		    	}
 			} catch (SQLException e1) {
 				e1.printStackTrace();
-			}		    
+			}	
+		    
+		    if(fView.getArkaKameraDiger() != null)
+		    	ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 6, 22, fView.getArkaKameraDiger()));
+		    if(fView.getArkaKameraVideo() != null)
+		    	ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 6, 23, fView.getArkaKameraVideo()));
+
 		    
 		    for(OzellikAtama ozellikAtama : ozellikAtamaList){
 				  try {
