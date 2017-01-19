@@ -338,6 +338,10 @@ public class CihazView {
 	private ComboBoxModel<PikselBuyuklugu> onKameraPikselBuyuklugu2ComboBoxModel = new PikselBuyukluguCombBoxModel();
 	private JComboBox<PikselBuyuklugu> fOnKameraPikselBuyuklugu2= new JComboBox<PikselBuyuklugu>(onKameraPikselBuyuklugu2ComboBoxModel);	
 	private PikselBuyuklugu selectedOnKameraPikselBuyuklugu2= new PikselBuyuklugu();
+	
+	private JTextArea fOnKameraDiger = new JTextArea(2,30); 
+
+	
 	CihazView(JFrame aParent) {				    
 		fEdit = Edit.ADD;		
 		buildGui(aParent, "Cihaz Ekle");
@@ -730,6 +734,9 @@ public class CihazView {
 	PikselBuyuklugu getOnKameraPikselBuyuklugu2() {
 		return (PikselBuyuklugu) fOnKameraPikselBuyuklugu2.getModel().getSelectedItem();
 	}
+	String getOnKameraDiger() {
+	    return fOnKameraDiger.getText();
+	}
 	
 	private void buildGui(JFrame aParent, String aDialogTitle) {
 		fStandardDialog = new StandardDialog(
@@ -869,6 +876,7 @@ public class CihazView {
 	    addOnKameraCozunurluk2ComboField(fOnKameraCozunurluk2, result);	    
 	    addOnKameraDiyafram2ComboField(fOnKameraDiyafram2, result);	    
 	    addOnKameraPikselBuyuklugu2ComboField(fOnKameraPikselBuyuklugu2, result);	    
+		addTextAreaField(fOnKameraDiger,"Diğer",result);
 		return result;
 	}
 	
@@ -1741,7 +1749,14 @@ public class CihazView {
 			fOnKameraDiyafram2.getModel().setSelectedItem(selectedOnKameraDiyafram2);
 		if(selectedOnKameraPikselBuyuklugu2.getId()!=null)
 			fOnKameraPikselBuyuklugu2.getModel().setSelectedItem(selectedOnKameraPikselBuyuklugu2);
-
+		try {
+			ozellikAtama = ozellikAtamaDao.find(fId,52);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(ozellikAtama!=null)
+			fOnKameraDiger.setText(ozellikAtama.getDeger());
 	}
 	
 	private java.util.List<JButton> getButtons() {

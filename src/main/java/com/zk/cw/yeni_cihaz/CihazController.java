@@ -53,6 +53,8 @@ import com.zk.cw.kamera.ArkaKameraAta;
 import com.zk.cw.kamera.ArkaKameraAtaDAO;
 import com.zk.cw.kamera.KameraCozunurluk;
 import com.zk.cw.kamera.KameraCozunurlukDAO;
+import com.zk.cw.kamera.OnKameraAta;
+import com.zk.cw.kamera.OnKameraAtaDAO;
 import com.zk.cw.kamera.Diyafram;
 import com.zk.cw.kamera.DiyaframDAO;
 import com.zk.cw.kamera.PikselBuyuklugu;
@@ -333,7 +335,7 @@ public class CihazController implements ActionListener {
 				}
 				cihazOzellikAtamaList.add(new CihazOzellikAtama(4,18, gpu.getId().toString()));
 			}
-			if(!fView.getHafizaKarti().equals("")){
+			if(!fView.getHafizaKarti().equals("Yok")){
 				HariciHafizaTipi hariciHafizaTipi = new HariciHafizaTipi();
 				HariciHafizaBuyukluk hariciHafizaBuyukluk = new HariciHafizaBuyukluk();
 				String[] hariciHafiza = fView.getHafizaKarti().split(",");
@@ -371,9 +373,15 @@ public class CihazController implements ActionListener {
 			if(!fView.getVideo().equals("")){
 				cihazOzellikAtamaList.add(new CihazOzellikAtama(6,23, fView.getVideo().trim()));
 			}
+
 			if(!fView.getOnKam().equals("")){
-				cihazOzellikAtamaList.add(new CihazOzellikAtama(6,24, fView.getOnKam().trim()));
+				if(fView.getOnKam().contains(";")){
+					String[] kamArr = fView.getOnKam().split(";");
+					cihazOzellikAtamaList.add(new CihazOzellikAtama(6,52, kamArr[1].trim()));
+				}
 			}
+
+			
 			if(!fView.getUyariTip().equals("")){
 				cihazOzellikAtamaList.add(new CihazOzellikAtama(7,25, fView.getUyariTip().trim()));
 			}
@@ -674,6 +682,57 @@ public class CihazController implements ActionListener {
 				
 				cihazOzellikAtamaList.add(new CihazOzellikAtama(6,21, fView.getArkaKam().trim()));
 				
+			}
+			
+			if(!fView.getOnKam().equals("")){
+				String patternCoz = "\\b([0-9\\.\\s]+MP)\\b";
+				Pattern rCoz = Pattern.compile(patternCoz);
+			    Matcher mCoz = rCoz.matcher(fView.getArkaKam());
+				
+			    String patternDiy = "\\b(f/[0-9\\.]+)\\b";
+				Pattern rDiy = Pattern.compile(patternDiy);
+			    Matcher mDiy = rDiy.matcher(fView.getArkaKam());
+				
+			    String patternPik = "\\b([0-9]+mm)\\b";
+				Pattern rPik = Pattern.compile(patternPik);
+			    Matcher mPik = rPik.matcher(fView.getArkaKam());
+			    int count= 0;
+			    while (mCoz.find()) {
+					KameraCozunurluk onKamera = new KameraCozunurluk();
+					Diyafram diyafram = new Diyafram();
+					OnKameraAta onKameraAta = new OnKameraAta();
+					PikselBuyuklugu pikselBuyuklugu = new PikselBuyuklugu();
+					onKameraAta.setCihazId(fCihaz.getId());
+
+			    	//çözünürlük
+					onKamera.setCozunurluk(mCoz.group().trim());
+			    	KameraCozunurlukDAO.findBy(onKamera);
+					if(onKamera.getId() == null){
+						KameraCozunurlukDAO.add(onKamera);
+					}
+					onKameraAta.setKameraCozunurlukId(onKamera.getId());
+					// diyafram
+			    	if(mDiy.find()){
+				    	diyafram.setAciklik(mDiy.group().trim());
+				    	DiyaframDAO.findBy(diyafram);
+						if(diyafram.getId() == null){
+							DiyaframDAO.add(diyafram);
+						}
+						onKameraAta.setDiyaframAcikligiId(diyafram.getId());
+			    	}
+					// piksel büyüklüğü
+			    	if(mPik.find()){
+				    	pikselBuyuklugu.setBuyukluk(mPik.group().trim());
+				    	PikselBuyukluguDAO.findBy(pikselBuyuklugu);
+						if(pikselBuyuklugu.getId() == null){
+							PikselBuyukluguDAO.add(pikselBuyuklugu);
+						}
+						onKameraAta.setPikselBuyukluguId(pikselBuyuklugu.getId());
+			    	}
+					OnKameraAtaDAO.add(onKameraAta);
+			    }
+				
+				cihazOzellikAtamaList.add(new CihazOzellikAtama(6,24, fView.getOnKam().trim()));
 			}
     		  
     		  for(CihazOzellikAtama cihazOzellikAtama : cihazOzellikAtamaList){

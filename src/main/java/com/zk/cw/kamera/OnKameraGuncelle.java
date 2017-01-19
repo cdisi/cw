@@ -12,7 +12,7 @@ import com.zk.cw.ozellik_atama.OzellikAtama;
 public class OnKameraGuncelle {
 
 	public static void main(String[] args) {
-		System.exit(0);
+		//System.exit(0);
 		LinkedHashMap<Integer, OzellikAtama> lhm = null;
 		OnKameraAtaDAO onKameraAtaDAO = new OnKameraAtaDAO();
 		try {

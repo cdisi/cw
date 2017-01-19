@@ -481,7 +481,12 @@ public class CihazController implements ActionListener  {
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
-		    }	    		    
+		    }	  
+		    
+		    if(fView.getOnKameraDiger() != null)
+		    	ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 6, 52, fView.getOnKameraDiger()));
+		    
+		    
 		    for(OzellikAtama ozellikAtama : ozellikAtamaList){
 				  try {
 					if( ozellikAtamaDao.find(ozellikAtama.getCihazId(), ozellikAtama.getOzellikId()) == null){
