@@ -687,15 +687,15 @@ public class CihazController implements ActionListener {
 			if(!fView.getOnKam().equals("")){
 				String patternCoz = "\\b([0-9\\.\\s]+MP)\\b";
 				Pattern rCoz = Pattern.compile(patternCoz);
-			    Matcher mCoz = rCoz.matcher(fView.getArkaKam());
+			    Matcher mCoz = rCoz.matcher(fView.getOnKam());
 				
 			    String patternDiy = "\\b(f/[0-9\\.]+)\\b";
 				Pattern rDiy = Pattern.compile(patternDiy);
-			    Matcher mDiy = rDiy.matcher(fView.getArkaKam());
+			    Matcher mDiy = rDiy.matcher(fView.getOnKam());
 				
 			    String patternPik = "\\b([0-9]+mm)\\b";
 				Pattern rPik = Pattern.compile(patternPik);
-			    Matcher mPik = rPik.matcher(fView.getArkaKam());
+			    Matcher mPik = rPik.matcher(fView.getOnKam());
 			    int count= 0;
 			    while (mCoz.find()) {
 					KameraCozunurluk onKamera = new KameraCozunurluk();
