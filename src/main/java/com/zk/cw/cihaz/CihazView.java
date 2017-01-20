@@ -340,8 +340,12 @@ public class CihazView {
 	private PikselBuyuklugu selectedOnKameraPikselBuyuklugu2= new PikselBuyuklugu();
 	
 	private JTextArea fOnKameraDiger = new JTextArea(2,30); 
-
 	
+	private JTextField fUyariTur = new JTextField();
+	private JTextField fHoparlor = new JTextField();
+	private JCheckBox fKulaklikGir = new JCheckBox();
+	private JTextArea fSesDiger = new JTextArea(2,30); 
+
 	CihazView(JFrame aParent) {				    
 		fEdit = Edit.ADD;		
 		buildGui(aParent, "Cihaz Ekle");
@@ -529,6 +533,30 @@ public class CihazView {
 					selectedOnKameraPikselBuyuklugu2 = PikselBuyukluguDAO.findById(onKameraPikselBuyuklugu2);
 				}
 			}
+			
+			//uyarı tipleri
+			ozellikAtama = ozellikAtamaDao.find(fId,25);
+			if(ozellikAtama!=null)
+				fUyariTur.setText(ozellikAtama.getDeger());		
+
+			//hoparlör
+			ozellikAtama = ozellikAtamaDao.find(fId,26);
+			if(ozellikAtama!=null)
+				fHoparlor.setText(ozellikAtama.getDeger());		
+
+			ozellikAtama = ozellikAtamaDao.find(fId,27);
+			if(ozellikAtama != null){
+				if(ozellikAtama.getDeger().equals("Var"))
+					fKulaklikGir.setSelected(true);
+				else
+					fKulaklikGir.setSelected(false);
+			}
+			
+			//hoparlör
+			ozellikAtama = ozellikAtamaDao.find(fId,28);
+			if(ozellikAtama!=null)
+				fSesDiger.setText(ozellikAtama.getDeger());		
+
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -738,6 +766,21 @@ public class CihazView {
 	    return fOnKameraDiger.getText();
 	}
 	
+	String getUyariTur() {
+	    return fUyariTur.getText();
+	}	
+	String getHoparlor() {
+	    return fHoparlor.getText();
+	}
+	
+	public Boolean getKulaklikGir(){
+		return this.fKulaklikGir.isSelected();
+	}
+	
+	String getSesDiger() {
+	    return fSesDiger.getText();
+	}
+	
 	private void buildGui(JFrame aParent, String aDialogTitle) {
 		fStandardDialog = new StandardDialog(
 		      aParent, aDialogTitle, true, OnClose.DISPOSE, getUserInputArea(), getButtons()
@@ -769,6 +812,9 @@ public class CihazView {
 	    JPanel onKameraPanel = getOnKameraInputArea();
 	    mainPanel.add(onKameraPanel);
 
+	    JPanel sesPanel = getSesInputArea();
+	    mainPanel.add(sesPanel);
+	    
 	    UiUtil.alignAllX(mainPanel, UiUtil.AlignX.LEFT);
 	    return mainPanel;	    
 	}
@@ -879,6 +925,16 @@ public class CihazView {
 		addTextAreaField(fOnKameraDiger,"Diğer",result);
 		return result;
 	}
+	
+	private JPanel getSesInputArea(){
+		JPanel result = new JPanel(new FlowLayout(FlowLayout.LEFT));	    
+		result.setBorder(BorderFactory.createTitledBorder("SES"));
+		addTextField(fUyariTur, "Uyarı türleri", result);
+		addTextField(fHoparlor, "Hoparlör", result);
+	    addCheckField(fKulaklikGir,"Kulaklık",result);
+		addTextAreaField(fSesDiger,"Diğer",result);
+	    return result;
+	}	
 	
 	private void addTextAreaField(JTextArea aTextField, String aLabel, JPanel aPanel) {
 		  JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));

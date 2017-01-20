@@ -486,6 +486,18 @@ public class CihazController implements ActionListener  {
 		    if(fView.getOnKameraDiger() != null)
 		    	ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 6, 52, fView.getOnKameraDiger()));
 		    
+		    if(fView.getUyariTur() != null)
+		    	ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 7, 25, fView.getUyariTur()));
+		    if(fView.getHoparlor() != null)
+		    	ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 7, 26, fView.getHoparlor()));
+
+		    if(fView.getKulaklikGir())
+		    	ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 7, 27,"Var"));
+		    else
+		    	ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 7, 27, "Yok"));
+		    if(!fView.getSesDiger().equals(""))
+		    	ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 7, 28, fView.getSesDiger()));
+		    	
 		    
 		    for(OzellikAtama ozellikAtama : ozellikAtamaList){
 				  try {
