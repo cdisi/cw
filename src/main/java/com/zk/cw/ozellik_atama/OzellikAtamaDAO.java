@@ -17,10 +17,15 @@ import com.zk.cw.sim.Sim;
 import com.zk.cw.sim.SimSayisi;
 import com.zk.cw.yonga_seti.YongaSeti;
 
+import batarya.Degisir;
+import batarya.Kapasite;
+import batarya.Teknoloji;
+
 
 public class OzellikAtamaDAO {
 	
 	private static final String FIND = "SELECT * FROM cihaz_ozellik_atama WHERE cihaz_id=? AND ozellik_id=?";	
+	private static final String FIND_BY_OZELLLIK = "SELECT * FROM cihaz_ozellik_atama WHERE ozellik_id=?";	
 	private static final String INSERT = "INSERT INTO cihaz_ozellik_atama (cihaz_id,kategori_id,ozellik_id,deger) VALUES (?,?,?,?)";	
 	private static final String OZELLIK_IDDEN_UPDATE = "UPDATE cihaz_ozellik_atama SET cihaz_id=?,kategori_id=?,ozellik_id=?,deger=? WHERE id=?";	
 	private static final String UPDATE = "UPDATE cihaz_ozellik_atama SET kategori_id=?,deger=? WHERE cihaz_id=? AND ozellik_id=?";	
@@ -44,6 +49,21 @@ public class OzellikAtamaDAO {
 		c.close();
 
 		return ozellikAtama;
+	}
+	
+	public static LinkedHashMap<Integer, OzellikAtama> find(Integer ozellikId) throws SQLException {
+		LinkedHashMap<Integer, OzellikAtama> lhm = new LinkedHashMap<>(); 
+		Connection c = DaoFactory.openConnection();
+		PreparedStatement pstmt = c.prepareStatement(FIND_BY_OZELLLIK);
+		pstmt.setInt(1, ozellikId);
+		ResultSet rset = pstmt.executeQuery();
+		while (rset.next()){
+			OzellikAtama ozellikAtama = new OzellikAtama(rset.getInt("id"),rset.getInt("cihaz_id"),rset.getInt("kategori_id"),rset.getInt("ozellik_id"),rset.getString("deger"));
+			lhm.put(rset.getInt("id"), ozellikAtama);
+		}
+		pstmt.close();
+		c.close();
+		return lhm;		
 	}
 	
 	public OzellikAtama update(OzellikAtama ozellikAtama, EkranTip ekranTip) throws SQLException {
@@ -292,9 +312,58 @@ public class OzellikAtamaDAO {
 		c.close();
 		
 		return ozellikAtama;
-	}		
+	}	
 	
+	public OzellikAtama insert(OzellikAtama ozellikAtama, Kapasite kapasite) throws SQLException {
+		Connection c = DaoFactory.openConnection();
+		
+		PreparedStatement pstmt = c.prepareStatement(INSERT);
+		pstmt.setInt(1, ozellikAtama.getCihazId());
+		pstmt.setInt(2, ozellikAtama.getKategoriId());
+		pstmt.setInt(3, 53);
+		pstmt.setInt(4, kapasite.getId());
+		
+		pstmt.executeUpdate();
+
+		pstmt.close();
+		c.close();
+		
+		return ozellikAtama;
+	}
 	
+	public OzellikAtama insert(OzellikAtama ozellikAtama, Teknoloji teknoloji) throws SQLException {
+		Connection c = DaoFactory.openConnection();
+		
+		PreparedStatement pstmt = c.prepareStatement(INSERT);
+		pstmt.setInt(1, ozellikAtama.getCihazId());
+		pstmt.setInt(2, ozellikAtama.getKategoriId());
+		pstmt.setInt(3, 54);
+		pstmt.setInt(4, teknoloji.getId());
+		
+		pstmt.executeUpdate();
+
+		pstmt.close();
+		c.close();
+		
+		return ozellikAtama;
+	}	
+	
+	public OzellikAtama insert(OzellikAtama ozellikAtama, Degisir degisir) throws SQLException {
+		Connection c = DaoFactory.openConnection();
+		
+		PreparedStatement pstmt = c.prepareStatement(INSERT);
+		pstmt.setInt(1, ozellikAtama.getCihazId());
+		pstmt.setInt(2, ozellikAtama.getKategoriId());
+		pstmt.setInt(3, 55);
+		pstmt.setInt(4, degisir.getId());
+		
+		pstmt.executeUpdate();
+
+		pstmt.close();
+		c.close();
+		
+		return ozellikAtama;
+	}	
 	public void delete(Cihaz aCihaz, int ozellikId) throws SQLException {
 		Connection c = DaoFactory.openConnection();
 		

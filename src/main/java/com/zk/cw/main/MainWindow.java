@@ -113,7 +113,7 @@ public final class MainWindow {
 			String ad = link.text().trim();
 			String logoUrl = null;
 			String gsmArenaUrl = "http://www.gsmarena.com/"+ link.attr("href").trim();
-			Uretici uretici = new Uretici(null,ad,null,gsmArenaUrl,0);
+			Uretici uretici = new Uretici(null,ad,null,gsmArenaUrl,1);
 			String dosya =  (ad.replaceAll("[^\\w.-]", "_") + "." + (FilenameUtils.getExtension(imgElm.attr("src")))).toLowerCase();
 			if(!UreticiDAO.bul(uretici)){
 				//Util.downloadImage(imgElm.attr("src"), "resources/logo", dosya);

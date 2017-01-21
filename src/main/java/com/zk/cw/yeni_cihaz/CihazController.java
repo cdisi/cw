@@ -153,14 +153,16 @@ public class CihazController implements ActionListener {
 						e.printStackTrace();
 					}
 					cihazOzellikAtamaList.add(new CihazOzellikAtama(2,9, simSayisi.getId().toString()));
-					sim.setAd(simArr[1].trim());
-					try {
-						SimDAO.findBy(sim);
-						if(sim.getId() == null){
-							SimDAO.add(sim);
+					if(simArr[1] != null){
+						sim.setAd(simArr[1].trim());
+						try {
+							SimDAO.findBy(sim);
+							if(sim.getId() == null){
+								SimDAO.add(sim);
+							}
+						} catch (SQLException e) {
+							e.printStackTrace();
 						}
-					} catch (SQLException e) {
-						e.printStackTrace();
 					}
 					cihazOzellikAtamaList.add(new CihazOzellikAtama(2,50, sim.getId().toString()));
 
