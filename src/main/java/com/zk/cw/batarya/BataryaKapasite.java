@@ -1,12 +1,12 @@
-package batarya;
+package com.zk.cw.batarya;
 
-public class Kapasite {
+public class BataryaKapasite {
 	private Integer id;
     private String kapasite;
     
-    public Kapasite() {
+    public BataryaKapasite() {
     }
-    public Kapasite(Integer id, String kapasite) {
+    public BataryaKapasite(Integer id, String kapasite) {
         this.id = id;
         this.kapasite = kapasite;
     }

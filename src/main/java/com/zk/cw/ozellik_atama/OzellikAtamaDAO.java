@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
 
+import com.zk.cw.batarya.BataryaDegisir;
+import com.zk.cw.batarya.BataryaKapasite;
+import com.zk.cw.batarya.BataryaTeknoloji;
 import com.zk.cw.cihaz.Cihaz;
 import com.zk.cw.dao_factory.DaoFactory;
 import com.zk.cw.ekran.EkranCozunurluk;
@@ -16,10 +19,6 @@ import com.zk.cw.gpu.Gpu;
 import com.zk.cw.sim.Sim;
 import com.zk.cw.sim.SimSayisi;
 import com.zk.cw.yonga_seti.YongaSeti;
-
-import batarya.Degisir;
-import batarya.Kapasite;
-import batarya.Teknoloji;
 
 
 public class OzellikAtamaDAO {
@@ -314,7 +313,7 @@ public class OzellikAtamaDAO {
 		return ozellikAtama;
 	}	
 	
-	public OzellikAtama insert(OzellikAtama ozellikAtama, Kapasite kapasite) throws SQLException {
+	public OzellikAtama insert(OzellikAtama ozellikAtama, BataryaKapasite kapasite) throws SQLException {
 		Connection c = DaoFactory.openConnection();
 		
 		PreparedStatement pstmt = c.prepareStatement(INSERT);
@@ -331,7 +330,7 @@ public class OzellikAtamaDAO {
 		return ozellikAtama;
 	}
 	
-	public OzellikAtama insert(OzellikAtama ozellikAtama, Teknoloji teknoloji) throws SQLException {
+	public OzellikAtama insert(OzellikAtama ozellikAtama, BataryaTeknoloji teknoloji) throws SQLException {
 		Connection c = DaoFactory.openConnection();
 		
 		PreparedStatement pstmt = c.prepareStatement(INSERT);
@@ -348,7 +347,7 @@ public class OzellikAtamaDAO {
 		return ozellikAtama;
 	}	
 	
-	public OzellikAtama insert(OzellikAtama ozellikAtama, Degisir degisir) throws SQLException {
+	public OzellikAtama insert(OzellikAtama ozellikAtama, BataryaDegisir degisir) throws SQLException {
 		Connection c = DaoFactory.openConnection();
 		
 		PreparedStatement pstmt = c.prepareStatement(INSERT);

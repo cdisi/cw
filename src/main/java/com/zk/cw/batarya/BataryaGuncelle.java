@@ -1,4 +1,4 @@
-package batarya;
+package com.zk.cw.batarya;
 
 import java.sql.SQLException;
 import java.util.Iterator;
@@ -13,7 +13,7 @@ import com.zk.cw.ozellik_atama.OzellikAtamaDAO;
 public class BataryaGuncelle {
 
 	public static void main(String[] args) {
-		//System.exit(0);
+		System.exit(0);
 		LinkedHashMap<Integer, OzellikAtama> lhm = null;
 		OzellikAtamaDAO ozellikAtamaDAO = new OzellikAtamaDAO();
 		try {
@@ -23,18 +23,18 @@ public class BataryaGuncelle {
 			while (itr.hasNext()){
 				Integer key = itr.next();
 				OzellikAtama ozellikAtama = lhm.get(key);
-				Kapasite kapasite = new Kapasite();
-				Teknoloji teknoloji = new Teknoloji();
-				Degisir degisir = new Degisir();
+				BataryaKapasite kapasite = new BataryaKapasite();
+				BataryaTeknoloji teknoloji = new BataryaTeknoloji();
+				BataryaDegisir degisir = new BataryaDegisir();
 				
 				String pattern = "([0-9]+) mAh\\b";
 				Pattern r = Pattern.compile(pattern);
 			    Matcher m = r.matcher(ozellikAtama.getDeger());
 			    if (m.find()) {
 			    	kapasite.setKapasite(m.group(1).trim());
-			    	KapasiteDAO.findBy(kapasite);
+			    	BataryaKapasiteDAO.findBy(kapasite);
 					if(kapasite.getId() == null){
-						KapasiteDAO.add(kapasite);
+						BataryaKapasiteDAO.add(kapasite);
 					}
 					ozellikAtamaDAO.insert(ozellikAtama,kapasite);
 			    }
@@ -45,9 +45,9 @@ public class BataryaGuncelle {
 			    	teknoloji.setAd("Li-Ion");
 			    }
 			    if(teknoloji.getAd() != null){
-			    	TeknolojiDAO.findBy(teknoloji);
+			    	BataryaTeknolojiDAO.findBy(teknoloji);
 					if(teknoloji.getId() == null){
-						TeknolojiDAO.add(teknoloji);
+						BataryaTeknolojiDAO.add(teknoloji);
 					}
 					ozellikAtamaDAO.insert(ozellikAtama,teknoloji);
 
@@ -59,10 +59,10 @@ public class BataryaGuncelle {
 			    	degisir.setAd("Var");
 			    }
 			    if(degisir.getAd() != null){
-			    	DegisirDAO.findBy(degisir);
+			    	BataryaDegisirDAO.findBy(degisir);
 					System.out.println(degisir.getId());
 			    	if(degisir.getId() == null){
-						DegisirDAO.add(degisir);
+						BataryaDegisirDAO.add(degisir);
 					}
 					ozellikAtamaDAO.insert(ozellikAtama,degisir);
 			    }

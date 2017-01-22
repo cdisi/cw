@@ -1,4 +1,4 @@
-package batarya;
+package com.zk.cw.batarya;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,13 +9,13 @@ import java.util.List;
 
 import com.zk.cw.dao_factory.DaoFactory;
 
-public class TeknolojiDAO {
+public class BataryaTeknolojiDAO {
 	private static final String FIND_BY_ID = "SELECT * FROM batarya_teknoloji WHERE id = ?";		
 	private static final String INSERT = "INSERT INTO batarya_teknoloji (ad) VALUES (?)";
 	private static final String FIND_BY_NAME = "SELECT * FROM batarya_teknoloji WHERE ad = ?";	
 	private static final String ALL = "SELECT * FROM batarya_teknoloji ORDER BY ad";
 	
-	public static Teknoloji findBy(Teknoloji teknoloji) throws SQLException {
+	public static BataryaTeknoloji findBy(BataryaTeknoloji teknoloji) throws SQLException {
 		Connection c = DaoFactory.openConnection();
 
 		PreparedStatement pstmt = c.prepareStatement(FIND_BY_NAME);
@@ -34,7 +34,7 @@ public class TeknolojiDAO {
 		return teknoloji;
 	}	
 	
-	public static Teknoloji findById(Teknoloji teknoloji) throws SQLException {
+	public static BataryaTeknoloji findById(BataryaTeknoloji teknoloji) throws SQLException {
 		Connection c = DaoFactory.openConnection();
 
 		PreparedStatement pstmt = c.prepareStatement(FIND_BY_ID);
@@ -53,7 +53,7 @@ public class TeknolojiDAO {
 		return teknoloji;
 	}	
 	
-	public static Teknoloji add(Teknoloji teknoloji) throws SQLException {
+	public static BataryaTeknoloji add(BataryaTeknoloji teknoloji) throws SQLException {
 		Connection c = DaoFactory.openConnection();
 		
 		PreparedStatement pstmt = c.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -72,14 +72,14 @@ public class TeknolojiDAO {
 		return teknoloji;
 	}
 	
-	public static List<Teknoloji> all() throws SQLException {
+	public static List<BataryaTeknoloji> all() throws SQLException {
 		Connection c = DaoFactory.openConnection();
 		PreparedStatement pstmt = c.prepareStatement(ALL);
 
 		ResultSet rset = pstmt.executeQuery();
-		List<Teknoloji> teknolojiler = new ArrayList<Teknoloji>();
+		List<BataryaTeknoloji> teknolojiler = new ArrayList<BataryaTeknoloji>();
 		while (rset.next()){
-			Teknoloji teknoloji = new Teknoloji(rset.getInt("id"), rset.getString("ad"));
+			BataryaTeknoloji teknoloji = new BataryaTeknoloji(rset.getInt("id"), rset.getString("ad"));
 			teknolojiler.add(teknoloji);
 		}
 

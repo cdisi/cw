@@ -1,12 +1,12 @@
-package batarya;
+package com.zk.cw.batarya;
 
-public class Degisir {
+public class BataryaTeknoloji {
 	private Integer id;
     private String ad;
     
-    public Degisir() {
+    public BataryaTeknoloji() {
     }
-    public Degisir(Integer id, String ad) {
+    public BataryaTeknoloji(Integer id, String ad) {
         this.id = id;
         this.ad = ad;
     }

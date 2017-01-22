@@ -5,4 +5,4 @@
  * @author pc
  *
  */
-package batarya;
+package com.zk.cw.batarya;

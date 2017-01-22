@@ -33,6 +33,15 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import com.zk.cw.batarya.BataryaDegisir;
+import com.zk.cw.batarya.BataryaDegisirCombBoxModel;
+import com.zk.cw.batarya.BataryaDegisirDAO;
+import com.zk.cw.batarya.BataryaKapasite;
+import com.zk.cw.batarya.BataryaKapasiteCombBoxModel;
+import com.zk.cw.batarya.BataryaKapasiteDAO;
+import com.zk.cw.batarya.BataryaTeknoloji;
+import com.zk.cw.batarya.BataryaTeknolojiCombBoxModel;
+import com.zk.cw.batarya.BataryaTeknolojiDAO;
 import com.zk.cw.cihaz_resim.Resim;
 import com.zk.cw.cihaz_resim.ResimDAO;
 import com.zk.cw.cihaz_tur.CihazTur;
@@ -346,6 +355,20 @@ public class CihazView {
 	private JCheckBox fKulaklikGir = new JCheckBox();
 	private JTextArea fSesDiger = new JTextArea(2,30); 
 
+	//batarya kapasite
+	private ComboBoxModel<BataryaKapasite> bataryaKapasiteComboBoxModel = new BataryaKapasiteCombBoxModel();
+	private JComboBox<BataryaKapasite> fBataryaKapasite= new JComboBox<BataryaKapasite>(bataryaKapasiteComboBoxModel);	
+	private BataryaKapasite selectedBataryaKapasite= new BataryaKapasite();
+	//batarya teknoloji
+	private ComboBoxModel<BataryaTeknoloji> bataryaTeknolojiComboBoxModel = new BataryaTeknolojiCombBoxModel();
+	private JComboBox<BataryaTeknoloji> fBataryaTeknoloji= new JComboBox<BataryaTeknoloji>(bataryaTeknolojiComboBoxModel);	
+	private BataryaTeknoloji selectedBataryaTeknoloji= new BataryaTeknoloji();
+
+	//batarya değişir
+	private ComboBoxModel<BataryaDegisir> bataryaDegisirComboBoxModel = new BataryaDegisirCombBoxModel();
+	private JComboBox<BataryaDegisir> fBataryaDegisir= new JComboBox<BataryaDegisir>(bataryaDegisirComboBoxModel);	
+	private BataryaDegisir selectedBataryaDegisir= new BataryaDegisir();
+	
 	CihazView(JFrame aParent) {				    
 		fEdit = Edit.ADD;		
 		buildGui(aParent, "Cihaz Ekle");
@@ -555,7 +578,30 @@ public class CihazView {
 			//hoparlör
 			ozellikAtama = ozellikAtamaDao.find(fId,28);
 			if(ozellikAtama!=null)
-				fSesDiger.setText(ozellikAtama.getDeger());		
+				fSesDiger.setText(ozellikAtama.getDeger());	
+			
+			//batarya kapasite
+			ozellikAtama = ozellikAtamaDao.find(fId,53);
+			if(ozellikAtama!=null){
+				BataryaKapasite bataryaKapasite = new BataryaKapasite();
+				bataryaKapasite.setId(Integer.parseInt(ozellikAtama.getDeger()));
+				selectedBataryaKapasite = BataryaKapasiteDAO.findById(bataryaKapasite);			
+			}
+
+			//batarya teknoloji
+			ozellikAtama = ozellikAtamaDao.find(fId,54);
+			if(ozellikAtama!=null){
+				BataryaTeknoloji bataryaTeknoloji = new BataryaTeknoloji();
+				bataryaTeknoloji.setId(Integer.parseInt(ozellikAtama.getDeger()));
+				selectedBataryaTeknoloji = BataryaTeknolojiDAO.findById(bataryaTeknoloji);			
+			}
+			//batarya değişir
+			ozellikAtama = ozellikAtamaDao.find(fId,55);
+			if(ozellikAtama!=null){
+				BataryaDegisir bataryaDegisir = new BataryaDegisir();
+				bataryaDegisir.setId(Integer.parseInt(ozellikAtama.getDeger()));
+				selectedBataryaDegisir = BataryaDegisirDAO.findById(bataryaDegisir);			
+			}
 
 			
 		} catch (SQLException e) {
@@ -780,7 +826,15 @@ public class CihazView {
 	String getSesDiger() {
 	    return fSesDiger.getText();
 	}
-	
+	BataryaKapasite getBataryaKapasite() {
+		return (BataryaKapasite) fBataryaKapasite.getModel().getSelectedItem();
+	}	
+	BataryaTeknoloji getBataryaTeknoloji() {
+		return (BataryaTeknoloji) fBataryaTeknoloji.getModel().getSelectedItem();
+	}	
+	BataryaDegisir getBataryaDegisir() {
+		return (BataryaDegisir) fBataryaDegisir.getModel().getSelectedItem();
+	}	
 	private void buildGui(JFrame aParent, String aDialogTitle) {
 		fStandardDialog = new StandardDialog(
 		      aParent, aDialogTitle, true, OnClose.DISPOSE, getUserInputArea(), getButtons()
@@ -814,7 +868,10 @@ public class CihazView {
 
 	    JPanel sesPanel = getSesInputArea();
 	    mainPanel.add(sesPanel);
-	    
+
+	    JPanel bataryaPanel = getBataryaInputArea();
+	    mainPanel.add(bataryaPanel);
+
 	    UiUtil.alignAllX(mainPanel, UiUtil.AlignX.LEFT);
 	    return mainPanel;	    
 	}
@@ -933,6 +990,15 @@ public class CihazView {
 		addTextField(fHoparlor, "Hoparlör", result);
 	    addCheckField(fKulaklikGir,"Kulaklık",result);
 		addTextAreaField(fSesDiger,"Diğer",result);
+	    return result;
+	}	
+	
+	private JPanel getBataryaInputArea(){
+		JPanel result = new JPanel(new FlowLayout(FlowLayout.LEFT));	    
+		result.setBorder(BorderFactory.createTitledBorder("BATARYA"));
+	    addBataryaKapasiteComboField(fBataryaKapasite, result);	    
+	    addBataryaTeknolojiComboField(fBataryaTeknoloji, result);	    
+	    addBataryaDegisirComboField(fBataryaDegisir, result);	    
 	    return result;
 	}	
 	
@@ -1656,7 +1722,57 @@ public class CihazView {
 	    panel.add(aComboField);		 
 		aPanel.add(panel);		  
 	}
-		
+	
+	private void addBataryaKapasiteComboField(JComboBox<BataryaKapasite> aComboField,  JPanel aPanel) {
+  	    JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+  	  fBataryaKapasite.addItem(new BataryaKapasite(null, "Kapasite"));  	  		
+		try {
+			for(BataryaKapasite bataryaKapasite : BataryaKapasiteDAO.all()){
+				fBataryaKapasite.addItem(bataryaKapasite);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
+		aComboField.setPreferredSize(new Dimension(100, aComboField.getPreferredSize().height));
+
+	    panel.add(aComboField);		 
+		aPanel.add(panel);		  
+	}
+	
+	private void addBataryaTeknolojiComboField(JComboBox<BataryaTeknoloji> aComboField,  JPanel aPanel) {
+  	    JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+  	  fBataryaTeknoloji.addItem(new BataryaTeknoloji(null, "Teknoloji"));  	  		
+		try {
+			for(BataryaTeknoloji bataryaTeknoloji : BataryaTeknolojiDAO.all()){
+				fBataryaTeknoloji.addItem(bataryaTeknoloji);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
+		aComboField.setPreferredSize(new Dimension(100, aComboField.getPreferredSize().height));
+
+	    panel.add(aComboField);		 
+		aPanel.add(panel);		  
+	}	
+	private void addBataryaDegisirComboField(JComboBox<BataryaDegisir> aComboField,  JPanel aPanel) {
+  	    JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+  	  fBataryaDegisir.addItem(new BataryaDegisir(null, "Değişir Batarya"));  	  		
+		try {
+			for(BataryaDegisir bataryaDegisir : BataryaDegisirDAO.all()){
+				fBataryaDegisir.addItem(bataryaDegisir);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
+		aComboField.setPreferredSize(new Dimension(100, aComboField.getPreferredSize().height));
+
+	    panel.add(aComboField);		 
+		aPanel.add(panel);		  
+	}	
+	
 	private void populateFields(Cihaz aSelectedCihaz) {
 		fAd.setText(aSelectedCihaz.getAd());
 		fDigerAd.setText(aSelectedCihaz.getDigerAd());
@@ -1813,6 +1929,14 @@ public class CihazView {
 		}
 		if(ozellikAtama!=null)
 			fOnKameraDiger.setText(ozellikAtama.getDeger());
+		
+		if(selectedBataryaKapasite.getKapasite()!=null)
+			fBataryaKapasite.getModel().setSelectedItem(selectedBataryaKapasite);
+		
+		if(selectedBataryaTeknoloji.getId()!=null)
+			fBataryaTeknoloji.getModel().setSelectedItem(selectedBataryaTeknoloji);
+		if(selectedBataryaDegisir.getId()!=null)
+			fBataryaDegisir.getModel().setSelectedItem(selectedBataryaDegisir);
 	}
 	
 	private java.util.List<JButton> getButtons() {

@@ -22,6 +22,12 @@ import javax.swing.JOptionPane;
 
 import org.apache.commons.io.FilenameUtils;
 
+import com.zk.cw.batarya.BataryaDegisir;
+import com.zk.cw.batarya.BataryaDegisirDAO;
+import com.zk.cw.batarya.BataryaKapasite;
+import com.zk.cw.batarya.BataryaKapasiteDAO;
+import com.zk.cw.batarya.BataryaTeknoloji;
+import com.zk.cw.batarya.BataryaTeknolojiDAO;
 import com.zk.cw.cihaz_resim.Resim;
 import com.zk.cw.cihaz_resim.ResimDAO;
 import com.zk.cw.cpu.CekirdekHiz;
@@ -418,9 +424,7 @@ public class CihazController implements ActionListener {
 			if(!fView.getUsb().equals("")){
 				cihazOzellikAtamaList.add(new CihazOzellikAtama(8,35, fView.getUsb().trim()));
 			}
-			if(!fView.getPil().equals("")){
-				cihazOzellikAtamaList.add(new CihazOzellikAtama(9,36, fView.getPil().trim()));
-			}
+
 			if(!fView.getBekSure().equals("")){
 				cihazOzellikAtamaList.add(new CihazOzellikAtama(9,37, fView.getBekSure().trim()));
 			}
@@ -736,6 +740,53 @@ public class CihazController implements ActionListener {
 				
 				cihazOzellikAtamaList.add(new CihazOzellikAtama(6,24, fView.getOnKam().trim()));
 			}
+			
+			if(!fView.getPil().equals("")){
+				BataryaKapasite kapasite = new BataryaKapasite();
+				BataryaTeknoloji teknoloji = new BataryaTeknoloji();
+				BataryaDegisir degisir = new BataryaDegisir();
+				
+				String pattern = "([0-9]+) mAh\\b";
+				Pattern r = Pattern.compile(pattern);
+			    Matcher m = r.matcher(fView.getPil());
+			    if (m.find()) {
+			    	kapasite.setKapasite(m.group(1).trim());
+			    	BataryaKapasiteDAO.findBy(kapasite);
+					if(kapasite.getId() == null){
+						BataryaKapasiteDAO.add(kapasite);
+					}
+					cihazOzellikAtamaList.add(new CihazOzellikAtama(9,53, kapasite.getId().toString()));
+			    }
+			    
+			    if(fView.getPil().contains("Li-Po")){
+			    	teknoloji.setAd("Li-Po");
+			    }else if(fView.getPil().contains("Li-Ion")){
+			    	teknoloji.setAd("Li-Ion");
+			    }
+			    if(teknoloji.getAd() != null){
+			    	BataryaTeknolojiDAO.findBy(teknoloji);
+					if(teknoloji.getId() == null){
+						BataryaTeknolojiDAO.add(teknoloji);
+					}
+					cihazOzellikAtamaList.add(new CihazOzellikAtama(9,54, teknoloji.getId().toString()));
+			    }
+			    
+			    if(fView.getPil().contains("Çıkarılmaz")){
+			    	degisir.setAd("Yok");
+			    }else if(fView.getPil().contains("Çıkarılabilir ")){
+			    	degisir.setAd("Var");
+			    }
+			    if(degisir.getAd() != null){
+			    	BataryaDegisirDAO.findBy(degisir);
+			    	if(degisir.getId() == null){
+						BataryaDegisirDAO.add(degisir);
+					}
+					cihazOzellikAtamaList.add(new CihazOzellikAtama(9,55, degisir.getId().toString()));
+			    }
+
+				cihazOzellikAtamaList.add(new CihazOzellikAtama(9,36, fView.getPil().trim()));
+			}
+			
     		  
     		  for(CihazOzellikAtama cihazOzellikAtama : cihazOzellikAtamaList){
 					CihazOzellikAtamaDAO.insert(fCihaz, cihazOzellikAtama);

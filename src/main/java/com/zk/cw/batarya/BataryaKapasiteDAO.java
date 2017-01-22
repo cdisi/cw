@@ -1,4 +1,4 @@
-package batarya;
+package com.zk.cw.batarya;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,13 +9,13 @@ import java.util.List;
 
 import com.zk.cw.dao_factory.DaoFactory;
 
-public class KapasiteDAO {
+public class BataryaKapasiteDAO {
 	private static final String FIND_BY_ID = "SELECT * FROM batarya_kapasite WHERE id = ?";		
 	private static final String INSERT = "INSERT INTO batarya_kapasite (kapasite) VALUES (?)";
 	private static final String FIND_BY_NAME = "SELECT * FROM batarya_kapasite WHERE kapasite = ?";	
 	private static final String ALL = "SELECT * FROM batarya_kapasite ORDER BY kapasite";
 
-	public static Kapasite findBy(Kapasite kapasite) throws SQLException {
+	public static BataryaKapasite findBy(BataryaKapasite kapasite) throws SQLException {
 		Connection c = DaoFactory.openConnection();
 
 		PreparedStatement pstmt = c.prepareStatement(FIND_BY_NAME);
@@ -34,7 +34,7 @@ public class KapasiteDAO {
 		return kapasite;
 	}	
 	
-	public static Kapasite findById(Kapasite kapasite) throws SQLException {
+	public static BataryaKapasite findById(BataryaKapasite kapasite) throws SQLException {
 		Connection c = DaoFactory.openConnection();
 
 		PreparedStatement pstmt = c.prepareStatement(FIND_BY_ID);
@@ -53,7 +53,7 @@ public class KapasiteDAO {
 		return kapasite;
 	}	
 	
-	public static Kapasite add(Kapasite kapasite) throws SQLException {
+	public static BataryaKapasite add(BataryaKapasite kapasite) throws SQLException {
 		Connection c = DaoFactory.openConnection();
 		
 		PreparedStatement pstmt = c.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -72,14 +72,14 @@ public class KapasiteDAO {
 		return kapasite;
 	}
 	
-	public static List<Kapasite> all() throws SQLException {
+	public static List<BataryaKapasite> all() throws SQLException {
 		Connection c = DaoFactory.openConnection();
 		PreparedStatement pstmt = c.prepareStatement(ALL);
 
 		ResultSet rset = pstmt.executeQuery();
-		List<Kapasite> kapasiteler = new ArrayList<Kapasite>();
+		List<BataryaKapasite> kapasiteler = new ArrayList<BataryaKapasite>();
 		while (rset.next()){
-			Kapasite kapasite = new Kapasite(rset.getInt("id"), rset.getString("kapasite"));
+			BataryaKapasite kapasite = new BataryaKapasite(rset.getInt("id"), rset.getString("kapasite"));
 			kapasiteler.add(kapasite);
 		}
 

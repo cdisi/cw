@@ -1,4 +1,4 @@
-package batarya;
+package com.zk.cw.batarya;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,13 +9,13 @@ import java.util.List;
 
 import com.zk.cw.dao_factory.DaoFactory;
 
-public class DegisirDAO {
+public class BataryaDegisirDAO {
 	private static final String FIND_BY_ID = "SELECT * FROM batarya_degisir WHERE id = ?";		
 	private static final String INSERT = "INSERT INTO batarya_degisir (ad) VALUES (?)";
 	private static final String FIND_BY_NAME = "SELECT * FROM batarya_degisir WHERE ad = ?";	
 	private static final String ALL = "SELECT * FROM batarya_degisir ORDER BY ad";
 	
-	public static Degisir findBy(Degisir degisir) throws SQLException {
+	public static BataryaDegisir findBy(BataryaDegisir degisir) throws SQLException {
 		Connection c = DaoFactory.openConnection();
 
 		PreparedStatement pstmt = c.prepareStatement(FIND_BY_NAME);
@@ -34,7 +34,7 @@ public class DegisirDAO {
 		return degisir;
 	}	
 	
-	public static Degisir findById(Degisir degisir) throws SQLException {
+	public static BataryaDegisir findById(BataryaDegisir degisir) throws SQLException {
 		Connection c = DaoFactory.openConnection();
 
 		PreparedStatement pstmt = c.prepareStatement(FIND_BY_ID);
@@ -53,7 +53,7 @@ public class DegisirDAO {
 		return degisir;
 	}	
 	
-	public static Degisir add(Degisir degisir) throws SQLException {
+	public static BataryaDegisir add(BataryaDegisir degisir) throws SQLException {
 		Connection c = DaoFactory.openConnection();
 		
 		PreparedStatement pstmt = c.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -72,14 +72,14 @@ public class DegisirDAO {
 		return degisir;
 	}
 	
-	public static List<Degisir> all() throws SQLException {
+	public static List<BataryaDegisir> all() throws SQLException {
 		Connection c = DaoFactory.openConnection();
 		PreparedStatement pstmt = c.prepareStatement(ALL);
 
 		ResultSet rset = pstmt.executeQuery();
-		List<Degisir> degisirler = new ArrayList<Degisir>();
+		List<BataryaDegisir> degisirler = new ArrayList<BataryaDegisir>();
 		while (rset.next()){
-			Degisir degisir = new Degisir(rset.getInt("id"), rset.getString("ad"));
+			BataryaDegisir degisir = new BataryaDegisir(rset.getInt("id"), rset.getString("ad"));
 			degisirler.add(degisir);
 		}
 
