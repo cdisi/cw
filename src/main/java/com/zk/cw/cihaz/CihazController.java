@@ -402,11 +402,12 @@ public class CihazController implements ActionListener  {
 				e1.printStackTrace();
 			}	
 		    
-		    if(fView.getArkaKameraDiger() != null)
+		    if(!fView.getArkaKameraDiger().equals(""))
 		    	ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 6, 22, fView.getArkaKameraDiger()));
-		    if(fView.getArkaKameraVideo() != null)
+		    
+		    if(fView.getArkaKameraVideo().equals(""))
 		    	ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 6, 23, fView.getArkaKameraVideo()));
-
+		    
 		    //ön kamera çözünürlük		     
 		    OnKameraAta onKameraAta = fView.getOnKameraAta();
 	    	if(onKameraAta == null){
@@ -525,7 +526,30 @@ public class CihazController implements ActionListener  {
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-		    }		    
+		    }	
+		    
+		    if(!fView.getBeklemeSur().equals(""))
+		    	ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 9, 37, fView.getBeklemeSur()));
+		    if(!fView.getKonusmaSur().equals(""))
+		    	ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 9, 38, fView.getKonusmaSur()));
+		    if(!fView.getWifi().equals(""))
+		    	ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 8, 29, fView.getWifi()));
+		    
+		    if(!fView.getBluetooth().equals(""))
+		    	ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 8, 30, fView.getBluetooth()));
+		    
+		    if(!fView.getNfc().equals(""))
+		    	ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 8, 32, fView.getNfc()));
+		    
+		    if(!fView.getGps().equals(""))
+		    	ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 8, 31, fView.getGps()));
+		    if(!fView.getKizilOtesi().equals(""))
+		    	ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 8, 33, fView.getKizilOtesi()));
+		    if(!fView.getRadyo().equals(""))
+		    	ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 8, 34, fView.getRadyo()));
+		    if(!fView.getUsb().equals(""))
+		    	ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 8, 35, fView.getUsb()));
+		    
 		    
 		    for(OzellikAtama ozellikAtama : ozellikAtamaList){
 				  try {

@@ -368,7 +368,17 @@ public class CihazView {
 	private ComboBoxModel<BataryaDegisir> bataryaDegisirComboBoxModel = new BataryaDegisirCombBoxModel();
 	private JComboBox<BataryaDegisir> fBataryaDegisir= new JComboBox<BataryaDegisir>(bataryaDegisirComboBoxModel);	
 	private BataryaDegisir selectedBataryaDegisir= new BataryaDegisir();
+	private JTextField fBeklemeSur = new JTextField();
+	private JTextField fKonusmaSur = new JTextField();
 	
+	private JTextField fWifi = new JTextField();
+	private JTextField fBluetooth = new JTextField();
+	private JTextField fNfc = new JTextField();
+	private JTextField fGps = new JTextField();
+	private JTextField fKizilOtesi = new JTextField();
+	private JTextField fRadyo = new JTextField();
+	private JTextField fUsb = new JTextField();
+
 	CihazView(JFrame aParent) {				    
 		fEdit = Edit.ADD;		
 		buildGui(aParent, "Cihaz Ekle");
@@ -602,7 +612,43 @@ public class CihazView {
 				bataryaDegisir.setId(Integer.parseInt(ozellikAtama.getDeger()));
 				selectedBataryaDegisir = BataryaDegisirDAO.findById(bataryaDegisir);			
 			}
-
+			
+			//bekleme süresi
+			ozellikAtama = ozellikAtamaDao.find(fId,37);
+			if(ozellikAtama!=null)
+				fBeklemeSur.setText(ozellikAtama.getDeger());	
+			//konuşma süresi
+			ozellikAtama = ozellikAtamaDao.find(fId,38);
+			if(ozellikAtama!=null)
+				fKonusmaSur.setText(ozellikAtama.getDeger());	
+			//wifi
+			ozellikAtama = ozellikAtamaDao.find(fId,29);
+			if(ozellikAtama!=null)
+				fWifi.setText(ozellikAtama.getDeger());	
+			//bluetooth
+			ozellikAtama = ozellikAtamaDao.find(fId,30);
+			if(ozellikAtama!=null)
+				fBluetooth.setText(ozellikAtama.getDeger());	
+			//nfc
+			ozellikAtama = ozellikAtamaDao.find(fId,32);
+			if(ozellikAtama!=null)
+				fNfc.setText(ozellikAtama.getDeger());	
+			//gps
+			ozellikAtama = ozellikAtamaDao.find(fId,31);
+			if(ozellikAtama!=null)
+				fGps.setText(ozellikAtama.getDeger());	
+			//kızıl ötesi
+			ozellikAtama = ozellikAtamaDao.find(fId,33);
+			if(ozellikAtama!=null)
+				fKizilOtesi.setText(ozellikAtama.getDeger());	
+			//radyo
+			ozellikAtama = ozellikAtamaDao.find(fId,34);
+			if(ozellikAtama!=null)
+				fRadyo.setText(ozellikAtama.getDeger());	
+			//usb
+			ozellikAtama = ozellikAtamaDao.find(fId,35);
+			if(ozellikAtama!=null)
+				fUsb.setText(ozellikAtama.getDeger());	
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -835,6 +881,38 @@ public class CihazView {
 	BataryaDegisir getBataryaDegisir() {
 		return (BataryaDegisir) fBataryaDegisir.getModel().getSelectedItem();
 	}	
+	
+	String getBeklemeSur() {
+	    return fBeklemeSur.getText();
+	}
+	String getKonusmaSur() {
+	    return fKonusmaSur.getText();
+	}
+	
+	String getWifi() {
+	    return fWifi.getText();
+	}
+	
+	String getBluetooth() {
+	    return fBluetooth.getText();
+	}
+	
+	String getNfc() {
+	    return fNfc.getText();
+	}
+	String getGps() {
+	    return fGps.getText();
+	}
+	String getKizilOtesi() {
+	    return fKizilOtesi.getText();
+	}
+	String getRadyo() {
+	    return fRadyo.getText();
+	}
+	String getUsb() {
+	    return fUsb.getText();
+	}
+	
 	private void buildGui(JFrame aParent, String aDialogTitle) {
 		fStandardDialog = new StandardDialog(
 		      aParent, aDialogTitle, true, OnClose.DISPOSE, getUserInputArea(), getButtons()
@@ -871,6 +949,9 @@ public class CihazView {
 
 	    JPanel bataryaPanel = getBataryaInputArea();
 	    mainPanel.add(bataryaPanel);
+
+	    JPanel baglantiPanel = getBaglantiInputArea();
+	    mainPanel.add(baglantiPanel);
 
 	    UiUtil.alignAllX(mainPanel, UiUtil.AlignX.LEFT);
 	    return mainPanel;	    
@@ -999,8 +1080,32 @@ public class CihazView {
 	    addBataryaKapasiteComboField(fBataryaKapasite, result);	    
 	    addBataryaTeknolojiComboField(fBataryaTeknoloji, result);	    
 	    addBataryaDegisirComboField(fBataryaDegisir, result);	    
+		addTextField(fBeklemeSur, "Bekleme Süresi", result);
+		addTextField(fKonusmaSur, "Konuşma Süresi", result);
 	    return result;
 	}	
+	
+	private JPanel getBaglantiInputArea(){
+		
+		JPanel baglantiMainPanel = new JPanel();
+		baglantiMainPanel.setLayout(new BoxLayout(baglantiMainPanel, BoxLayout.Y_AXIS));
+		baglantiMainPanel.setBorder(BorderFactory.createTitledBorder("BAĞLANTI"));
+		
+		JPanel baglanti1Panel = new JPanel(new FlowLayout(FlowLayout.LEFT));	    
+		addTextField(fWifi, "Wi-fi", baglanti1Panel);
+		addTextField(fBluetooth, "Bluetooth", baglanti1Panel);
+		addTextField(fNfc, "NFC", baglanti1Panel);
+		addTextField(fGps, "GPS", baglanti1Panel);
+		baglantiMainPanel.add(baglanti1Panel);
+		
+		JPanel baglanti2Panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		addTextField(fKizilOtesi, "Kızıl Ötesi", baglanti2Panel);		
+		addTextField(fRadyo, "Radyo", baglanti2Panel);		
+		addTextField(fUsb, "USB", baglanti2Panel);		
+		baglantiMainPanel.add(baglanti2Panel);
+		
+	    return baglantiMainPanel;
+	}		
 	
 	private void addTextAreaField(JTextArea aTextField, String aLabel, JPanel aPanel) {
 		  JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -1015,7 +1120,7 @@ public class CihazView {
 		  JLabel label = new JLabel(aLabel);
 		  panel.add(label);
 		  panel.add(aTextField);
-		  aTextField.setColumns(15);		  
+		  aTextField.setColumns(20);		  
 		  aPanel.add(panel);		  
 	}	
 	
@@ -1924,7 +2029,6 @@ public class CihazView {
 		try {
 			ozellikAtama = ozellikAtamaDao.find(fId,52);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		if(ozellikAtama!=null)
@@ -1935,6 +2039,7 @@ public class CihazView {
 		
 		if(selectedBataryaTeknoloji.getId()!=null)
 			fBataryaTeknoloji.getModel().setSelectedItem(selectedBataryaTeknoloji);
+		
 		if(selectedBataryaDegisir.getId()!=null)
 			fBataryaDegisir.getModel().setSelectedItem(selectedBataryaDegisir);
 	}
