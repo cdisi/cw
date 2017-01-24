@@ -147,8 +147,8 @@ public class CihazController implements ActionListener {
 			if(!fView.getSim().equals("")){
 				SimSayisi simSayisi = new SimSayisi();
 				Sim sim = new Sim();
+				String[] simArr = fView.getSim().split(",");
 				if(fView.getSim().contains(",")){
-					String[] simArr = fView.getSim().split(",");
 					try {
 						simSayisi.setSayi(simArr[0].trim());
 						SimSayisiDAO.findBy(simSayisi);
@@ -181,6 +181,7 @@ public class CihazController implements ActionListener {
 				EkranRenkDAO ekranRenkDAO = new EkranRenkDAO();
 				EkranRenk ekranRenk = new EkranRenk();
 				String[] ekranTipiArr=null;
+		    	ekranTipiArr = fView.getEkranTip().split(",");
 				if(fView.getEkranTip().contains(",")){
 			    	ekranTipiArr = fView.getEkranTip().split(",");
 			    	ekranRenk.setAd(ekranTipiArr[1].trim());
