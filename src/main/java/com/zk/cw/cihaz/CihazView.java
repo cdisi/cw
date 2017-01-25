@@ -378,7 +378,12 @@ public class CihazView {
 	private JTextField fKizilOtesi = new JTextField();
 	private JTextField fRadyo = new JTextField();
 	private JTextField fUsb = new JTextField();
-
+	
+	// ağ
+	private JTextField fIkiG = new JTextField();
+	private JTextField fUcG = new JTextField();
+	private JTextField fDortG = new JTextField();
+	
 	CihazView(JFrame aParent) {				    
 		fEdit = Edit.ADD;		
 		buildGui(aParent, "Cihaz Ekle");
@@ -649,6 +654,18 @@ public class CihazView {
 			ozellikAtama = ozellikAtamaDao.find(fId,35);
 			if(ozellikAtama!=null)
 				fUsb.setText(ozellikAtama.getDeger());	
+			//2g
+			ozellikAtama = ozellikAtamaDao.find(fId,1);
+			if(ozellikAtama!=null)
+				fIkiG.setText(ozellikAtama.getDeger());	
+			//3g
+			ozellikAtama = ozellikAtamaDao.find(fId,2);
+			if(ozellikAtama!=null)
+				fUcG.setText(ozellikAtama.getDeger());	
+			//4g
+			ozellikAtama = ozellikAtamaDao.find(fId,3);
+			if(ozellikAtama!=null)
+				fDortG.setText(ozellikAtama.getDeger());	
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -912,7 +929,15 @@ public class CihazView {
 	String getUsb() {
 	    return fUsb.getText();
 	}
-	
+	String getIkiG() {
+	    return fIkiG.getText();
+	}
+	String getUcG() {
+	    return fUcG.getText();
+	}	
+	String getDortG() {
+	    return fDortG.getText();
+	}	
 	private void buildGui(JFrame aParent, String aDialogTitle) {
 		fStandardDialog = new StandardDialog(
 		      aParent, aDialogTitle, true, OnClose.DISPOSE, getUserInputArea(), getButtons()
@@ -952,6 +977,9 @@ public class CihazView {
 
 	    JPanel baglantiPanel = getBaglantiInputArea();
 	    mainPanel.add(baglantiPanel);
+	    
+	    JPanel agPanel = getAgInputArea();
+	    mainPanel.add(agPanel);
 
 	    UiUtil.alignAllX(mainPanel, UiUtil.AlignX.LEFT);
 	    return mainPanel;	    
@@ -1105,6 +1133,15 @@ public class CihazView {
 		baglantiMainPanel.add(baglanti2Panel);
 		
 	    return baglantiMainPanel;
+	}		
+	
+	private JPanel getAgInputArea(){
+		JPanel result = new JPanel(new FlowLayout(FlowLayout.LEFT));	    
+		result.setBorder(BorderFactory.createTitledBorder("AĞ"));
+		addTextField(fIkiG, "2G", result);
+		addTextField(fUcG, "3G", result);
+		addTextField(fDortG, "4G", result);
+	    return result;
 	}		
 	
 	private void addTextAreaField(JTextArea aTextField, String aLabel, JPanel aPanel) {

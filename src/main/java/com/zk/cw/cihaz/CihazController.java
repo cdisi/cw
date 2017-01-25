@@ -187,12 +187,15 @@ public class CihazController implements ActionListener  {
 
 		      try {
 				 if( (fView.getCekirdekHiz().getId() == null) && (fView.getCekirdekSayi().getId()==null) ){
-				    	CpuSayiHizAtaDAO.delete(cpuSayiHizAta);
+					 if(cpuSayiHizAta.getId() != null)	
+						 CpuSayiHizAtaDAO.delete(cpuSayiHizAta);
 				 }else{
 			    	  if(cpuSayiHizAta.getId() == null)
 			    		  CpuSayiHizAtaDAO.add(cpuSayiHizAta);
-			    	  else
-			    		  CpuSayiHizAtaDAO.update(cpuSayiHizAta);
+			    	  else{
+			    		  if(cpuSayiHizAta.getId() != null)	
+			    			  CpuSayiHizAtaDAO.update(cpuSayiHizAta);
+			    	  }
 				 }
 					
 			} catch (SQLException e1) {
@@ -349,7 +352,8 @@ public class CihazController implements ActionListener  {
 		    // arka kamera diyafram
 		    try {
 		    	arkaKameraAta.setDiyaframAcikligiId(fView.getArkaKameraDiyafram().getId());  
-		    	ArkaKameraAtaDAO.update(arkaKameraAta);
+		    	if(arkaKameraAta.getId() != null)
+		    		ArkaKameraAtaDAO.update(arkaKameraAta);
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
@@ -357,7 +361,8 @@ public class CihazController implements ActionListener  {
 		    // arka kamera piksel büyüklüğü
 		    try {
 		    	arkaKameraAta.setPikselBuyukluguId(fView.getArkaKameraPikselBuyuklugu().getId());  
-		    	ArkaKameraAtaDAO.update(arkaKameraAta);
+		    	if(arkaKameraAta.getId() != null)
+		    		ArkaKameraAtaDAO.update(arkaKameraAta);
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
@@ -549,10 +554,37 @@ public class CihazController implements ActionListener  {
 		    	ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 8, 34, fView.getRadyo()));
 		    if(!fView.getUsb().equals(""))
 		    	ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 8, 35, fView.getUsb()));
+		    if(fView.getIkiG().equals("")){
+		    	try {
+					ozellikAtamaDao.delete(fCihaz,1);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		    }
+		    else	
+		    	ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 1, 1, fView.getIkiG()));
 		    
-		    
+		    if(!fView.getUcG().equals(""))
+		    	ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 1, 2, fView.getUcG()));
+		    else{
+		    	try {
+					ozellikAtamaDao.delete(fCihaz,2);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		    }
+		    	
+		    if(!fView.getDortG().equals(""))
+		    	ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 1, 3, fView.getDortG()));
+		    else{
+		    	try {
+					ozellikAtamaDao.delete(fCihaz,3);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		    }
 		    for(OzellikAtama ozellikAtama : ozellikAtamaList){
-				  try {
+				try {
 					if( ozellikAtamaDao.find(ozellikAtama.getCihazId(), ozellikAtama.getOzellikId()) == null){
 						ozellikAtamaDao.insert(ozellikAtama);
 					  }else{
@@ -563,7 +595,7 @@ public class CihazController implements ActionListener  {
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-			  }
+			}
 		      fView.closeDialog();
 		      CihazMainWindow.getInstance().refreshView();
 		   }
