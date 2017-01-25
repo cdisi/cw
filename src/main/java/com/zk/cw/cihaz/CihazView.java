@@ -383,6 +383,9 @@ public class CihazView {
 	private JTextField fIkiG = new JTextField();
 	private JTextField fUcG = new JTextField();
 	private JTextField fDortG = new JTextField();
+	private JTextField fHiz = new JTextField();
+	private JTextField fGprs = new JTextField();
+	private JTextField fEdge = new JTextField();
 	
 	CihazView(JFrame aParent) {				    
 		fEdit = Edit.ADD;		
@@ -666,7 +669,19 @@ public class CihazView {
 			ozellikAtama = ozellikAtamaDao.find(fId,3);
 			if(ozellikAtama!=null)
 				fDortG.setText(ozellikAtama.getDeger());	
-			
+			//hız
+			ozellikAtama = ozellikAtamaDao.find(fId,4);
+			if(ozellikAtama!=null)
+				fHiz.setText(ozellikAtama.getDeger());	
+			//gprs
+			ozellikAtama = ozellikAtamaDao.find(fId,5);
+			if(ozellikAtama!=null)
+				fGprs.setText(ozellikAtama.getDeger());	
+			//edge
+			ozellikAtama = ozellikAtamaDao.find(fId,6);
+			if(ozellikAtama!=null)
+				fEdge.setText(ozellikAtama.getDeger());	
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -937,6 +952,15 @@ public class CihazView {
 	}	
 	String getDortG() {
 	    return fDortG.getText();
+	}
+	String getHiz() {
+	    return fHiz.getText();
+	}
+	String getGprs() {
+	    return fGprs.getText();
+	}
+	String getEdge() {
+	    return fEdge.getText();
 	}	
 	private void buildGui(JFrame aParent, String aDialogTitle) {
 		fStandardDialog = new StandardDialog(
@@ -1141,6 +1165,9 @@ public class CihazView {
 		addTextField(fIkiG, "2G", result);
 		addTextField(fUcG, "3G", result);
 		addTextField(fDortG, "4G", result);
+		addTextField(fHiz, "Hız", result);
+		addTextField(fGprs, "GPRS", result);
+		addTextField(fEdge, "Edge", result);
 	    return result;
 	}		
 	
@@ -1157,7 +1184,7 @@ public class CihazView {
 		  JLabel label = new JLabel(aLabel);
 		  panel.add(label);
 		  panel.add(aTextField);
-		  aTextField.setColumns(20);		  
+		  aTextField.setColumns(17);		  
 		  aPanel.add(panel);		  
 	}	
 	
