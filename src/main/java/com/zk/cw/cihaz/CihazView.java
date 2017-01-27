@@ -1012,8 +1012,8 @@ public class CihazView {
 	private JPanel getGenelInputArea(){
 		JPanel result = new JPanel(new FlowLayout(FlowLayout.LEFT));	    
 		result.setBorder(BorderFactory.createTitledBorder("GENEL"));
-		addTextField(fAd, "Ad", result);
-	    addTextField(fDigerAd, "Diğer Ad", result);
+		addTextField(fAd, "Ad", result,20);
+	    addTextField(fDigerAd, "Diğer Ad", result,20);
 	    addUreticiComboField(fUretici, "Üretici", result);
 	    addCihazTurComboField(fCihazTur, "Türü", result);
 	    addDuyurulmaYilComboField(fDuyurulmaYil, "Duyurulma Yıl", result);
@@ -1035,7 +1035,7 @@ public class CihazView {
 	    addEkranCozunurlukComboField(fEkranCozunurluk, "Çözünürlük", result);	    
 	    addEkranPPIComboField(fEkranPPI, "PPI", result);	    
 	    addCokluDokunmatikComboField(fCokluDokunmatik, "ÇD", result);	    
-		addTextField(fEkranKor, "EK", result);
+		addTextField(fEkranKor, "EK", result,20);
 		ekranMainPanel.add(result);
 		
 		JPanel ekranDigerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -1047,8 +1047,8 @@ public class CihazView {
 	private JPanel getGovdeInputArea(){
 		JPanel result = new JPanel(new FlowLayout(FlowLayout.LEFT));	    
 		result.setBorder(BorderFactory.createTitledBorder("GÖVDE"));
-		addTextField(fBoyut, "Boyutlar", result);
-		addTextField(fAgirlik, "Ağırlık", result);
+		addTextField(fBoyut, "Boyutlar", result,20);
+		addTextField(fAgirlik, "Ağırlık", result,20);
 	    addSimSayisiComboField(fSimSayisi, "Hat Sayısı", result);	    
 	    addSimComboField(fSim, "SIM türü", result);	    
 		addTextAreaField(fGovdeDiger,"Diğer",result);
@@ -1099,7 +1099,7 @@ public class CihazView {
 	    addArkaKameraDiyafram2ComboField(fArkaKameraDiyafram2, result);	    
 	    addArkaKameraPikselBuyuklugu2ComboField(fArkaKameraPikselBuyuklugu2, result);	
 		addTextAreaField(fArkaKameraDiger,"Diğer",result);
-		addTextField(fArkaKameraVideo, "Video", result);
+		addTextField(fArkaKameraVideo, "Video", result,20);
 		return result;
 	}
 	
@@ -1119,8 +1119,8 @@ public class CihazView {
 	private JPanel getSesInputArea(){
 		JPanel result = new JPanel(new FlowLayout(FlowLayout.LEFT));	    
 		result.setBorder(BorderFactory.createTitledBorder("SES"));
-		addTextField(fUyariTur, "Uyarı türleri", result);
-		addTextField(fHoparlor, "Hoparlör", result);
+		addTextField(fUyariTur, "Uyarı türleri", result,20);
+		addTextField(fHoparlor, "Hoparlör", result,20);
 	    addCheckField(fKulaklikGir,"Kulaklık",result);
 		addTextAreaField(fSesDiger,"Diğer",result);
 	    return result;
@@ -1132,8 +1132,8 @@ public class CihazView {
 	    addBataryaKapasiteComboField(fBataryaKapasite, result);	    
 	    addBataryaTeknolojiComboField(fBataryaTeknoloji, result);	    
 	    addBataryaDegisirComboField(fBataryaDegisir, result);	    
-		addTextField(fBeklemeSur, "Bekleme Süresi", result);
-		addTextField(fKonusmaSur, "Konuşma Süresi", result);
+		addTextField(fBeklemeSur, "Bekleme Süresi", result,20);
+		addTextField(fKonusmaSur, "Konuşma Süresi", result,20);
 	    return result;
 	}	
 	
@@ -1144,16 +1144,16 @@ public class CihazView {
 		baglantiMainPanel.setBorder(BorderFactory.createTitledBorder("BAĞLANTI"));
 		
 		JPanel baglanti1Panel = new JPanel(new FlowLayout(FlowLayout.LEFT));	    
-		addTextField(fWifi, "Wi-fi", baglanti1Panel);
-		addTextField(fBluetooth, "Bluetooth", baglanti1Panel);
-		addTextField(fNfc, "NFC", baglanti1Panel);
-		addTextField(fGps, "GPS", baglanti1Panel);
+		addTextField(fWifi, "Wi-fi", baglanti1Panel,20);
+		addTextField(fBluetooth, "Bluetooth", baglanti1Panel,20);
+		addTextField(fNfc, "NFC", baglanti1Panel,20);
+		addTextField(fGps, "GPS", baglanti1Panel,20);
 		baglantiMainPanel.add(baglanti1Panel);
 		
 		JPanel baglanti2Panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		addTextField(fKizilOtesi, "Kızıl Ötesi", baglanti2Panel);		
-		addTextField(fRadyo, "Radyo", baglanti2Panel);		
-		addTextField(fUsb, "USB", baglanti2Panel);		
+		addTextField(fKizilOtesi, "Kızıl Ötesi", baglanti2Panel,20);		
+		addTextField(fRadyo, "Radyo", baglanti2Panel,20);		
+		addTextField(fUsb, "USB", baglanti2Panel,20);		
 		baglantiMainPanel.add(baglanti2Panel);
 		
 	    return baglantiMainPanel;
@@ -1162,12 +1162,12 @@ public class CihazView {
 	private JPanel getAgInputArea(){
 		JPanel result = new JPanel(new FlowLayout(FlowLayout.LEFT));	    
 		result.setBorder(BorderFactory.createTitledBorder("AĞ"));
-		addTextField(fIkiG, "2G", result);
-		addTextField(fUcG, "3G", result);
-		addTextField(fDortG, "4G", result);
-		addTextField(fHiz, "Hız", result);
-		addTextField(fGprs, "GPRS", result);
-		addTextField(fEdge, "Edge", result);
+		addTextField(fIkiG, "2G", result,20);
+		addTextField(fUcG, "3G", result,20);
+		addTextField(fDortG, "4G", result,20);
+		addTextField(fHiz, "Hız", result,20);
+		addTextField(fGprs, "GPRS", result,10);
+		addTextField(fEdge, "Edge", result,10);
 	    return result;
 	}		
 	
@@ -1179,12 +1179,12 @@ public class CihazView {
 		  aPanel.add(panel);		  
 	}
 	
-	private void addTextField(JTextField aTextField, String aLabel, JPanel aPanel) {
+	private void addTextField(JTextField aTextField, String aLabel, JPanel aPanel, int width) {
 		  JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		  JLabel label = new JLabel(aLabel);
 		  panel.add(label);
 		  panel.add(aTextField);
-		  aTextField.setColumns(17);		  
+		  aTextField.setColumns(width);		  
 		  aPanel.add(panel);		  
 	}	
 	
