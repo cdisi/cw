@@ -4,8 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
+import javax.swing.AbstractButton;
+import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.text.View;
 
@@ -31,6 +34,8 @@ import com.zk.cw.ozellik_atama.OzellikAtamaDAO;
 import com.zk.cw.ram.RamAta;
 import com.zk.cw.ram.RamAtaDAO;
 import com.zk.cw.ram.RamDAO;
+import com.zk.cw.sensor.Sensor;
+import com.zk.cw.sensor.SensorJCheckBox;
 import com.zk.cw.util.Edit;
 
 public class CihazController implements ActionListener  {
@@ -611,7 +616,12 @@ public class CihazController implements ActionListener  {
 		    }
 		    else	
 		    	ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 1, 6, fView.getEdge()));
-
+		    
+		    for(SensorJCheckBox sensor : fView.getSensorler()){
+		    	if(sensor.isSelected())
+		    		System.out.println(sensor.getText());
+		    }
+		    
 		    for(OzellikAtama ozellikAtama : ozellikAtamaList){
 				try {
 					if( ozellikAtamaDao.find(ozellikAtama.getCihazId(), ozellikAtama.getOzellikId()) == null){

@@ -16,6 +16,7 @@ import com.zk.cw.ekran.EkranPPI;
 import com.zk.cw.ekran.EkranRenk;
 import com.zk.cw.ekran.EkranTip;
 import com.zk.cw.gpu.Gpu;
+import com.zk.cw.sensor.Sensor;
 import com.zk.cw.sim.Sim;
 import com.zk.cw.sim.SimSayisi;
 import com.zk.cw.yonga_seti.YongaSeti;
@@ -226,7 +227,23 @@ public class OzellikAtamaDAO {
 		return ozellikAtama;
 	}	
 	
-	
+	public OzellikAtama update(OzellikAtama ozellikAtama, Sensor sensor) throws SQLException {
+		Connection c = DaoFactory.openConnection();
+		
+		PreparedStatement pstmt = c.prepareStatement(OZELLIK_IDDEN_UPDATE);
+		pstmt.setInt(1, ozellikAtama.getCihazId());
+		pstmt.setInt(2, ozellikAtama.getKategoriId());
+		pstmt.setInt(3, 40);
+		pstmt.setInt(4, sensor.getId());
+		pstmt.setInt(5, ozellikAtama.getId());
+		
+		pstmt.executeUpdate();
+
+		pstmt.close();
+		c.close();
+		
+		return ozellikAtama;
+	}
 	
 	public OzellikAtama insert(OzellikAtama ozellikAtama) throws SQLException {
 		Connection c = DaoFactory.openConnection();
@@ -362,7 +379,25 @@ public class OzellikAtamaDAO {
 		c.close();
 		
 		return ozellikAtama;
+	}
+	
+	public OzellikAtama insert(OzellikAtama ozellikAtama, Sensor sensor) throws SQLException {
+		Connection c = DaoFactory.openConnection();
+		
+		PreparedStatement pstmt = c.prepareStatement(INSERT);
+		pstmt.setInt(1, ozellikAtama.getCihazId());
+		pstmt.setInt(2, ozellikAtama.getKategoriId());
+		pstmt.setInt(3, 40);
+		pstmt.setInt(4, sensor.getId());
+		
+		pstmt.executeUpdate();
+
+		pstmt.close();
+		c.close();
+		
+		return ozellikAtama;
 	}	
+	
 	public void delete(Cihaz aCihaz, int ozellikId) throws SQLException {
 		Connection c = DaoFactory.openConnection();
 		

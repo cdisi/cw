@@ -1,5 +1,6 @@
 package com.zk.cw.cihaz;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
@@ -19,6 +20,7 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -111,6 +113,10 @@ import com.zk.cw.ram.RamAtaDAO;
 import com.zk.cw.ram.RamCombBoxModel;
 import com.zk.cw.ram.RamComboBoxRenderer;
 import com.zk.cw.ram.RamDAO;
+import com.zk.cw.sensor.Sensor;
+import com.zk.cw.sensor.SensorDAO;
+import com.zk.cw.sensor.SensorJCheckBox;
+import com.zk.cw.sensor.SensorListener;
 import com.zk.cw.sim.Sim;
 import com.zk.cw.sim.SimComboBoxModel;
 import com.zk.cw.sim.SimComboBoxRenderer;
@@ -386,6 +392,8 @@ public class CihazView {
 	private JTextField fHiz = new JTextField();
 	private JTextField fGprs = new JTextField();
 	private JTextField fEdge = new JTextField();
+	//sensör
+	List<SensorJCheckBox> fSensorler = new ArrayList<SensorJCheckBox>();
 	
 	CihazView(JFrame aParent) {				    
 		fEdit = Edit.ADD;		
@@ -962,6 +970,9 @@ public class CihazView {
 	String getEdge() {
 	    return fEdge.getText();
 	}	
+	List<SensorJCheckBox> getSensorler() {
+	    return fSensorler;
+	}	
 	private void buildGui(JFrame aParent, String aDialogTitle) {
 		fStandardDialog = new StandardDialog(
 		      aParent, aDialogTitle, true, OnClose.DISPOSE, getUserInputArea(), getButtons()
@@ -1004,6 +1015,9 @@ public class CihazView {
 	    
 	    JPanel agPanel = getAgInputArea();
 	    mainPanel.add(agPanel);
+	    
+	    JPanel sensorPanel = getSensorInputArea();
+	    mainPanel.add(sensorPanel);
 
 	    UiUtil.alignAllX(mainPanel, UiUtil.AlignX.LEFT);
 	    return mainPanel;	    
@@ -1171,6 +1185,24 @@ public class CihazView {
 	    return result;
 	}		
 	
+	private JPanel getSensorInputArea(){
+		JPanel result = new JPanel(new FlowLayout(FlowLayout.LEFT));	    
+		result.setBorder(BorderFactory.createTitledBorder("SENSÖRLER"));
+		try {
+			for(Sensor sensor : SensorDAO.all()){
+				SensorJCheckBox cb = new SensorJCheckBox(sensor.getAd(),sensor.getId());
+				fSensorler.add(cb);
+				addSensorCheckField(cb, result);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	    return result;
+	}		
+	
 	private void addTextAreaField(JTextArea aTextField, String aLabel, JPanel aPanel) {
 		  JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		  JLabel label = new JLabel(aLabel);
@@ -1254,6 +1286,11 @@ public class CihazView {
 		aPanel.add(panel);		  
 	}	
 	
+	private void addSensorCheckField(JCheckBox aCheckField, JPanel aPanel) {
+  	    JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+	    panel.add(aCheckField);		 
+		aPanel.add(panel);		  
+	}	
 	// Ekran
 	private void addEkranTipComboField(JComboBox<EkranTip> aComboField, String aLabel, JPanel aPanel) {
   	    JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
