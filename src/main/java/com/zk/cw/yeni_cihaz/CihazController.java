@@ -68,6 +68,10 @@ import com.zk.cw.kamera.PikselBuyukluguDAO;
 import com.zk.cw.main.MainWindow;
 import com.zk.cw.ram.Ram;
 import com.zk.cw.ram.RamDAO;
+import com.zk.cw.sensor.Sensor;
+import com.zk.cw.sensor.SensorAta;
+import com.zk.cw.sensor.SensorAtaDAO;
+import com.zk.cw.sensor.SensorDAO;
 import com.zk.cw.sim.Sim;
 import com.zk.cw.sim.SimDAO;
 import com.zk.cw.sim.SimSayisi;
@@ -436,9 +440,6 @@ public class CihazController implements ActionListener {
 				cihazOzellikAtamaList.add(new CihazOzellikAtama(10,39, fView.getRenk().trim()));
 			}
 
-			if(!fView.getSensor().equals("")){
-				cihazOzellikAtamaList.add(new CihazOzellikAtama(10,40, fView.getSensor().trim()));
-			}
 			if(!fView.getMesaj().equals("")){
 				cihazOzellikAtamaList.add(new CihazOzellikAtama(10,41, fView.getMesaj().trim()));
 			}
@@ -786,8 +787,28 @@ public class CihazController implements ActionListener {
 			    }
 
 				cihazOzellikAtamaList.add(new CihazOzellikAtama(9,36, fView.getPil().trim()));
-			}
+			  }
 			
+			if(!fView.getSensor().equals("")){
+				String[] sensorler = fView.getSensor().split(",");
+				for(String sensorAd:sensorler){
+					Sensor sensor = new Sensor();
+					sensor.setAd(sensorAd.trim());
+			    	SensorDAO.findByName(sensor);
+					if(sensor.getId() == null){
+						SensorDAO.add(sensor);
+					}
+					com.zk.cw.cihaz.Cihaz cihaz = new com.zk.cw.cihaz.Cihaz();
+					cihaz.setId(fCihaz.getId());
+					
+	    			SensorAta sensorAta = SensorAtaDAO.findBy(cihaz,sensor);
+					if(sensorAta == null){
+						SensorAtaDAO.add(cihaz, sensor);
+					}
+
+				}
+				cihazOzellikAtamaList.add(new CihazOzellikAtama(10,40, fView.getSensor().trim()));
+			}	
     		  
     		  for(CihazOzellikAtama cihazOzellikAtama : cihazOzellikAtamaList){
 					CihazOzellikAtamaDAO.insert(fCihaz, cihazOzellikAtama);

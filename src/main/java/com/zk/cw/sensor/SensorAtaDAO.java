@@ -11,16 +11,18 @@ import java.util.List;
 import com.zk.cw.cihaz.Cihaz;
 import com.zk.cw.cpu.CekirdekSayi;
 import com.zk.cw.cpu.CekirdekSayiAta;
+import com.zk.cw.cpu.CpuSayiHizAta;
 import com.zk.cw.dao_factory.DaoFactory;
 import com.zk.cw.ozellik_atama.OzellikAtama;
 
 public class SensorAtaDAO {
-	private static final String FIND_BY_ID = "SELECT * FROM cpu_cekirdek_sayi WHERE id = ?";		
+	private static final String FIND_BY_ID = "SELECT * FROM sensor_ata WHERE id = ?";		
+	private static final String FIND_BY_CIHAZ_ID = "SELECT * FROM sensor_ata WHERE cihaz_id = ?";		
+	private static final String FIND_BY_CIHAZ_SENSOR_ID = "SELECT * FROM sensor_ata WHERE cihaz_id = ? AND sensor_id=?";		
 	private static final String INSERT = "INSERT INTO sensor_ata (cihaz_id,sensor_id) VALUES (?,?)";
 	private static final String FIND_BY_NAME = "SELECT * FROM cpu_cekirdek_sayi WHERE ad = ?";	
 	private static final String ALL = "SELECT * FROM cpu_cekirdek_sayi ORDER BY id";
-	
-	
+	private static final String DELETE = "DELETE FROM sensor_ata WHERE cihaz_id = ? AND sensor_id=?";		
 	
 	public static SensorAta add(Cihaz cihaz, Sensor sensor) throws SQLException {
 		Connection c = DaoFactory.openConnection();
@@ -61,19 +63,52 @@ public class SensorAtaDAO {
 		return cekirdekSayi;
 	}	
 	
-	public static List<CekirdekSayi> all() throws SQLException {
+	public static SensorAta findBy(Cihaz cihaz, Sensor sensor) throws SQLException {
 		Connection c = DaoFactory.openConnection();
-		PreparedStatement pstmt = c.prepareStatement(ALL);
 
+		PreparedStatement pstmt = c.prepareStatement(FIND_BY_CIHAZ_SENSOR_ID);
+		pstmt.setInt(1, cihaz.getId());
+		pstmt.setInt(2, sensor.getId());
+		
+		SensorAta sensorAta = null;
 		ResultSet rset = pstmt.executeQuery();
-		List<CekirdekSayi> cekirdekSayilar = new ArrayList<CekirdekSayi>();
+
 		while (rset.next()){
-			CekirdekSayi cekirdekSayi = new CekirdekSayi(rset.getInt("id"), rset.getString("ad"));
-			cekirdekSayilar.add(cekirdekSayi);
+			sensorAta = new SensorAta(rset.getInt("id"), rset.getInt("cihaz_id"), rset.getInt("sensor_id"));
 		}
 
 		pstmt.close();
 		c.close();
-		return cekirdekSayilar;
+
+		return sensorAta;
 	}
+
+	public static List<SensorAta> findByCihazId(Integer cihazId) throws SQLException {
+		Connection c = DaoFactory.openConnection();
+		PreparedStatement pstmt = c.prepareStatement(FIND_BY_CIHAZ_ID);
+		pstmt.setInt(1, cihazId);
+		ResultSet rset = pstmt.executeQuery();
+		List<SensorAta> sensorler = new ArrayList<SensorAta>();
+		while (rset.next()){
+			SensorAta sensorAta = new SensorAta(rset.getInt("id"), rset.getInt("cihaz_id"), rset.getInt("sensor_id"));
+			sensorler.add(sensorAta);
+		}
+
+		pstmt.close();
+		c.close();
+		return sensorler;
+	}
+	
+	public static void delete(Cihaz cihaz, Sensor sensor) throws SQLException {
+		Connection c = DaoFactory.openConnection();
+		
+		PreparedStatement pstmt = c.prepareStatement(DELETE);
+		pstmt.setInt(1, cihaz.getId());
+		pstmt.setInt(2, sensor.getId());
+		pstmt.executeUpdate();
+
+		pstmt.close();
+		c.close();
+		
+	}	
 }

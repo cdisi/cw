@@ -53,6 +53,25 @@ public class SensorDAO {
 		return sensor;
 	}	
 	
+	public static Sensor findById(Integer id) throws SQLException {
+		Connection c = DaoFactory.openConnection();
+
+		PreparedStatement pstmt = c.prepareStatement(FIND_BY_ID);
+		pstmt.setInt(1, id);
+		
+		ResultSet rset = pstmt.executeQuery();
+		Sensor sensor = new Sensor();
+		while (rset.next()){
+			sensor.setId(rset.getInt("id"));
+			sensor.setAd(rset.getString("ad"));
+		}
+
+		pstmt.close();
+		c.close();
+
+		return sensor;
+	}
+	
 	public static Sensor add(Sensor sensor) throws SQLException {
 		Connection c = DaoFactory.openConnection();
 		

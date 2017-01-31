@@ -35,6 +35,9 @@ import com.zk.cw.ram.RamAta;
 import com.zk.cw.ram.RamAtaDAO;
 import com.zk.cw.ram.RamDAO;
 import com.zk.cw.sensor.Sensor;
+import com.zk.cw.sensor.SensorAta;
+import com.zk.cw.sensor.SensorAtaDAO;
+import com.zk.cw.sensor.SensorDAO;
 import com.zk.cw.sensor.SensorJCheckBox;
 import com.zk.cw.util.Edit;
 
@@ -618,8 +621,28 @@ public class CihazController implements ActionListener  {
 		    	ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 1, 6, fView.getEdge()));
 		    
 		    for(SensorJCheckBox sensor : fView.getSensorler()){
-		    	if(sensor.isSelected())
-		    		System.out.println(sensor.getText());
+		    	if(sensor.isSelected()){
+		    		try {
+		    			Sensor selectedSensor = new Sensor();
+		    			selectedSensor.setId(sensor.getId());
+		    			SensorAta sensorAta = SensorAtaDAO.findBy(fCihaz,selectedSensor);
+						if(sensorAta == null){
+							SensorAtaDAO.add(fCihaz, selectedSensor);
+						}
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		    	}else{
+	    			Sensor selectedSensor = new Sensor();
+	    			selectedSensor.setId(sensor.getId());
+					try {
+						SensorAtaDAO.delete(fCihaz, selectedSensor);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		    	}
 		    }
 		    
 		    for(OzellikAtama ozellikAtama : ozellikAtamaList){

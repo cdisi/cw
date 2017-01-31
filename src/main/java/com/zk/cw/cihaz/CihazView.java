@@ -114,6 +114,8 @@ import com.zk.cw.ram.RamCombBoxModel;
 import com.zk.cw.ram.RamComboBoxRenderer;
 import com.zk.cw.ram.RamDAO;
 import com.zk.cw.sensor.Sensor;
+import com.zk.cw.sensor.SensorAta;
+import com.zk.cw.sensor.SensorAtaDAO;
 import com.zk.cw.sensor.SensorDAO;
 import com.zk.cw.sensor.SensorJCheckBox;
 import com.zk.cw.sensor.SensorListener;
@@ -1192,6 +1194,13 @@ public class CihazView {
 			for(Sensor sensor : SensorDAO.all()){
 				SensorJCheckBox cb = new SensorJCheckBox(sensor.getAd(),sensor.getId());
 				fSensorler.add(cb);
+				if(fId != null) {
+					for (SensorAta sensorAta : SensorAtaDAO.findByCihazId(fId)){
+						if(sensor.getId() == sensorAta.getSensorId()){
+							cb.setSelected(true);
+						}
+					}
+				}
 				addSensorCheckField(cb, result);
 			}
 			
