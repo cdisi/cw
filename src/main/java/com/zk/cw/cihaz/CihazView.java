@@ -396,6 +396,7 @@ public class CihazView {
 	private JTextField fEdge = new JTextField();
 	//sensör
 	List<SensorJCheckBox> fSensorler = new ArrayList<SensorJCheckBox>();
+	//diğer özellikler
 	
 	CihazView(JFrame aParent) {				    
 		fEdit = Edit.ADD;		
