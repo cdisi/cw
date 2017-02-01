@@ -397,6 +397,10 @@ public class CihazView {
 	//sensör
 	List<SensorJCheckBox> fSensorler = new ArrayList<SensorJCheckBox>();
 	//diğer özellikler
+	private JTextField fRenkler = new JTextField();
+	private JTextField fMesaj = new JTextField();
+	private JTextField fJava = new JTextField();
+	private JTextArea fDigerOzellikler = new JTextArea(3,30);
 	
 	CihazView(JFrame aParent) {				    
 		fEdit = Edit.ADD;		
@@ -692,6 +696,23 @@ public class CihazView {
 			ozellikAtama = ozellikAtamaDao.find(fId,6);
 			if(ozellikAtama!=null)
 				fEdge.setText(ozellikAtama.getDeger());	
+			//renk
+			ozellikAtama = ozellikAtamaDao.find(fId,39);
+			if(ozellikAtama!=null)
+				fRenkler.setText(ozellikAtama.getDeger());	
+			//mesaj
+			ozellikAtama = ozellikAtamaDao.find(fId,41);
+			if(ozellikAtama!=null)
+				fMesaj.setText(ozellikAtama.getDeger());	
+			//java
+			ozellikAtama = ozellikAtamaDao.find(fId,42);
+			if(ozellikAtama!=null)
+				fJava.setText(ozellikAtama.getDeger());	
+			//diğer özellikler
+			ozellikAtama = ozellikAtamaDao.find(fId,45);
+			if(ozellikAtama!=null)
+				fDigerOzellikler.setText(ozellikAtama.getDeger());	
+
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -973,6 +994,18 @@ public class CihazView {
 	String getEdge() {
 	    return fEdge.getText();
 	}	
+	String getRenkler() {
+	    return fRenkler.getText();
+	}
+	String getMesaj() {
+	    return fMesaj.getText();
+	}	
+	String getJava() {
+	    return fJava.getText();
+	}
+	String getDigerOzellikler() {
+	    return fDigerOzellikler.getText();
+	}	
 	List<SensorJCheckBox> getSensorler() {
 	    return fSensorler;
 	}	
@@ -1022,6 +1055,9 @@ public class CihazView {
 	    JPanel sensorPanel = getSensorInputArea();
 	    mainPanel.add(sensorPanel);
 
+	    JPanel digerOzelliklerPanel = getDigerOzelliklerInputArea();
+	    mainPanel.add(digerOzelliklerPanel);
+	    
 	    UiUtil.alignAllX(mainPanel, UiUtil.AlignX.LEFT);
 	    return mainPanel;	    
 	}
@@ -1211,7 +1247,26 @@ public class CihazView {
 		}
 		
 	    return result;
-	}		
+	}	
+	
+	private JPanel getDigerOzelliklerInputArea(){
+		
+		JPanel digerOzelliklerMainPanel = new JPanel();
+		digerOzelliklerMainPanel.setLayout(new BoxLayout(digerOzelliklerMainPanel, BoxLayout.Y_AXIS));
+		digerOzelliklerMainPanel.setBorder(BorderFactory.createTitledBorder("DİĞER ÖZELLİKLER"));
+		
+		JPanel result1 = new JPanel(new FlowLayout(FlowLayout.LEFT));	    
+		addTextField(fRenkler, "Renkler", result1,20);
+		addTextField(fMesaj, "Mesajlaşma", result1,20);
+		addTextField(fJava, "Java", result1,20);
+		digerOzelliklerMainPanel.add(result1);
+
+		
+		JPanel result2 = new JPanel(new FlowLayout(FlowLayout.LEFT));	    
+		addTextAreaField(fDigerOzellikler, "Diğer", result2);
+		digerOzelliklerMainPanel.add(result2);
+		return digerOzelliklerMainPanel;
+	}
 	
 	private void addTextAreaField(JTextArea aTextField, String aLabel, JPanel aPanel) {
 		  JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));

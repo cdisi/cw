@@ -617,8 +617,50 @@ public class CihazController implements ActionListener  {
 					e.printStackTrace();
 				}
 		    }
-		    else	
+		    else{	
 		    	ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 1, 6, fView.getEdge()));
+		    }
+		    if(fView.getRenkler().equals("")){
+		    	try {
+					ozellikAtamaDao.delete(fCihaz,39);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		    }
+		    else{	
+		    	ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 10, 39, fView.getRenkler()));
+		    }
+		    if(fView.getMesaj().equals("")){
+		    	try {
+					ozellikAtamaDao.delete(fCihaz,41);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		    }
+		    else{	
+		    	ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 10, 41, fView.getMesaj()));
+		    }
+		    
+		    if(fView.getJava().equals("")){
+		    	try {
+					ozellikAtamaDao.delete(fCihaz,42);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		    }
+		    else{	
+		    	ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 10, 42, fView.getJava()));
+		    }
+		    if(fView.getDigerOzellikler().equals("")){
+		    	try {
+					ozellikAtamaDao.delete(fCihaz,45);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		    }
+		    else{	
+		    	ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 10, 45, fView.getDigerOzellikler()));
+		    }
 		    
 		    for(SensorJCheckBox sensor : fView.getSensorler()){
 		    	if(sensor.isSelected()){
