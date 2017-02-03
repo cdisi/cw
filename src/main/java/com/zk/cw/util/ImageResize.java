@@ -119,7 +119,7 @@ public class ImageResize {
 	    Core.copyMakeBorder(output, output, top, down, left, right, Core.BORDER_CONSTANT, new Scalar(255, 255, 255) );
     	
 	    MatOfByte matOfByte = new MatOfByte();   	
-    	Imgcodecs.imencode(".jpg", input, matOfByte);
+    	Imgcodecs.imencode(".jpg", output, matOfByte);
     	byte[] matOfByteArr = matOfByte.toArray();	
     	
 	    return matOfByteArr;

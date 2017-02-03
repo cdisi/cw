@@ -707,8 +707,8 @@ public class CihazController implements ActionListener  {
 		    	Resim resim = new Resim();
 		    	resim.setCihazId(fCihaz.getId());
 		    	resim.setBuyukResim(fView.getBuyukResim());
-				resim.setKucukResim(ImageResize.resizeKeepAspectRatio(resim.getBuyukResim(),40,53));
 				resim.setOrtaResim(ImageResize.resizeKeepAspectRatio(resim.getBuyukResim(),160,212));
+				resim.setKucukResim(ImageResize.resizeKeepAspectRatio(resim.getBuyukResim(),40,53));
 				try {
 					Resim selectedResim=ResimDAO.findBy(fCihaz);
 					if(selectedResim == null){
@@ -718,6 +718,7 @@ public class CihazController implements ActionListener  {
 						selectedResim.setOrtaResim(resim.getOrtaResim());
 						selectedResim.setKucukResim(resim.getKucukResim());
 						ResimDAO.update(selectedResim);
+						System.out.println(selectedResim.getBuyukResim());
 					}
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
