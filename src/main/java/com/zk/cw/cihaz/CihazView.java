@@ -45,6 +45,7 @@ import com.zk.cw.batarya.BataryaTeknoloji;
 import com.zk.cw.batarya.BataryaTeknolojiCombBoxModel;
 import com.zk.cw.batarya.BataryaTeknolojiDAO;
 import com.zk.cw.cihaz_resim.Resim;
+import com.zk.cw.cihaz_resim.ResimControllerAdd;
 import com.zk.cw.cihaz_resim.ResimDAO;
 import com.zk.cw.cihaz_tur.CihazTur;
 import com.zk.cw.cihaz_tur.CihazTurCombBoxModel;
@@ -402,6 +403,12 @@ public class CihazView {
 	private JTextField fJava = new JTextField();
 	private JTextArea fDigerOzellikler = new JTextArea(3,30);
 	
+	private ImageIcon fGoruntuIcon = new ImageIcon();
+	private byte[] fKucukResim;
+	private byte[] fOrtaResim;
+	private byte[] fBuyukResim;
+	private byte[] selectedOrtaResim;
+	
 	CihazView(JFrame aParent) {				    
 		fEdit = Edit.ADD;		
 		buildGui(aParent, "Cihaz Ekle");
@@ -712,8 +719,20 @@ public class CihazView {
 			ozellikAtama = ozellikAtamaDao.find(fId,45);
 			if(ozellikAtama!=null)
 				fDigerOzellikler.setText(ozellikAtama.getDeger());	
-
-
+			
+			//resim
+			selectedResim = ResimDAO.findBy(selectedCihaz);
+			if(selectedResim!=null){
+				InputStream in = new ByteArrayInputStream(selectedResim.getOrtaResim());
+				BufferedImage bImageFromConvert;
+				try {
+					bImageFromConvert = ImageIO.read(in);
+					fGoruntuIcon.setImage(bImageFromConvert);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -723,7 +742,7 @@ public class CihazView {
 		fStandardDialog.display();
 	}
 	
-	Integer getId() {
+	public Integer getId() {
 	    return fId;
 	}	
 	String getAd() {
@@ -1009,6 +1028,20 @@ public class CihazView {
 	List<SensorJCheckBox> getSensorler() {
 	    return fSensorler;
 	}	
+	Image getGoruntuIcon(){
+		return this.fGoruntuIcon.getImage();
+	}	
+	public void setGoruntuIcon(Image goruntu){
+		fGoruntuIcon.setImage(goruntu);
+	}
+	
+	byte[] getBuyukResim(){
+		return this.fBuyukResim;
+	}
+	public void setBuyukResim(byte[] buyukResim){
+		this.fBuyukResim=buyukResim;
+	}
+	
 	private void buildGui(JFrame aParent, String aDialogTitle) {
 		fStandardDialog = new StandardDialog(
 		      aParent, aDialogTitle, true, OnClose.DISPOSE, getUserInputArea(), getButtons()
@@ -1057,6 +1090,9 @@ public class CihazView {
 
 	    JPanel digerOzelliklerPanel = getDigerOzelliklerInputArea();
 	    mainPanel.add(digerOzelliklerPanel);
+
+	    JPanel resimPanel = getResimInputArea();
+	    mainPanel.add(resimPanel);
 	    
 	    UiUtil.alignAllX(mainPanel, UiUtil.AlignX.LEFT);
 	    return mainPanel;	    
@@ -1267,6 +1303,29 @@ public class CihazView {
 		digerOzelliklerMainPanel.add(result2);
 		return digerOzelliklerMainPanel;
 	}
+	
+	private JPanel getResimInputArea(){
+		JPanel resimMainPanel = new JPanel();
+		resimMainPanel.setLayout(new BoxLayout(resimMainPanel, BoxLayout.Y_AXIS));
+		resimMainPanel.setBorder(BorderFactory.createTitledBorder("RESİMLER"));		
+		
+		JPanel resimPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JLabel label = new JLabel();
+		label.setIcon(fGoruntuIcon);
+		resimPanel.add(label);
+
+		resimMainPanel.add(resimPanel);
+		
+		JPanel resimButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+	    JButton fButton = new JButton("Resim Yükle");
+	    
+	    fButton.addActionListener(new ResimControllerAdd(this, resimMainPanel));
+	    
+	    resimButtonPanel.add(fButton);
+		resimMainPanel.add(resimButtonPanel);
+		
+	    return resimMainPanel;
+	}	
 	
 	private void addTextAreaField(JTextArea aTextField, String aLabel, JPanel aPanel) {
 		  JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));

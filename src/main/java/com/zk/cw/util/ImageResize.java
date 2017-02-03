@@ -102,6 +102,7 @@ public class ImageResize {
 		Mat output = new Mat();
 
 		Mat input = Imgcodecs.imdecode(new MatOfByte(img), Imgcodecs.CV_LOAD_IMAGE_UNCHANGED);
+		
 		double h1 = dtsSizeWidth * (input.rows()/(double)input.cols());
 	    double w2 = dtsSizeHeight * (input.cols()/(double)input.rows());
 	    if( h1 <= dtsSizeHeight) {
@@ -114,11 +115,11 @@ public class ImageResize {
 	    int down = (dtsSizeHeight-output.rows()+1) / 2;
 	    int left = (dtsSizeWidth - output.cols()) / 2;
 	    int right = (dtsSizeWidth - output.cols()+1) / 2;
-
+		 
 	    Core.copyMakeBorder(output, output, top, down, left, right, Core.BORDER_CONSTANT, new Scalar(255, 255, 255) );
     	
 	    MatOfByte matOfByte = new MatOfByte();   	
-    	Imgcodecs.imencode(".jpg", output, matOfByte);
+    	Imgcodecs.imencode(".jpg", input, matOfByte);
     	byte[] matOfByteArr = matOfByte.toArray();	
     	
 	    return matOfByteArr;

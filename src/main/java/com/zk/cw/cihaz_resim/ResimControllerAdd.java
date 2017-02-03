@@ -11,16 +11,17 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 
+import com.zk.cw.cihaz.CihazView;
 import com.zk.cw.util.ImageResize;
 
 public class ResimControllerAdd implements ActionListener  {
 	JFileChooser fResimChooser= new JFileChooser();
-	ResimView fView;
+	CihazView fView;
 	JPanel fMainPanel;
 	Resim resimGaleri = new Resim();
 	ResimDAO resimGaleriDAO;
 	
-	public ResimControllerAdd(ResimView aView, JPanel aMainPanel){
+	public ResimControllerAdd(CihazView aView, JPanel aMainPanel){
 		fView = aView;
 		fMainPanel = aMainPanel;
 	}
@@ -31,25 +32,12 @@ public class ResimControllerAdd implements ActionListener  {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
            File file = fResimChooser.getSelectedFile();
        		try {
-       			byte[] fKucukResim;
-       			byte[] fOrtaResim;
-       			byte[] fBuyukResim;
-       			resimGaleri.setCihazId(fView.getCihazId());
-       			resimGaleri.setKucukResim(ImageResize.reize(file, 40, 0));
-       			resimGaleri.setOrtaResim(ImageResize.reize(file, 160, 0));
     			BufferedImage originalImage = ImageIO.read(file);
     			ByteArrayOutputStream baos = new ByteArrayOutputStream();
     			ImageIO.write( originalImage, "jpg", baos );
-    			resimGaleri.setBuyukResim(baos.toByteArray());
-    			JPanel resimGaleriPanel = fView.getResimGaleriPanel();
-    			resimGaleriPanel.removeAll();
-    			resimGaleriDAO.add(resimGaleri);
-    			resimGaleriPanel = fView.getGaleriInputArea();   			
-    			resimGaleriPanel.revalidate();
-    			//resimGaleriPanel.repaint();
+    			fView.setBuyukResim(baos.toByteArray());
+    			fView.setGoruntuIcon(originalImage);
     			fMainPanel.revalidate();
-    			//fMainPanel.repaint();
-    			fMainPanel.add(resimGaleriPanel);
     			
     		} catch (Exception ex) {
     			ex.printStackTrace();

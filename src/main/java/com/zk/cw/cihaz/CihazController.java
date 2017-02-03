@@ -40,6 +40,7 @@ import com.zk.cw.sensor.SensorAtaDAO;
 import com.zk.cw.sensor.SensorDAO;
 import com.zk.cw.sensor.SensorJCheckBox;
 import com.zk.cw.util.Edit;
+import com.zk.cw.util.ImageResize;
 
 public class CihazController implements ActionListener  {
 	
@@ -699,10 +700,34 @@ public class CihazController implements ActionListener  {
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-			}
-		      fView.closeDialog();
-		      CihazMainWindow.getInstance().refreshView();
 		   }
+		   
+		   //resim
+		    if(fView.getBuyukResim() != null){
+		    	Resim resim = new Resim();
+		    	resim.setCihazId(fCihaz.getId());
+		    	resim.setBuyukResim(fView.getBuyukResim());
+				resim.setKucukResim(ImageResize.resizeKeepAspectRatio(resim.getBuyukResim(),40,53));
+				resim.setOrtaResim(ImageResize.resizeKeepAspectRatio(resim.getBuyukResim(),160,212));
+				try {
+					Resim selectedResim=ResimDAO.findBy(fCihaz);
+					if(selectedResim == null){
+						ResimDAO.add(resim);
+					}else{
+						selectedResim.setBuyukResim(resim.getBuyukResim());
+						selectedResim.setOrtaResim(resim.getOrtaResim());
+						selectedResim.setKucukResim(resim.getKucukResim());
+						ResimDAO.update(selectedResim);
+					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		    }
+		   fView.closeDialog();
+		   CihazMainWindow.getInstance().refreshView();
+		   
+		}
 	}
 	 
 	private void createValidCihazFromUserInput() throws InvalidInputException {
