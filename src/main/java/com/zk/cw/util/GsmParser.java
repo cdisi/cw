@@ -478,7 +478,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(Sensors)").first();
 		if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().toLowerCase(Locale.ENGLISH).replaceAll(".hermometer", "Termometre").replaceAll(".ccelerometer", "İvmeölçer").replaceAll(".roximity", "Yakınlık Sensörü").replace("compass", "Pusula").replaceAll(".ingerprint", "Parmak İzi").replaceAll(".olor spectrum", "Renk Spektrumu").replaceAll(".yro", "Jiroskop").replaceAll(".eart rate", "Kalp Atış Hızı Sensörü").replaceAll(".ltimeter", "Yükseklik Ölçer").replaceAll("\\(.+\\)", "").replaceAll(".arometer", "Basınçölçer").replaceAll(".ris scanner", "Göz Tarama").replaceAll(".emperature", "Isı Ölçer").replace("yes","").trim();		
+	    	deger = elm.parent().nextElementSibling().text().toLowerCase(Locale.ENGLISH).replaceAll(".hermometer", "Termometre").replaceAll(".ccelerometer", "İvmeölçer").replaceAll(".roximity", "Yakınlık").replace("compass", "Pusula").replaceAll(".ingerprint", "Parmak İzi").replaceAll(".olor spectrum", "Renk Spektrumu").replaceAll(".yro", "Jiroskop").replaceAll(".eart rate", "Kalp Atış Hızı").replaceAll(".ltimeter", "Yükseklik Ölçer").replaceAll("\\(.+\\)", "").replaceAll(".arometer", "Basınçölçer").replaceAll(".ris scanner", "Göz Tarama").replaceAll(".emperature", "Isı Ölçer").replace("yes","").trim();		
 	    }
 		return deger;
 	}	

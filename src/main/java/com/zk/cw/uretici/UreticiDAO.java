@@ -29,7 +29,7 @@ public final class UreticiDAO {
     private static final String NULL = "NULL";
     private final static Charset ENCODING = StandardCharsets.UTF_8;
 	private static final String FIND_BY_ID = "SELECT * FROM uretici WHERE id = ?";		
-	private static final String ALL = "SELECT * FROM uretici";
+	private static final String ALL = "SELECT * FROM uretici ORDER BY ad";
 
 
     static {

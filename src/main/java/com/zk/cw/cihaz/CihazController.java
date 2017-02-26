@@ -419,7 +419,7 @@ public class CihazController implements ActionListener  {
 		    if(!fView.getArkaKameraDiger().equals(""))
 		    	ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 6, 22, fView.getArkaKameraDiger()));
 		    
-		    if(fView.getArkaKameraVideo().equals(""))
+		    if(!fView.getArkaKameraVideo().equals(""))
 		    	ozellikAtamaList.add(new OzellikAtama(null, fCihaz.getId(), 6, 23, fView.getArkaKameraVideo()));
 		    
 		    //ön kamera çözünürlük		     
