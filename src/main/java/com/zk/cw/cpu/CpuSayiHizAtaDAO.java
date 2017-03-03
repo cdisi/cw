@@ -20,7 +20,11 @@ public class CpuSayiHizAtaDAO {
 		PreparedStatement pstmt = c.prepareStatement(INSERT);
 		pstmt.setInt(1, cpuSayiHizAta.getCihazId());
 		pstmt.setInt(2, cpuSayiHizAta.getSayiId());
-		pstmt.setInt(3, cpuSayiHizAta.getHizId());
+		
+		if(cpuSayiHizAta.getHizId() != null)
+			pstmt.setInt(3, cpuSayiHizAta.getHizId());
+		else
+			pstmt.setNull(3, java.sql.Types.INTEGER);
 		
 		pstmt.executeUpdate();
 
