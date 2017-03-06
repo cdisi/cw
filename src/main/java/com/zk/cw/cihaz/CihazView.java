@@ -359,9 +359,9 @@ public class CihazView {
 	
 	private JTextArea fOnKameraDiger = new JTextArea(2,30); 
 	
-	private JTextField fUyariTur = new JTextField();
+	private JTextField fUyariTur = new JTextField("Titreşim; MP3, WAV zil sesleri");
 	private JTextField fHoparlor = new JTextField();
-	private JCheckBox fKulaklikGir = new JCheckBox();
+	private JCheckBox fKulaklikGir = new JCheckBox("Var");
 	private JTextArea fSesDiger = new JTextArea(2,30); 
 
 	//batarya kapasite
@@ -389,17 +389,17 @@ public class CihazView {
 	private JTextField fUsb = new JTextField();
 	
 	// ağ
-	private JTextField fIkiG = new JTextField();
-	private JTextField fUcG = new JTextField();
-	private JTextField fDortG = new JTextField();
-	private JTextField fHiz = new JTextField();
-	private JTextField fGprs = new JTextField();
-	private JTextField fEdge = new JTextField();
+	private JTextField fIkiG = new JTextField("GSM 850 / 900 / 1800 / 1900");
+	private JTextField fUcG = new JTextField("HSDPA 850 / 900 / 1900 / 2100");
+	private JTextField fDortG = new JTextField("LTE band 1(2100), 2(1900), 3(1800), 5(850), 7(2600), 20(800)");
+	private JTextField fHiz = new JTextField("HSPA 21.1/5.76 Mbps, LTE Cat7 300/100 Mbps");
+	private JTextField fGprs = new JTextField("Var");
+	private JTextField fEdge = new JTextField("Var");
 	//sensör
 	List<SensorJCheckBox> fSensorler = new ArrayList<SensorJCheckBox>();
 	//diğer özellikler
 	private JTextField fRenkler = new JTextField();
-	private JTextField fMesaj = new JTextField();
+	private JTextField fMesaj = new JTextField("SMS, MMS, Email, Push Mail, IM");
 	private JTextField fJava = new JTextField();
 	private JTextArea fDigerOzellikler = new JTextArea(3,30);
 	
