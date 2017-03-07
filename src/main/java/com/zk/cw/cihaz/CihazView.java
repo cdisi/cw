@@ -380,10 +380,10 @@ public class CihazView {
 	private JTextField fBeklemeSur = new JTextField();
 	private JTextField fKonusmaSur = new JTextField();
 	
-	private JTextField fWifi = new JTextField();
-	private JTextField fBluetooth = new JTextField();
-	private JTextField fNfc = new JTextField();
-	private JTextField fGps = new JTextField();
+	private JTextField fWifi = new JTextField("802.11 b/g/n, Wi-Fi Direct, Wi-Fi Hotspot");
+	private JTextField fBluetooth = new JTextField("v4.1, A2DP");
+	private JTextField fNfc = new JTextField("Var");
+	private JTextField fGps = new JTextField("A-GPS, GLONASS");
 	private JTextField fKizilOtesi = new JTextField();
 	private JTextField fRadyo = new JTextField();
 	private JTextField fUsb = new JTextField();
