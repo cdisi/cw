@@ -317,7 +317,7 @@ public class GsmParser {
 	}	
 	public String videoBul(){
 	    String deger=null;
-		Element elm = doc.select("a:contains(Video)").first();
+		Element elm = doc.select("a:contains(Video)").get(1);
 	    if(elm != null){
 	    	deger = elm.parent().nextElementSibling().text().replace(", check quality", "").replace("No", "Yok").replace("Yes", "Var").trim();		
 	    }
