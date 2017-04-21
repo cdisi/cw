@@ -384,11 +384,11 @@ public class CihazView {
 	private JTextField fBluetooth = new JTextField("v4.1, A2DP");
 	private JTextField fNfc = new JTextField("Var");
 	private JTextField fGps = new JTextField("A-GPS, GLONASS");
-	private JTextField fKizilOtesi = new JTextField();
+	private JTextField fKizilOtesi = new JTextField("Yok");
 	private JTextField fRadyo = new JTextField();
-	private JTextField fUsb = new JTextField();
+	private JTextField fUsb = new JTextField("v4.0");
 	
-	// ağ
+	//ağ
 	private JTextField fIkiG = new JTextField("GSM 850 / 900 / 1800 / 1900");
 	private JTextField fUcG = new JTextField("HSDPA 850 / 900 / 1900 / 2100");
 	private JTextField fDortG = new JTextField("LTE band 1(2100), 2(1900), 3(1800), 5(850), 7(2600), 20(800)");
