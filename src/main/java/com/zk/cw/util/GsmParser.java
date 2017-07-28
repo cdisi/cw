@@ -19,7 +19,7 @@ import com.zk.cw.yeni_cihaz.RenkDAO;
 public class GsmParser {
 	
 	private Document doc;
-	
+	private Boolean arkaKam = false;
 	public GsmParser(String url){  
 		try {
 			doc = Jsoup.connect(url)
@@ -311,14 +311,17 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(Features)").first();
 	    if(elm != null){
+	    	arkaKam = true;
 	    	deger = elm.parent().nextElementSibling().text().replace("No", "Yok").replace("Yes", "Var").replaceAll(".ensor size", "sensör genişliği").replaceAll(".ixel size", "piksel genişliği").replaceAll(".ace detection", "yüz bulma").replaceAll(".ace/smile detection", "yüz/gülümseme algılama").replaceAll(".ouch focus", "dokunmatik odaklama").replaceAll(".eo-tagging", "coğrafi konum etiketleme").replaceAll(".aser & phase detection autofocus", "lazer ve faz algılama otofokus").replaceAll(".utofocus", "otofokus").replaceAll(".ual-LED", "Çift LED").replaceAll("flash", "flaş").replaceAll(".ptical zoom", "optik zum").trim();		
 	    }
 		return deger;
 	}	
 	public String videoBul(){
-	    String deger=null;
-		Element elm = doc.select("a:contains(Video)").get(1);
-	    if(elm != null){
+	    if(arkaKam == false) return null;
+		String deger=null;
+	    Element elm = null;
+		elm = doc.select("a:contains(Video)").get(1);
+		if(elm != null){
 	    	deger = elm.parent().nextElementSibling().text().replace(", check quality", "").replace("No", "Yok").replace("Yes", "Var").trim();		
 	    }
 		return deger;
