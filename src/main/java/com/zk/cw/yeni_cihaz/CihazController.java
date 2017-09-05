@@ -368,17 +368,19 @@ public class CihazController implements ActionListener {
 						e.printStackTrace();
 					}
 				}
-				if(hariciHafiza[1] != null){
-					hariciHafizaBuyukluk.setBuyukluk(hariciHafiza[1].trim());
-					try {
-						HariciHafizaBuyuklukDAO.findBy(hariciHafizaBuyukluk);
-						if(hariciHafizaBuyukluk.getId() == null){
-							HariciHafizaBuyuklukDAO.add(hariciHafizaBuyukluk);
+				if(hariciHafiza.length > 1){
+					if(hariciHafiza[1] != null){
+						hariciHafizaBuyukluk.setBuyukluk(hariciHafiza[1].trim());
+						try {
+							HariciHafizaBuyuklukDAO.findBy(hariciHafizaBuyukluk);
+							if(hariciHafizaBuyukluk.getId() == null){
+								HariciHafizaBuyuklukDAO.add(hariciHafizaBuyukluk);
+							}
+							cihazOzellikAtamaList.add(new CihazOzellikAtama(5,51, hariciHafizaBuyukluk.getId().toString()));
+	
+						} catch (SQLException e) {
+							e.printStackTrace();
 						}
-						cihazOzellikAtamaList.add(new CihazOzellikAtama(5,51, hariciHafizaBuyukluk.getId().toString()));
-
-					} catch (SQLException e) {
-						e.printStackTrace();
 					}
 				}
 			}
