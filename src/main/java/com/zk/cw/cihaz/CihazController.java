@@ -233,7 +233,31 @@ public class CihazController implements ActionListener  {
 				 }
 			} catch (SQLException e1) {
 				e1.printStackTrace();
-			}		     
+			}	
+		      
+		      // 3.işlemci
+	    	  CpuSayiHizAta cpuSayiHizAta3 = fView.getCpuSayiHizAta3();
+	    	  if(fView.getCpuSayiHizAta3() == null){
+	    		  cpuSayiHizAta3 = new CpuSayiHizAta(); 
+	    	  }
+    		  cpuSayiHizAta3.setCihazId(fCihaz.getId());
+    		  cpuSayiHizAta3.setSayiId(fView.getCekirdekSayi3().getId());
+    		  cpuSayiHizAta3.setHizId(fView.getCekirdekHiz3().getId());
+
+		      try {
+				 if( (fView.getCekirdekHiz3().getId() == null) && (fView.getCekirdekSayi3().getId()==null) ){
+				    	if(cpuSayiHizAta3.getId() != null)
+				    		CpuSayiHizAtaDAO.delete(cpuSayiHizAta3);
+				 }else{
+			    	  if(cpuSayiHizAta3.getId() == null)
+			    		  CpuSayiHizAtaDAO.add(cpuSayiHizAta3);
+			    	  else
+			    		  CpuSayiHizAtaDAO.update(cpuSayiHizAta3);
+				 }
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}		      
+		      
 		      // dahili hafıza		     
 		      DahiliHafizaAta dahiliHafizaAta = fView.getDahiliHafizaAta();
 	    	  if(dahiliHafizaAta == null){
