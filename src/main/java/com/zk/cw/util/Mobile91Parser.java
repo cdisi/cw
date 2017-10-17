@@ -39,7 +39,7 @@ public class Mobile91Parser {
 		if(elms != null){
 	    	for(Element elm:elms){
 				try {
-					URL url = new URL("http:"+elm.attr("data-large-src"));
+					URL url = new URL("https:"+elm.attr("data-large-src"));
 					BufferedImage originalImage = ImageIO.read(url);
 					ByteArrayOutputStream baos = new ByteArrayOutputStream();
 					ImageIO.write( originalImage, "jpg", baos );
