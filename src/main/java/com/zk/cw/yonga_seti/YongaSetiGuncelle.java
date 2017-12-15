@@ -15,7 +15,7 @@ public class YongaSetiGuncelle {
 		LinkedHashMap<Integer, OzellikAtama> lhm = null;
 		OzellikAtamaDAO ozellikAtamaDAO = new OzellikAtamaDAO();
 		try {
-			lhm = OzellikAtamaDAO.tumOzellikler();
+			//lhm = OzellikAtamaDAO.tumOzellikler();
 			Set<Integer> ks = lhm.keySet();
 			Iterator<Integer> itr = ks.iterator();
 			while (itr.hasNext()){

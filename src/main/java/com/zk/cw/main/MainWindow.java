@@ -73,7 +73,7 @@ public final class MainWindow {
   
   /** Refresh the display in response to changing database content. */
   public void refreshView(){
-    fMovieTableModel.refreshView();
+    //fMovieTableModel.refreshView();
   }
   
   public String getUserName(){
@@ -86,7 +86,7 @@ public final class MainWindow {
       LaunchApplication.APP_NAME + 
       " - " + fUserName.toUpperCase(Locale.ENGLISH)
     ); 
-    ureticiBul();
+    //ureticiBul();
     
     ureticiTableModel = new UreticiTableModel();
     ureticiTable = new JTable(ureticiTableModel);
@@ -96,7 +96,7 @@ public final class MainWindow {
     
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     placeInMiddlePartOfTheScreen(frame);
-    addApplicationIcon(frame);
+    //addApplicationIcon(frame);
     UiUtil.centerAndShow(frame);
   }
   
@@ -132,8 +132,8 @@ public final class MainWindow {
   private final class SortMovieTable extends MouseAdapter {
     @Override public void mouseClicked(MouseEvent aEvent) {
       fLogger.config("Sorting the table.");
-      int columnIdx = fMovieTable.getColumnModel().getColumnIndexAtX(aEvent.getX());
-      fMovieTableModel.sortByColumn(columnIdx);
+      //int columnIdx = fMovieTable.getColumnModel().getColumnIndexAtX(aEvent.getX());
+      //fMovieTableModel.sortByColumn(columnIdx);
     }
   }
   

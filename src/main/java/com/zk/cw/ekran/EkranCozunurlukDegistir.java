@@ -11,6 +11,7 @@ import com.zk.cw.ozellik_atama.OzellikAtama;
 import com.zk.cw.ozellik_atama.OzellikAtamaDAO;
 
 public class EkranCozunurlukDegistir {
+	/*
 	public static void main(String[] args) {
 		try {
 			LinkedHashMap<Integer, OzellikAtama> lhm = EkranDAO.tumOzellikler();
@@ -82,5 +83,5 @@ public class EkranCozunurlukDegistir {
 		}	
 
 	}
-
+*/
 }

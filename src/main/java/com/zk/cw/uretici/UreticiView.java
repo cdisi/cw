@@ -32,27 +32,6 @@ final class UreticiView {
     fStandardDialog.display();
   }
 
-  /**
-    Constructor.
-    
-    <P>Called when editing an existing {@link Movie}. The text fields are simply
-    prepopulated with the text taken from the currently selected row of the table.
-  */
-  UreticiView(JFrame aParent, Movie aSelectedMovie) {
-    fLogger.fine("Editing selected movie:" + aSelectedMovie);
-    fEdit = Edit.CHANGE;
-    fId = aSelectedMovie.getId();
-    buildGui(aParent, "Edit Movie");
-    populateFields(aSelectedMovie);
-    fStandardDialog.display();
-  }
-
-  /**
-   Return the movie id. The id is used by the database, but is never shown to the user,
-   nor is it ever edited by the end user. This method is supplied since it's
-   convenient to carry the id with the other information related to a movie, and the
-   {@link MovieDAO} needs a way to uniquely identify records.
-  */
   String getId() {
     return fId;
   }
@@ -98,14 +77,6 @@ final class UreticiView {
   private JButton fEditButton;
   private static final Logger fLogger = Util.getLogger(UreticiView.class);
 
-  /** Populate the GUI with data from the movie. */
-  private void populateFields(Movie aSelectedMovie) {
-    fTitle.setText(Util.format(aSelectedMovie.getTitle()));
-    fDateViewed.setText(Util.format(aSelectedMovie.getDateViewed()));
-    fRating.setText(Util.format(aSelectedMovie.getRating()));
-    fComment.setText(aSelectedMovie.getComment());
-  }
-
   private void buildGui(JFrame aParent, String aDialogTitle) {
     fStandardDialog = new StandardDialog(
       aParent, aDialogTitle, true, OnClose.DISPOSE, getUserInputArea(), getButtons()
@@ -136,7 +107,7 @@ final class UreticiView {
     java.util.List<JButton> result = new ArrayList<>();
 
     fEditButton = new JButton(fEdit.toString());
-    fEditButton.addActionListener(new UreticiController(this, fEdit));
+    //fEditButton.addActionListener(new UreticiController(this, fEdit));
     result.add(fEditButton);
 
     JButton cancel = new JButton("Cancel");

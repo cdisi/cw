@@ -23,41 +23,12 @@ public final class UreticiTableModel extends AbstractTableModel {
     fireTableDataChanged();
   }
   
-  /** Returned the selected movie's id. */
-  public String getId(int aRow){
-    Uretici uretici = fUretici.get(aRow);
-    return uretici.idAl(); 
-  }
   
   /** Return the selected {@link Uretici}. */
   public Uretici getUretici(int aRow){
     return fUretici.get(aRow);
   }
   
-  public void sortByColumn(int aIdx){
-    fNumClicks++;
-    if( aIdx == 1 ) {
-      //natural sorting of the Movie class
-      Collections.sort(fUretici);
-    }
-    else {
-      Comparator<Uretici> comparator = null;
-      if ( aIdx == 0 ){
-        comparator = Uretici.TITLE_SORT;
-      }
-      else if ( aIdx == 2 ){
-        comparator = Uretici.RATING_SORT;
-      }
-      else if ( aIdx == 3 ){
-        comparator = Uretici.COMMENT_SORT;
-      }
-      Collections.sort(fUretici, comparator);
-    }
-    if( (fNumClicks % 2) == 0){
-      Collections.reverse(fUretici);
-    }
-    fireTableDataChanged();
-  }
   
   /** Return the number of columns in the table. */
   @Override public int getColumnCount() {

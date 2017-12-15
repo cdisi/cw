@@ -202,7 +202,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(Resolution)").first();
 	    if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replace("pixels ", "piksel").replace("~", "").replace(" pixel density", "").replace("(", ", ").replace(")", "").trim();		
+	    	deger = elm.parent().nextElementSibling().text().replace("pixels", "piksel").replace("~", "").replace(" pixel density", "").replace("(", ", ").replace(")", "").replace(" density", "").replaceAll("[0-9]+:[0-9]+ ratio ,", "").trim();		
 	    }
 		return deger;
 	}	

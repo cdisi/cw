@@ -94,7 +94,7 @@ public class ResimView {
 	    java.util.List<JButton> result = new ArrayList<>();
 
 	    fButton = new JButton("Resim Yükle");
-	    fButton.addActionListener(new ResimControllerAdd(this, mainPanel));
+	    //fButton.addActionListener(new ResimControllerAdd(this, mainPanel));
 	    result.add(fButton);
 	    
 	    JButton cancel = new JButton("İptal");

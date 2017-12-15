@@ -45,7 +45,7 @@ public class CpuGuncelle {
 						if(cekirdekHiz.getId() == null){
 							CekirdekHizDAO.add(cekirdekHiz);
 						}
-						CpuSayiHizAtaDAO.add(cihaz,cekirdekSayi,cekirdekHiz);
+						//CpuSayiHizAtaDAO.add(cihaz,cekirdekSayi,cekirdekHiz);
 				    }
 				}else{
 					if(ozellikAtama.getDeger().contains("Çift Çekirdek")){
@@ -73,7 +73,7 @@ public class CpuGuncelle {
 				    	if(cekirdekHiz.getId() == null){
 							CekirdekHizDAO.add(cekirdekHiz);
 						}
-				    	CpuSayiHizAtaDAO.add(cihaz,cekirdekSayi,cekirdekHiz);
+				    	//CpuSayiHizAtaDAO.add(cihaz,cekirdekSayi,cekirdekHiz);
 				    }
 
 				}
