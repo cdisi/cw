@@ -10,6 +10,13 @@
   <name>cw</name>
   <url>http://maven.apache.org</url>
 
+<repositories>
+    <repository>
+        <id>javaopencvbook</id>
+        <url>https://raw.github.com/JavaOpenCVBook/code/maven2/</url>
+    </repository>
+</repositories>
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>

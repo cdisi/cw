@@ -20,7 +20,6 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 
 
-
 public class ImageResize {
 	
 	public static byte[] reize(File file, int width, int height) {
@@ -131,10 +130,10 @@ public class ImageResize {
 	    Image intermediateWithTransparentPixels = makeColorTransparent(intermediateImage, Color.WHITE);
 
 	    //finalize the transparent image
-	    BufferedImage finalImage = new BufferedImage(finalWidth, finalHeight, BufferedImage.TYPE_INT_RGB);
+	    BufferedImage finalImage = new BufferedImage(finalWidth, finalHeight, BufferedImage.TYPE_INT_ARGB);
 	    Graphics2D gf = finalImage.createGraphics();
 	    gf.setComposite(AlphaComposite.SrcOver);
-	    gf.setColor(new Color(255, 255, 255, 255));
+	    gf.setColor(new Color(0, 0, 0, 0));
 	    gf.fillRect(0, 0, finalWidth, finalHeight);
 	    gf.drawImage(intermediateWithTransparentPixels, 0, 0, finalWidth, finalHeight, new Color(0, 0, 0, 0), null);
 	    gf.dispose();

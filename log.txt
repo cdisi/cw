@@ -1,20 +1,20 @@
-Ara 19, 2017 11:07:08 AM com.zk.cw.LaunchApplication main
+Ara 19, 2017 3:21:34 PM com.zk.cw.LaunchApplication main
 CONFIG: Launching application...
-Ara 19, 2017 11:07:08 AM com.zk.cw.LaunchApplication main
+Ara 19, 2017 3:21:34 PM com.zk.cw.LaunchApplication main
 CONFIG: Operating System : Windows 8.1 6.3
-Ara 19, 2017 11:07:08 AM com.zk.cw.LaunchApplication main
+Ara 19, 2017 3:21:34 PM com.zk.cw.LaunchApplication main
 CONFIG: Java Version: 1.8.0_66
-Ara 19, 2017 11:07:08 AM com.zk.cw.LaunchApplication main
+Ara 19, 2017 3:21:34 PM com.zk.cw.LaunchApplication main
 CONFIG: Java Home: C:\Program Files\Java\jdk1.8.0_66\jre
-Ara 19, 2017 11:07:08 AM com.zk.cw.LaunchApplication useCustomExceptionHandler
+Ara 19, 2017 3:21:34 PM com.zk.cw.LaunchApplication useCustomExceptionHandler
 CONFIG: Setting up custom exception handler.
-Ara 19, 2017 11:07:08 AM com.zk.cw.LaunchApplication main
+Ara 19, 2017 3:21:34 PM com.zk.cw.LaunchApplication main
 CONFIG: Showing user login screen.
-Ara 19, 2017 11:07:08 AM com.zk.cw.LaunchApplication userLogin
+Ara 19, 2017 3:21:34 PM com.zk.cw.LaunchApplication userLogin
 CONFIG: Showing the login screen.
-Ara 19, 2017 11:07:25 AM com.zk.cw.login.LoginController showMainWindow
+Ara 19, 2017 3:21:36 PM com.zk.cw.login.LoginController showMainWindow
 CONFIG: Showing the main window.
-Ara 19, 2017 11:07:25 AM com.zk.cw.main.MainWindow buildAndShow
-FINE: Building GUI for user : d
-Ara 19, 2017 11:07:25 AM com.zk.cw.LaunchApplication main
+Ara 19, 2017 3:21:36 PM com.zk.cw.main.MainWindow buildAndShow
+FINE: Building GUI for user : dsfasd
+Ara 19, 2017 3:21:36 PM com.zk.cw.LaunchApplication main
 CONFIG: Launch thread now ending.
