@@ -101,11 +101,8 @@ public final class UreticiDAO {
 	  InputStream input = null;
 	  ArrayList<Uretici> sonuc = new ArrayList<Uretici>();
 	  try{
-		  input = new FileInputStream("resources/config.properties");
-		  configProps.load(input);
-		  Class.forName("com.mysql.jdbc.Driver");
-	      conn = DriverManager.getConnection(configProps.getProperty("DB_URL"), configProps.getProperty("DB_USER"), configProps.getProperty("DB_PASS"));
-	      stmt = conn.createStatement();
+	      Connection c = DaoFactory.openConnection();
+	      stmt = c.createStatement();
 	      String sql= "SELECT * FROM uretici";
 	      if(ureticiId != 0){
 	    	  sql += " WHERE id="+ureticiId;
@@ -147,10 +144,7 @@ public final class UreticiDAO {
 	  Properties configProps = new Properties();
 	  InputStream input = null;
 	  try{
-		  input = new FileInputStream("resources/config.properties");
-		  configProps.load(input);
-		  Class.forName("com.mysql.jdbc.Driver");
-	      conn = DriverManager.getConnection(configProps.getProperty("DB_URL"), configProps.getProperty("DB_USER"), configProps.getProperty("DB_PASS"));
+	      Connection conn = DaoFactory.openConnection();
 	      stmt = conn.createStatement();
 	      String sql= "SELECT * FROM uretici";
 	      ResultSet rs = stmt.executeQuery(sql);	      
@@ -190,10 +184,7 @@ public final class UreticiDAO {
 	  InputStream input = null;
 	  boolean donus = false;
 	  try{
-		  input = new FileInputStream("resources/config.properties");
-		  configProps.load(input);
-		  Class.forName("com.mysql.jdbc.Driver");
-	      conn = DriverManager.getConnection(configProps.getProperty("DB_URL"), configProps.getProperty("DB_USER"), configProps.getProperty("DB_PASS"));
+	      Connection conn = DaoFactory.openConnection();
 	      stmt = conn.createStatement();
 	      String sql= "SELECT * FROM uretici";
 	      if(uretici != null)
@@ -226,13 +217,9 @@ public final class UreticiDAO {
   }
   
   public static void ekle(Uretici uretici) {
-	  Properties configProps = new Properties();
-	  InputStream input = null;	  
 	  try{
-		  input = new FileInputStream("resources/config.properties");
-		  configProps.load(input);
-		  Class.forName("com.mysql.jdbc.Driver");
-	      conn = DriverManager.getConnection(configProps.getProperty("DB_URL"), configProps.getProperty("DB_USER"), configProps.getProperty("DB_PASS"));
+	      Connection conn = DaoFactory.openConnection();
+	      stmt = conn.createStatement();
 	      PreparedStatement pstmt = conn.prepareStatement("INSERT INTO uretici (ad, logo_url, gsm_arena_url, aktif) VALUES (?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
 	      pstmt.setString(1, uretici.adAl());
 	      pstmt.setString(2, uretici.logoUrlAl());

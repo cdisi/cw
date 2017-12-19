@@ -829,8 +829,8 @@ public class CihazController implements ActionListener {
 			  }else{
 				  Resim resim = new Resim();
 				  resim.setCihazId(fCihaz.getId());
-				  resim.setKucukResim(ImageResize.resizeKeepAspectRatio(fView.getResim(),40,53));
-				  resim.setOrtaResim(ImageResize.resizeKeepAspectRatio(fView.getResim(),160,212));
+				  resim.setKucukResim(ImageResize.reizeFromByte(fView.getResim(),40,53));
+				  resim.setOrtaResim(ImageResize.reizeFromByte(fView.getResim(),160,212));
 				  ResimDAO.add(resim);				  
 			  }
 	  		  cihazDAO.update(fView.getUrl());

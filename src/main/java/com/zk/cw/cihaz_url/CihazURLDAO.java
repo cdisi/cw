@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
+import com.zk.cw.dao_factory.DaoFactory;
 import com.zk.cw.uretici.Uretici;
 
 public class CihazURLDAO {
@@ -17,14 +18,9 @@ public class CihazURLDAO {
     private static Statement stmt = null;
     
     public static boolean bul(CihazURL cihazURL) {
-  	  Properties configProps = new Properties();
-  	  InputStream input = null;
   	  boolean donus = false;
   	  try{
-  		  input = new FileInputStream("resources/config.properties");
-  		  configProps.load(input);
-  		  Class.forName("com.mysql.jdbc.Driver");
-  	      conn = DriverManager.getConnection(configProps.getProperty("DB_URL"), configProps.getProperty("DB_USER"), configProps.getProperty("DB_PASS"));
+	      Connection conn = DaoFactory.openConnection();
   	      stmt = conn.createStatement();
   	      String sql= "SELECT * FROM cihaz_url WHERE url ='"+ cihazURL.getUrl() +"'";
   	      ResultSet rs = stmt.executeQuery(sql);	      
@@ -55,13 +51,8 @@ public class CihazURLDAO {
     }    
     
     public static void ekle(CihazURL cihazURL,Uretici uretici) {
-  	  Properties configProps = new Properties();
-  	  InputStream input = null;	  
   	  try{
-  		  input = new FileInputStream("resources/config.properties");
-  		  configProps.load(input);
-  		  Class.forName("com.mysql.jdbc.Driver");
-  	      conn = DriverManager.getConnection(configProps.getProperty("DB_URL"), configProps.getProperty("DB_USER"), configProps.getProperty("DB_PASS"));
+	      Connection conn = DaoFactory.openConnection();
   	      PreparedStatement pstmt = conn.prepareStatement("INSERT INTO cihaz_url (uretici_id, url) VALUES (?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
   	      pstmt.setInt(1, uretici.idAl());
   	      pstmt.setString(2, cihazURL.getUrl());

@@ -46,8 +46,8 @@ public class Mobile91Parser {
 					baos.flush();
 					resim.setBuyukResim(baos.toByteArray());
 					baos.close();
-					resim.setKucukResim(ImageResize.resizeKeepAspectRatio(resim.getBuyukResim(),40,53));
-					resim.setOrtaResim(ImageResize.resizeKeepAspectRatio(resim.getBuyukResim(),160,212));
+					resim.setKucukResim(ImageResize.reizeFromByte(resim.getBuyukResim(),40,53));
+					resim.setOrtaResim(ImageResize.reizeFromByte(resim.getBuyukResim(),160,212));
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
