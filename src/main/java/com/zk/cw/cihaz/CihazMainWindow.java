@@ -111,7 +111,7 @@ public class CihazMainWindow {
 		mainFrame.getContentPane().removeAll();
 		
 		JScrollPane panel = new JScrollPane(cihazTable);
-	    mainFrame.getContentPane().add(panel); 
+		mainFrame.getContentPane().add(panel); 
 	    mainFrame.revalidate(); 
 	    mainFrame.repaint();
 	    //clickOnHeaderSortsTable();
