@@ -154,7 +154,7 @@ public class CihazView {
 	private JComboBox<Uretici> fUretici = new JComboBox<Uretici>(ureticiCombBoxModel);
 	private ComboBoxModel<CihazTur> cihazTurCombBoxModel = new CihazTurCombBoxModel();
 	private JComboBox<CihazTur> fCihazTur = new JComboBox<CihazTur>(cihazTurCombBoxModel);
-	final String[] yilar = {"2010","2011", "2012", "2013", "2014", "2015", "2016", "2017"};
+	final String[] yilar = {"2010","2011", "2012", "2013", "2014", "2015", "2016", "2017","2018"};
 	final DefaultComboBoxModel duyurulmaYilCombBoxModel = new DefaultComboBoxModel(yilar);
 	final JComboBox<Integer> fDuyurulmaYil = new JComboBox<Integer>(duyurulmaYilCombBoxModel);      
 	final String[] aylar = {"","01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
