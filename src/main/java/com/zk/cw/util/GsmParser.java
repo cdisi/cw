@@ -374,7 +374,7 @@ public class GsmParser {
 	    String deger=null;
 		Element elm = doc.select("a:contains(WLAN)").first();
 	    if(elm != null){
-	    	deger = elm.parent().nextElementSibling().text().replaceAll("dual-band", "çift anten").replaceAll("Yes", "Var").replaceAll("No", "Yok").trim();		
+	    	deger = elm.parent().nextElementSibling().text().replaceAll("Yes", "Var").replaceAll("No", "Yok").trim();		
 	    }
 		return deger;
 	}	
