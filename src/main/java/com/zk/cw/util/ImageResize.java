@@ -32,7 +32,7 @@ public class ImageResize {
                 width = (height * img.getWidth())/ img.getHeight();
             }
             Image scaledImage = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-            BufferedImage imageBuff = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+            BufferedImage imageBuff = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
             imageBuff.getGraphics().drawImage(scaledImage, 0, 0, new Color(0,0,0), null);
 
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -56,7 +56,7 @@ public class ImageResize {
                 width = (height * img.getWidth())/ img.getHeight();
             }
             Image scaledImage = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-            BufferedImage imageBuff = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+            BufferedImage imageBuff = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
             imageBuff.getGraphics().drawImage(scaledImage, 0, 0, new Color(0,0,0), null);
 
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -127,15 +127,15 @@ public class ImageResize {
 	    //even if we draw it onto a transparent image
 	    //so we set it to a specific color, in this case white
 	    //now we have to set that white background transparent
-	    Image intermediateWithTransparentPixels = makeColorTransparent(intermediateImage, Color.WHITE);
+	    //Image intermediateWithTransparentPixels = makeColorTransparent(intermediateImage, Color.WHITE);
 
 	    //finalize the transparent image
-	    BufferedImage finalImage = new BufferedImage(finalWidth, finalHeight, BufferedImage.TYPE_INT_ARGB);
+	    BufferedImage finalImage = new BufferedImage(finalWidth, finalHeight, BufferedImage.TYPE_INT_RGB);
 	    Graphics2D gf = finalImage.createGraphics();
 	    gf.setComposite(AlphaComposite.SrcOver);
 	    gf.setColor(new Color(0, 0, 0, 0));
 	    gf.fillRect(0, 0, finalWidth, finalHeight);
-	    gf.drawImage(intermediateWithTransparentPixels, 0, 0, finalWidth, finalHeight, new Color(0, 0, 0, 0), null);
+	    gf.drawImage(originalImage, 0, 0, finalWidth, finalHeight, new Color(0, 0, 0, 0), null);
 	    gf.dispose();
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 
@@ -167,7 +167,9 @@ public class ImageResize {
 
 	    ImageProducer ip = new FilteredImageSource(im.getSource(), filter);
 	    return Toolkit.getDefaultToolkit().createImage(ip);
-	}	
+	}
+	
+	
 	/*
 	public static byte[] reizeFromByte(byte[] aImg, int aWidth, int aHeight) {
         try {
