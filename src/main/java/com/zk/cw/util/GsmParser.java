@@ -320,7 +320,7 @@ public class GsmParser {
 	    if(arkaKam == false) return null;
 		String deger=null;
 	    Element elm = null;
-		elm = doc.select("a:contains(Video)").get(1);
+		elm = doc.select("a:contains(Video)").first();
 		if(elm != null){
 	    	deger = elm.parent().nextElementSibling().text().replace(", check quality", "").replace("No", "Yok").replace("Yes", "Var").trim();		
 	    }

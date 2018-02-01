@@ -130,6 +130,7 @@ public class ImageResize {
 	    //Image intermediateWithTransparentPixels = makeColorTransparent(intermediateImage, Color.WHITE);
 
 	    //finalize the transparent image
+	    /*
 	    BufferedImage finalImage = new BufferedImage(finalWidth, finalHeight, BufferedImage.TYPE_INT_RGB);
 	    Graphics2D gf = finalImage.createGraphics();
 	    gf.setComposite(AlphaComposite.SrcOver);
@@ -137,10 +138,11 @@ public class ImageResize {
 	    gf.fillRect(0, 0, finalWidth, finalHeight);
 	    gf.drawImage(originalImage, 0, 0, finalWidth, finalHeight, new Color(0, 0, 0, 0), null);
 	    gf.dispose();
+	    */
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 
         try {
-			ImageIO.write(finalImage, "jpg", buffer);
+			ImageIO.write(intermediateImage, "jpg", buffer);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
