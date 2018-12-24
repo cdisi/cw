@@ -103,9 +103,9 @@ public final class UreticiDAO {
 	  try{
 	      Connection c = DaoFactory.openConnection();
 	      stmt = c.createStatement();
-	      String sql= "SELECT * FROM uretici";
+	      String sql= "SELECT * FROM uretici WHERE aktif=1 AND gsm_arena_url IS NOT NULL";
 	      if(ureticiId != 0){
-	    	  sql += " WHERE id="+ureticiId;
+	    	  sql += " AND id="+ureticiId;
 	      }
 	      ResultSet rs = stmt.executeQuery(sql);	      
 	      while(rs.next()){
@@ -119,7 +119,7 @@ public final class UreticiDAO {
 	      }
 	      rs.close();
 	      stmt.close();
-	      conn.close();
+	      c.close();
 	   }catch(SQLException se){
 	      se.printStackTrace();
 	   }catch(Exception e){

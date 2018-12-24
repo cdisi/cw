@@ -44,6 +44,7 @@ public final class CihazAraAction extends AbstractAction  {
 			for (Element elm : elms) {
 				CihazURL cihazURL = new CihazURL();
 				cihazURL.setUrl(elm.attr("abs:href").trim());
+				System.out.println(cihazURL.getUrl());
 				if(!dao.bul(cihazURL)){
 					dao.ekle(cihazURL, uretici);
 				}
